@@ -38,5 +38,11 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --cache --write",
+      "eslint --cache --fix"
+    ]
   }
 }
