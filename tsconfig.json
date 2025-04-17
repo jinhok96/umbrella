@@ -11,6 +11,7 @@
       "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
+      "@libs/*": ["libs/*"],
       "@navigation/*": ["navigation/*"],
       "@screens/*": ["screens/*"],
       "@services/*": ["services/*"],
