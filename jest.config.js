@@ -1,5 +1,10 @@
 module.exports = {
   preset: 'react-native',
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   modulePathIgnorePatterns: ['<rootDir>/index.js'],
   moduleNameMapper: {
     '^@assets/(.*)$': '<rootDir>/src/assets/$1',

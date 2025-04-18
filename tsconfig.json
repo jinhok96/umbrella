@@ -4,7 +4,7 @@
     "@tsconfig/react-native/tsconfig.json"
   ],
   "compilerOptions": {
-    "types": ["react-native", "react-test-renderer"],
+    "types": ["react-native", "react-test-renderer", "jest"],
     "moduleResolution": "node16",
     "baseUrl": "./src",
     "paths": {
@@ -23,5 +23,5 @@
     "esModuleInterop": true
   },
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"]
+  "exclude": ["node_modules", "android", "ios"]
 }
