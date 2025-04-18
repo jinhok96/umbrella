@@ -24,6 +24,7 @@ module.exports = {
         singleQuote: true,
         trailingComma: 'all',
         endOfLine: 'auto',
+        printWidth: 120,
       },
     ],
     'react/jsx-filename-extension': [
@@ -57,14 +58,7 @@ module.exports = {
     'simple-import-sort/imports': [
       'error',
       {
-        groups: [
-          ['^\\u0000'],
-          ['^react'],
-          ['^@'],
-          ['^[a-z]'],
-          ['^@/'],
-          ['^\\./', '^\\.\\./'],
-        ],
+        groups: [['^\\u0000'], ['^react'], ['^@'], ['^[a-z]'], ['^@/'], ['^\\./', '^\\.\\./']],
       },
     ],
   },

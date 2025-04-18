@@ -1,14 +1,6 @@
-import type {
-  CommonRequestHeadersList,
-  PickedAxiosResponse,
-} from '@services/httpClient/httpClient.type';
+import type { CommonRequestHeadersList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
-import type {
-  AxiosHeaderValue,
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-} from 'axios';
+import type { AxiosHeaderValue, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초
@@ -38,9 +30,7 @@ export default class HttpClient {
    * @returns 가공된 response 객체
    * @jinhok96 25.04.18
    */
-  private static filterResponse<T>(
-    response: AxiosResponse<T>,
-  ): PickedAxiosResponse<T> {
+  private static filterResponse<T>(response: AxiosResponse<T>): PickedAxiosResponse<T> {
     const { data, status, statusText } = response;
     return { data, status, statusText };
   }
@@ -51,18 +41,13 @@ export default class HttpClient {
    * @returns 오류 response 객체
    * @jinhok96 25.04.18
    */
-  private static errorResponse<T>(
-    error: unknown,
-  ): PickedAxiosResponse<T | null> {
+  private static errorResponse<T>(error: unknown): PickedAxiosResponse<T | null> {
     // Axios 오류인 경우
     if (axios.isAxiosError(error)) {
       return {
         data: error.response?.data || null,
         status: error.response?.status || Number(error.code) || 500,
-        statusText:
-          error.response?.statusText ||
-          error.message ||
-          'Internal Server Error',
+        statusText: error.response?.statusText || error.message || 'Internal Server Error',
       };
     }
     // 다른 종류의 오류
@@ -79,10 +64,7 @@ export default class HttpClient {
    * @param value 헤더 키 값
    * @jinhok96 25.04.18
    */
-  public setHeader(
-    key: CommonRequestHeadersList | string,
-    value: AxiosHeaderValue,
-  ): void {
+  public setHeader(key: CommonRequestHeadersList | string, value: AxiosHeaderValue): void {
     if (key === 'Content-Type') {
       throw new Error('setContentType으로 Content-Type을 설정해주세요.');
     }
@@ -95,9 +77,7 @@ export default class HttpClient {
    * @returns 헤더 키 값
    * @jinhok96 25.04.18
    */
-  public getHeader(
-    key: CommonRequestHeadersList | string,
-  ): AxiosHeaderValue | undefined {
+  public getHeader(key: CommonRequestHeadersList | string): AxiosHeaderValue | undefined {
     return this.instance.defaults.headers.common[key];
   }
 
@@ -118,11 +98,7 @@ export default class HttpClient {
    * @returns `{ data, status, statusText }`
    * @jinhok96 25.04.18
    */
-  public async get<
-    T,
-    P = Record<string, unknown> | URLSearchParams,
-    D = unknown,
-  >(
+  public async get<T, P = Record<string, unknown> | URLSearchParams, D = unknown>(
     url: string,
     params?: P,
     config?: Omit<AxiosRequestConfig<D>, 'params'>,
@@ -152,11 +128,7 @@ export default class HttpClient {
     config?: Omit<AxiosRequestConfig, 'data'>,
   ): Promise<PickedAxiosResponse<T | null>> {
     try {
-      const response = await this.instance.post<T, AxiosResponse<T>, D>(
-        url,
-        data,
-        config,
-      );
+      const response = await this.instance.post<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
       return HttpClient.errorResponse(error);
@@ -177,11 +149,7 @@ export default class HttpClient {
     config?: Omit<AxiosRequestConfig, 'data'>,
   ): Promise<PickedAxiosResponse<T | null>> {
     try {
-      const response = await this.instance.put<T, AxiosResponse<T>, D>(
-        url,
-        data,
-        config,
-      );
+      const response = await this.instance.put<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
       return HttpClient.errorResponse(error);
@@ -202,11 +170,7 @@ export default class HttpClient {
     config?: Omit<AxiosRequestConfig, 'data'>,
   ): Promise<PickedAxiosResponse<T | null>> {
     try {
-      const response = await this.instance.patch<T, AxiosResponse<T>, D>(
-        url,
-        data,
-        config,
-      );
+      const response = await this.instance.patch<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
       return HttpClient.errorResponse(error);
@@ -221,11 +185,7 @@ export default class HttpClient {
    * @returns `{ data, status, statusText }`
    * @jinhok96 25.04.18
    */
-  public async delete<
-    T,
-    P = Record<string, unknown> | URLSearchParams,
-    D = unknown,
-  >(
+  public async delete<T, P = Record<string, unknown> | URLSearchParams, D = unknown>(
     url: string,
     params?: P,
     config?: Omit<AxiosRequestConfig<D>, 'params'>,
