@@ -1,30 +1,16 @@
 import type {
+  CommonRequestHeadersList,
+  ContentType,
+  PickedAxiosResponse,
+} from '@services/httpClient/httpClient.type';
+
+import type {
   AxiosHeaderValue,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
 import axios from 'axios';
-
-type ContentType =
-  | 'text/html'
-  | 'text/plain'
-  | 'multipart/form-data'
-  | 'application/json'
-  | 'application/x-www-form-urlencoded'
-  | 'application/octet-stream';
-
-type CommonRequestHeadersList =
-  | 'Accept'
-  | 'Content-Length'
-  | 'User-Agent'
-  | 'Content-Encoding'
-  | 'Authorization';
-
-type PickedAxiosResponse<T> = Pick<
-  AxiosResponse<T>,
-  'data' | 'status' | 'statusText'
->;
 
 const DEFAULT_TIMEOUT = 10000; // 10초
 
