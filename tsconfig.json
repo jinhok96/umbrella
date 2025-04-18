@@ -1,8 +1,5 @@
 {
-  "extends": [
-    "@react-native/typescript-config/tsconfig.json",
-    "@tsconfig/react-native/tsconfig.json"
-  ],
+  "extends": ["@react-native/typescript-config/tsconfig.json", "@tsconfig/react-native/tsconfig.json"],
   "compilerOptions": {
     "types": ["react-native", "react-test-renderer", "jest"],
     "moduleResolution": "node16",
