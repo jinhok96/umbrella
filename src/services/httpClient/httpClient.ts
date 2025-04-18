@@ -1,6 +1,5 @@
 import type {
   CommonRequestHeadersList,
-  ContentType,
   PickedAxiosResponse,
 } from '@services/httpClient/httpClient.type';
 
@@ -14,8 +13,11 @@ import axios from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초
 
-/** @jinhok96 25.04.18
+/**
  * Axios HttpClient
+ * @description timeout: 10초
+ * @description Content-Type: application/json
+ * @jinhok96 25.04.18
  */
 export default class HttpClient {
   private instance: AxiosInstance;
@@ -30,10 +32,11 @@ export default class HttpClient {
     });
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * response에서 특정 데이터를 반환하는 함수
    * @param response Axios response 원본
    * @returns 가공된 response 객체
+   * @jinhok96 25.04.18
    */
   private static filterResponse<T>(
     response: AxiosResponse<T>,
@@ -42,10 +45,11 @@ export default class HttpClient {
     return { data, status, statusText };
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * API 통신 오류를 response 객체로 변환하는 함수
    * @param error 오류
    * @returns 오류 response 객체
+   * @jinhok96 25.04.18
    */
   private static errorResponse<T>(
     error: unknown,
@@ -69,19 +73,11 @@ export default class HttpClient {
     };
   }
 
-  /** @jinhok96 25.04.18
-   * Content-Type을 설정하는 함수
-   * @description 기본값: application/json
-   * @param value Content-Type
-   */
-  public setContentType(value: ContentType | AxiosHeaderValue): void {
-    this.instance.defaults.headers.common['Content-Type'] = value;
-  }
-
-  /** @jinhok96 25.04.18
-   * Content-Type를 제외한 헤더를 설정하는 함수
+  /**
+   * 헤더를 설정하는 함수
    * @param key 헤더 키
    * @param value 헤더 키 값
+   * @jinhok96 25.04.18
    */
   public setHeader(
     key: CommonRequestHeadersList | string,
@@ -93,10 +89,11 @@ export default class HttpClient {
     this.instance.defaults.headers.common[key] = value;
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * 특정 헤더를 반환하는 함수
    * @param key 헤더 키
    * @returns 헤더 키 값
+   * @jinhok96 25.04.18
    */
   public getHeader(
     key: CommonRequestHeadersList | string,
@@ -104,20 +101,22 @@ export default class HttpClient {
     return this.instance.defaults.headers.common[key];
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * 특정 헤더를 제거하는 함수
    * @param key 제거할 헤더 키
+   * @jinhok96 25.04.18
    */
   public removeHeader(key: string): void {
     delete this.instance.defaults.headers.common[key];
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * GET 요청
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
    * @returns `{ data, status, statusText }`
+   * @jinhok96 25.04.18
    */
   public async get<
     T,
@@ -139,12 +138,13 @@ export default class HttpClient {
     }
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * POST 요청
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
    * @returns `{ data, status, statusText }`
+   * @jinhok96 25.04.18
    */
   public async post<T, D = unknown>(
     url: string,
@@ -163,12 +163,13 @@ export default class HttpClient {
     }
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * PUT 요청
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
    * @returns `{ data, status, statusText }`
+   * @jinhok96 25.04.18
    */
   public async put<T, D = unknown>(
     url: string,
@@ -187,12 +188,13 @@ export default class HttpClient {
     }
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * PATCH 요청
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
    * @returns `{ data, status, statusText }`
+   * @jinhok96 25.04.18
    */
   public async patch<T, D = unknown>(
     url: string,
@@ -211,12 +213,13 @@ export default class HttpClient {
     }
   }
 
-  /** @jinhok96 25.04.18
+  /**
    * DELETE 요청
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
    * @returns `{ data, status, statusText }`
+   * @jinhok96 25.04.18
    */
   public async delete<
     T,
