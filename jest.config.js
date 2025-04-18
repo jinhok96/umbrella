@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'react-native',
+  testEnvironment: 'node',
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
