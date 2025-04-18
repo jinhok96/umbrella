@@ -4,7 +4,7 @@
     "@tsconfig/react-native/tsconfig.json"
   ],
   "compilerOptions": {
-    "types": ["react-native", "react-test-renderer"],
+    "types": ["react-native", "react-test-renderer", "jest"],
     "moduleResolution": "node16",
     "baseUrl": "./src",
     "paths": {
