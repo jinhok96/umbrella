@@ -24,6 +24,7 @@ module.exports = {
         singleQuote: true,
         trailingComma: 'all',
         endOfLine: 'auto',
+        length: 120,
       },
     ],
     'react/jsx-filename-extension': [
