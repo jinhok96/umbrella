@@ -14,7 +14,7 @@ import axios from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초
 
-/**
+/** @jinhok96 25.04.18
  * Axios HttpClient
  */
 export default class HttpClient {
@@ -30,7 +30,7 @@ export default class HttpClient {
     });
   }
 
-  /**
+  /** @jinhok96 25.04.18
    * response에서 특정 데이터를 반환하는 함수
    * @param response Axios response 원본
    * @returns 가공된 response 객체
@@ -42,49 +42,69 @@ export default class HttpClient {
     return { data, status, statusText };
   }
 
-  /**
-   * 타입 정의된 공통 Content-Type을 설정하는 함수
-   * @description 기본값: application/json
-   * @param value 타입 정의된 공통 Content-Type
+  /** @jinhok96 25.04.18
+   * API 통신 오류를 response 객체로 변환하는 함수
+   * @param error 오류
+   * @returns 오류 response 객체
    */
-  public setCommonContentType(value: ContentType): void {
+  private static errorResponse<T>(
+    error: unknown,
+  ): PickedAxiosResponse<T | null> {
+    // Axios 오류인 경우
+    if (axios.isAxiosError(error)) {
+      return {
+        data: error.response?.data || null,
+        status: error.response?.status || Number(error.code) || 500,
+        statusText:
+          error.response?.statusText ||
+          error.message ||
+          'Internal Server Error',
+      };
+    }
+    // 다른 종류의 오류
+    return {
+      data: null,
+      status: 999,
+      statusText: 'Unknown Error',
+    };
+  }
+
+  /** @jinhok96 25.04.18
+   * Content-Type을 설정하는 함수
+   * @description 기본값: application/json
+   * @param value Content-Type
+   */
+  public setContentType(value: ContentType | AxiosHeaderValue): void {
     this.instance.defaults.headers.common['Content-Type'] = value;
   }
 
-  /**
-   * 전체 Content-Type을 설정하는 함수
-   * @description 기본값: application/json
-   * @param value 임의의 Content-Type
+  /** @jinhok96 25.04.18
+   * Content-Type를 제외한 헤더를 설정하는 함수
+   * @param key 헤더 키
+   * @param value 헤더 키 값
    */
-  public setContentType(value: AxiosHeaderValue): void {
-    this.instance.defaults.headers.common['Content-Type'] = value;
-  }
-
-  /**
-   * 타입 정의된 공통 헤더를 설정하는 함수
-   * @param key 타입 정의된 공통 헤더 키
-   * @param value 헤더 키값
-   */
-  public setCommonHeader(
-    key: CommonRequestHeadersList,
+  public setHeader(
+    key: CommonRequestHeadersList | string,
     value: AxiosHeaderValue,
   ): void {
-    this.instance.defaults.headers.common[key] = value;
-  }
-
-  /**
-   * 전체 헤더를 설정하는 함수
-   * @param key 임의의 헤더 키
-   * @param value 헤더 키값
-   */
-  public setHeader(key: string, value: AxiosHeaderValue): void {
     if (key === 'Content-Type') {
       throw new Error('setContentType으로 Content-Type을 설정해주세요.');
     }
     this.instance.defaults.headers.common[key] = value;
   }
 
-  /**
+  /** @jinhok96 25.04.18
+   * 특정 헤더를 반환하는 함수
+   * @param key 헤더 키
+   * @returns 헤더 키 값
+   */
+  public getHeader(
+    key: CommonRequestHeadersList | string,
+  ): AxiosHeaderValue | undefined {
+    return this.instance.defaults.headers.common[key];
+  }
+
+  /** @jinhok96 25.04.18
    * 특정 헤더를 제거하는 함수
    * @param key 제거할 헤더 키
    */
@@ -92,12 +112,12 @@ export default class HttpClient {
     delete this.instance.defaults.headers.common[key];
   }
 
-  /**
+  /** @jinhok96 25.04.18
    * GET 요청
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
-   * @returns \{ data, status, statusText \}
+   * @returns `{ data, status, statusText }`
    */
   public async get<
     T,
@@ -107,80 +127,96 @@ export default class HttpClient {
     url: string,
     params?: P,
     config?: Omit<AxiosRequestConfig<D>, 'params'>,
-  ): Promise<PickedAxiosResponse<T>> {
-    const response = await this.instance.get<T, AxiosResponse<T>, D>(url, {
-      ...config,
-      params,
-    });
-    return HttpClient.filterResponse(response);
+  ): Promise<PickedAxiosResponse<T | null>> {
+    try {
+      const response = await this.instance.get<T, AxiosResponse<T>, D>(url, {
+        ...config,
+        params,
+      });
+      return HttpClient.filterResponse(response);
+    } catch (error) {
+      return HttpClient.errorResponse(error);
+    }
   }
 
-  /**
+  /** @jinhok96 25.04.18
    * POST 요청
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns \{ data, status, statusText \}
+   * @returns `{ data, status, statusText }`
    */
   public async post<T, D = unknown>(
     url: string,
     data?: D,
     config?: Omit<AxiosRequestConfig, 'data'>,
-  ): Promise<PickedAxiosResponse<T>> {
-    const response = await this.instance.post<T, AxiosResponse<T>, D>(
-      url,
-      data,
-      config,
-    );
-    return HttpClient.filterResponse(response);
+  ): Promise<PickedAxiosResponse<T | null>> {
+    try {
+      const response = await this.instance.post<T, AxiosResponse<T>, D>(
+        url,
+        data,
+        config,
+      );
+      return HttpClient.filterResponse(response);
+    } catch (error) {
+      return HttpClient.errorResponse(error);
+    }
   }
 
-  /**
+  /** @jinhok96 25.04.18
    * PUT 요청
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns \{ data, status, statusText \}
+   * @returns `{ data, status, statusText }`
    */
   public async put<T, D = unknown>(
     url: string,
     data?: D,
     config?: Omit<AxiosRequestConfig, 'data'>,
-  ): Promise<PickedAxiosResponse<T>> {
-    const response = await this.instance.put<T, AxiosResponse<T>, D>(
-      url,
-      data,
-      config,
-    );
-    return HttpClient.filterResponse(response);
+  ): Promise<PickedAxiosResponse<T | null>> {
+    try {
+      const response = await this.instance.put<T, AxiosResponse<T>, D>(
+        url,
+        data,
+        config,
+      );
+      return HttpClient.filterResponse(response);
+    } catch (error) {
+      return HttpClient.errorResponse(error);
+    }
   }
 
-  /**
+  /** @jinhok96 25.04.18
    * PATCH 요청
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns \{ data, status, statusText \}
+   * @returns `{ data, status, statusText }`
    */
   public async patch<T, D = unknown>(
     url: string,
     data?: D,
     config?: Omit<AxiosRequestConfig, 'data'>,
-  ): Promise<PickedAxiosResponse<T>> {
-    const response = await this.instance.patch<T, AxiosResponse<T>, D>(
-      url,
-      data,
-      config,
-    );
-    return HttpClient.filterResponse(response);
+  ): Promise<PickedAxiosResponse<T | null>> {
+    try {
+      const response = await this.instance.patch<T, AxiosResponse<T>, D>(
+        url,
+        data,
+        config,
+      );
+      return HttpClient.filterResponse(response);
+    } catch (error) {
+      return HttpClient.errorResponse(error);
+    }
   }
 
-  /**
+  /** @jinhok96 25.04.18
    * DELETE 요청
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
-   * @returns \{ data, status, statusText \}
+   * @returns `{ data, status, statusText }`
    */
   public async delete<
     T,
@@ -190,11 +226,15 @@ export default class HttpClient {
     url: string,
     params?: P,
     config?: Omit<AxiosRequestConfig<D>, 'params'>,
-  ): Promise<PickedAxiosResponse<T>> {
-    const response = await this.instance.delete<T, AxiosResponse<T>, D>(url, {
-      ...config,
-      params,
-    });
-    return HttpClient.filterResponse(response);
+  ): Promise<PickedAxiosResponse<T | null>> {
+    try {
+      const response = await this.instance.delete<T, AxiosResponse<T>, D>(url, {
+        ...config,
+        params,
+      });
+      return HttpClient.filterResponse(response);
+    } catch (error) {
+      return HttpClient.errorResponse(error);
+    }
   }
 }
