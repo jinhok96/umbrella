@@ -3,16 +3,17 @@
   "compilerOptions": {
     "types": ["react-native", "react-test-renderer", "jest"],
     "moduleResolution": "node16",
-    "baseUrl": "./src",
+    "baseUrl": ".", // 반드시 루트 디렉토리로 설정
     "paths": {
-      "@assets/*": ["assets/*"],
-      "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
-      "@libs/*": ["libs/*"],
-      "@navigation/*": ["navigation/*"],
-      "@screens/*": ["screens/*"],
-      "@services/*": ["services/*"],
-      "@store/*": ["store/*"]
+      // babel.config.js, metro.config.js와 통일
+      "@assets/*": ["src/assets/*"],
+      "@components/*": ["src/components/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@libs/*": ["src/libs/*"],
+      "@navigation/*": ["src/navigation/*"],
+      "@screens/*": ["src/screens/*"],
+      "@services/*": ["src/services/*"],
+      "@store/*": ["src/store/*"]
     },
     "jsx": "react-native",
     "skipLibCheck": true,
