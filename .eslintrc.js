@@ -6,6 +6,7 @@ module.exports = {
     'eslint:recommended',
     '@react-native',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@tanstack/query/recommended',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
