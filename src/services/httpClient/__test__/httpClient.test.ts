@@ -1,6 +1,6 @@
-import HttpClient from '@services/httpClient/httpClient';
-
 import nock from 'nock';
+
+import HttpClient from '@services/httpClient/httpClient';
 
 const BASE_URL = 'https://example.com';
 const httpClient = new HttpClient(BASE_URL);

@@ -1,6 +1,8 @@
-import { PropsWithChildren } from 'react';
-import { StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { PropsWithChildren, useEffect } from 'react';
+import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+
+import { useGetJsonPlaceholderTodo } from '@services/template/query';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -8,6 +10,12 @@ type SectionProps = PropsWithChildren<{
 
 export default function Section({ children, title }: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const { data } = useGetJsonPlaceholderTodo(1);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <View style={styles.sectionContainer}>
       <Text

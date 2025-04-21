@@ -6,10 +6,11 @@ module.exports = {
     'eslint:recommended',
     '@react-native',
     'plugin:@typescript-eslint/recommended',
+    'plugin:@tanstack/query/recommended',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'simple-import-sort', 'jest'],
+  plugins: ['@typescript-eslint', 'import', 'jest'],
   env: {
     'jest/globals': true,
   },
@@ -54,13 +55,39 @@ module.exports = {
         tsx: 'never',
       },
     ],
-    // simple-import-sort (import 정렬)
-    'simple-import-sort/imports': [
+    // Import 정렬
+    'import/order': [
       'error',
       {
-        groups: [['^\\u0000'], ['^react'], ['^@'], ['^[a-z]'], ['^@/'], ['^\\./', '^\\.\\./']],
+        groups: [
+          'builtin', // 1. Built-in types (react, react-native 등)
+          'external', // 2. node_modules 의존성
+          'internal', // 3. 프로젝트 내부 경로 (@..)
+          'parent', // 4. 상위 디렉토리 (../)
+          'sibling', // 5. 같은 디렉토리 (./)
+          'index', // 6. index 파일
+          'object', // 7. 타입 import (type 키워드 사용 시)
+          'type', // 8. 타입 전용 import
+        ],
+        pathGroups: [
+          {
+            pattern: 'react+(|-native)+(|/**)',
+            group: 'builtin',
+            position: 'before',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['react'],
+        'newlines-between': 'always', // 그룹 간 줄바꿈 강제
+        alphabetize: {
+          order: 'asc', // 알파벳 순 정렬
+          caseInsensitive: true, // 대소문자 구분 없음
+        },
+        warnOnUnassignedImports: true, // 그룹 미할당 시 경고
       },
     ],
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
   },
   settings: {
     'import/resolver': {
