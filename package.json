@@ -9,7 +9,8 @@
     "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
     "start": "react-native start",
     "test": "jest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "reset-cache": "rm -rf node_modules/.cache && rm -rf $TMPDIR/metro-*"
   },
   "dependencies": {
     "@react-native-community/eslint-config": "^3.2.0",
