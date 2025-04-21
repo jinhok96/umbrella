@@ -1,7 +1,7 @@
-import axios from 'axios';
-
 import type { CommonRequestHeadersList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
-import type { AxiosHeaderValue, AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
+
+import type { AxiosHeaderValue, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초
 
@@ -9,21 +9,18 @@ const DEFAULT_TIMEOUT = 10000; // 10초
  * Axios HttpClient
  * @description timeout: 10초
  * @description Content-Type: application/json
- * @param baseURL 기본 URL (ex: https://example.com)
- * @param config 초기 axios config
  * @jinhok96 25.04.18
  */
 export default class HttpClient {
   private instance: AxiosInstance;
 
-  constructor(baseURL: string, config?: CreateAxiosDefaults) {
+  constructor(baseURL: string) {
     this.instance = axios.create({
       baseURL,
       timeout: DEFAULT_TIMEOUT,
       headers: {
         'Content-Type': 'application/json',
       },
-      ...config,
     });
   }
 

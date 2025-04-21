@@ -5,11 +5,10 @@ module.exports = {
       'module-resolver',
       {
         root: ['./src'],
-        extensions: ['.tsx', '.ts', '.ios.tsx', '.android.tsx', '.js', '.ios.js', '.android.js', '.json'],
+        extensions: ['.ios.js', '.android.js', '.js', '.ts', '.tsx', '.json'],
         alias: {
-          // tsconfig.json, metro.config.js와 통일
           '@assets': './src/assets',
-          '@components': './src/components',
+          '@constants': './src/constants',
           '@hooks': './src/hooks',
           '@libs': './src/libs',
           '@navigation': './src/navigation',
