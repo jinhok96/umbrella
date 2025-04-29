@@ -70,13 +70,25 @@ module.exports = {
           'type', // 8. 타입 전용 import
         ],
         pathGroups: [
+          // 1. react와 react-native 계열을 하나의 그룹으로 통합
           {
-            pattern: 'react+(|-native)+(|/**)',
+            pattern: '{react,react-native}{,/**}',
             group: 'builtin',
             position: 'before',
           },
+          // 2. react-* 또는 react-native-* 외부 패키지 (별도 그룹)
+          {
+            pattern: 'react-*',
+            group: 'external',
+            position: 'after',
+          },
+          {
+            pattern: 'react-native-*',
+            group: 'external',
+            position: 'after',
+          },
         ],
-        pathGroupsExcludedImportTypes: ['react'],
+        pathGroupsExcludedImportTypes: ['react', 'react-native'],
         'newlines-between': 'always', // 그룹 간 줄바꿈 강제
         alphabetize: {
           order: 'asc', // 알파벳 순 정렬
