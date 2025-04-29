@@ -2,7 +2,7 @@ import { PropsWithChildren, useEffect } from 'react';
 import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-import { useGetJsonPlaceholderTodo } from '@services/template/query';
+import Config from 'react-native-config';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -10,11 +10,13 @@ type SectionProps = PropsWithChildren<{
 
 export default function Section({ children, title }: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const { data } = useGetJsonPlaceholderTodo(1);
+  // const { data } = useGetJsonPlaceholderTodo(1);
 
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    // console.log(data);
+    console.log(Config.OPEN_WEATHER_API_BASE_URL);
+    console.log(Config.OPEN_WEATHER_API_KEY);
+  }, []);
 
   return (
     <View style={styles.sectionContainer}>
