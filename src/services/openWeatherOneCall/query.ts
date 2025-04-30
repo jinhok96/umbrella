@@ -25,7 +25,7 @@ const GC_TIME = 15 * MINUTE;
 function getOpenWeatherAPICommonParams(): Omit<OpenWeatherOneCallAPICommonParams, 'appid'> {
   // store에서 units, lang 가져와서 반환
   const params: Pick<OpenWeatherOneCallAPICommonParams, 'units' | 'lang'> = {
-    units: 'standard',
+    units: 'metric',
     lang: 'kr',
   };
   return params;
