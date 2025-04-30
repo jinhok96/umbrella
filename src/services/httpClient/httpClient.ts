@@ -17,6 +17,8 @@ export default class HttpClient {
   private instance: AxiosInstance;
 
   constructor(baseURL: string, config?: CreateAxiosDefaults) {
+    if (!baseURL) throw new Error('baseURL이 없습니다.');
+
     this.instance = axios.create({
       baseURL,
       timeout: DEFAULT_TIMEOUT,
