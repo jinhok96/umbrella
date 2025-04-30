@@ -115,7 +115,7 @@ export default class HttpClient {
       });
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -136,7 +136,7 @@ export default class HttpClient {
       const response = await this.instance.post<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -157,7 +157,7 @@ export default class HttpClient {
       const response = await this.instance.put<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -178,7 +178,7 @@ export default class HttpClient {
       const response = await this.instance.patch<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -202,7 +202,7 @@ export default class HttpClient {
       });
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 }
