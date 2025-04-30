@@ -1,8 +1,6 @@
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren } from 'react';
 import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-
-import { useGetCurrentAndForecastsWeatherData } from '@services/openWeatherOneCall/query';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -10,11 +8,6 @@ type SectionProps = PropsWithChildren<{
 
 export default function Section({ children, title }: SectionProps): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
-  const { data } = useGetCurrentAndForecastsWeatherData({ lat: 33.44, lon: -94.04 });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <View style={styles.sectionContainer}>
