@@ -38,9 +38,7 @@ export const openWeatherOneCallService = {
    * @jinhok96 25.04.30
    */
   getCurrentAndForecastsWeatherData: async (params: Omit<GetCurrentAndForecastsWeatherDataParams, 'appid'>) => {
-    const response = await axiosInstance.get<GetCurrentAndForecastsWeatherDataResponse>('/3.0/onecall', {
-      params,
-    });
+    const response = await axiosInstance.get<GetCurrentAndForecastsWeatherDataResponse>('/3.0/onecall', params);
     return response;
   },
   /**
@@ -50,9 +48,7 @@ export const openWeatherOneCallService = {
    * @jinhok96 25.04.30
    */
   getWeatherDataForTimestamp: async (params: Omit<GetWeatherDataForTimestampParams, 'appid'>) => {
-    const response = await axiosInstance.get<GetWeatherDataForTimestampResponse>(`/3.0/onecall/timemachine`, {
-      params,
-    });
+    const response = await axiosInstance.get<GetWeatherDataForTimestampResponse>(`/3.0/onecall/timemachine`, params);
     return response;
   },
   /**
@@ -62,9 +58,7 @@ export const openWeatherOneCallService = {
    * @jinhok96 25.04.30
    */
   getDailyAggregation: async (params: Omit<GetDailyAggregationParams, 'appid'>) => {
-    const response = await axiosInstance.get<GetDailyAggregationResponse>('/3.0/onecall/day_summary', {
-      params,
-    });
+    const response = await axiosInstance.get<GetDailyAggregationResponse>('/3.0/onecall/day_summary', params);
     return response;
   },
 };
