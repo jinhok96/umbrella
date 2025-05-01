@@ -11,15 +11,8 @@ describe('HttpClient', () => {
     nock.cleanAll();
   });
 
-  test('setHeader, getHeader, removeHeader 테스트', () => {
-    const mockKey = 'X-Test-Header-Key';
-    const mockValue = 'X-Test-Header-Value';
-
-    httpClient.setHeader(mockKey, mockValue);
-    expect(httpClient.getHeader(mockKey)).toBe(mockValue);
-
-    httpClient.removeHeader(mockKey);
-    expect(httpClient.getHeader(mockKey)).toBeUndefined();
+  test('baseURL 비어있을 경우 에러 throw 테스트', () => {
+    expect(() => new HttpClient('')).toThrow('baseURL이 없습니다.');
   });
 
   test('GET 요청 성공', async () => {
@@ -27,9 +20,11 @@ describe('HttpClient', () => {
     const mockData = { id: 1, name: 'Test' };
     nock(BASE_URL).get(mockURL).reply(200, mockData);
 
-    const { data, status } = await httpClient.get(mockURL);
+    const { data, status, statusText, headers } = await httpClient.get(mockURL);
     expect(data).toEqual(mockData);
     expect(status).toBe(200);
+    expect(statusText).toBe('OK');
+    expect(headers).toMatchObject({ 'content-type': 'application/json' });
   });
 
   test('GET 요청 오류', async () => {
@@ -39,8 +34,11 @@ describe('HttpClient', () => {
     try {
       await httpClient.get(mockURL);
     } catch (error) {
-      const { status } = error as PickedAxiosResponse<null>;
-      return expect(status).toBe(500);
+      const { data, status, statusText, headers } = error as PickedAxiosResponse<null>;
+      expect(data).toBeNull();
+      expect(status).toBe(500);
+      expect(statusText).toBe('Internal Server Error');
+      expect(headers).toMatchObject({});
     }
   });
 
@@ -50,9 +48,11 @@ describe('HttpClient', () => {
     const mockPayload = { name: 'Test' };
     nock(BASE_URL).post(mockURL).reply(201, mockData);
 
-    const { data, status } = await httpClient.post(mockURL, mockPayload);
+    const { data, status, statusText, headers } = await httpClient.post(mockURL, mockPayload);
     expect(data).toEqual(mockData);
     expect(status).toBe(201);
+    expect(statusText).toBe('Created');
+    expect(headers).toMatchObject({ 'content-type': 'application/json' });
   });
 
   test('POST 요청 오류', async () => {
@@ -63,8 +63,11 @@ describe('HttpClient', () => {
     try {
       await httpClient.post(mockURL, mockPayload);
     } catch (error) {
-      const { status } = error as PickedAxiosResponse<null>;
-      return expect(status).toBe(500);
+      const { data, status, statusText, headers } = error as PickedAxiosResponse<null>;
+      expect(data).toBeNull();
+      expect(status).toBe(500);
+      expect(statusText).toBe('Internal Server Error');
+      expect(headers).toMatchObject({});
     }
   });
 
@@ -74,9 +77,11 @@ describe('HttpClient', () => {
     const mockPayload = { name: 'Test' };
     nock(BASE_URL).put(mockURL).reply(200, mockData);
 
-    const { data, status } = await httpClient.put(mockURL, mockPayload);
+    const { data, status, statusText, headers } = await httpClient.put(mockURL, mockPayload);
     expect(data).toEqual(mockData);
     expect(status).toBe(200);
+    expect(statusText).toBe('OK');
+    expect(headers).toMatchObject({ 'content-type': 'application/json' });
   });
 
   test('PUT 요청 오류', async () => {
@@ -87,8 +92,11 @@ describe('HttpClient', () => {
     try {
       await httpClient.put(mockURL, mockPayload);
     } catch (error) {
-      const { status } = error as PickedAxiosResponse<null>;
-      return expect(status).toBe(500);
+      const { data, status, statusText, headers } = error as PickedAxiosResponse<null>;
+      expect(data).toBeNull();
+      expect(status).toBe(500);
+      expect(statusText).toBe('Internal Server Error');
+      expect(headers).toMatchObject({});
     }
   });
 
@@ -98,9 +106,11 @@ describe('HttpClient', () => {
     const mockPayload = { name: 'Test' };
     nock(BASE_URL).patch(mockURL).reply(200, mockData);
 
-    const { data, status } = await httpClient.patch(mockURL, mockPayload);
+    const { data, status, statusText, headers } = await httpClient.patch(mockURL, mockPayload);
     expect(data).toEqual(mockData);
     expect(status).toBe(200);
+    expect(statusText).toBe('OK');
+    expect(headers).toMatchObject({ 'content-type': 'application/json' });
   });
 
   test('PATCH 요청 오류', async () => {
@@ -111,8 +121,11 @@ describe('HttpClient', () => {
     try {
       await httpClient.patch(mockURL, mockPayload);
     } catch (error) {
-      const { status } = error as PickedAxiosResponse<null>;
-      return expect(status).toBe(500);
+      const { data, status, statusText, headers } = error as PickedAxiosResponse<null>;
+      expect(data).toBeNull();
+      expect(status).toBe(500);
+      expect(statusText).toBe('Internal Server Error');
+      expect(headers).toMatchObject({});
     }
   });
 
@@ -121,9 +134,11 @@ describe('HttpClient', () => {
     const mockData = { id: 1, name: 'Test' };
     nock(BASE_URL).delete(mockURL).reply(200, mockData);
 
-    const { data, status } = await httpClient.delete(mockURL);
+    const { data, status, statusText, headers } = await httpClient.delete(mockURL);
     expect(data).toEqual(mockData);
     expect(status).toBe(200);
+    expect(statusText).toBe('OK');
+    expect(headers).toMatchObject({ 'content-type': 'application/json' });
   });
 
   test('DELETE 요청 오류', async () => {
@@ -131,10 +146,13 @@ describe('HttpClient', () => {
     nock(BASE_URL).delete(mockURL).reply(500);
 
     try {
-      await httpClient.get(mockURL);
+      await httpClient.delete(mockURL);
     } catch (error) {
-      const { status } = error as PickedAxiosResponse<null>;
-      return expect(status).toBe(500);
+      const { data, status, statusText, headers } = error as PickedAxiosResponse<null>;
+      expect(data).toBeNull();
+      expect(status).toBe(500);
+      expect(statusText).toBe('Internal Server Error');
+      expect(headers).toMatchObject({});
     }
   });
 });
