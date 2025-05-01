@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import type { CommonRequestHeadersList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
-import type { AxiosHeaderValue, AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
+import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초
 
@@ -22,9 +22,6 @@ export default class HttpClient {
     this.instance = axios.create({
       baseURL,
       timeout: DEFAULT_TIMEOUT,
-      headers: {
-        'Content-Type': 'application/json',
-      },
       ...config,
     });
   }
@@ -36,63 +33,56 @@ export default class HttpClient {
    * @jinhok96 25.04.18
    */
   private static filterResponse<T>(response: AxiosResponse<T>): PickedAxiosResponse<T> {
-    const { data, status, statusText } = response;
-    return { data, status, statusText };
+    const { data, status, statusText, headers } = response;
+    return { data, status, statusText, headers };
   }
 
   /**
    * API 통신 오류를 response 객체로 변환하는 함수
    * @param error 오류
    * @returns 오류 response 객체
-   * @jinhok96 25.04.18
+   * @jinhok96 25.05.01
    */
   private static errorResponse<T>(error: unknown): PickedAxiosResponse<T | null> {
     // Axios 오류인 경우
     if (axios.isAxiosError(error)) {
+      // 서버 응답에서 status가 2xx가 아닌 경우
+      if (error.response) {
+        return {
+          data: error.response?.data || null,
+          status: error.response?.status || Number(error.code) || 500,
+          statusText: error.response?.statusText || error.message || 'Internal Server Error',
+          headers: error.response?.headers,
+        };
+      }
+
+      // 요청 시 브라우저 또는 클라이언트에서 에러가 발생한 경우
+      if (error.request) {
+        return {
+          data: null,
+          status: Number(error.code) || 500,
+          statusText: error.message || 'Internal Server Error',
+          headers: {},
+        };
+      }
+    }
+
+    // AxiosError가 아닐 경우
+    if (error instanceof Error) {
       return {
-        data: error.response?.data || null,
-        status: error.response?.status || Number(error.code) || 500,
-        statusText: error.response?.statusText || error.message || 'Internal Server Error',
+        data: null,
+        status: 9999,
+        statusText: error.message || 'Unknown Error',
+        headers: {},
       };
     }
-    // 다른 종류의 오류
+
     return {
       data: null,
-      status: 999,
+      status: 9999,
       statusText: 'Unknown Error',
+      headers: {},
     };
-  }
-
-  /**
-   * 헤더를 설정하는 함수
-   * @param key 헤더 키
-   * @param value 헤더 키 값
-   * @jinhok96 25.04.18
-   */
-  public setHeader(key: CommonRequestHeadersList | string, value: AxiosHeaderValue): void {
-    if (key === 'Content-Type') {
-      throw new Error('setContentType으로 Content-Type을 설정해주세요.');
-    }
-    this.instance.defaults.headers.common[key] = value;
-  }
-
-  /**
-   * 특정 헤더를 반환하는 함수
-   * @param key 헤더 키
-   * @returns 헤더 키 값
-   * @jinhok96 25.04.18
-   */
-  public getHeader(key: CommonRequestHeadersList | string): AxiosHeaderValue | undefined {
-    return this.instance.defaults.headers.common[key];
-  }
-
-  /**
-   * 특정 헤더를 제거하는 함수
-   * @param key 제거할 헤더 키
-   * @jinhok96 25.04.18
-   */
-  public removeHeader(key: string): void {
-    delete this.instance.defaults.headers.common[key];
   }
 
   /**
