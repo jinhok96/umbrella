@@ -11,7 +11,7 @@ const DEFAULT_TIMEOUT = 10000; // 10초
  * @description Content-Type: application/json
  * @param baseURL 기본 URL (ex: https://example.com)
  * @param config 초기 axios config
- * @jinhok96 25.04.18
+ * @jinhok96 25.05.01
  */
 export default class HttpClient {
   private instance: AxiosInstance;
@@ -30,7 +30,7 @@ export default class HttpClient {
    * response에서 특정 데이터를 반환하는 함수
    * @param response Axios response 원본
    * @returns 가공된 response 객체
-   * @jinhok96 25.04.18
+   * @jinhok96 25.05.01
    */
   private static filterResponse<T>(response: AxiosResponse<T>): PickedAxiosResponse<T> {
     const { data, status, statusText, headers } = response;
@@ -90,8 +90,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async get<T, P = Record<string, unknown> | URLSearchParams, D = unknown>(
     url: string,
@@ -114,8 +114,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async post<T, D = unknown>(
     url: string,
@@ -135,8 +135,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async put<T, D = unknown>(
     url: string,
@@ -156,8 +156,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async patch<T, D = unknown>(
     url: string,
@@ -177,8 +177,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async delete<T, P = Record<string, unknown> | URLSearchParams, D = unknown>(
     url: string,
