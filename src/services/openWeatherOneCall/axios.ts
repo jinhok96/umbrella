@@ -25,11 +25,11 @@ type OpenWeatherOneCallServiceError = {
 /**
  * OpenWeather One Call API 3.0 에러 처리 함수
  * @param error httpClient에서 throw한 에러
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.01
  */
 function throwError(error: PickedAxiosResponse<OpenWeatherOneCallServiceError | null>) {
-  if (!error.data?.message) throw new Error(error.statusText);
-  throw new Error(error.data.message);
+  const errorMessage = error.data?.message || error.statusText || 'Unknown Error';
+  throw new Error(errorMessage);
 }
 
 const OpenWeatherAPIBaseURL = Config.OPEN_WEATHER_API_BASE_URL || '';
