@@ -125,11 +125,22 @@ type Lang =
  * @ appid: 고유 API 키
  * @ units: 측정 단위; 표준(standard), 미터법(metric), 영국식(imperial)
  * @ lang: 출력 언어
+ * @jinhok96 25.05.05
  */
 export type OpenWeatherOneCallAPICommonParams = {
-  appid: AppId;
+  // appid: AppId;
   units?: Units;
   lang?: Lang;
+};
+
+/**
+ * OpenWeather One Call API 3.0 에러 타입
+ * @jinhok96 25.05.05
+ */
+export type OpenWeatherOneCallServiceError = {
+  cod: number;
+  message: string;
+  parameters?: string[];
 };
 
 /**

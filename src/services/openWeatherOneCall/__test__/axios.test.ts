@@ -4,6 +4,13 @@ import Config from 'react-native-config';
 
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 
+import type {
+  GetCurrentAndForecastsWeatherDataParams,
+  GetDailyAggregationParams,
+  GetWeatherDataForTimestampParams,
+  OpenWeatherOneCallServiceError,
+} from '@services/openWeatherOneCall/axios.type';
+
 const BASE_URL = Config.OPEN_WEATHER_API_BASE_URL || '';
 
 describe('OpenWeatherOneCallService', () => {
@@ -12,10 +19,10 @@ describe('OpenWeatherOneCallService', () => {
   });
 
   describe('getCurrentAndForecastsWeatherData', () => {
-    const mockParams = { lat: 37.5665, lon: 126.978 };
+    const mockParams: GetCurrentAndForecastsWeatherDataParams = { lat: 37.5665, lon: 126.978 };
 
     test('API 에러 응답 처리', async () => {
-      const mockError = { cod: 401, message: 'Invalid API key' };
+      const mockError: OpenWeatherOneCallServiceError = { cod: 401, message: 'Invalid API key' };
       nock(BASE_URL).get('/3.0/onecall').query(true).reply(401, mockError);
 
       try {
@@ -37,10 +44,10 @@ describe('OpenWeatherOneCallService', () => {
   });
 
   describe('getWeatherDataForTimestamp', () => {
-    const mockParams = { lat: 37.5665, lon: 126.978, dt: 1717171200 };
+    const mockParams: GetWeatherDataForTimestampParams = { lat: 37.5665, lon: 126.978, dt: 1717171200 };
 
     test('API 에러 응답 처리', async () => {
-      const mockError = { cod: 400, message: 'Invalid timestamp' };
+      const mockError: OpenWeatherOneCallServiceError = { cod: 400, message: 'Invalid timestamp' };
       nock(BASE_URL).get('/3.0/onecall/timemachine').query(true).reply(400, mockError);
 
       try {
@@ -62,10 +69,10 @@ describe('OpenWeatherOneCallService', () => {
   });
 
   describe('getDailyAggregation', () => {
-    const mockParams = { lat: 37.5665, lon: 126.978, date: '2024-05-01' };
+    const mockParams: GetDailyAggregationParams = { lat: 37.5665, lon: 126.978, date: '2024-05-01' };
 
     test('API 에러 응답 처리', async () => {
-      const mockError = { cod: 400, message: 'Invalid date format' };
+      const mockError: OpenWeatherOneCallServiceError = { cod: 400, message: 'Invalid date format' };
       nock(BASE_URL).get('/3.0/onecall/day_summary').query(true).reply(400, mockError);
 
       try {

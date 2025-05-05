@@ -10,17 +10,8 @@ import type {
   GetDailyAggregationResponse,
   GetWeatherDataForTimestampParams,
   GetWeatherDataForTimestampResponse,
-} from '@services/openWeatherOneCall/type';
-
-/**
- * OpenWeather One Call API 3.0 에러 타입
- * @jinhok96 25.04.30
- */
-type OpenWeatherOneCallServiceError = {
-  cod: number;
-  message: string;
-  parameters?: string[];
-};
+  OpenWeatherOneCallServiceError,
+} from '@services/openWeatherOneCall/axios.type';
 
 /**
  * OpenWeather One Call API 3.0 에러 처리 함수
@@ -38,8 +29,8 @@ const OpenWeatherAPIKey = Config.OPEN_WEATHER_API_KEY || '';
 /**
  * OpenWeather One Call API 3.0 인스턴스
  *
- * params에 appid(API 키) 포함됨
- * @jinhok96 25.04.30
+ * params에 appid(API 키) 주입
+ * @jinhok96 25.05.05
  */
 const axiosInstance = new HttpClient(OpenWeatherAPIBaseURL, {
   params: {
@@ -49,10 +40,10 @@ const axiosInstance = new HttpClient(OpenWeatherAPIBaseURL, {
 
 /**
  * OpenWeather One Call API 3.0 서비스
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.05
  */
 export const openWeatherOneCallService = {
-  getCurrentAndForecastsWeatherData: async (params: Omit<GetCurrentAndForecastsWeatherDataParams, 'appid'>) => {
+  getCurrentAndForecastsWeatherData: async (params: GetCurrentAndForecastsWeatherDataParams) => {
     try {
       const response = await axiosInstance.get<GetCurrentAndForecastsWeatherDataResponse>('/3.0/onecall', params);
       return response;
@@ -60,7 +51,7 @@ export const openWeatherOneCallService = {
       throwError(error as PickedAxiosResponse<OpenWeatherOneCallServiceError | null>);
     }
   },
-  getWeatherDataForTimestamp: async (params: Omit<GetWeatherDataForTimestampParams, 'appid'>) => {
+  getWeatherDataForTimestamp: async (params: GetWeatherDataForTimestampParams) => {
     try {
       const response = await axiosInstance.get<GetWeatherDataForTimestampResponse>(`/3.0/onecall/timemachine`, params);
       return response;
@@ -68,7 +59,7 @@ export const openWeatherOneCallService = {
       throwError(error as PickedAxiosResponse<OpenWeatherOneCallServiceError | null>);
     }
   },
-  getDailyAggregation: async (params: Omit<GetDailyAggregationParams, 'appid'>) => {
+  getDailyAggregation: async (params: GetDailyAggregationParams) => {
     try {
       const response = await axiosInstance.get<GetDailyAggregationResponse>('/3.0/onecall/day_summary', params);
       return response;

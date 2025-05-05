@@ -3,12 +3,12 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { MINUTE } from '@libs/constants/time';
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 
+import type { OpenWeatherOneCallAPICommonParams } from '@services/openWeatherOneCall/axios.type';
 import type {
-  GetCurrentAndForecastsWeatherDataParams,
-  GetDailyAggregationParams,
-  GetWeatherDataForTimestampParams,
-  OpenWeatherOneCallAPICommonParams,
-} from '@services/openWeatherOneCall/type';
+  UseGetCurrentAndForecastsWeatherDataParams,
+  UseGetDailyAggregationParams,
+  UseGetWeatherDataForTimestampParams,
+} from '@services/openWeatherOneCall/query.type';
 
 /**
  * STALE_TIME: OpenWeather One Call API 3.0 데이터 갱신 시간 10분
@@ -21,8 +21,9 @@ const GC_TIME = 15 * MINUTE;
 /**
  * 전역 상태에서 OpenWeather Oen Call API 3.0 공통 파라미터 가져오기
  * @returns `{ units, lang }`
+ * @jinhok96 25.05.05
  */
-function getOpenWeatherAPICommonParams(): Omit<OpenWeatherOneCallAPICommonParams, 'appid'> {
+function getOpenWeatherAPICommonParams(): OpenWeatherOneCallAPICommonParams {
   // store에서 units, lang 가져와서 반환
   const params: Pick<OpenWeatherOneCallAPICommonParams, 'units' | 'lang'> = {
     units: 'metric',
@@ -37,11 +38,9 @@ function getOpenWeatherAPICommonParams(): Omit<OpenWeatherOneCallAPICommonParams
  * @param lon number; 경도, 소수점(-180, 180)
  * @param exclude string | undefined; 응답에서 제외할 날씨 데이터
  * @returns `{ lat, lon, timezone, timezone_offset, current, minutely, hourly, daily, alerts }`
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.05
  */
-export function useGetCurrentAndForecastsWeatherData(
-  params: Omit<GetCurrentAndForecastsWeatherDataParams, 'appid' | 'units' | 'lang'>,
-) {
+export function useGetCurrentAndForecastsWeatherData(params: UseGetCurrentAndForecastsWeatherDataParams) {
   const commonParams = getOpenWeatherAPICommonParams();
   const fullParams = { ...params, ...commonParams };
   return useSuspenseQuery({
@@ -58,11 +57,9 @@ export function useGetCurrentAndForecastsWeatherData(
  * @param lon number; 경도, 소수점(-180, 180)
  * @param dt number; 요청할 타임스탬프(유닉스 시간, UTC 표준 시간대)
  * @returns `{ lat, lon, timezone, timezone_offset, data }`
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.05
  */
-export function useGetWeatherDataForTimestamp(
-  params: Omit<GetWeatherDataForTimestampParams, 'appid' | 'units' | 'lang'>,
-) {
+export function useGetWeatherDataForTimestamp(params: UseGetWeatherDataForTimestampParams) {
   const commonParams = getOpenWeatherAPICommonParams();
   const fullParams = { ...params, ...commonParams };
   return useSuspenseQuery({
@@ -79,9 +76,9 @@ export function useGetWeatherDataForTimestamp(
  * @param lon number; 경도, 소수점(-180, 180)
  * @param date string; 요청할 날짜; YYYY-MM-DD
  * @returns `{ lat, lon, tz, date, units, cloud_cover, humidity, precipitation, pressure, temperature, wind }`
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.05
  */
-export function useGetDailyAggregation(params: Omit<GetDailyAggregationParams, 'appid' | 'units' | 'lang'>) {
+export function useGetDailyAggregation(params: UseGetDailyAggregationParams) {
   const commonParams = getOpenWeatherAPICommonParams();
   const fullParams = { ...params, ...commonParams };
   return useSuspenseQuery({
