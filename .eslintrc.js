@@ -7,6 +7,7 @@ module.exports = {
     '@react-native',
     'plugin:@typescript-eslint/recommended',
     'plugin:@tanstack/query/recommended',
+    'plugin:jest-dom/recommended',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',

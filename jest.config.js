@@ -1,6 +1,10 @@
 module.exports = {
   preset: 'react-native',
   testEnvironment: 'node',
+  testEnvironmentOptions: {
+    customExportConditions: ['react-native'],
+  },
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.js', '<rootDir>/jest.polyfills.js'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
