@@ -54,31 +54,33 @@ describe('templateService Hooks', () => {
     container = null;
   });
 
+  const errorMessageMock = TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText;
+
   /**
    * useGetTemplate 테스트
    * @jinhok96 25.05.06
    */
   describe('useGetTemplate', () => {
-    test('API 응답 성공', async () => {
-      (templateService.getTemplate as jest.Mock).mockResolvedValue(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.RESPONSE);
+    const mock = TEMPLATE_SERVICE_MOCK.GET_TEMPLATE;
 
-      const { result } = renderHook(() => useGetTemplate(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.PARAMS), {
+    test('API 응답 성공', async () => {
+      (templateService.getTemplate as jest.Mock).mockResolvedValue(mock.RESPONSE);
+
+      const { result } = renderHook(() => useGetTemplate(mock.PARAMS), {
         wrapper,
       });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current.data).toEqual(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.RESPONSE);
+        expect(result.current.data).toEqual(mock.RESPONSE);
       });
     });
 
     test('에러 throw 테스트', async () => {
-      (templateService.getTemplate as jest.Mock).mockRejectedValue(
-        new Error(TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText),
-      );
+      (templateService.getTemplate as jest.Mock).mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
-        useGetTemplate(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.PARAMS);
+        useGetTemplate(mock.PARAMS);
         return null;
       }
 
@@ -87,7 +89,7 @@ describe('templateService Hooks', () => {
           <ErrorBoundary
             onError={error => {
               expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText);
+              expect(error.message).toBe(errorMessageMock);
             }}>
             {wrapper({ children: <TestComponent /> })}
           </ErrorBoundary>,

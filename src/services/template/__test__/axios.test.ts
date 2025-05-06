@@ -11,26 +11,31 @@ describe('templateService', () => {
     jest.restoreAllMocks();
   });
 
+  const errorMock = TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR;
+  const invalidHttpClientErrorMock = HTTP_CLIENT_STATUS_LIST.INVALID_HTTP_CLIENT_ERROR.statusText;
+
   /**
    * getTemplate 테스트
    * @jinhok96 25.05.06
    */
   describe('getTemplate', () => {
-    test('API 응답 성공', async () => {
-      jest.spyOn(templateServiceAxiosInstance, 'get').mockResolvedValue(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.RESPONSE);
+    const mock = TEMPLATE_SERVICE_MOCK.GET_TEMPLATE;
 
-      const response = await templateService.getTemplate(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.PARAMS);
-      expect(response).toMatchObject(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.RESPONSE);
+    test('API 응답 성공', async () => {
+      jest.spyOn(templateServiceAxiosInstance, 'get').mockResolvedValue(mock.RESPONSE);
+
+      const response = await templateService.getTemplate(mock.PARAMS);
+      expect(response).toMatchObject(mock.RESPONSE);
     });
 
     test('유효한 HttpClient 에러 throw 테스트', async () => {
-      jest.spyOn(templateServiceAxiosInstance, 'get').mockRejectedValue(TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR);
+      jest.spyOn(templateServiceAxiosInstance, 'get').mockRejectedValue(errorMock);
 
       try {
-        await templateService.getTemplate(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.PARAMS);
+        await templateService.getTemplate(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect((error as Error).message).toBe(TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText);
+        expect((error as Error).message).toBe(errorMock.statusText);
       }
     });
 
@@ -38,10 +43,10 @@ describe('templateService', () => {
       jest.spyOn(templateServiceAxiosInstance, 'get').mockRejectedValue('error');
 
       try {
-        await templateService.getTemplate(TEMPLATE_SERVICE_MOCK.GET_TEMPLATE.PARAMS);
+        await templateService.getTemplate(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect((error as Error).message).toBe(HTTP_CLIENT_STATUS_LIST.INVALID_HTTP_CLIENT_ERROR.statusText);
+        expect((error as Error).message).toBe(invalidHttpClientErrorMock);
       }
     });
   });

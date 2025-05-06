@@ -54,41 +54,33 @@ describe('OpenWeatherOneCallService Hooks', () => {
     container = null;
   });
 
+  const errorMessageMock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText;
+
   /**
    * useGetCurrentAndForecastsWeatherData 테스트
    * @jinhok96 25.05.06
    */
   describe('useGetCurrentAndForecastsWeatherData', () => {
-    test('API 응답 성공', async () => {
-      (openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock).mockResolvedValue(
-        OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_CURRENT_AND_FORECASTS_WEATHER_DATA.RESPONSE,
-      );
+    const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_CURRENT_AND_FORECASTS_WEATHER_DATA;
 
-      const { result } = renderHook(
-        () =>
-          useGetCurrentAndForecastsWeatherData(
-            OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_CURRENT_AND_FORECASTS_WEATHER_DATA.PARAMS,
-          ),
-        { wrapper },
-      );
+    test('API 응답 성공', async () => {
+      (openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock).mockResolvedValue(mock.RESPONSE);
+
+      const { result } = renderHook(() => useGetCurrentAndForecastsWeatherData(mock.PARAMS), { wrapper });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current.data).toEqual(
-          OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_CURRENT_AND_FORECASTS_WEATHER_DATA.RESPONSE,
-        );
+        expect(result.current.data).toEqual(mock.RESPONSE);
       });
     });
 
     test('에러 throw 테스트', async () => {
       (openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock).mockRejectedValue(
-        new Error(OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.HTTP_CLIENT_ERROR.data.message),
+        new Error(errorMessageMock),
       );
 
       function TestComponent() {
-        useGetCurrentAndForecastsWeatherData(
-          OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_CURRENT_AND_FORECASTS_WEATHER_DATA.PARAMS,
-        );
+        useGetCurrentAndForecastsWeatherData(mock.PARAMS);
         return null;
       }
 
@@ -97,7 +89,7 @@ describe('OpenWeatherOneCallService Hooks', () => {
           <ErrorBoundary
             onError={error => {
               expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.HTTP_CLIENT_ERROR.data.message);
+              expect(error.message).toBe(errorMessageMock);
             }}>
             {wrapper({ children: <TestComponent /> })}
           </ErrorBoundary>,
