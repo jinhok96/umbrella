@@ -35,12 +35,6 @@ type Date = string;
 type Dt = number;
 
 /**
- * 고유 API 키
- * @jinhok96 25.04.30
- */
-type AppId = string;
-
-/**
  * 응답에서 제외할 날씨 데이터
  *
  * 쉼표로 구분된 목록(공백 없음)이어야 합니다.
@@ -320,7 +314,7 @@ export type GetWeatherDataForTimestampResponse = {
   timezone: string; // Timezone name for the requested location
   timezone_offset: number; // Shift in seconds from UTC
 
-  data: {
+  data: Array<{
     dt: number; // Requested time, Unix, UTC
     sunrise?: number; // Sunrise time, Unix, UTC (optional for polar areas)
     sunset?: number; // Sunset time, Unix, UTC (optional for polar areas)
@@ -335,19 +329,19 @@ export type GetWeatherDataForTimestampResponse = {
     wind_speed: number; // Wind speed (units depend on request)
     wind_gust?: number; // Wind gust (where available, units depend on request)
     wind_deg: number; // Wind direction, degrees (meteorological)
-    weather: {
+    weather: Array<{
       id: number; // Weather condition id
       main: string; // Group of weather parameters (Rain, Snow etc.)
       description: string; // Weather condition description
       icon: string; // Weather icon id
-    }[];
+    }>;
     rain?: {
       '1h': number; // Precipitation, mm/h (where available)
     };
     snow?: {
       '1h': number; // Precipitation, mm/h (where available)
     };
-  };
+  }>;
 };
 
 /**

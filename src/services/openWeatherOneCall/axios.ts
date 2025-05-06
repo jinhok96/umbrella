@@ -1,7 +1,7 @@
 import Config from 'react-native-config';
 
 import HttpClient from '@services/httpClient/httpClient';
-import { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
+import { httpClientError } from '@services/httpClient/utils';
 
 import type {
   GetCurrentAndForecastsWeatherDataParams,
@@ -16,10 +16,11 @@ import type {
 /**
  * OpenWeather One Call API 3.0 에러 처리 함수
  * @param error httpClient에서 throw한 에러
- * @jinhok96 25.05.01
+ * @jinhok96 25.05.06
  */
-function throwError(error: PickedAxiosResponse<OpenWeatherOneCallServiceError | null>) {
-  const errorMessage = error.data?.message || error.statusText || 'Unknown Error';
+function throwError(error: unknown) {
+  const typedError = httpClientError<OpenWeatherOneCallServiceError>(error);
+  const errorMessage = typedError.data?.message || typedError.statusText;
   throw new Error(errorMessage);
 }
 
@@ -48,7 +49,7 @@ export const openWeatherOneCallService = {
       const response = await axiosInstance.get<GetCurrentAndForecastsWeatherDataResponse>('/3.0/onecall', params);
       return response;
     } catch (error) {
-      throwError(error as PickedAxiosResponse<OpenWeatherOneCallServiceError | null>);
+      throwError(error);
     }
   },
   getWeatherDataForTimestamp: async (params: GetWeatherDataForTimestampParams) => {
@@ -56,7 +57,7 @@ export const openWeatherOneCallService = {
       const response = await axiosInstance.get<GetWeatherDataForTimestampResponse>(`/3.0/onecall/timemachine`, params);
       return response;
     } catch (error) {
-      throwError(error as PickedAxiosResponse<OpenWeatherOneCallServiceError | null>);
+      throwError(error);
     }
   },
   getDailyAggregation: async (params: GetDailyAggregationParams) => {
@@ -64,7 +65,9 @@ export const openWeatherOneCallService = {
       const response = await axiosInstance.get<GetDailyAggregationResponse>('/3.0/onecall/day_summary', params);
       return response;
     } catch (error) {
-      throwError(error as PickedAxiosResponse<OpenWeatherOneCallServiceError | null>);
+      throwError(error);
     }
   },
 };
+
+export { axiosInstance as openWeatherOneCallAxiosInstance };
