@@ -57,13 +57,13 @@ export function useGetCurrentAndForecastsWeatherData(params: UseGetCurrentAndFor
  * @param lon number; 경도, 소수점(-180, 180)
  * @param dt number; 요청할 타임스탬프(유닉스 시간, UTC 표준 시간대)
  * @returns `{ lat, lon, timezone, timezone_offset, data }`
- * @jinhok96 25.05.05
+ * @jinhok96 25.05.06
  */
 export function useGetWeatherDataForTimestamp(params: UseGetWeatherDataForTimestampParams) {
   const commonParams = getOpenWeatherAPICommonParams();
   const fullParams = { ...params, ...commonParams };
   return useSuspenseQuery({
-    queryKey: ['useGetJsonPlaceholderTodo', JSON.stringify(fullParams)],
+    queryKey: ['useGetWeatherDataForTimestamp', JSON.stringify(fullParams)],
     queryFn: () => openWeatherOneCallService.getWeatherDataForTimestamp(fullParams),
     staleTime: STALE_TIME,
     gcTime: GC_TIME,
@@ -76,13 +76,13 @@ export function useGetWeatherDataForTimestamp(params: UseGetWeatherDataForTimest
  * @param lon number; 경도, 소수점(-180, 180)
  * @param date string; 요청할 날짜; YYYY-MM-DD
  * @returns `{ lat, lon, tz, date, units, cloud_cover, humidity, precipitation, pressure, temperature, wind }`
- * @jinhok96 25.05.05
+ * @jinhok96 25.05.06
  */
 export function useGetDailyAggregation(params: UseGetDailyAggregationParams) {
   const commonParams = getOpenWeatherAPICommonParams();
   const fullParams = { ...params, ...commonParams };
   return useSuspenseQuery({
-    queryKey: ['useGetJsonPlaceholderPhoto', JSON.stringify(fullParams)],
+    queryKey: ['useGetDailyAggregation', JSON.stringify(fullParams)],
     queryFn: () => openWeatherOneCallService.getDailyAggregation(fullParams),
     staleTime: STALE_TIME,
     gcTime: GC_TIME,
