@@ -17,6 +17,7 @@
     },
     "jsx": "react-native",
     "skipLibCheck": true,
+    "lib": ["es2017", "dom"],
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
