@@ -99,9 +99,7 @@ describe('OpenWeatherOneCallService Hooks', () => {
               expect(error).toBeInstanceOf(Error);
               expect(error.message).toBe(OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.HTTP_CLIENT_ERROR.data.message);
             }}>
-            <QueryClientProvider client={queryClient}>
-              <TestComponent />
-            </QueryClientProvider>
+            {wrapper({ children: <TestComponent /> })}
           </ErrorBoundary>,
         );
       });
