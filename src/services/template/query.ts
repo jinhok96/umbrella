@@ -1,31 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { jsonPlaceholderService } from '@services/template/axios';
+import { templateService } from '@services/template/axios';
 
-export function useGetJsonPlaceholderTodoList() {
-  return useQuery({
-    queryKey: ['useGetJsonPlaceholderTodoList'],
-    queryFn: jsonPlaceholderService.getTodoList,
-  });
-}
+import type { UseGetTemplateParams } from '@services/template/query.type';
 
-export function useGetJsonPlaceholderTodo(id: number) {
-  return useQuery({
-    queryKey: ['useGetJsonPlaceholderTodo', id],
-    queryFn: () => jsonPlaceholderService.getTodo(id),
-  });
-}
-
-export function useGetJsonPlaceholderPhotoList() {
-  return useQuery({
-    queryKey: ['useGetJsonPlaceholderPhotoList'],
-    queryFn: jsonPlaceholderService.getPhotoList,
-  });
-}
-
-export function useGetJsonPlaceholderPhoto(id: number) {
-  return useQuery({
-    queryKey: ['useGetJsonPlaceholderPhoto', id],
-    queryFn: () => jsonPlaceholderService.getPhoto(id),
+/**
+ * React Query 모듈
+ * @param id number; 아이디
+ * @returns `{ userId, id, title, completed }`
+ * @jinhok96 25.05.06
+ */
+export function useGetTemplate(params: UseGetTemplateParams) {
+  return useSuspenseQuery({
+    queryKey: ['useGetTemplate', JSON.stringify(params)],
+    queryFn: () => templateService.getTemplate(params),
   });
 }
