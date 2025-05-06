@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
 
@@ -17,7 +19,7 @@ export default class HttpClient {
   private instance: AxiosInstance;
 
   constructor(baseURL: string, config?: CreateAxiosDefaults) {
-    if (!baseURL) throw new Error('baseURL이 없습니다.');
+    if (!baseURL) throw new Error(HTTP_CLIENT_STATUS_LIST.BASE_URL_MISSING_ERROR.statusText);
 
     this.instance = axios.create({
       baseURL,
@@ -41,7 +43,7 @@ export default class HttpClient {
    * API 통신 오류를 response 객체로 변환하는 함수
    * @param error 오류
    * @returns 오류 response 객체
-   * @jinhok96 25.05.01
+   * @jinhok96 25.05.06
    */
   private static errorResponse<T>(error: unknown): PickedAxiosResponse<T | null> {
     // Axios 오류인 경우
@@ -50,8 +52,9 @@ export default class HttpClient {
       if (error.response) {
         return {
           data: error.response?.data || null,
-          status: error.response?.status || Number(error.code) || 500,
-          statusText: error.response?.statusText || error.message || 'Internal Server Error',
+          status: error.response?.status || Number(error.code) || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.status,
+          statusText:
+            error.response?.statusText || error.message || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.statusText,
           headers: error.response?.headers,
         };
       }
@@ -60,8 +63,8 @@ export default class HttpClient {
       if (error.request) {
         return {
           data: null,
-          status: Number(error.code) || 500,
-          statusText: error.message || 'Internal Server Error',
+          status: Number(error.code) || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.status,
+          statusText: error.message || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.statusText,
           headers: {},
         };
       }
@@ -71,16 +74,16 @@ export default class HttpClient {
     if (error instanceof Error) {
       return {
         data: null,
-        status: 9999,
-        statusText: error.message || 'Unknown Error',
+        status: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.status,
+        statusText: error.message || HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.statusText,
         headers: {},
       };
     }
 
     return {
       data: null,
-      status: 9999,
-      statusText: 'Unknown Error',
+      status: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.status,
+      statusText: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.statusText,
       headers: {},
     };
   }
