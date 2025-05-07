@@ -1,7 +1,9 @@
-import type { CommonRequestHeadersList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
-
-import type { AxiosHeaderValue, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
+
+import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+
+import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초
 
@@ -9,18 +11,20 @@ const DEFAULT_TIMEOUT = 10000; // 10초
  * Axios HttpClient
  * @description timeout: 10초
  * @description Content-Type: application/json
- * @jinhok96 25.04.18
+ * @param baseURL 기본 URL (ex: https://example.com)
+ * @param config 초기 axios config
+ * @jinhok96 25.05.01
  */
 export default class HttpClient {
   private instance: AxiosInstance;
 
-  constructor(baseURL: string) {
+  constructor(baseURL: string, config?: CreateAxiosDefaults) {
+    if (!baseURL) throw new Error(HTTP_CLIENT_STATUS_LIST.BASE_URL_MISSING_ERROR.statusText);
+
     this.instance = axios.create({
       baseURL,
       timeout: DEFAULT_TIMEOUT,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      ...config,
     });
   }
 
@@ -28,66 +32,60 @@ export default class HttpClient {
    * response에서 특정 데이터를 반환하는 함수
    * @param response Axios response 원본
    * @returns 가공된 response 객체
-   * @jinhok96 25.04.18
+   * @jinhok96 25.05.01
    */
   private static filterResponse<T>(response: AxiosResponse<T>): PickedAxiosResponse<T> {
-    const { data, status, statusText } = response;
-    return { data, status, statusText };
+    const { data, status, statusText, headers } = response;
+    return { data, status, statusText, headers };
   }
 
   /**
    * API 통신 오류를 response 객체로 변환하는 함수
    * @param error 오류
    * @returns 오류 response 객체
-   * @jinhok96 25.04.18
+   * @jinhok96 25.05.06
    */
   private static errorResponse<T>(error: unknown): PickedAxiosResponse<T | null> {
     // Axios 오류인 경우
     if (axios.isAxiosError(error)) {
+      // 서버 응답에서 status가 2xx가 아닌 경우
+      if (error.response) {
+        return {
+          data: error.response?.data || null,
+          status: error.response?.status || Number(error.code) || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.status,
+          statusText:
+            error.response?.statusText || error.message || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.statusText,
+          headers: error.response?.headers,
+        };
+      }
+
+      // 요청 시 브라우저 또는 클라이언트에서 에러가 발생한 경우
+      if (error.request) {
+        return {
+          data: null,
+          status: Number(error.code) || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.status,
+          statusText: error.message || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.statusText,
+          headers: {},
+        };
+      }
+    }
+
+    // AxiosError가 아닐 경우
+    if (error instanceof Error) {
       return {
-        data: error.response?.data || null,
-        status: error.response?.status || Number(error.code) || 500,
-        statusText: error.response?.statusText || error.message || 'Internal Server Error',
+        data: null,
+        status: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.status,
+        statusText: error.message || HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.statusText,
+        headers: {},
       };
     }
-    // 다른 종류의 오류
+
     return {
       data: null,
-      status: 999,
-      statusText: 'Unknown Error',
+      status: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.status,
+      statusText: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.statusText,
+      headers: {},
     };
-  }
-
-  /**
-   * 헤더를 설정하는 함수
-   * @param key 헤더 키
-   * @param value 헤더 키 값
-   * @jinhok96 25.04.18
-   */
-  public setHeader(key: CommonRequestHeadersList | string, value: AxiosHeaderValue): void {
-    if (key === 'Content-Type') {
-      throw new Error('setContentType으로 Content-Type을 설정해주세요.');
-    }
-    this.instance.defaults.headers.common[key] = value;
-  }
-
-  /**
-   * 특정 헤더를 반환하는 함수
-   * @param key 헤더 키
-   * @returns 헤더 키 값
-   * @jinhok96 25.04.18
-   */
-  public getHeader(key: CommonRequestHeadersList | string): AxiosHeaderValue | undefined {
-    return this.instance.defaults.headers.common[key];
-  }
-
-  /**
-   * 특정 헤더를 제거하는 함수
-   * @param key 제거할 헤더 키
-   * @jinhok96 25.04.18
-   */
-  public removeHeader(key: string): void {
-    delete this.instance.defaults.headers.common[key];
   }
 
   /**
@@ -95,8 +93,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async get<T, P = Record<string, unknown> | URLSearchParams, D = unknown>(
     url: string,
@@ -110,7 +108,7 @@ export default class HttpClient {
       });
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -119,8 +117,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async post<T, D = unknown>(
     url: string,
@@ -131,7 +129,7 @@ export default class HttpClient {
       const response = await this.instance.post<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -140,8 +138,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async put<T, D = unknown>(
     url: string,
@@ -152,7 +150,7 @@ export default class HttpClient {
       const response = await this.instance.put<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -161,8 +159,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param data 요청 Body에 전송할 데이터
    * @param config data를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async patch<T, D = unknown>(
     url: string,
@@ -173,7 +171,7 @@ export default class HttpClient {
       const response = await this.instance.patch<T, AxiosResponse<T>, D>(url, data, config);
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 
@@ -182,8 +180,8 @@ export default class HttpClient {
    * @param url 요청 URL
    * @param params URL 파라미터
    * @param config params를 제외한 나머지 config
-   * @returns `{ data, status, statusText }`
-   * @jinhok96 25.04.18
+   * @returns `{ data, status, statusText, headers }`
+   * @jinhok96 25.05.01
    */
   public async delete<T, P = Record<string, unknown> | URLSearchParams, D = unknown>(
     url: string,
@@ -197,7 +195,7 @@ export default class HttpClient {
       });
       return HttpClient.filterResponse(response);
     } catch (error) {
-      return HttpClient.errorResponse(error);
+      throw HttpClient.errorResponse(error);
     }
   }
 }
