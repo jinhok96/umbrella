@@ -1,0 +1,16 @@
+name: Check PR Branch
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+    branches: [ main ]
+
+jobs:
+  check-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from develop or hotfix
+        run: |
+          if [ "$GITHUB_HEAD_REF" != "develop" ] && [ "$GITHUB_HEAD_REF" != "hotfix" ]; then
+            echo "PR must be from 'develop' or 'hotfix' branch"
+            exit 1
+          fi
