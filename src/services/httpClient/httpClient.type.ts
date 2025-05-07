@@ -15,4 +15,4 @@ export type CommonRequestHeadersList =
   | 'Content-Encoding'
   | 'Authorization';
 
-export type PickedAxiosResponse<T> = Pick<AxiosResponse<T>, 'data' | 'status' | 'statusText' | 'headers'>;
+export type PickedAxiosResponse<T> = Pick<AxiosResponse<T>, 'data' | 'status' | 'statusText'>;

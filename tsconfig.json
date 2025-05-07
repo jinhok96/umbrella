@@ -1,26 +1,24 @@
 {
   "extends": ["@react-native/typescript-config/tsconfig.json", "@tsconfig/react-native/tsconfig.json"],
   "compilerOptions": {
-    "types": ["react", "react-native", "react-test-renderer", "jest"],
+    "types": ["react-native", "react-test-renderer", "jest"],
     "moduleResolution": "node16",
-    "baseUrl": ".", // 반드시 루트 디렉토리로 설정
+    "baseUrl": "./src",
     "paths": {
-      // babel.config.js, metro.config.js와 통일
-      "@assets/*": ["src/assets/*"],
-      "@components/*": ["src/components/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@libs/*": ["src/libs/*"],
-      "@navigation/*": ["src/navigation/*"],
-      "@screens/*": ["src/screens/*"],
-      "@services/*": ["src/services/*"],
-      "@store/*": ["src/store/*"]
+      "@assets/*": ["assets/*"],
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@libs/*": ["libs/*"],
+      "@navigation/*": ["navigation/*"],
+      "@screens/*": ["screens/*"],
+      "@services/*": ["services/*"],
+      "@store/*": ["store/*"]
     },
     "jsx": "react-native",
     "skipLibCheck": true,
-    "lib": ["es2017", "dom"],
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "src/__mocks__/react-native-config.js"],
+  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "android", "ios"]
 }
