@@ -1,7 +1,7 @@
 {
   "extends": ["@react-native/typescript-config/tsconfig.json", "@tsconfig/react-native/tsconfig.json"],
   "compilerOptions": {
-    "types": ["react-native", "react-test-renderer", "jest"],
+    "types": ["react", "react-native", "react-test-renderer", "jest"],
     "moduleResolution": "node16",
     "baseUrl": ".", // 반드시 루트 디렉토리로 설정
     "paths": {
