@@ -35,6 +35,7 @@ describe('templateService', () => {
 
       try {
         await service(mock.PARAMS);
+        throw new Error('Test Failed: Error has not been thrown');
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(errorMock.statusText);
@@ -46,6 +47,7 @@ describe('templateService', () => {
 
       try {
         await service(mock.PARAMS);
+        throw new Error('Test Failed: Error has not been thrown');
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(invalidHttpClientErrorMock);

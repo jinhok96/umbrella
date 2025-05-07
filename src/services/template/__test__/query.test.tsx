@@ -4,7 +4,7 @@
 import { ReactNode } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { act, render, renderHook, waitFor } from '@testing-library/react';
+import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
 
 import ErrorBoundary from 'react-native-error-boundary';
 
@@ -62,12 +62,13 @@ describe('templateService Hooks', () => {
    */
   describe('useGetTemplate', () => {
     const service = templateService.getTemplate as jest.Mock;
+    const useHook = useGetTemplate;
     const mock = TEMPLATE_SERVICE_MOCK.GET_TEMPLATE;
 
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useGetTemplate(mock.PARAMS), {
+      const { result } = renderHook(() => useHook(mock.PARAMS), {
         wrapper,
       });
 
@@ -81,13 +82,14 @@ describe('templateService Hooks', () => {
       service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
-        useGetTemplate(mock.PARAMS);
+        useHook(mock.PARAMS);
         return null;
       }
 
       await act(async () => {
         render(
           <ErrorBoundary
+            FallbackComponent={error => <div>{error.error.message}</div>}
             onError={error => {
               expect(error).toBeInstanceOf(Error);
               expect(error.message).toBe(errorMessageMock);
@@ -96,6 +98,8 @@ describe('templateService Hooks', () => {
           </ErrorBoundary>,
         );
       });
+
+      expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
     });
   });
 });
