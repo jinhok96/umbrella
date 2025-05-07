@@ -10,12 +10,18 @@ import ErrorBoundary from 'react-native-error-boundary';
 
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/mock';
-import { useGetCurrentAndForecastsWeatherData } from '@services/openWeatherOneCall/query';
+import {
+  useGetCurrentAndForecastsWeatherData,
+  useGetDailyAggregation,
+  useGetWeatherDataForTimestamp,
+} from '@services/openWeatherOneCall/query';
 
 // 서비스 모듈 모킹
 jest.mock('@services/openWeatherOneCall/axios', () => ({
   openWeatherOneCallService: {
     getCurrentAndForecastsWeatherData: jest.fn(),
+    getWeatherDataForTimestamp: jest.fn(),
+    getDailyAggregation: jest.fn(),
   },
 }));
 
@@ -98,7 +104,85 @@ describe('OpenWeatherOneCallService Hooks', () => {
     });
   });
 
-  // useGetWeatherDataForTimestamp 테스트
+  /**
+   * useGetWeatherDataForTimestamp 테스트
+   * @jinhok96 25.05.07
+   */
+  describe('useGetWeatherDataForTimestamp', () => {
+    const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_WEATHER_DATA_FOR_TIMESTAMP;
 
-  // useGetDailyAggregation 테스트
+    test('API 응답 성공', async () => {
+      (openWeatherOneCallService.getWeatherDataForTimestamp as jest.Mock).mockResolvedValue(mock.RESPONSE);
+
+      const { result } = renderHook(() => useGetWeatherDataForTimestamp(mock.PARAMS), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+        expect(result.current.data).toEqual(mock.RESPONSE);
+      });
+    });
+
+    test('에러 throw 테스트', async () => {
+      (openWeatherOneCallService.getWeatherDataForTimestamp as jest.Mock).mockRejectedValue(
+        new Error(errorMessageMock),
+      );
+
+      function TestComponent() {
+        useGetWeatherDataForTimestamp(mock.PARAMS);
+        return null;
+      }
+
+      await act(async () => {
+        render(
+          <ErrorBoundary
+            onError={error => {
+              expect(error).toBeInstanceOf(Error);
+              expect(error.message).toBe(errorMessageMock);
+            }}>
+            {wrapper({ children: <TestComponent /> })}
+          </ErrorBoundary>,
+        );
+      });
+    });
+  });
+
+  /**
+   * useGetDailyAggregation 테스트
+   * @jinhok96 25.05.07
+   */
+  describe('useGetDailyAggregation', () => {
+    const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_DAILY_AGGREGATION;
+
+    test('API 응답 성공', async () => {
+      (openWeatherOneCallService.getDailyAggregation as jest.Mock).mockResolvedValue(mock.RESPONSE);
+
+      const { result } = renderHook(() => useGetDailyAggregation(mock.PARAMS), { wrapper });
+
+      await waitFor(() => {
+        expect(result.current.isSuccess).toBe(true);
+        expect(result.current.data).toEqual(mock.RESPONSE);
+      });
+    });
+
+    test('에러 throw 테스트', async () => {
+      (openWeatherOneCallService.getDailyAggregation as jest.Mock).mockRejectedValue(new Error(errorMessageMock));
+
+      function TestComponent() {
+        useGetDailyAggregation(mock.PARAMS);
+        return null;
+      }
+
+      await act(async () => {
+        render(
+          <ErrorBoundary
+            onError={error => {
+              expect(error).toBeInstanceOf(Error);
+              expect(error.message).toBe(errorMessageMock);
+            }}>
+            {wrapper({ children: <TestComponent /> })}
+          </ErrorBoundary>,
+        );
+      });
+    });
+  });
 });
