@@ -16,23 +16,25 @@ describe('OpenWeatherOneCallService', () => {
 
   /**
    * getCurrentAndForecastsWeatherData 테스트
-   * @jinhok96 25.05.06
+   * @jinhok96 25.05.07
    */
   describe('getCurrentAndForecastsWeatherData', () => {
+    const axiosInstance = () => jest.spyOn(openWeatherOneCallAxiosInstance, 'get');
+    const service = openWeatherOneCallService.getCurrentAndForecastsWeatherData;
     const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_CURRENT_AND_FORECASTS_WEATHER_DATA;
 
     test('API 응답 성공', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockResolvedValue(mock.RESPONSE);
+      axiosInstance().mockResolvedValue(mock.RESPONSE);
 
-      const response = await openWeatherOneCallService.getCurrentAndForecastsWeatherData(mock.PARAMS);
+      const response = await service(mock.PARAMS);
       expect(response).toMatchObject(mock.RESPONSE);
     });
 
     test('유효한 HttpClient 에러 throw 테스트', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockRejectedValue(errorMock);
+      axiosInstance().mockRejectedValue(errorMock);
 
       try {
-        await openWeatherOneCallService.getCurrentAndForecastsWeatherData(mock.PARAMS);
+        await service(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(errorMock.data.message);
@@ -40,10 +42,10 @@ describe('OpenWeatherOneCallService', () => {
     });
 
     test('유효하지 않은 HttpClient 에러 throw 테스트', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockRejectedValue('error');
+      axiosInstance().mockRejectedValue('error');
 
       try {
-        await openWeatherOneCallService.getCurrentAndForecastsWeatherData(mock.PARAMS);
+        await service(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(invalidHttpClientErrorMock);
@@ -53,23 +55,25 @@ describe('OpenWeatherOneCallService', () => {
 
   /**
    * getWeatherDataForTimestamp 테스트
-   * @jinhok96 25.05.06
+   * @jinhok96 25.05.07
    */
   describe('getWeatherDataForTimestamp', () => {
+    const axiosInstance = () => jest.spyOn(openWeatherOneCallAxiosInstance, 'get');
+    const service = openWeatherOneCallService.getWeatherDataForTimestamp;
     const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_WEATHER_DATA_FOR_TIMESTAMP;
 
     test('API 응답 성공', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockResolvedValue(mock.RESPONSE);
+      axiosInstance().mockResolvedValue(mock.RESPONSE);
 
-      const response = await openWeatherOneCallService.getWeatherDataForTimestamp(mock.PARAMS);
+      const response = await service(mock.PARAMS);
       expect(response).toMatchObject(mock.RESPONSE);
     });
 
     test('유효한 HttpClient 에러 throw 테스트', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockRejectedValue(errorMock);
+      axiosInstance().mockRejectedValue(errorMock);
 
       try {
-        await openWeatherOneCallService.getWeatherDataForTimestamp(mock.PARAMS);
+        await service(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(errorMock.data.message);
@@ -77,10 +81,10 @@ describe('OpenWeatherOneCallService', () => {
     });
 
     test('유효하지 않은 HttpClient 에러 throw 테스트', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockRejectedValue('error');
+      axiosInstance().mockRejectedValue('error');
 
       try {
-        await openWeatherOneCallService.getWeatherDataForTimestamp(mock.PARAMS);
+        await service(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(invalidHttpClientErrorMock);
@@ -90,23 +94,25 @@ describe('OpenWeatherOneCallService', () => {
 
   /**
    * getDailyAggregation 테스트
-   * @jinhok96 25.05.06
+   * @jinhok96 25.05.07
    */
   describe('getDailyAggregation', () => {
+    const axiosInstance = () => jest.spyOn(openWeatherOneCallAxiosInstance, 'get');
+    const service = openWeatherOneCallService.getDailyAggregation;
     const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_DAILY_AGGREGATION;
 
     test('API 응답 성공', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockResolvedValue(mock.RESPONSE);
+      axiosInstance().mockResolvedValue(mock.RESPONSE);
 
-      const response = await openWeatherOneCallService.getDailyAggregation(mock.PARAMS);
+      const response = await service(mock.PARAMS);
       expect(response).toMatchObject(mock.RESPONSE);
     });
 
     test('유효한 HttpClient 에러 throw 테스트', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockRejectedValue(errorMock);
+      axiosInstance().mockRejectedValue(errorMock);
 
       try {
-        await openWeatherOneCallService.getDailyAggregation(mock.PARAMS);
+        await service(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(errorMock.data.message);
@@ -114,10 +120,10 @@ describe('OpenWeatherOneCallService', () => {
     });
 
     test('유효하지 않은 HttpClient 에러 throw 테스트', async () => {
-      jest.spyOn(openWeatherOneCallAxiosInstance, 'get').mockRejectedValue('error');
+      axiosInstance().mockRejectedValue('error');
 
       try {
-        await openWeatherOneCallService.getDailyAggregation(mock.PARAMS);
+        await service(mock.PARAMS);
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect((error as Error).message).toBe(invalidHttpClientErrorMock);

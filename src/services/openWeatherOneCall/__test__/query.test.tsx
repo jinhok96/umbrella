@@ -64,13 +64,14 @@ describe('OpenWeatherOneCallService Hooks', () => {
 
   /**
    * useGetCurrentAndForecastsWeatherData 테스트
-   * @jinhok96 25.05.06
+   * @jinhok96 25.05.07
    */
   describe('useGetCurrentAndForecastsWeatherData', () => {
+    const service = openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock;
     const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_CURRENT_AND_FORECASTS_WEATHER_DATA;
 
     test('API 응답 성공', async () => {
-      (openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock).mockResolvedValue(mock.RESPONSE);
+      service.mockResolvedValue(mock.RESPONSE);
 
       const { result } = renderHook(() => useGetCurrentAndForecastsWeatherData(mock.PARAMS), { wrapper });
 
@@ -81,9 +82,7 @@ describe('OpenWeatherOneCallService Hooks', () => {
     });
 
     test('에러 throw 테스트', async () => {
-      (openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock).mockRejectedValue(
-        new Error(errorMessageMock),
-      );
+      service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
         useGetCurrentAndForecastsWeatherData(mock.PARAMS);
@@ -109,10 +108,11 @@ describe('OpenWeatherOneCallService Hooks', () => {
    * @jinhok96 25.05.07
    */
   describe('useGetWeatherDataForTimestamp', () => {
+    const service = openWeatherOneCallService.getWeatherDataForTimestamp as jest.Mock;
     const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_WEATHER_DATA_FOR_TIMESTAMP;
 
     test('API 응답 성공', async () => {
-      (openWeatherOneCallService.getWeatherDataForTimestamp as jest.Mock).mockResolvedValue(mock.RESPONSE);
+      service.mockResolvedValue(mock.RESPONSE);
 
       const { result } = renderHook(() => useGetWeatherDataForTimestamp(mock.PARAMS), { wrapper });
 
@@ -123,9 +123,7 @@ describe('OpenWeatherOneCallService Hooks', () => {
     });
 
     test('에러 throw 테스트', async () => {
-      (openWeatherOneCallService.getWeatherDataForTimestamp as jest.Mock).mockRejectedValue(
-        new Error(errorMessageMock),
-      );
+      service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
         useGetWeatherDataForTimestamp(mock.PARAMS);
@@ -151,10 +149,11 @@ describe('OpenWeatherOneCallService Hooks', () => {
    * @jinhok96 25.05.07
    */
   describe('useGetDailyAggregation', () => {
+    const service = openWeatherOneCallService.getDailyAggregation as jest.Mock;
     const mock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.GET_DAILY_AGGREGATION;
 
     test('API 응답 성공', async () => {
-      (openWeatherOneCallService.getDailyAggregation as jest.Mock).mockResolvedValue(mock.RESPONSE);
+      service.mockResolvedValue(mock.RESPONSE);
 
       const { result } = renderHook(() => useGetDailyAggregation(mock.PARAMS), { wrapper });
 
@@ -165,7 +164,7 @@ describe('OpenWeatherOneCallService Hooks', () => {
     });
 
     test('에러 throw 테스트', async () => {
-      (openWeatherOneCallService.getDailyAggregation as jest.Mock).mockRejectedValue(new Error(errorMessageMock));
+      service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
         useGetDailyAggregation(mock.PARAMS);

@@ -58,13 +58,14 @@ describe('templateService Hooks', () => {
 
   /**
    * useGetTemplate 테스트
-   * @jinhok96 25.05.06
+   * @jinhok96 25.05.07
    */
   describe('useGetTemplate', () => {
+    const service = templateService.getTemplate as jest.Mock;
     const mock = TEMPLATE_SERVICE_MOCK.GET_TEMPLATE;
 
     test('API 응답 성공', async () => {
-      (templateService.getTemplate as jest.Mock).mockResolvedValue(mock.RESPONSE);
+      service.mockResolvedValue(mock.RESPONSE);
 
       const { result } = renderHook(() => useGetTemplate(mock.PARAMS), {
         wrapper,
@@ -77,7 +78,7 @@ describe('templateService Hooks', () => {
     });
 
     test('에러 throw 테스트', async () => {
-      (templateService.getTemplate as jest.Mock).mockRejectedValue(new Error(errorMessageMock));
+      service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
         useGetTemplate(mock.PARAMS);
