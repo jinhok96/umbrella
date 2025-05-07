@@ -267,14 +267,6 @@ export const HTTP_CLIENT_STATUS_LIST: Record<
   Pick<PickedAxiosResponse<null>, 'status' | 'statusText'>
 > = {
   ...HTTP_STATUS_LIST,
-  BASE_URL_MISSING_ERROR: {
-    status: -1,
-    statusText: 'baseURL이 없습니다.',
-  },
-  INVALID_HTTP_CLIENT_ERROR: {
-    status: -1,
-    statusText: 'HttpClient 에러가 아닙니다.',
-  },
   UNKNOWN_HTTP_CLIENT_ERROR: {
     status: 9998,
     statusText: '알 수 없는 HttpClient 에러가 발생했습니다.',
@@ -282,5 +274,13 @@ export const HTTP_CLIENT_STATUS_LIST: Record<
   UNKNOWN_ERROR: {
     status: 9999,
     statusText: 'Unknown Error',
+  },
+  BASE_URL_MISSING_ERROR: {
+    status: 100001,
+    statusText: 'baseURL이 없습니다.',
+  },
+  INVALID_HTTP_CLIENT_ERROR: {
+    status: 100002,
+    statusText: 'HttpClient 에러가 아닙니다.',
   },
 };
