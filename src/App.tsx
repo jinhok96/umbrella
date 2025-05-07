@@ -5,7 +5,6 @@
  * @format
  */
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, View, useColorScheme } from 'react-native';
 import {
@@ -15,6 +14,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Section from '@components/Section';
 

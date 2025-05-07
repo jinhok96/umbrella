@@ -1,33 +1,29 @@
 import HttpClient from '@services/httpClient/httpClient';
+import { httpClientError } from '@services/httpClient/utils';
 
-import type { Photo, PhotoList, Todo, TodoList } from '@services/template/type';
+import type { GetTemplateParams, GetTemplateResponse } from '@services/template/axios.type';
 
 /**
- * 이 파일에서 사용할 Axios 인스턴스
+ * Axios 인스턴스
  * baseURL 필수, config 선택
- * @jinhok96 25.04.21
+ * @jinhok96 25.05.06
  */
 const axiosInstance = new HttpClient('https://jsonplaceholder.typicode.com');
 
 /**
- * API 메서드 객체
- * @jinhok96 25.04.21
+ * 서비스 모듈
+ * @jinhok96 25.05.06
  */
-export const jsonPlaceholderService = {
-  getTodoList: async () => {
-    const response = await axiosInstance.get<TodoList>('/todos');
-    return response;
-  },
-  getTodo: async (id: number) => {
-    const response = await axiosInstance.get<Todo>(`/todos/${id}`);
-    return response;
-  },
-  getPhotoList: async () => {
-    const response = await axiosInstance.get<PhotoList>('/photos');
-    return response;
-  },
-  getPhoto: async (id: number) => {
-    const response = await axiosInstance.get<Photo>(`/photos/${id}`);
-    return response;
+export const templateService = {
+  getTemplate: async (params: GetTemplateParams) => {
+    try {
+      const response = await axiosInstance.get<GetTemplateResponse>('/todos', params);
+      return response;
+    } catch (error) {
+      const typedError = httpClientError(error);
+      throw new Error(typedError.statusText);
+    }
   },
 };
+
+export { axiosInstance as templateServiceAxiosInstance };

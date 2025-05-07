@@ -31,5 +31,11 @@ target 'umbrella' do
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['OPEN_WEATHER_API_BASE_URL'] = ENV['OPEN_WEATHER_API_BASE_URL']
+        config.build_settings['OPEN_WEATHER_API_KEY'] = ENV['OPEN_WEATHER_API_KEY']
+      end
+    end
   end
 end

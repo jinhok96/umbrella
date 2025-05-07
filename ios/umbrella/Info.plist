@@ -48,5 +48,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<!-- ENV -->
+	<key>OPEN_WEATHER_API_BASE_URL</key>
+	<string>$(OPEN_WEATHER_API_BASE_URL)</string>
+	<key>OPEN_WEATHER_API_KEY</key>
+	<string>$(OPEN_WEATHER_API_KEY)</string>
 </dict>
 </plist>

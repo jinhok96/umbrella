@@ -1,7 +1,7 @@
 {
   "extends": ["@react-native/typescript-config/tsconfig.json", "@tsconfig/react-native/tsconfig.json"],
   "compilerOptions": {
-    "types": ["react-native", "react-test-renderer", "jest"],
+    "types": ["react", "react-native", "react-test-renderer", "jest"],
     "moduleResolution": "node16",
     "baseUrl": ".", // 반드시 루트 디렉토리로 설정
     "paths": {
@@ -17,9 +17,10 @@
     },
     "jsx": "react-native",
     "skipLibCheck": true,
+    "lib": ["es2017", "dom"],
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
+  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "src/__mocks__/react-native-config.js"],
   "exclude": ["node_modules", "android", "ios"]
 }
