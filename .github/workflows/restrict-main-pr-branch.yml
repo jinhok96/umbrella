@@ -1,8 +1,8 @@
-name: Check PR Branch
+name: Restrict Main PR Branch
 on:
   pull_request_target:
     types: [opened, reopened, synchronize]
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   check-branch:
