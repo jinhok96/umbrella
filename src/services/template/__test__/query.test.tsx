@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
@@ -27,7 +27,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const wrapper = ({ children }: { children: ReactNode }) => (
+const wrapper = ({ children }: PropsWithChildren) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );
 

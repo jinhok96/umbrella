@@ -1,8 +1,9 @@
 import axios from 'axios';
 
-import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+import { getHttpClientStatusMessage } from '@services/httpClient/utils';
 
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
+import type { HttpClientStatusList } from '@services/httpClient/status.type';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초
@@ -13,13 +14,13 @@ const DEFAULT_TIMEOUT = 10000; // 10초
  * @description Content-Type: application/json
  * @param baseURL 기본 URL (ex: https://example.com)
  * @param config 초기 axios config
- * @jinhok96 25.05.01
+ * @jinhok96 25.05.08
  */
 export default class HttpClient {
   private instance: AxiosInstance;
 
   constructor(baseURL: string, config?: CreateAxiosDefaults) {
-    if (!baseURL) throw new Error(HTTP_CLIENT_STATUS_LIST.BASE_URL_MISSING_ERROR.statusText);
+    if (!baseURL) throw new Error(getHttpClientStatusMessage('10002'));
 
     this.instance = axios.create({
       baseURL,
@@ -43,18 +44,18 @@ export default class HttpClient {
    * API 통신 오류를 response 객체로 변환하는 함수
    * @param error 오류
    * @returns 오류 response 객체
-   * @jinhok96 25.05.06
+   * @jinhok96 25.05.08
    */
   private static errorResponse<T>(error: unknown): PickedAxiosResponse<T | null> {
     // Axios 오류인 경우
     if (axios.isAxiosError(error)) {
+      const status: keyof HttpClientStatusList = '500';
       // 서버 응답에서 status가 2xx가 아닌 경우
       if (error.response) {
         return {
           data: error.response?.data || null,
-          status: error.response?.status || Number(error.code) || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.status,
-          statusText:
-            error.response?.statusText || error.message || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.statusText,
+          status: error.response?.status || Number(status),
+          statusText: error.response?.statusText || error.message || getHttpClientStatusMessage(status),
           headers: error.response?.headers,
         };
       }
@@ -63,27 +64,29 @@ export default class HttpClient {
       if (error.request) {
         return {
           data: null,
-          status: Number(error.code) || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.status,
-          statusText: error.message || HTTP_CLIENT_STATUS_LIST.INTERNAL_SERVER_ERROR.statusText,
+          status: Number(status),
+          statusText: error.message || getHttpClientStatusMessage(status),
           headers: {},
         };
       }
     }
 
+    const status: keyof HttpClientStatusList = '10001';
+
     // AxiosError가 아닐 경우
     if (error instanceof Error) {
       return {
         data: null,
-        status: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.status,
-        statusText: error.message || HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.statusText,
+        status: Number(status),
+        statusText: error.message || getHttpClientStatusMessage(status),
         headers: {},
       };
     }
 
     return {
       data: null,
-      status: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.status,
-      statusText: HTTP_CLIENT_STATUS_LIST.UNKNOWN_HTTP_CLIENT_ERROR.statusText,
+      status: Number(status),
+      statusText: getHttpClientStatusMessage(status),
       headers: {},
     };
   }

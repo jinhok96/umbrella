@@ -1,3 +1,6 @@
+import { DEFAULT_LANGUAGE } from '@libs/utils/localize';
+import { OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS } from '@services/openWeatherOneCall/status';
+
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 import type {
   GetCurrentAndForecastsWeatherDataParams,
@@ -11,9 +14,12 @@ import type {
 
 /**
  * OpenWeatherOneCallService 공통 에러 Mock
- * @jinhok96 25.05.06
+ * @jinhok96 25.05.08
  */
-const openWeatherOneCallServiceMockError: OpenWeatherOneCallServiceError = { cod: 401, message: 'Invalid API key' };
+const openWeatherOneCallServiceMockError: OpenWeatherOneCallServiceError = {
+  cod: 401,
+  message: OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS[401][DEFAULT_LANGUAGE],
+};
 const openWeatherOneCallServiceMockHttpClientError: PickedAxiosResponse<OpenWeatherOneCallServiceError> = {
   data: openWeatherOneCallServiceMockError,
   status: 500,

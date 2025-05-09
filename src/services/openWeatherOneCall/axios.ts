@@ -1,8 +1,12 @@
 import Config from 'react-native-config';
 
+import { getLocalizedTextFromMap } from '@libs/utils/localize';
 import HttpClient from '@services/httpClient/httpClient';
-import { httpClientError } from '@services/httpClient/utils';
+import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+import { getHttpClientStatusMessage, httpClientError } from '@services/httpClient/utils';
+import { OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS } from '@services/openWeatherOneCall/status';
 
+import type { HttpClientStatusList } from '@services/httpClient/status.type';
 import type {
   GetCurrentAndForecastsWeatherDataParams,
   GetCurrentAndForecastsWeatherDataResponse,
@@ -16,12 +20,31 @@ import type {
 /**
  * OpenWeather One Call API 3.0 에러 처리 함수
  * @param error httpClient에서 throw한 에러
- * @jinhok96 25.05.06
+ * @jinhok96 25.05.08
  */
-function throwError(error: unknown) {
-  const typedError = httpClientError<OpenWeatherOneCallServiceError>(error);
-  const errorMessage = typedError.data?.message || typedError.statusText;
-  throw new Error(errorMessage);
+function throwError(error: unknown): void {
+  const { data, status } = httpClientError<OpenWeatherOneCallServiceError>(error);
+  const errorCode = data?.cod || status;
+  const missingParams = data?.parameters?.join(', ');
+
+  switch (errorCode) {
+    case 400:
+      throw new Error(
+        getLocalizedTextFromMap(OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS, errorCode.toString()) +
+          (missingParams && ` (${missingParams})`),
+      );
+    case 401:
+      throw new Error(getLocalizedTextFromMap(OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS, errorCode.toString()));
+    case 404:
+      throw new Error(getLocalizedTextFromMap(OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS, errorCode.toString()));
+    case 429:
+      throw new Error(getLocalizedTextFromMap(OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS, errorCode.toString()));
+    default:
+      if (errorCode in HTTP_CLIENT_STATUS_LIST) {
+        throw new Error(getHttpClientStatusMessage(errorCode.toString() as keyof HttpClientStatusList));
+      }
+      throw new Error(getHttpClientStatusMessage('9999'));
+  }
 }
 
 const OpenWeatherAPIBaseURL = Config.OPEN_WEATHER_API_BASE_URL || '';
