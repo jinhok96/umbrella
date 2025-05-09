@@ -1,5 +1,5 @@
 import HttpClient from '@services/httpClient/httpClient';
-import { httpClientError } from '@services/httpClient/utils';
+import { httpClientError } from '@services/httpClient/httpClient.util';
 
 import type { GetTemplateParams, GetTemplateResponse } from '@services/template/axios.type';
 

@@ -9,7 +9,7 @@ import { act, render, renderHook, screen, waitFor } from '@testing-library/react
 import ErrorBoundary from 'react-native-error-boundary';
 
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
-import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/mock';
+import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/test.mock';
 import {
   useGetCurrentAndForecastsWeatherData,
   useGetDailyAggregation,

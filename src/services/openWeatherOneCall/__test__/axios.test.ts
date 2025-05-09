@@ -1,6 +1,6 @@
-import { getHttpClientStatusMessage } from '@services/httpClient/utils';
+import { getHttpClientStatusMessage } from '@services/httpClient/httpClient.util';
 import { openWeatherOneCallAxiosInstance, openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
-import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/mock';
+import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/test.mock';
 
 describe('OpenWeatherOneCallService', () => {
   beforeEach(() => {

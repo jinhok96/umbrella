@@ -1,6 +1,6 @@
-import { getHttpClientStatusMessage } from '@services/httpClient/utils';
+import { getHttpClientStatusMessage } from '@services/httpClient/httpClient.util';
 import { templateService, templateServiceAxiosInstance } from '@services/template/axios';
-import { TEMPLATE_SERVICE_MOCK } from '@services/template/mock/mock';
+import { TEMPLATE_SERVICE_MOCK } from '@services/template/mock/test.mock';
 
 describe('templateService', () => {
   beforeEach(() => {

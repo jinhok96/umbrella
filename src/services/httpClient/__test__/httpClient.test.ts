@@ -1,7 +1,7 @@
 import nock from 'nock';
 
 import HttpClient from '@services/httpClient/httpClient';
-import { getHttpClientStatusMessage } from '@services/httpClient/utils';
+import { getHttpClientStatusMessage } from '@services/httpClient/httpClient.util';
 
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 

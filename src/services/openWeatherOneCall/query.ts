@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { MINUTE } from '@libs/constants/time';
+import { MINUTE } from '@libs/constants/time.const';
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 
 import type { OpenWeatherOneCallAPICommonParams } from '@services/openWeatherOneCall/axios.type';

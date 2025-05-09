@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { getHttpClientStatusMessage } from '@services/httpClient/utils';
+import { getHttpClientStatusMessage } from '@services/httpClient/httpClient.util';
 
 import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
