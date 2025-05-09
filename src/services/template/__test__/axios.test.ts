@@ -1,6 +1,6 @@
-import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+import { getHttpClientStatusMessage } from '@services/httpClient/httpClient.util';
 import { templateService, templateServiceAxiosInstance } from '@services/template/axios';
-import { TEMPLATE_SERVICE_MOCK } from '@services/template/mock/mock';
+import { TEMPLATE_SERVICE_MOCK } from '@services/template/mock/test.mock';
 
 describe('templateService', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('templateService', () => {
   });
 
   const errorMock = TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR;
-  const invalidHttpClientErrorMock = HTTP_CLIENT_STATUS_LIST.INVALID_HTTP_CLIENT_ERROR.statusText;
+  const invalidHttpClientErrorMock = getHttpClientStatusMessage('10003');
 
   /**
    * getTemplate 테스트
@@ -38,7 +38,7 @@ describe('templateService', () => {
         throw new Error('Test Failed: Error has not been thrown');
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
-        expect((error as Error).message).toBe(errorMock.statusText);
+        expect((error as Error).message).toBe(errorMock.statusText); // 내부 로직에 맞게 변경해서 사용
       }
     });
 

@@ -1,6 +1,6 @@
-import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+import { getHttpClientStatusMessage } from '@services/httpClient/httpClient.util';
 import { openWeatherOneCallAxiosInstance, openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
-import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/mock';
+import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/test.mock';
 
 describe('OpenWeatherOneCallService', () => {
   beforeEach(() => {
@@ -12,11 +12,11 @@ describe('OpenWeatherOneCallService', () => {
   });
 
   const errorMock = OPEN_WEATHER_ONE_CALL_SERVICE_MOCK.HTTP_CLIENT_ERROR;
-  const invalidHttpClientErrorMock = HTTP_CLIENT_STATUS_LIST.INVALID_HTTP_CLIENT_ERROR.statusText;
+  const invalidHttpClientErrorMock = getHttpClientStatusMessage('10003');
 
   /**
    * getCurrentAndForecastsWeatherData 테스트
-   * @jinhok96 25.05.07
+   * @jinhok96 25.05.08
    */
   describe('getCurrentAndForecastsWeatherData', () => {
     const axiosInstance = () => jest.spyOn(openWeatherOneCallAxiosInstance, 'get');
@@ -57,7 +57,7 @@ describe('OpenWeatherOneCallService', () => {
 
   /**
    * getWeatherDataForTimestamp 테스트
-   * @jinhok96 25.05.07
+   * @jinhok96 25.05.08
    */
   describe('getWeatherDataForTimestamp', () => {
     const axiosInstance = () => jest.spyOn(openWeatherOneCallAxiosInstance, 'get');
@@ -98,7 +98,7 @@ describe('OpenWeatherOneCallService', () => {
 
   /**
    * getDailyAggregation 테스트
-   * @jinhok96 25.05.07
+   * @jinhok96 25.05.08
    */
   describe('getDailyAggregation', () => {
     const axiosInstance = () => jest.spyOn(openWeatherOneCallAxiosInstance, 'get');

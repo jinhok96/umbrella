@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { MINUTE } from '@libs/constants/time';
+import { MINUTE } from '@libs/constants/time.const';
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 
 import type { OpenWeatherOneCallAPICommonParams } from '@services/openWeatherOneCall/axios.type';
@@ -24,7 +24,7 @@ const GC_TIME = 15 * MINUTE;
  * @jinhok96 25.05.05
  */
 function getOpenWeatherAPICommonParams(): OpenWeatherOneCallAPICommonParams {
-  // store에서 units, lang 가져와서 반환
+  // 스토어에서 units, lang 가져와서 반환
   const params: Pick<OpenWeatherOneCallAPICommonParams, 'units' | 'lang'> = {
     units: 'metric',
     lang: 'kr',

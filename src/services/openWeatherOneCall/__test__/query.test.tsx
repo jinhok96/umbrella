@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
@@ -9,7 +9,7 @@ import { act, render, renderHook, screen, waitFor } from '@testing-library/react
 import ErrorBoundary from 'react-native-error-boundary';
 
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
-import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/mock';
+import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/test.mock';
 import {
   useGetCurrentAndForecastsWeatherData,
   useGetDailyAggregation,
@@ -33,7 +33,7 @@ const queryClient = new QueryClient({
   },
 });
 
-const wrapper = ({ children }: { children: ReactNode }) => (
+const wrapper = ({ children }: PropsWithChildren) => (
   <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 );
 
