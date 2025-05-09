@@ -2,8 +2,7 @@ import axios from 'axios';
 
 import { getHttpClientStatusMessage } from '@services/httpClient/utils';
 
-import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
-import type { HttpClientStatusList } from '@services/httpClient/status.type';
+import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
 
 const DEFAULT_TIMEOUT = 10000; // 10초

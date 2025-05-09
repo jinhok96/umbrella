@@ -1,4 +1,4 @@
-import type { HttpClientStatusList, HttpStatusList } from '@services/httpClient/status.type';
+import type { HttpClientStatusList, HttpStatusList } from '@services/httpClient/httpClient.type';
 
 /**
  * HTTP 상태 리스트

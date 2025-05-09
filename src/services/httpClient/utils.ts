@@ -1,9 +1,8 @@
 import { getLocalizedTextFromMap } from '@libs/utils/localize';
-import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
 
 import type { LanguageCode } from '@libs/types/localize.type';
-import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
-import type { HttpClientStatusList } from '@services/httpClient/status.type';
+import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
 /**
  * 로컬라이징된 HttpClient 에러 메세지를 반환하는 함수

@@ -2,11 +2,11 @@ import Config from 'react-native-config';
 
 import { getLocalizedTextFromMap } from '@libs/utils/localize';
 import HttpClient from '@services/httpClient/httpClient';
-import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/status';
+import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
 import { getHttpClientStatusMessage, httpClientError } from '@services/httpClient/utils';
 import { OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS } from '@services/openWeatherOneCall/status';
 
-import type { HttpClientStatusList } from '@services/httpClient/status.type';
+import type { HttpClientStatusList } from '@services/httpClient/httpClient.type';
 import type {
   GetCurrentAndForecastsWeatherDataParams,
   GetCurrentAndForecastsWeatherDataResponse,
