@@ -1,286 +1,286 @@
-import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
-import type { HttpStatus } from '@services/httpClient/status.type';
+import type { HttpClientStatusList, HttpStatusList } from '@services/httpClient/status.type';
 
 /**
  * HTTP 상태 리스트
  * @link https://datatracker.ietf.org/doc/html/rfc2616#section-10
- * @jinhok96 25.05.06
+ * @jinhok96 25.05.08
  */
-const HTTP_STATUS_LIST: Record<HttpStatus, Pick<PickedAxiosResponse<null>, 'status' | 'statusText'>> = {
-  CONTINUE: {
-    status: 100,
-    statusText: 'Continue',
+const HTTP_STATUS_LIST: HttpStatusList = {
+  100: {
+    en: 'Continue',
+    kr: 'Continue',
   },
-  SWITCHING_PROTOCOL: {
-    status: 101,
-    statusText: 'Switching Protocol',
+  101: {
+    en: 'Switching Protocol',
+    kr: 'Switching Protocol',
   },
-  PROCESSING: {
-    status: 102,
-    statusText: 'Processing',
+  102: {
+    en: 'Processing',
+    kr: 'Processing',
   },
-  EARLY_HINTS: {
-    status: 103,
-    statusText: 'Early Hints',
+  103: {
+    en: 'Early Hints',
+    kr: 'Early Hints',
   },
-  OK: {
-    status: 200,
-    statusText: 'OK',
+  200: {
+    en: 'OK',
+    kr: 'OK',
   },
-  CREATED: {
-    status: 201,
-    statusText: 'Created',
+  201: {
+    en: 'Created',
+    kr: 'Created',
   },
-  ACCEPTED: {
-    status: 202,
-    statusText: 'Accepted',
+  202: {
+    en: 'Accepted',
+    kr: 'Accepted',
   },
-  NON_AUTHORITATIVE_INFORMATION: {
-    status: 203,
-    statusText: 'Non-Authoritative Information',
+  203: {
+    en: 'Non-Authoritative Information',
+    kr: 'Non-Authoritative Information',
   },
-  NO_CONTENT: {
-    status: 204,
-    statusText: 'No Content',
+  204: {
+    en: 'No Content',
+    kr: 'No Content',
   },
-  RESET_CONTENT: {
-    status: 205,
-    statusText: 'Reset Content',
+  205: {
+    en: 'Reset Content',
+    kr: 'Reset Content',
   },
-  PARTIAL_CONTENT: {
-    status: 206,
-    statusText: 'Partial Content',
+  206: {
+    en: 'Partial Content',
+    kr: 'Partial Content',
   },
-  MULTI_STATUS: {
-    status: 207,
-    statusText: 'Multi-Status',
+  207: {
+    en: 'Multi-Status',
+    kr: 'Multi-Status',
   },
-  ALREADY_REPORTED: {
-    status: 208,
-    statusText: 'Already Reported',
+  208: {
+    en: 'Already Reported',
+    kr: 'Already Reported',
   },
-  IM_USED: {
-    status: 226,
-    statusText: 'IM Used',
+  226: {
+    en: 'IM Used',
+    kr: 'IM Used',
   },
-  MULTIPLE_CHOICE: {
-    status: 300,
-    statusText: 'Multiple Choice',
+  300: {
+    en: 'Multiple Choice',
+    kr: 'Multiple Choice',
   },
-  MOVED_PERMANENTLY: {
-    status: 301,
-    statusText: 'Moved Permanently',
+  301: {
+    en: 'Moved Permanently',
+    kr: 'Moved Permanently',
   },
-  FOUND: {
-    status: 302,
-    statusText: 'Found',
+  302: {
+    en: 'Found',
+    kr: 'Found',
   },
-  SEE_OTHER: {
-    status: 303,
-    statusText: 'See Other',
+  303: {
+    en: 'See Other',
+    kr: 'See Other',
   },
-  NOT_MODIFIED: {
-    status: 304,
-    statusText: 'Not Modified',
+  304: {
+    en: 'Not Modified',
+    kr: 'Not Modified',
   },
-  USE_PROXY: {
-    status: 305,
-    statusText: 'Use Proxy',
+  305: {
+    en: 'Use Proxy',
+    kr: 'Use Proxy',
   },
-  TEMPORARY_REDIRECT: {
-    status: 307,
-    statusText: 'Temporary Redirect',
+  307: {
+    en: 'Temporary Redirect',
+    kr: 'Temporary Redirect',
   },
-  PERMANENT_REDIRECT: {
-    status: 308,
-    statusText: 'Permanent Redirect',
+  308: {
+    en: 'Permanent Redirect',
+    kr: 'Permanent Redirect',
   },
-  BAD_REQUEST: {
-    status: 400,
-    statusText: 'Bad Request',
+  400: {
+    en: 'Bad Request',
+    kr: 'Bad Request',
   },
-  UNAUTHORIZED: {
-    status: 401,
-    statusText: 'Unauthorized',
+  401: {
+    en: 'Unauthorized',
+    kr: 'Unauthorized',
   },
-  PAYMENT_REQUIRED: {
-    status: 402,
-    statusText: 'Payment Required',
+  402: {
+    en: 'Payment Required',
+    kr: 'Payment Required',
   },
-  FORBIDDEN: {
-    status: 403,
-    statusText: 'Forbidden',
+  403: {
+    en: 'Forbidden',
+    kr: 'Forbidden',
   },
-  NOT_FOUND: {
-    status: 404,
-    statusText: 'Not Found',
+  404: {
+    en: 'Not Found',
+    kr: 'Not Found',
   },
-  METHOD_NOT_ALLOWED: {
-    status: 405,
-    statusText: 'Method Not Allowed',
+  405: {
+    en: 'Method Not Allowed',
+    kr: 'Method Not Allowed',
   },
-  NOT_ACCEPTABLE: {
-    status: 406,
-    statusText: 'Not Acceptable',
+  406: {
+    en: 'Not Acceptable',
+    kr: 'Not Acceptable',
   },
-  PROXY_AUTHENTICATION_REQUIRED: {
-    status: 407,
-    statusText: 'Proxy Authentication Required',
+  407: {
+    en: 'Proxy Authentication Required',
+    kr: 'Proxy Authentication Required',
   },
-  REQUEST_TIMEOUT: {
-    status: 408,
-    statusText: 'Request Timeout',
+  408: {
+    en: 'Request Timeout',
+    kr: 'Request Timeout',
   },
-  CONFLICT: {
-    status: 409,
-    statusText: 'Conflict',
+  409: {
+    en: 'Conflict',
+    kr: 'Conflict',
   },
-  GONE: {
-    status: 410,
-    statusText: 'Gone',
+  410: {
+    en: 'Gone',
+    kr: 'Gone',
   },
-  LENGTH_REQUIRED: {
-    status: 411,
-    statusText: 'Length Required',
+  411: {
+    en: 'Length Required',
+    kr: 'Length Required',
   },
-  PRECONDITION_FAILED: {
-    status: 412,
-    statusText: 'Precondition Failed',
+  412: {
+    en: 'Precondition Failed',
+    kr: 'Precondition Failed',
   },
-  PAYLOAD_TOO_LARGE: {
-    status: 413,
-    statusText: 'Payload Too Large',
+  413: {
+    en: 'Payload Too Large',
+    kr: 'Payload Too Large',
   },
-  URI_TOO_LONG: {
-    status: 414,
-    statusText: 'URI Too Long',
+  414: {
+    en: 'URI Too Long',
+    kr: 'URI Too Long',
   },
-  UNSUPPORTED_MEDIA_TYPE: {
-    status: 415,
-    statusText: 'Unsupported Media Type',
+  415: {
+    en: 'Unsupported Media Type',
+    kr: 'Unsupported Media Type',
   },
-  RANGE_NOT_SATISFIABLE: {
-    status: 416,
-    statusText: 'Range Not Satisfiable',
+  416: {
+    en: 'Range Not Satisfiable',
+    kr: 'Range Not Satisfiable',
   },
-  EXPECTATION_FAILED: {
-    status: 417,
-    statusText: 'Expectation Failed',
+  417: {
+    en: 'Expectation Failed',
+    kr: 'Expectation Failed',
   },
-  IM_A_TEAPOT: {
-    status: 418,
-    statusText: "I'm a teapot",
+  418: {
+    en: "I'm a teapot",
+    kr: "I'm a teapot",
   },
-  MISDIRECTED_REQUEST: {
-    status: 421,
-    statusText: 'Misdirected Request',
+  421: {
+    en: 'Misdirected Request',
+    kr: 'Misdirected Request',
   },
-  UNPROCESSABLE_ENTITY: {
-    status: 422,
-    statusText: 'Unprocessable Entity',
+  422: {
+    en: 'Unprocessable Entity',
+    kr: 'Unprocessable Entity',
   },
-  LOCKED: {
-    status: 423,
-    statusText: 'Locked',
+  423: {
+    en: 'Locked',
+    kr: 'Locked',
   },
-  FAILED_DEPENDENCY: {
-    status: 424,
-    statusText: 'Failed Dependency',
+  424: {
+    en: 'Failed Dependency',
+    kr: 'Failed Dependency',
   },
-  UPGRADE_REQUIRED: {
-    status: 426,
-    statusText: 'Upgrade Required',
+  426: {
+    en: 'Upgrade Required',
+    kr: 'Upgrade Required',
   },
-  PRECONDITION_REQUIRED: {
-    status: 428,
-    statusText: 'Precondition Required',
+  428: {
+    en: 'Precondition Required',
+    kr: 'Precondition Required',
   },
-  TOO_MANY_REQUESTS: {
-    status: 429,
-    statusText: 'Too Many Requests',
+  429: {
+    en: 'Too Many Requests',
+    kr: 'Too Many Requests',
   },
-  REQUEST_HEADER_FIELDS_TOO_LARGE: {
-    status: 431,
-    statusText: 'Request Header Fields Too Large',
+  431: {
+    en: 'Request Header Fields Too Large',
+    kr: 'Request Header Fields Too Large',
   },
-  UNAVAILABLE_FOR_LEGAL_REASONS: {
-    status: 451,
-    statusText: 'Unavailable For Legal Reasons',
+  451: {
+    en: 'Unavailable For Legal Reasons',
+    kr: 'Unavailable For Legal Reasons',
   },
-  INTERNAL_SERVER_ERROR: {
-    status: 500,
-    statusText: 'Internal Server Error',
+  500: {
+    en: 'Internal Server Error',
+    kr: 'Internal Server Error',
   },
-  NOT_IMPLEMENTED: {
-    status: 501,
-    statusText: 'Not Implemented',
+  501: {
+    en: 'Not Implemented',
+    kr: 'Not Implemented',
   },
-  BAD_GATEWAY: {
-    status: 502,
-    statusText: 'Bad Gateway',
+  502: {
+    en: 'Bad Gateway',
+    kr: 'Bad Gateway',
   },
-  SERVICE_UNAVAILABLE: {
-    status: 503,
-    statusText: 'Service Unavailable',
+  503: {
+    en: 'Service Unavailable',
+    kr: 'Service Unavailable',
   },
-  GATEWAY_TIMEOUT: {
-    status: 504,
-    statusText: 'Gateway Timeout',
+  504: {
+    en: 'Gateway Timeout',
+    kr: 'Gateway Timeout',
   },
-  HTTP_VERSION_NOT_SUPPORTED: {
-    status: 505,
-    statusText: 'HTTP Version Not Supported',
+  505: {
+    en: 'HTTP Version Not Supported',
+    kr: 'HTTP Version Not Supported',
   },
-  VARIANT_ALSO_NEGOTIATES: {
-    status: 506,
-    statusText: 'Variant Also Negotiates',
+  506: {
+    en: 'Variant Also Negotiates',
+    kr: 'Variant Also Negotiates',
   },
-  INSUFFICIENT_STORAGE: {
-    status: 507,
-    statusText: 'Insufficient Storage',
+  507: {
+    en: 'Insufficient Storage',
+    kr: 'Insufficient Storage',
   },
-  LOOP_DETECTED: {
-    status: 508,
-    statusText: 'Loop Detected',
+  508: {
+    en: 'Loop Detected',
+    kr: 'Loop Detected',
   },
-  NOT_EXTENDED: {
-    status: 510,
-    statusText: 'Not Extended',
+  510: {
+    en: 'Not Extended',
+    kr: 'Not Extended',
   },
-  NETWORK_AUTHENTICATION_REQUIRED: {
-    status: 511,
-    statusText: 'Network Authentication Required',
+  511: {
+    en: 'Network Authentication Required',
+    kr: 'Network Authentication Required',
   },
 };
 
 /**
  * HttpClient 상태 리스트
- * @jinhok96 25.05.06
+ * @jinhok96 25.05.08
  */
-export const HTTP_CLIENT_STATUS_LIST: Record<
-  | HttpStatus
-  | 'BASE_URL_MISSING_ERROR'
-  | 'INVALID_HTTP_CLIENT_ERROR'
-  | 'INTERNAL_SERVER_ERROR'
-  | 'UNKNOWN_HTTP_CLIENT_ERROR'
-  | 'UNKNOWN_ERROR',
-  Pick<PickedAxiosResponse<null>, 'status' | 'statusText'>
-> = {
+export const HTTP_CLIENT_STATUS_LIST: HttpClientStatusList = {
+  // Http 오류
   ...HTTP_STATUS_LIST,
-  UNKNOWN_HTTP_CLIENT_ERROR: {
-    status: 9998,
-    statusText: '알 수 없는 HttpClient 에러가 발생했습니다.',
+
+  // 기타 오류
+  9999: {
+    en: 'Unexpected error has occurred.',
+    kr: '예기치 않은 오류가 발생했습니다.',
   },
-  UNKNOWN_ERROR: {
-    status: 9999,
-    statusText: 'Unknown Error',
+
+  // HttpClient 내부 오류
+  10001: {
+    en: 'Unknown HttpClient error has occurred.',
+    kr: '알 수 없는 HttpClient 오류가 발생했습니다.',
   },
-  BASE_URL_MISSING_ERROR: {
-    status: 100001,
-    statusText: 'baseURL이 없습니다.',
+  10002: {
+    en: 'BaseURL of HttpClient is empty.',
+    kr: 'baseURL이 없습니다.',
   },
-  INVALID_HTTP_CLIENT_ERROR: {
-    status: 100002,
-    statusText: 'HttpClient 에러가 아닙니다.',
+  10003: {
+    en: 'Invalid HttpClient error.',
+    kr: '유효하지 않은 HttpClient 오류입니다.',
+  },
+  10004: {
+    en: 'Status is not defined in HttpClient.',
+    kr: 'HttpClient에 정의되지 않은 상태입니다.',
   },
 };
