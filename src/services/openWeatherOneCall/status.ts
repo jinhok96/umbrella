@@ -1,4 +1,4 @@
-import type { LocalizedTextMap } from '@libs/types/localize.type';
+import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 
 // 에러 코드 타입
 type OpenWeatherOneCallServiceErrorStatus = LocalizedTextMap<'400' | '401' | '404' | '429'>;

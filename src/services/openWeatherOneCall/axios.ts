@@ -1,6 +1,6 @@
 import Config from 'react-native-config';
 
-import { getLocalizedTextFromMap } from '@libs/utils/localize';
+import { getLocalizedTextFromMap } from '@libs/utils/localize/localize';
 import HttpClient from '@services/httpClient/httpClient';
 import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
 import { getHttpClientStatusMessage, httpClientError } from '@services/httpClient/utils';

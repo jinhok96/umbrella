@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE } from '@libs/utils/localize';
+import { DEFAULT_LANGUAGE } from '@libs/utils/localize/localize.const';
 import { OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS } from '@services/openWeatherOneCall/status';
 
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';

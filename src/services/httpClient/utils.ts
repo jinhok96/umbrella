@@ -1,7 +1,7 @@
-import { getLocalizedTextFromMap } from '@libs/utils/localize';
+import { getLocalizedTextFromMap } from '@libs/utils/localize/localize';
 import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
 
-import type { LanguageCode } from '@libs/types/localize.type';
+import type { LanguageCode } from '@libs/utils/localize/localize.type';
 import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
 /**

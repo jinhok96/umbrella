@@ -1,6 +1,7 @@
-import { GET_LOCALIZED_TEXT_FROM_MAP_ERROR, getLocalizedTextFromMap } from '@libs/utils/localize';
+import { getLocalizedTextFromMap } from '@libs/utils/localize/localize';
+import { GET_LOCALIZED_TEXT_FROM_MAP_ERROR } from '@libs/utils/localize/localize.const';
 
-import type { LocalizedTextMap } from '@libs/types/localize.type';
+import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 
 const mockLocalizedTextMap: LocalizedTextMap<'mock'> = {
   mock: {

@@ -1,4 +1,4 @@
-import type { LocalizedTextMap } from '@libs/types/localize.type';
+import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 import type { AxiosResponse } from 'axios';
 
 export type ContentType =
