@@ -1,4 +1,4 @@
-import type { SettingStoreState } from '@store/useSettingStore.type';
+import type { SettingStoreState } from '@store/settingStore/useSettingStore.type';
 
 export const INIT_SETTING_STORE_STATE: SettingStoreState = {
   theme: 'light',
