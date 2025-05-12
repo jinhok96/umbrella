@@ -1,5 +1,6 @@
 import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
 import { getHttpClientStatusMessage, httpClientError } from '@services/httpClient/httpClient.util';
+import { settingStore } from '@store/useSettingStore';
 
 import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
@@ -9,10 +10,10 @@ import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpCl
  * @jinhok96 25.05.08
  */
 describe('getHttpClientStatusMessage', () => {
+  const { lang } = settingStore.getState();
   test('성공 테스트', () => {
     const status: keyof HttpClientStatusList = '9999';
-    expect(getHttpClientStatusMessage(status, 'en')).toBe(HTTP_CLIENT_STATUS_LIST[status].en);
-    expect(getHttpClientStatusMessage(status, 'kr')).toBe(HTTP_CLIENT_STATUS_LIST[status].kr);
+    expect(getHttpClientStatusMessage(status)).toBe(HTTP_CLIENT_STATUS_LIST[status][lang]);
   });
 });
 

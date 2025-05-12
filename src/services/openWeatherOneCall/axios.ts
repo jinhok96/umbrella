@@ -64,12 +64,17 @@ const axiosInstance = new HttpClient(OpenWeatherAPIBaseURL, {
 
 /**
  * OpenWeather One Call API 3.0 서비스
- * @jinhok96 25.05.05
+ * @jinhok96 25.05.12
  */
 export const openWeatherOneCallService = {
   getCurrentAndForecastsWeatherData: async (params: GetCurrentAndForecastsWeatherDataParams) => {
     try {
-      const response = await axiosInstance.get<GetCurrentAndForecastsWeatherDataResponse>('/3.0/onecall', params);
+      const exclude = params.exclude?.join(',');
+      const updatedParams = { ...params, exclude };
+      const response = await axiosInstance.get<GetCurrentAndForecastsWeatherDataResponse>(
+        '/3.0/onecall',
+        updatedParams,
+      );
       return response;
     } catch (error) {
       throwError(error);

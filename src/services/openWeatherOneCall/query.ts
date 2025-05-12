@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { MINUTE } from '@libs/constants/time.const';
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
+import { settingStore } from '@store/useSettingStore';
 
 import type { OpenWeatherOneCallAPICommonParams } from '@services/openWeatherOneCall/axios.type';
 import type {
@@ -21,15 +22,12 @@ const GC_TIME = 15 * MINUTE;
 /**
  * 전역 상태에서 OpenWeather Oen Call API 3.0 공통 파라미터 가져오기
  * @returns `{ units, lang }`
- * @jinhok96 25.05.05
+ * @jinhok96 25.05.12
  */
 function getOpenWeatherAPICommonParams(): OpenWeatherOneCallAPICommonParams {
-  // 스토어에서 units, lang 가져와서 반환
-  const params: Pick<OpenWeatherOneCallAPICommonParams, 'units' | 'lang'> = {
-    units: 'metric',
-    lang: 'kr',
-  };
-  return params;
+  const { units } = settingStore.getState();
+  const { lang } = settingStore.getState();
+  return { units, lang };
 }
 
 /**
