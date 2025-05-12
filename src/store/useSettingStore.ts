@@ -2,25 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 
-type SettingStoreState = {
-  theme: 'light' | 'dark';
-  unit: 'metric' | 'imperial';
-  lang: 'kr' | 'en';
-};
+import { INIT_SETTING_STORE_STATE } from '@store/useSettingStore.const';
 
-type SettingStoreActions = {
-  setTheme: (theme: SettingStoreState['theme']) => void;
-  setUnit: (unit: SettingStoreState['unit']) => void;
-  setLang: (lang: SettingStoreState['lang']) => void;
-};
-
-type SettingStore = SettingStoreState & SettingStoreActions;
-
-const INIT_SETTING_STORE_STATE: SettingStoreState = {
-  theme: 'light',
-  unit: 'metric',
-  lang: 'kr',
-};
+import type { SettingStore, SettingStoreState } from '@store/useSettingStore.type';
 
 export const useSettingStore = create<SettingStore>()(
   devtools(
@@ -28,7 +12,7 @@ export const useSettingStore = create<SettingStore>()(
       set => ({
         ...INIT_SETTING_STORE_STATE,
         setTheme: theme => set({ theme }),
-        setUnit: unit => set({ unit }),
+        setUnit: units => set({ units }),
         setLang: lang => set({ lang }),
       }),
       {
@@ -36,10 +20,12 @@ export const useSettingStore = create<SettingStore>()(
         storage: createJSONStorage(() => AsyncStorage),
         partialize: state => ({
           theme: state.theme,
-          unit: state.unit,
+          units: state.units,
           lang: state.lang,
         }),
       },
     ),
   ),
 );
+
+export const settingStore = useSettingStore;
