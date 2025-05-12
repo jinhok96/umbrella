@@ -1,5 +1,6 @@
 import { getLocalizedTextFromMap } from '@libs/utils/localize/localize';
 import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
+import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
@@ -7,10 +8,11 @@ import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpCl
  * 로컬라이징된 HttpClient 에러 메세지를 반환하는 함수
  * @param status 에러 status
  * @returns 에러 메세지
- * @jinhok96 25.05.08
+ * @jinhok96 25.05.12
  */
 export function getHttpClientStatusMessage(status: keyof HttpClientStatusList): string {
-  return getLocalizedTextFromMap(HTTP_CLIENT_STATUS_LIST, status);
+  const { lang } = settingStore.getState();
+  return getLocalizedTextFromMap(HTTP_CLIENT_STATUS_LIST, status, lang);
 }
 
 /**

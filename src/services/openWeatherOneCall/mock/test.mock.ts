@@ -1,5 +1,5 @@
 import { OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS } from '@services/openWeatherOneCall/axios.const';
-import { INIT_SETTING_STORE_STATE } from '@store/useSettingStore.const';
+import { INIT_SETTING_STORE_STATE } from '@store/settingStore/useSettingStore.const';
 
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 import type {

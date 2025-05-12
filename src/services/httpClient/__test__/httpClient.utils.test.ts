@@ -1,6 +1,6 @@
 import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
 import { getHttpClientStatusMessage, httpClientError } from '@services/httpClient/httpClient.util';
-import { settingStore } from '@store/useSettingStore';
+import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { HttpClientStatusList, PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
