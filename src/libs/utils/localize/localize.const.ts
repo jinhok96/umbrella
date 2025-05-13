@@ -1,6 +1,4 @@
-import type { LanguageCode, LocalizedTextMap } from '@libs/utils/localize/localize.type';
-
-export const DEFAULT_LANGUAGE: LanguageCode = 'kr';
+import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 
 export const GET_LOCALIZED_TEXT_FROM_MAP_ERROR: LocalizedTextMap<'10001'> = {
   10001: {

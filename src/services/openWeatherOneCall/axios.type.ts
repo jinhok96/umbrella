@@ -1,9 +1,4 @@
 /**
- * OpenWeather API 타입
- * @jinhok96 25.04.30
- */
-
-/**
  * 위도, 소수점(-90; 90)
  *
  * 도시명과 우편번호를 지리적 좌표로 또는 그 반대로 자동 변환하는 지오코딩이 필요한 경우 지오코딩 API를 사용하세요.
@@ -41,9 +36,9 @@ type Dt = number;
  *
  * 사용 가능한 값: current, minutely, hourly, daily, alerts
  * @example exclude=current,minutely,hourly
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.12
  */
-type ExcludeList = string;
+type Exclude = 'current' | 'minutely' | 'hourly' | 'daily' | 'alerts';
 
 /**
  * 측정 단위
@@ -51,78 +46,80 @@ type ExcludeList = string;
  * 표준(standard), 미터법(metric), 영국식(imperial) 단위를 사용할 수 있습니다
  *
  * 단위 매개변수를 사용하지 않으면 기본적으로 표준(standard) 단위가 적용됩니다.
+ *
+ * 앱에서 미터법(metric), 영국식(imperial) 단위만 지원
  * @link https://openweathermap.org/api/one-call-3#data
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.12
  */
-type Units = 'standard' | 'metric' | 'imperial';
+export type Units = 'metric' | 'imperial';
 
 /**
  * 출력 언어
- * @jinhok96 25.04.30
+ *
+ * 앱에서 한국어, 영어만 지원
+ * @jinhok96 25.05.12
  */
-type Lang =
-  | 'sq' // Albanian
-  | 'af' // Afrikaans
-  | 'ar' // Arabic
-  | 'az' // Azerbaijani
-  | 'eu' // Basque
-  | 'be' // Belarusian
-  | 'bg' // Bulgarian
-  | 'ca' // Catalan
-  | 'zh_cn' // Chinese Simplified
-  | 'zh_tw' // Chinese Traditional
-  | 'hr' // Croatian
-  | 'cz' // Czech
-  | 'da' // Danish
-  | 'nl' // Dutch
-  | 'en' // English
-  | 'fi' // Finnish
-  | 'fr' // French
-  | 'gl' // Galician
-  | 'de' // German
-  | 'el' // Greek
-  | 'he' // Hebrew
-  | 'hi' // Hindi
-  | 'hu' // Hungarian
-  | 'is' // Icelandic
-  | 'id' // Indonesian
-  | 'it' // Italian
-  | 'ja' // Japanese
+export type Lang =
   | 'kr' // Korean
-  | 'ku' // Kurmanji (Kurdish)
-  | 'la' // Latvian
-  | 'lt' // Lithuanian
-  | 'mk' // Macedonian
-  | 'no' // Norwegian
-  | 'fa' // Persian (Farsi)
-  | 'pl' // Polish
-  | 'pt' // Portuguese
-  | 'pt_br' // Português Brasil
-  | 'ro' // Romanian
-  | 'ru' // Russian
-  | 'sr' // Serbian
-  | 'sk' // Slovak
-  | 'sl' // Slovenian
-  | 'sp' // Spanish
-  | 'es' // Spanish
-  | 'sv' // Swedish
-  | 'se' // Swedish
-  | 'th' // Thai
-  | 'tr' // Turkish
-  | 'ua' // Ukrainian
-  | 'uk' // Ukrainian
-  | 'vi' // Vietnamese
-  | 'zu'; // Zulu
+  | 'en'; // English
+// | 'sq' // Albanian
+// | 'af' // Afrikaans
+// | 'ar' // Arabic
+// | 'az' // Azerbaijani
+// | 'eu' // Basque
+// | 'be' // Belarusian
+// | 'bg' // Bulgarian
+// | 'ca' // Catalan
+// | 'zh_cn' // Chinese Simplified
+// | 'zh_tw' // Chinese Traditional
+// | 'hr' // Croatian
+// | 'cz' // Czech
+// | 'da' // Danish
+// | 'nl' // Dutch
+// | 'fi' // Finnish
+// | 'fr' // French
+// | 'gl' // Galician
+// | 'de' // German
+// | 'el' // Greek
+// | 'he' // Hebrew
+// | 'hi' // Hindi
+// | 'hu' // Hungarian
+// | 'is' // Icelandic
+// | 'id' // Indonesian
+// | 'it' // Italian
+// | 'ja' // Japanese
+// | 'ku' // Kurmanji (Kurdish)
+// | 'la' // Latvian
+// | 'lt' // Lithuanian
+// | 'mk' // Macedonian
+// | 'no' // Norwegian
+// | 'fa' // Persian (Farsi)
+// | 'pl' // Polish
+// | 'pt' // Portuguese
+// | 'pt_br' // Português Brasil
+// | 'ro' // Romanian
+// | 'ru' // Russian
+// | 'sr' // Serbian
+// | 'sk' // Slovak
+// | 'sl' // Slovenian
+// | 'sp' // Spanish
+// | 'es' // Spanish
+// | 'sv' // Swedish
+// | 'se' // Swedish
+// | 'th' // Thai
+// | 'tr' // Turkish
+// | 'ua' // Ukrainian
+// | 'uk' // Ukrainian
+// | 'vi' // Vietnamese
+// | 'zu'; // Zulu
 
 /**
  * OpenWeather One Call API 3.0 공통 매개변수
- * @ appid: 고유 API 키
  * @ units: 측정 단위; 표준(standard), 미터법(metric), 영국식(imperial)
  * @ lang: 출력 언어
- * @jinhok96 25.05.05
+ * @jinhok96 25.05.12
  */
 export type OpenWeatherOneCallAPICommonParams = {
-  // appid: AppId;
   units?: Units;
   lang?: Lang;
 };
@@ -142,12 +139,12 @@ export type OpenWeatherOneCallServiceError = {
  * @ lon: 경도, 소수점(-180, 180)
  * @ exclude: 응답에서 제외할 날씨 데이터
  * @link https://openweathermap.org/api/one-call-3#current
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.12
  */
 export type GetCurrentAndForecastsWeatherDataParams = OpenWeatherOneCallAPICommonParams & {
   lat: Lat;
   lon: Lon;
-  exclude?: ExcludeList;
+  exclude?: Exclude[];
 };
 
 /**

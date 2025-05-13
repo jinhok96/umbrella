@@ -1,5 +1,5 @@
-import { DEFAULT_LANGUAGE } from '@libs/utils/localize/localize.const';
 import { OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS } from '@services/openWeatherOneCall/axios.const';
+import { INIT_SETTING_STORE_STATE } from '@store/settingStore/useSettingStore.const';
 
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 import type {
@@ -14,11 +14,11 @@ import type {
 
 /**
  * OpenWeatherOneCallService 공통 에러 Mock
- * @jinhok96 25.05.08
+ * @jinhok96 25.05.12
  */
 const openWeatherOneCallServiceMockError: OpenWeatherOneCallServiceError = {
   cod: 401,
-  message: OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS[401][DEFAULT_LANGUAGE],
+  message: OPEN_WEATHER_ONE_CALL_SERVICE_ERROR_STATUS[401][INIT_SETTING_STORE_STATE.lang],
 };
 const openWeatherOneCallServiceMockHttpClientError: PickedAxiosResponse<OpenWeatherOneCallServiceError> = {
   data: openWeatherOneCallServiceMockError,
@@ -34,6 +34,7 @@ const openWeatherOneCallServiceMockHttpClientError: PickedAxiosResponse<OpenWeat
 const getCurrentAndForecastsWeatherDataMockParams: GetCurrentAndForecastsWeatherDataParams = {
   lat: 37.5665,
   lon: 126.978,
+  exclude: ['minutely', 'alerts'],
 };
 const getCurrentAndForecastsWeatherDataMockData: GetCurrentAndForecastsWeatherDataResponse = {
   lat: 33.44,
