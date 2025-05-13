@@ -36,6 +36,19 @@ describe('useTemplateStore', () => {
     expect(result.current).toMatchObject(INIT_STATE);
   });
 
+  test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
+    const state = templateStore.getState();
+    expect(state).toMatchObject(INIT_STATE);
+
+    const newState = NEW_STATE.first;
+
+    act(() => {
+      templateStore.getState().setFirst(newState);
+    });
+
+    expect(templateStore.getState().first).toBe(newState);
+  });
+
   test('액션: setFirst', () => {
     const { result } = renderHook(() => useTemplateStore());
     expect(result.current).toMatchObject(INIT_STATE);
@@ -76,18 +89,5 @@ describe('useTemplateStore', () => {
     });
 
     expect(result.current).toMatchObject(newResult);
-  });
-
-  test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    const state = templateStore.getState();
-    expect(state).toMatchObject(INIT_STATE);
-
-    const newState = NEW_STATE.first;
-
-    act(() => {
-      templateStore.getState().setFirst(newState);
-    });
-
-    expect(templateStore.getState().first).toBe(newState);
   });
 });

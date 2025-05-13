@@ -13,17 +13,25 @@ const INIT_STATE: SettingStoreState = {
   theme: 'light',
   units: 'metric',
   lang: 'kr',
+  defaultLocationMode: 'current',
+  locationPermission: false,
+  fontSizeAccessibility: 'normal',
+  highContrastAccessibility: false,
 };
 
 const NEW_STATE: SettingStoreState = {
   theme: 'dark',
   units: 'imperial',
   lang: 'en',
+  defaultLocationMode: 'recent',
+  locationPermission: true,
+  fontSizeAccessibility: 'large',
+  highContrastAccessibility: true,
 };
 
 /**
  * useSettingStore 테스트
- * @jinhok96 25.05.12
+ * @jinhok96 25.05.13
  */
 describe('useSettingStore', () => {
   beforeEach(() => {
@@ -34,6 +42,19 @@ describe('useSettingStore', () => {
   test('초기 상태 확인', () => {
     const { result } = renderHook(() => useSettingStore());
     expect(result.current).toMatchObject(INIT_STATE);
+  });
+
+  test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
+    const state = settingStore.getState();
+    expect(state).toMatchObject(INIT_STATE);
+
+    const newState = NEW_STATE.theme;
+
+    act(() => {
+      settingStore.getState().setTheme(newState);
+    });
+
+    expect(settingStore.getState().theme).toBe(newState);
   });
 
   test('액션: setTheme', () => {
@@ -50,7 +71,7 @@ describe('useSettingStore', () => {
     expect(result.current).toMatchObject(newResult);
   });
 
-  test('액션: setUnit', () => {
+  test('액션: setUnits', () => {
     const { result } = renderHook(() => useSettingStore());
     expect(result.current).toMatchObject(INIT_STATE);
 
@@ -58,7 +79,7 @@ describe('useSettingStore', () => {
     const newResult: SettingStoreState = { ...INIT_STATE, units: newState };
 
     act(() => {
-      result.current.setUnit(newState);
+      result.current.setUnits(newState);
     });
 
     expect(result.current).toMatchObject(newResult);
@@ -78,16 +99,59 @@ describe('useSettingStore', () => {
     expect(result.current).toMatchObject(newResult);
   });
 
-  test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    const state = settingStore.getState();
-    expect(state).toMatchObject(INIT_STATE);
+  test('액션: setDefaultLocationMode', () => {
+    const { result } = renderHook(() => useSettingStore());
+    expect(result.current).toMatchObject(INIT_STATE);
 
-    const newState = NEW_STATE.theme;
+    const newState = NEW_STATE.defaultLocationMode;
+    const newResult: SettingStoreState = { ...INIT_STATE, defaultLocationMode: newState };
 
     act(() => {
-      settingStore.getState().setTheme(newState);
+      result.current.setDefaultLocationMode(newState);
     });
 
-    expect(settingStore.getState().theme).toBe(newState);
+    expect(result.current).toMatchObject(newResult);
+  });
+
+  test('액션: setLocationPermission', () => {
+    const { result } = renderHook(() => useSettingStore());
+    expect(result.current).toMatchObject(INIT_STATE);
+
+    const newState = NEW_STATE.locationPermission;
+    const newResult: SettingStoreState = { ...INIT_STATE, locationPermission: newState };
+
+    act(() => {
+      result.current.setLocationPermission(newState);
+    });
+
+    expect(result.current).toMatchObject(newResult);
+  });
+
+  test('액션: setFontSizeAccessibility', () => {
+    const { result } = renderHook(() => useSettingStore());
+    expect(result.current).toMatchObject(INIT_STATE);
+
+    const newState = NEW_STATE.fontSizeAccessibility;
+    const newResult: SettingStoreState = { ...INIT_STATE, fontSizeAccessibility: newState };
+
+    act(() => {
+      result.current.setFontSizeAccessibility(newState);
+    });
+
+    expect(result.current).toMatchObject(newResult);
+  });
+
+  test('액션: setHighContrastAccessibility', () => {
+    const { result } = renderHook(() => useSettingStore());
+    expect(result.current).toMatchObject(INIT_STATE);
+
+    const newState = NEW_STATE.highContrastAccessibility;
+    const newResult: SettingStoreState = { ...INIT_STATE, highContrastAccessibility: newState };
+
+    act(() => {
+      result.current.setHighContrastAccessibility(newState);
+    });
+
+    expect(result.current).toMatchObject(newResult);
   });
 });
