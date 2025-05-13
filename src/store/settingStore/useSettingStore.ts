@@ -13,14 +13,6 @@ import type { StateCreator } from 'zustand';
  * @ setUnits - 날씨 측정 단위 설정
  * @ setLang - 앱 언어 설정
  * @ setDefaultLocationMode - 앱 시작 시 기본 위치 모드 설정
- * @ setCurrentLocation - 현재 위치 설정
- * @ addRecentLocation - 최근 위치 목록 맨 앞에 새로운 위치 추가
- * @ removeRecentLocation - 최근 위치 목록에서 특정 원소 제거
- * @ removeAllRecentLocation - 최근 위치 목록 전체 제거
- * @ addFavoriteLocation - 즐겨찾기 위치 목록 맨 앞에 새로운 위치 추가
- * @ updateFavoriteLocationListOrder - 즐겨찾기 위치 목록 순서 변경
- * @ removeFavoriteLocation - 즐겨찾기 위치 목록에서 특정 원소 제거
- * @ removeAllFavoriteLocation - 즐겨찾기 위치 목록 전체 제거
  * @ setLocationPermission - 위치 권한 설정
  * @ setFontSizeAccessibility - 접근성 폰트 크기 설정
  * @ setHighContrastAccessibility - 접근성 고대비 설정
