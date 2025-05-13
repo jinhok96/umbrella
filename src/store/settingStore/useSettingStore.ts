@@ -20,15 +20,13 @@ import type { StateCreator } from 'zustand';
  */
 const settingStoreCreator: StateCreator<SettingStore> = set => ({
   ...INIT_SETTING_STORE_STATE,
-  // theme, units, lang
+  // theme, units, lang, defaultLocationMode
   setTheme: theme => set({ theme }),
   setUnits: units => set({ units }),
   setLang: lang => set({ lang }),
-
-  // defaultLocationMode, currentLocation
   setDefaultLocationMode: initLocationMode => set({ defaultLocationMode: initLocationMode }),
 
-  // locationPermission
+  // permission
   setLocationPermission: permission => set({ locationPermission: permission }),
 
   // accessibility
