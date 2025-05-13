@@ -6,6 +6,7 @@ import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 
 import { templateStore, useTemplateStore } from '@store/template/useTemplateStore';
+import { INIT_TEMPLATE_STORE_STATE } from '@store/template/useTemplateStore.const';
 
 import type { TemplateStoreState } from '@store/template/useTemplateStore.type';
 
@@ -23,12 +24,17 @@ const NEW_STATE_MOCK: TemplateStoreState = {
 
 /**
  * useTemplateStore 테스트
- * @jinhok96 25.05.12
+ * @jinhok96 25.05.13
  */
 describe('useTemplateStore', () => {
   beforeEach(() => {
     // 각 테스트 전에 스토어를 초기 상태로 리셋
     templateStore.setState(INIT_STATE_MOCK);
+  });
+
+  afterAll(() => {
+    // 모든 테스트 완료 후 스토어를 초기 상태로 리셋
+    templateStore.setState(INIT_TEMPLATE_STORE_STATE);
   });
 
   test('초기 상태 확인', () => {

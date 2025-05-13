@@ -7,6 +7,7 @@ import { renderHook } from '@testing-library/react';
 
 import { locationStore, useLocationStore } from '@store/locationStore/useLocationStore';
 import {
+  INIT_LOCATION_STORE_STATE,
   LOCATION_STORE_ERROR_MESSAGE,
   LOCATION_STORE_STATE_FAVORITE_LOCATION_LIST_MAX_LEN,
   LOCATION_STORE_STATE_RECENT_LOCATION_LIST_MAX_LEN,
@@ -56,6 +57,11 @@ describe('useLocationStore', () => {
   beforeEach(() => {
     // 각 테스트 전에 스토어를 초기 상태로 리셋
     locationStore.setState(INIT_STATE_MOCK);
+  });
+
+  afterAll(() => {
+    // 모든 테스트 완료 후 스토어를 초기 상태로 리셋
+    locationStore.setState(INIT_LOCATION_STORE_STATE);
   });
 
   const ErrorMessage = LOCATION_STORE_ERROR_MESSAGE;

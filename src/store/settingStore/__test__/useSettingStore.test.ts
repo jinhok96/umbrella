@@ -6,6 +6,7 @@ import { act } from 'react';
 import { renderHook } from '@testing-library/react';
 
 import { settingStore, useSettingStore } from '@store/settingStore/useSettingStore';
+import { INIT_SETTING_STORE_STATE } from '@store/settingStore/useSettingStore.const';
 
 import type { SettingStoreState } from '@store/settingStore/useSettingStore.type';
 
@@ -37,6 +38,11 @@ describe('useSettingStore', () => {
   beforeEach(() => {
     // 각 테스트 전에 스토어를 초기 상태로 리셋
     settingStore.setState(INIT_STATE_MOCK);
+  });
+
+  afterAll(() => {
+    // 모든 테스트 완료 후 스토어를 초기 상태로 리셋
+    settingStore.setState(INIT_SETTING_STORE_STATE);
   });
 
   test('초기 상태 확인', () => {
