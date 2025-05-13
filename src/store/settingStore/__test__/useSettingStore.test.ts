@@ -9,7 +9,7 @@ import { settingStore, useSettingStore } from '@store/settingStore/useSettingSto
 
 import type { SettingStoreState } from '@store/settingStore/useSettingStore.type';
 
-const INIT_STATE: SettingStoreState = {
+const INIT_STATE_MOCK: SettingStoreState = {
   theme: 'light',
   units: 'metric',
   lang: 'kr',
@@ -19,7 +19,7 @@ const INIT_STATE: SettingStoreState = {
   highContrastAccessibility: false,
 };
 
-const NEW_STATE: SettingStoreState = {
+const NEW_STATE_MOCK: SettingStoreState = {
   theme: 'dark',
   units: 'imperial',
   lang: 'en',
@@ -36,19 +36,19 @@ const NEW_STATE: SettingStoreState = {
 describe('useSettingStore', () => {
   beforeEach(() => {
     // 각 테스트 전에 스토어를 초기 상태로 리셋
-    settingStore.setState(INIT_STATE);
+    settingStore.setState(INIT_STATE_MOCK);
   });
 
   test('초기 상태 확인', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
   });
 
   test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
     const state = settingStore.getState();
-    expect(state).toMatchObject(INIT_STATE);
+    expect(state).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.theme;
+    const newState = NEW_STATE_MOCK.theme;
 
     act(() => {
       settingStore.getState().setTheme(newState);
@@ -59,10 +59,10 @@ describe('useSettingStore', () => {
 
   test('액션: setTheme', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.theme;
-    const newResult: SettingStoreState = { ...INIT_STATE, theme: newState };
+    const newState = NEW_STATE_MOCK.theme;
+    const newResult: SettingStoreState = { ...INIT_STATE_MOCK, theme: newState };
 
     act(() => {
       result.current.setTheme(newState);
@@ -73,10 +73,10 @@ describe('useSettingStore', () => {
 
   test('액션: setUnits', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.units;
-    const newResult: SettingStoreState = { ...INIT_STATE, units: newState };
+    const newState = NEW_STATE_MOCK.units;
+    const newResult: SettingStoreState = { ...INIT_STATE_MOCK, units: newState };
 
     act(() => {
       result.current.setUnits(newState);
@@ -87,10 +87,10 @@ describe('useSettingStore', () => {
 
   test('액션: setLang', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.lang;
-    const newResult: SettingStoreState = { ...INIT_STATE, lang: newState };
+    const newState = NEW_STATE_MOCK.lang;
+    const newResult: SettingStoreState = { ...INIT_STATE_MOCK, lang: newState };
 
     act(() => {
       result.current.setLang(newState);
@@ -101,10 +101,10 @@ describe('useSettingStore', () => {
 
   test('액션: setDefaultLocationMode', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.defaultLocationMode;
-    const newResult: SettingStoreState = { ...INIT_STATE, defaultLocationMode: newState };
+    const newState = NEW_STATE_MOCK.defaultLocationMode;
+    const newResult: SettingStoreState = { ...INIT_STATE_MOCK, defaultLocationMode: newState };
 
     act(() => {
       result.current.setDefaultLocationMode(newState);
@@ -115,10 +115,10 @@ describe('useSettingStore', () => {
 
   test('액션: setLocationPermission', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.locationPermission;
-    const newResult: SettingStoreState = { ...INIT_STATE, locationPermission: newState };
+    const newState = NEW_STATE_MOCK.locationPermission;
+    const newResult: SettingStoreState = { ...INIT_STATE_MOCK, locationPermission: newState };
 
     act(() => {
       result.current.setLocationPermission(newState);
@@ -129,10 +129,10 @@ describe('useSettingStore', () => {
 
   test('액션: setFontSizeAccessibility', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.fontSizeAccessibility;
-    const newResult: SettingStoreState = { ...INIT_STATE, fontSizeAccessibility: newState };
+    const newState = NEW_STATE_MOCK.fontSizeAccessibility;
+    const newResult: SettingStoreState = { ...INIT_STATE_MOCK, fontSizeAccessibility: newState };
 
     act(() => {
       result.current.setFontSizeAccessibility(newState);
@@ -143,10 +143,10 @@ describe('useSettingStore', () => {
 
   test('액션: setHighContrastAccessibility', () => {
     const { result } = renderHook(() => useSettingStore());
-    expect(result.current).toMatchObject(INIT_STATE);
+    expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE.highContrastAccessibility;
-    const newResult: SettingStoreState = { ...INIT_STATE, highContrastAccessibility: newState };
+    const newState = NEW_STATE_MOCK.highContrastAccessibility;
+    const newResult: SettingStoreState = { ...INIT_STATE_MOCK, highContrastAccessibility: newState };
 
     act(() => {
       result.current.setHighContrastAccessibility(newState);
