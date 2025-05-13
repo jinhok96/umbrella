@@ -32,26 +32,16 @@ const wrapper = ({ children }: PropsWithChildren) => (
 );
 
 describe('templateService Hooks', () => {
-  let container: HTMLDivElement | null;
-
   beforeEach(() => {
     jest.clearAllMocks();
     queryClient.clear();
 
     // 터미널에 console.error 표시되지 않도록 console.error 모킹
     jest.spyOn(console, 'error').mockImplementation(() => {});
-
-    // 테스트 컨테이너 생성
-    container = document.createElement('div');
-    document.body.appendChild(container);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
-
-    // 테스트 컨테이너 제거
-    container?.remove();
-    container = null;
   });
 
   const errorMessageMock = TEMPLATE_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText;
