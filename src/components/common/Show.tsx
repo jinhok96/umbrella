@@ -9,6 +9,8 @@ type ShowProps = PropsWithChildren<{ when: boolean; fallback?: ReactNode }>;
  * @param fallback when=false일 경우 렌더링할 요소
  * @jinhok96 25.05.14
  */
-export default function Show({ children, when, fallback = null }: ShowProps) {
-  return when ? children : fallback;
+export default function Show({ children, when, fallback }: ShowProps) {
+  if (when) return <>{children}</>;
+  if (fallback) return <>{fallback}</>;
+  return null;
 }
