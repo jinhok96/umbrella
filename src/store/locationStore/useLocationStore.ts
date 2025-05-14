@@ -22,7 +22,7 @@ import type { StateCreator } from 'zustand';
  * @ updateFavoriteLocationListOrder - 즐겨찾기 위치 목록 순서 변경
  * @ removeFavoriteLocation - 즐겨찾기 위치 목록에서 특정 원소 제거
  * @ removeAllFavoriteLocation - 즐겨찾기 위치 목록 전체 제거
- * @jinhok96 25.05.13
+ * @jinhok96 25.05.14
  */
 const locationStoreCreator: StateCreator<LocationStore> = set => ({
   ...INIT_LOCATION_STORE_STATE,
@@ -32,10 +32,8 @@ const locationStoreCreator: StateCreator<LocationStore> = set => ({
   // recentLocationList
   addRecentLocation: location =>
     set(state => {
-      // 중복 좌표 제거
-      const filteredList = state.recentLocationList.filter(
-        item => item.lat !== location.lat && item.lon !== location.lon,
-      );
+      // 중복 id 제거
+      const filteredList = state.recentLocationList.filter(item => item.id !== location.id);
 
       return {
         ...state,
@@ -59,9 +57,9 @@ const locationStoreCreator: StateCreator<LocationStore> = set => ({
       if (state.favoriteLocationList.some(item => item.name === location.name)) {
         throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationNameDuplication[lang]);
       }
-      // 중복 좌표 제한
-      if (state.favoriteLocationList.some(item => item.lat === location.lat && item.lon === location.lon)) {
-        throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationCoordDuplication[lang]);
+      // 중복 id 제한
+      if (state.favoriteLocationList.some(item => item.id === location.id)) {
+        throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationIdDuplication[lang]);
       }
 
       return {
