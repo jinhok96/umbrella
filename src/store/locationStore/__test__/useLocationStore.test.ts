@@ -21,7 +21,7 @@ const LOCATION_DATA_MOCK: Record<number, Location> = {
     name: Math.random().toString(),
     address: {
       en: Math.random().toString(),
-      kr: Math.random().toString(),
+      ko: Math.random().toString(),
     },
     lat: Math.random(),
     lon: Math.random(),
@@ -30,7 +30,7 @@ const LOCATION_DATA_MOCK: Record<number, Location> = {
     name: Math.random().toString(),
     address: {
       en: Math.random().toString(),
-      kr: Math.random().toString(),
+      ko: Math.random().toString(),
     },
     lat: Math.random(),
     lon: Math.random(),
@@ -199,7 +199,7 @@ describe('useLocationStore', () => {
       name: result.current.favoriteLocationList[0].name, // 중복
       address: {
         en: Math.random().toString(),
-        kr: Math.random().toString(),
+        ko: Math.random().toString(),
       },
       lat: Math.random(),
       lon: Math.random(),
@@ -213,7 +213,7 @@ describe('useLocationStore', () => {
       name: Math.random().toString(),
       address: {
         en: Math.random().toString(),
-        kr: Math.random().toString(),
+        ko: Math.random().toString(),
       },
       lat: result.current.favoriteLocationList[0].lat, // 중복
       lon: result.current.favoriteLocationList[0].lon, // 중복

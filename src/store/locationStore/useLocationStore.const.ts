@@ -26,14 +26,14 @@ export const LOCATION_STORE_ERROR_MESSAGE: LocationStoreErrorStatus = {
   // favoriteLocationList
   favoriteLocationListFull: {
     en: 'Favorite location list is full.',
-    kr: '즐겨찾기 위치 목록이 꽉 찼습니다.',
+    ko: '즐겨찾기 위치 목록이 꽉 찼습니다.',
   },
   favoriteLocationNameDuplication: {
     en: 'The name already exists in favorite location list.',
-    kr: '즐겨찾기 위치 목록에 이미 있는 이름입니다.',
+    ko: '즐겨찾기 위치 목록에 이미 있는 이름입니다.',
   },
   favoriteLocationCoordDuplication: {
     en: 'The location already exists in favorite location list.',
-    kr: '즐겨찾기 위치 목록에 이미 있는 위치입니다.',
+    ko: '즐겨찾기 위치 목록에 이미 있는 위치입니다.',
   },
 };

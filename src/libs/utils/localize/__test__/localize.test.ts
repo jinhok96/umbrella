@@ -7,7 +7,7 @@ import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 const mockLocalizedTextMap: LocalizedTextMap<'mock'> = {
   mock: {
     en: 'English Mock',
-    kr: '한국어 목',
+    ko: '한국어 목',
   },
 };
 
