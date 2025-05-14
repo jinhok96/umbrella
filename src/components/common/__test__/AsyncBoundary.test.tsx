@@ -7,27 +7,16 @@ import { act, render, screen } from '@testing-library/react';
 import AsyncBoundary from '@components/common/AsyncBoundary';
 
 describe('AsyncBoundary', () => {
-  let container: HTMLDivElement | null;
-
   beforeEach(() => {
     jest.clearAllMocks();
     jest.spyOn(console, 'error').mockImplementation(() => {});
-
-    // 테스트 컨테이너 생성
-    container = document.createElement('div');
-    document.body.appendChild(container);
   });
 
   afterEach(() => {
     jest.restoreAllMocks();
-
-    // 테스트 컨테이너 제거
-    container?.remove();
-    container = null;
   });
 
   test('children을 정상적으로 렌더링하는지 테스트', () => {
-    // 테스트 컴포넌트
     const childrenText = 'Test Children';
 
     act(() => {

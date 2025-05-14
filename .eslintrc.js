@@ -103,6 +103,8 @@ module.exports = {
     'import/no-duplicates': 'error',
     // type import
     '@typescript-eslint/consistent-type-imports': 'error',
+    // 기타 설정
+    'react/jsx-no-useless-fragment': 'off',
   },
   settings: {
     'import/resolver': {
