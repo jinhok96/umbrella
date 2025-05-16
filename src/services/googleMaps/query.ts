@@ -92,10 +92,10 @@ export function useGetCurrentAirQuality(params: UseGetCurrentAirQualityParams) {
 }
 
 /**
- * 미세먼지 시간별 예보
+ * 미세먼지 48시간 예보
  * @param lat number; 위도
  * @param lon number; 경도
- * @returns `{ dateTime, pm25, pm10 }`
+ * @returns `[{ dateTime, pm25, pm10 }]`
  * @jinhok96 25.05.16
  */
 export function useGetAirQualityHourlyForecasts(params: UseGetAirQualityHourlyForecastsParams) {
