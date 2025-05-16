@@ -1,4 +1,4 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { WEATHER_GC_TIME, WEATHER_STALE_TIME } from '@libs/constants/time.const';
 import { googleMapsService } from '@services/googleMaps/axios';
@@ -17,17 +17,6 @@ import type {
  * @returns `{ placeId, text, types }`
  * @jinhok96 25.05.16
  */
-export function usePostAutocompleteRegions() {
-  return useMutation({
-    mutationKey: ['usePostAutocompleteRegions'],
-    mutationFn: (payload: UseGetAutocompleteRegionParams) => {
-      // @ts-expect-error 나중에 없앨 훅
-      return googleMapsService.postAutocompleteRegions(payload);
-    },
-    throwOnError: true,
-  });
-}
-
 export function useGetAutocompleteRegions(params: UseGetAutocompleteRegionParams) {
   return useSuspenseQuery({
     queryKey: ['useGetAutocompleteRegions', JSON.stringify(params)],
@@ -88,17 +77,6 @@ export function useGetReverseGeocoding(params: UseGetReverseGeocodingParams) {
  * @returns `{ dateTime, pm25, pm10 }`
  * @jinhok96 25.05.16
  */
-export function usePostCurrentAirQuality() {
-  return useMutation({
-    mutationKey: ['usePostCurrentAirQuality'],
-    mutationFn: (payload: UseGetCurrentAirQualityParams) => {
-      // @ts-expect-error 나중에 없앨 훅
-      return googleMapsService.postCurrentAirQuality(payload);
-    },
-    throwOnError: true,
-  });
-}
-
 export function useGetCurrentAirQuality(params: UseGetCurrentAirQualityParams) {
   return useSuspenseQuery({
     queryKey: ['useGetCurrentAirQuality', JSON.stringify(params)],

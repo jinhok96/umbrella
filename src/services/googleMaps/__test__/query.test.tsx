@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 import type { PropsWithChildren } from 'react';
-import { useEffect } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
@@ -11,7 +10,7 @@ import ErrorBoundary from 'react-native-error-boundary';
 
 import { googleMapsService } from '@services/googleMaps/axios';
 import { GOOGLE_MAPS_SERVICE_MOCK } from '@services/googleMaps/mock/test.mock';
-import { useGetPlaceGeocoding, useGetReverseGeocoding, usePostAutocompleteRegions } from '@services/googleMaps/query';
+import { useGetAutocompleteRegions, useGetPlaceGeocoding, useGetReverseGeocoding } from '@services/googleMaps/query';
 
 // 서비스 모듈 모킹
 jest.mock('@services/googleMaps/axios', () => ({
@@ -50,22 +49,18 @@ describe('templateService Hooks', () => {
   const errorMessageMock = GOOGLE_MAPS_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText;
 
   /**
-   * usePostAutocompleteRegions 테스트
+   * useGetAutocompleteRegions 테스트
    * @jinhok96 25.05.16
    */
-  describe('usePostAutocompleteRegions', () => {
+  describe('useGetAutocompleteRegions', () => {
     const service = googleMapsService.postAutocompleteRegions as jest.Mock;
-    const useHook = usePostAutocompleteRegions;
+    const useHook = useGetAutocompleteRegions;
     const mock = GOOGLE_MAPS_SERVICE_MOCK.POST_AUTOCOMPLETE_REGIONS;
 
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(), { wrapper });
-
-      act(() => {
-        result.current?.mutate(mock.PAYLOAD);
-      });
+      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
@@ -77,12 +72,7 @@ describe('templateService Hooks', () => {
       service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
-        const { mutate } = useHook();
-
-        useEffect(() => {
-          mutate(mock.PAYLOAD);
-        }, [mutate]);
-
+        useHook(mock.PARAMS);
         return null;
       }
 
