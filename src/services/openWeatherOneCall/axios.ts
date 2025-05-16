@@ -49,8 +49,8 @@ function throwError(error: unknown): void {
   }
 }
 
-const OpenWeatherAPIBaseURL = Config.OPEN_WEATHER_API_BASE_URL || '';
-const OpenWeatherAPIKey = Config.OPEN_WEATHER_API_KEY || '';
+const OPEN_WEATHER_API_BASE_URL = Config.OPEN_WEATHER_API_BASE_URL || '';
+const OPEN_WEATHER_API_KEY = Config.OPEN_WEATHER_API_KEY || '';
 
 /**
  * OpenWeather One Call API 3.0 인스턴스
@@ -58,9 +58,9 @@ const OpenWeatherAPIKey = Config.OPEN_WEATHER_API_KEY || '';
  * params에 appid(API 키) 주입
  * @jinhok96 25.05.05
  */
-const axiosInstance = new HttpClient(OpenWeatherAPIBaseURL, {
+const axiosInstance = new HttpClient(OPEN_WEATHER_API_BASE_URL, {
   params: {
-    appid: OpenWeatherAPIKey,
+    appid: OPEN_WEATHER_API_KEY,
   },
 });
 
