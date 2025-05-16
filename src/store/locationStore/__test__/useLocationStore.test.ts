@@ -18,19 +18,21 @@ import type { Location, LocationStoreState } from '@store/locationStore/useLocat
 
 const LOCATION_DATA_MOCK: Record<number, Location> = {
   0: {
+    id: Math.random().toString(),
     name: Math.random().toString(),
     address: {
       en: Math.random().toString(),
-      kr: Math.random().toString(),
+      ko: Math.random().toString(),
     },
     lat: Math.random(),
     lon: Math.random(),
   },
   1: {
+    id: Math.random().toString(),
     name: Math.random().toString(),
     address: {
       en: Math.random().toString(),
-      kr: Math.random().toString(),
+      ko: Math.random().toString(),
     },
     lat: Math.random(),
     lon: Math.random(),
@@ -196,10 +198,11 @@ describe('useLocationStore', () => {
 
     // 기존 배열에 중복 이름 요소 추가 테스트
     const sameNameLocation: Location = {
+      id: Math.random().toString(),
       name: result.current.favoriteLocationList[0].name, // 중복
       address: {
         en: Math.random().toString(),
-        kr: Math.random().toString(),
+        ko: Math.random().toString(),
       },
       lat: Math.random(),
       lon: Math.random(),
@@ -208,18 +211,19 @@ describe('useLocationStore', () => {
       new Error(ErrorMessage.favoriteLocationNameDuplication[lang]),
     );
 
-    // 기존 배열에 중복 좌표 요소 추가 테스트
-    const sameCoordLocation: Location = {
+    // 기존 배열에 중복 id 요소 추가 테스트
+    const sameIdLocation: Location = {
+      id: result.current.favoriteLocationList[0].id,
       name: Math.random().toString(),
       address: {
         en: Math.random().toString(),
-        kr: Math.random().toString(),
+        ko: Math.random().toString(),
       },
-      lat: result.current.favoriteLocationList[0].lat, // 중복
-      lon: result.current.favoriteLocationList[0].lon, // 중복
+      lat: Math.random(),
+      lon: Math.random(),
     };
-    expect(() => result.current.addFavoriteLocation(sameCoordLocation)).toThrowError(
-      new Error(ErrorMessage.favoriteLocationCoordDuplication[lang]),
+    expect(() => result.current.addFavoriteLocation(sameIdLocation)).toThrowError(
+      new Error(ErrorMessage.favoriteLocationIdDuplication[lang]),
     );
 
     // 꽉 찬 배열에 요소 추가 테스트

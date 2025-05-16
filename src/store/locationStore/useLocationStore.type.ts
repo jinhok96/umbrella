@@ -1,6 +1,7 @@
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
 
 export type Location = {
+  id: string; // 위치 id (Google Places API에 등록된 id)
   name: string; // 위치 이름
   address: LocalizedText; // 행정구역 주소 '~동/군/구, ~시, 국가' (ex) '광진구, 서울특별시, 대한민국')
   lat: number; // 위도

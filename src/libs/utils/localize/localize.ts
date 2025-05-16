@@ -9,7 +9,7 @@ import type { SettingStoreState } from '@store/settingStore/useSettingStore.type
  * @param key 맵 키
  * @param lang 언어
  * @returns 로컬라이징된 텍스트
- * @jinhok96 25.05.12
+ * @jinhok96 25.05.14
  */
 export function getLocalizedTextFromMap<T extends string>(
   localizedTextMap: LocalizedTextMap<T>,

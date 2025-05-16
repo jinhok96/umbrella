@@ -10,6 +10,7 @@ import type {
   UseGetDailyAggregationParams,
   UseGetWeatherDataForTimestampParams,
 } from '@services/openWeatherOneCall/query.type';
+import type { Lang } from '@store/settingStore/useSettingStore.type';
 
 /**
  * STALE_TIME: OpenWeather One Call API 3.0 데이터 갱신 시간 10분
@@ -27,7 +28,11 @@ const GC_TIME = 15 * MINUTE;
 function useGetOpenWeatherAPICommonParams(): OpenWeatherOneCallAPICommonParams {
   const units = useSettingStore(state => state.units);
   const lang = useSettingStore(state => state.lang);
-  return { units, lang };
+  const langParam: Record<Lang, OpenWeatherOneCallAPICommonParams['lang']> = {
+    en: 'en',
+    ko: 'kr',
+  };
+  return { units, lang: langParam[lang] };
 }
 
 /**
