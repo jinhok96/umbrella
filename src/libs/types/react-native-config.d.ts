@@ -5,6 +5,7 @@ declare module 'react-native-config' {
     GOOGLE_MAPS_API_KEY?: string;
     GOOGLE_MAPS_PLACES_API_BASE_URL?: string;
     GOOGLE_MAPS_GEOCODING_API_BASE_URL?: string;
+    GOOGLE_MAPS_AIR_QUALITY_API_BASE_URL?: string;
   }
 
   export const Config: NativeConfig;
