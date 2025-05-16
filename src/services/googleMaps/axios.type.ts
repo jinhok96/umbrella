@@ -1,7 +1,16 @@
-export type GooglePlacesServiceError = {
+export type GoogleMapsServiceError = {
   code: number;
   message: string;
   status: string;
+};
+
+export type GoogleMapsAirQualityServiceError = {
+  error: {
+    code: number;
+    details: Array<{ '@type': string; fieldViolations: Array<{ description: string }> }>;
+    message: string;
+    status: string;
+  };
 };
 
 export type PostAutocompleteRegionsPayload = {
@@ -85,3 +94,62 @@ export type GetReverseGeocodingRawResponse = {
 };
 
 export type GetReverseGeocodingResponse = GeocodingResult;
+
+export type PostCurrentAirQualityPayload = { lat: number; lon: number };
+
+type AqiIndex = {
+  code: string;
+  displayName: string;
+  aqi: number;
+  aqiDisplay: string;
+  color: {
+    red: number;
+    green: number;
+    blue: number;
+  };
+  category: string;
+};
+type PollutantCode = 'pm25' | 'pm10' | 'co' | 'no2' | 'o3' | 'so2';
+type Pollutant = {
+  code: PollutantCode;
+  displayName: string;
+  fullName: string;
+  concentration: {
+    value: number;
+    units: 'PARTS_PER_BILLION' | 'MICROGRAMS_PER_CUBIC_METER'; // ppb, μg/m3
+  };
+};
+
+export type PostCurrentAirQualityRawResponse = {
+  dateTime: string;
+  regionCode: string;
+  indexes: AqiIndex[];
+  pollutants: Pollutant[];
+};
+
+export type PostCurrentAirQualityResponse = {
+  dateTime: string;
+  pm25?: number;
+  pm10?: number;
+};
+
+export type PostAirQualityHourlyForecastsPayload = {
+  lat: number;
+  lon: number;
+};
+
+export type PostAirQualityHourlyForecastsRawResponse = {
+  hourlyForecasts: Array<{
+    dateTime: string;
+    indexes: Array<AqiIndex & { dominantPollutant: PollutantCode }>;
+    pollutants: Pollutant[];
+  }>;
+  regionCode: string;
+  nextPageToken?: string;
+};
+
+export type PostAirQualityHourlyForecastsResponse = Array<{
+  dateTime: string;
+  pm25?: number;
+  pm10?: number;
+}>;

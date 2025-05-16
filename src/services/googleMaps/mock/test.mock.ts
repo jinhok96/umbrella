@@ -7,7 +7,7 @@ import type {
   GetReverseGeocodingParams,
   GetReverseGeocodingRawResponse,
   GetReverseGeocodingResponse,
-  GooglePlacesServiceError,
+  GoogleMapsServiceError,
   PostAutocompleteRegionsPayload,
   PostAutocompleteRegionsRawResponse,
   PostAutocompleteRegionsResponse,
@@ -63,7 +63,7 @@ const FULL_GEOCODING_RESULT: FullGeocodingResult = {
  * googleMapsService 공통 에러 Mock
  * @jinhok96 25.05.16
  */
-const googleMapsServiceMockHttpClientError: PickedAxiosResponse<GooglePlacesServiceError> = {
+const googleMapsServiceMockHttpClientError: PickedAxiosResponse<GoogleMapsServiceError> = {
   data: {
     code: 400,
     message: 'Invalid request.',

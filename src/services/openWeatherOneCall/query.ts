@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { MINUTE } from '@libs/constants/time.const';
+import { WEATHER_GC_TIME, WEATHER_STALE_TIME } from '@libs/constants/time.const';
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
@@ -11,14 +11,6 @@ import type {
   UseGetWeatherDataForTimestampParams,
 } from '@services/openWeatherOneCall/query.type';
 import type { Lang } from '@store/settingStore/useSettingStore.type';
-
-/**
- * STALE_TIME: OpenWeather One Call API 3.0 데이터 갱신 시간 10분
- * GC_TIME: staleTime과 겹치지 않도록 설정해 캐시 항상 유지
- * @jinhok96 25.04.30
- */
-const STALE_TIME = 10 * MINUTE;
-const GC_TIME = 15 * MINUTE;
 
 /**
  * 전역 상태에서 OpenWeather Oen Call API 3.0 공통 파라미터 가져오기
@@ -49,8 +41,8 @@ export function useGetCurrentAndForecastsWeatherData(params: UseGetCurrentAndFor
   return useSuspenseQuery({
     queryKey: ['useGetCurrentAndForecastsWeatherData', JSON.stringify(fullParams)],
     queryFn: () => openWeatherOneCallService.getCurrentAndForecastsWeatherData(fullParams),
-    staleTime: STALE_TIME,
-    gcTime: GC_TIME,
+    staleTime: WEATHER_STALE_TIME,
+    gcTime: WEATHER_GC_TIME,
   });
 }
 
@@ -68,8 +60,8 @@ export function useGetWeatherDataForTimestamp(params: UseGetWeatherDataForTimest
   return useSuspenseQuery({
     queryKey: ['useGetWeatherDataForTimestamp', JSON.stringify(fullParams)],
     queryFn: () => openWeatherOneCallService.getWeatherDataForTimestamp(fullParams),
-    staleTime: STALE_TIME,
-    gcTime: GC_TIME,
+    staleTime: WEATHER_STALE_TIME,
+    gcTime: WEATHER_GC_TIME,
   });
 }
 
@@ -87,7 +79,7 @@ export function useGetDailyAggregation(params: UseGetDailyAggregationParams) {
   return useSuspenseQuery({
     queryKey: ['useGetDailyAggregation', JSON.stringify(fullParams)],
     queryFn: () => openWeatherOneCallService.getDailyAggregation(fullParams),
-    staleTime: STALE_TIME,
-    gcTime: GC_TIME,
+    staleTime: WEATHER_STALE_TIME,
+    gcTime: WEATHER_GC_TIME,
   });
 }
