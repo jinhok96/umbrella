@@ -1,4 +1,6 @@
 import type {
+  AqiIndex,
+  AqiPmData,
   FullGeocodingResult,
   GeocodingResult,
   GetPlaceGeocodingParams,
@@ -7,10 +9,18 @@ import type {
   GetReverseGeocodingParams,
   GetReverseGeocodingRawResponse,
   GetReverseGeocodingResponse,
-  GoogleMapsServiceError,
+  GoogleMapsServiceAirQualityError,
+  GoogleMapsServicePlacesGeocodingError,
+  Pollutant,
+  PostAirQualityHourlyForecastsPayload,
+  PostAirQualityHourlyForecastsRawResponse,
+  PostAirQualityHourlyForecastsResponse,
   PostAutocompleteRegionsPayload,
   PostAutocompleteRegionsRawResponse,
   PostAutocompleteRegionsResponse,
+  PostCurrentAirQualityPayload,
+  PostCurrentAirQualityRawResponse,
+  PostCurrentAirQualityResponse,
 } from '@services/googleMaps/axios.type';
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
@@ -58,16 +68,73 @@ const FULL_GEOCODING_RESULT: FullGeocodingResult = {
     },
   ],
 };
+const AQI_DATE_TIME = 'testDateTime';
+const AQI_INDEX: AqiIndex = {
+  code: 'testCode',
+  displayName: 'testDisplayName',
+  aqi: 1,
+  aqiDisplay: 'testAqiDisplay',
+  color: {
+    red: 1,
+    green: 1,
+    blue: 1,
+  },
+  category: 'testCategory',
+};
+const POLLUTANT_LIST: Pollutant[] = [
+  {
+    code: 'pm25',
+    displayName: 'PM2.5',
+    fullName: 'testFullName',
+    concentration: {
+      value: 10,
+      units: 'PARTS_PER_BILLION',
+    },
+  },
+  {
+    code: 'pm10',
+    displayName: 'PM10',
+    fullName: 'testFullName',
+    concentration: {
+      value: 20,
+      units: 'PARTS_PER_BILLION',
+    },
+  },
+];
+const AQI_PM_RESULT: AqiPmData = {
+  dateTime: AQI_DATE_TIME,
+  pm25: POLLUTANT_LIST.find(item => item.code === 'pm25')?.concentration.value,
+  pm10: POLLUTANT_LIST.find(item => item.code === 'pm10')?.concentration.value,
+};
 
 /**
- * googleMapsService 공통 에러 Mock
+ * googleMapsService places, geocoding 공통 에러 Mock
  * @jinhok96 25.05.16
  */
-const googleMapsServiceMockHttpClientError: PickedAxiosResponse<GoogleMapsServiceError> = {
+const googleMapsServicePlacesGeocodingMockHttpClientError: PickedAxiosResponse<GoogleMapsServicePlacesGeocodingError> =
+  {
+    data: {
+      code: 400,
+      message: 'Invalid request.',
+      status: 'INVALID_REQUEST',
+    },
+    status: 500,
+    statusText: 'Internal Server Error',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+/**
+ * googleMapsService air quality 공통 에러 Mock
+ * @jinhok96 25.05.16
+ */
+const googleMapsServiceAirQualityMockHttpClientError: PickedAxiosResponse<GoogleMapsServiceAirQualityError> = {
   data: {
-    code: 400,
-    message: 'Invalid request.',
-    status: 'INVALID_REQUEST',
+    error: {
+      code: 400,
+      details: [{ '@type': 'testType', fieldViolations: [{ description: 'testDescription' }] }],
+      message: 'Invalid request.',
+      status: 'INVALID_REQUEST',
+    },
   },
   status: 500,
   statusText: 'Internal Server Error',
@@ -157,8 +224,61 @@ const getReverseGeocodingMockResponse: PickedAxiosResponse<GetReverseGeocodingRe
   headers: { 'Content-Type': 'application/json' },
 };
 
+/**
+ * postCurrentAirQuality Mock
+ * @jinhok96 25.05.16
+ */
+const postCurrentAirQualityMockPayload: PostCurrentAirQualityPayload = { lat: LAT, lon: LON };
+const postCurrentAirQualityMockRawData: PostCurrentAirQualityRawResponse = {
+  dateTime: AQI_DATE_TIME,
+  indexes: [AQI_INDEX],
+  pollutants: POLLUTANT_LIST,
+  regionCode: 'testRegionCode',
+};
+const postCurrentAirQualityMockData: PostCurrentAirQualityResponse = AQI_PM_RESULT;
+const postCurrentAirQualityMockRawResponse: PickedAxiosResponse<PostCurrentAirQualityRawResponse> = {
+  data: postCurrentAirQualityMockRawData,
+  status: 200,
+  statusText: 'OK',
+  headers: { 'Content-Type': 'application/json' },
+};
+const postCurrentAirQualityMockResponse: PickedAxiosResponse<PostCurrentAirQualityResponse> = {
+  data: postCurrentAirQualityMockData,
+  status: 200,
+  statusText: 'OK',
+  headers: { 'Content-Type': 'application/json' },
+};
+
+/**
+ * postAirQualityHourlyForecasts Mock
+ * @jinhok96 25.05.16
+ */
+const postAirQualityHourlyForecastsMockPayload: PostAirQualityHourlyForecastsPayload = { lat: LAT, lon: LON };
+const postAirQualityHourlyForecastsMockRawData: PostAirQualityHourlyForecastsRawResponse = {
+  hourlyForecasts: new Array(48).fill({
+    dateTime: AQI_DATE_TIME,
+    indexes: [AQI_INDEX],
+    pollutants: POLLUTANT_LIST,
+  }),
+  regionCode: 'testRegionCode',
+};
+const postAirQualityHourlyForecastsMockData: PostAirQualityHourlyForecastsResponse = new Array(48).fill(AQI_PM_RESULT);
+const postAirQualityHourlyForecastsMockRawResponse: PickedAxiosResponse<PostAirQualityHourlyForecastsRawResponse> = {
+  data: postAirQualityHourlyForecastsMockRawData,
+  status: 200,
+  statusText: 'OK',
+  headers: { 'Content-Type': 'application/json' },
+};
+const postAirQualityHourlyForecastsMockResponse: PickedAxiosResponse<PostAirQualityHourlyForecastsResponse> = {
+  data: postAirQualityHourlyForecastsMockData,
+  status: 200,
+  statusText: 'OK',
+  headers: { 'Content-Type': 'application/json' },
+};
+
 export const GOOGLE_MAPS_SERVICE_MOCK = {
-  HTTP_CLIENT_ERROR: googleMapsServiceMockHttpClientError,
+  HTTP_CLIENT_PLACES_GEOCODING_ERROR: googleMapsServicePlacesGeocodingMockHttpClientError,
+  HTTP_CLIENT_AIR_QUALITY_ERROR: googleMapsServiceAirQualityMockHttpClientError,
   POST_AUTOCOMPLETE_REGIONS: {
     PAYLOAD: postAutocompleteRegionsMockPayload,
     RAW_DATA: postAutocompleteRegionsMockRawData,
@@ -179,5 +299,19 @@ export const GOOGLE_MAPS_SERVICE_MOCK = {
     DATA: getReverseGeocodingMockData,
     RAW_RESPONSE: getReverseGeocodingMockRawResponse,
     RESPONSE: getReverseGeocodingMockResponse,
+  },
+  POST_CURRENT_AIR_QUALITY: {
+    PAYLOAD: postCurrentAirQualityMockPayload,
+    RAW_DATA: postCurrentAirQualityMockRawData,
+    DATA: postCurrentAirQualityMockData,
+    RAW_RESPONSE: postCurrentAirQualityMockRawResponse,
+    RESPONSE: postCurrentAirQualityMockResponse,
+  },
+  POST_AIR_QUALITY_HOURLY_FORECASTS: {
+    PAYLOAD: postAirQualityHourlyForecastsMockPayload,
+    RAW_DATA: postAirQualityHourlyForecastsMockRawData,
+    DATA: postAirQualityHourlyForecastsMockData,
+    RAW_RESPONSE: postAirQualityHourlyForecastsMockRawResponse,
+    RESPONSE: postAirQualityHourlyForecastsMockResponse,
   },
 };

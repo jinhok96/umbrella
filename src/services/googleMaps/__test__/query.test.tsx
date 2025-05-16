@@ -46,7 +46,7 @@ describe('templateService Hooks', () => {
     jest.restoreAllMocks();
   });
 
-  const errorMessageMock = GOOGLE_MAPS_SERVICE_MOCK.HTTP_CLIENT_ERROR.statusText;
+  const errorMessageMock = GOOGLE_MAPS_SERVICE_MOCK.HTTP_CLIENT_PLACES_GEOCODING_ERROR.statusText;
 
   /**
    * useGetAutocompleteRegions 테스트

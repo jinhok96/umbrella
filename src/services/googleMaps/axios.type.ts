@@ -1,10 +1,10 @@
-export type GoogleMapsServiceError = {
+export type GoogleMapsServicePlacesGeocodingError = {
   code: number;
   message: string;
   status: string;
 };
 
-export type GoogleMapsAirQualityServiceError = {
+export type GoogleMapsServiceAirQualityError = {
   error: {
     code: number;
     details: Array<{ '@type': string; fieldViolations: Array<{ description: string }> }>;
@@ -97,7 +97,7 @@ export type GetReverseGeocodingResponse = GeocodingResult;
 
 export type PostCurrentAirQualityPayload = { lat: number; lon: number };
 
-type AqiIndex = {
+export type AqiIndex = {
   code: string;
   displayName: string;
   aqi: number;
@@ -109,8 +109,10 @@ type AqiIndex = {
   };
   category: string;
 };
+
 type PollutantCode = 'pm25' | 'pm10' | 'co' | 'no2' | 'o3' | 'so2';
-type Pollutant = {
+
+export type Pollutant = {
   code: PollutantCode;
   displayName: string;
   fullName: string;
@@ -120,18 +122,20 @@ type Pollutant = {
   };
 };
 
-export type PostCurrentAirQualityRawResponse = {
-  dateTime: string;
-  regionCode: string;
-  indexes: AqiIndex[];
-  pollutants: Pollutant[];
-};
-
-export type PostCurrentAirQualityResponse = {
+export type AqiPmData = {
   dateTime: string;
   pm25?: number;
   pm10?: number;
 };
+
+export type PostCurrentAirQualityRawResponse = {
+  dateTime: string;
+  indexes: AqiIndex[];
+  pollutants: Pollutant[];
+  regionCode: string;
+};
+
+export type PostCurrentAirQualityResponse = AqiPmData;
 
 export type PostAirQualityHourlyForecastsPayload = {
   lat: number;
@@ -148,8 +152,4 @@ export type PostAirQualityHourlyForecastsRawResponse = {
   nextPageToken?: string;
 };
 
-export type PostAirQualityHourlyForecastsResponse = Array<{
-  dateTime: string;
-  pm25?: number;
-  pm10?: number;
-}>;
+export type PostAirQualityHourlyForecastsResponse = Array<AqiPmData>;

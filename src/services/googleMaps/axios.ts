@@ -13,8 +13,8 @@ import type {
   GetReverseGeocodingParams,
   GetReverseGeocodingRawResponse,
   GetReverseGeocodingResponse,
-  GoogleMapsAirQualityServiceError,
-  GoogleMapsServiceError,
+  GoogleMapsServiceAirQualityError,
+  GoogleMapsServicePlacesGeocodingError,
   PostAirQualityHourlyForecastsPayload,
   PostAirQualityHourlyForecastsRawResponse,
   PostAirQualityHourlyForecastsResponse,
@@ -42,14 +42,13 @@ type PostAirQualityHourlyForecastsFullPayload = {
 };
 
 function throwError(error: unknown): void {
-  const { data, statusText } = httpClientError<GoogleMapsServiceError>(error);
+  const { data, statusText } = httpClientError<GoogleMapsServicePlacesGeocodingError>(error);
   if (data?.message) throw new Error(data.message);
   throw new Error(statusText);
 }
 
 function throwAirQualityError(error: unknown): void {
-  console.log('error', error);
-  const { data, statusText } = httpClientError<GoogleMapsAirQualityServiceError>(error);
+  const { data, statusText } = httpClientError<GoogleMapsServiceAirQualityError>(error);
   if (data?.error.message) throw new Error(data.error.message);
   throw new Error(statusText);
 }
