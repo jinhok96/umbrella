@@ -1,5 +1,5 @@
-import { getLocalizedTextFromMap } from '@libs/utils/localize/localize';
 import { GET_LOCALIZED_TEXT_FROM_MAP_ERROR } from '@libs/utils/localize/localize.const';
+import { getLocalizedTextFromMap } from '@libs/utils/localize/localize.util';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';

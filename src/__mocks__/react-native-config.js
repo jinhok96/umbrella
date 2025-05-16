@@ -4,4 +4,5 @@ export default {
   GOOGLE_MAPS_API_KEY: 'GoogleMapsApiKeyMock',
   GOOGLE_MAPS_PLACES_API_BASE_URL: 'https://googlemapsplacesapibasemock.com',
   GOOGLE_MAPS_GEOCODING_API_BASE_URL: 'https://googlemapsgeocodingapibasemock.com',
+  GOOGLE_MAPS_AIR_QUALITY_API_BASE_URL: 'https://googlemapsairqualityapibasemock.com',
 };

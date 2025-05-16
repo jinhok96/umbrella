@@ -1,4 +1,4 @@
-import { getLocalizedTextFromMap } from '@libs/utils/localize/localize';
+import { getLocalizedTextFromMap } from '@libs/utils/localize/localize.util';
 import { HTTP_CLIENT_STATUS_LIST } from '@services/httpClient/httpClient.const';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
