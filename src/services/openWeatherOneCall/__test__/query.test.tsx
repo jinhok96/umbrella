@@ -54,7 +54,7 @@ describe('OpenWeatherOneCallService Hooks', () => {
 
   /**
    * useGetCurrentAndForecastsWeatherData 테스트
-   * @jinhok96 25.05.07
+   * @jinhok96 25.05.16
    */
   describe('useGetCurrentAndForecastsWeatherData', () => {
     const service = openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock;
@@ -93,13 +93,15 @@ describe('OpenWeatherOneCallService Hooks', () => {
         );
       });
 
-      expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      await waitFor(() => {
+        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      });
     });
   });
 
   /**
    * useGetWeatherDataForTimestamp 테스트
-   * @jinhok96 25.05.07
+   * @jinhok96 25.05.16
    */
   describe('useGetWeatherDataForTimestamp', () => {
     const service = openWeatherOneCallService.getWeatherDataForTimestamp as jest.Mock;
@@ -138,13 +140,15 @@ describe('OpenWeatherOneCallService Hooks', () => {
         );
       });
 
-      expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      await waitFor(() => {
+        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      });
     });
   });
 
   /**
    * useGetDailyAggregation 테스트
-   * @jinhok96 25.05.07
+   * @jinhok96 25.05.16
    */
   describe('useGetDailyAggregation', () => {
     const service = openWeatherOneCallService.getDailyAggregation as jest.Mock;
@@ -183,7 +187,9 @@ describe('OpenWeatherOneCallService Hooks', () => {
         );
       });
 
-      expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      await waitFor(() => {
+        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      });
     });
   });
 });

@@ -48,7 +48,7 @@ describe('templateService Hooks', () => {
 
   /**
    * useGetTemplate 테스트
-   * @jinhok96 25.05.07
+   * @jinhok96 25.05.16
    */
   describe('useGetTemplate', () => {
     const service = templateService.getTemplate as jest.Mock;
@@ -89,7 +89,9 @@ describe('templateService Hooks', () => {
         );
       });
 
-      expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      await waitFor(() => {
+        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
+      });
     });
   });
 });
