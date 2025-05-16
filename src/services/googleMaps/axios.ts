@@ -272,8 +272,8 @@ export const googleMapsService = {
   ): Promise<PickedAxiosResponse<PostAirQualityHourlyForecastsResponse | null> | undefined> => {
     try {
       // 48시간 예보
-      const startTime = getLocalISOString(1);
-      const endTime = getLocalISOString(48);
+      const startTime = getLocalISOString({ hourOffset: 1 });
+      const endTime = getLocalISOString({ hourOffset: 48 });
 
       const fullPayload: PostAirQualityHourlyForecastsFullPayload = {
         location: { latitude: payload.lat, longitude: payload.lon },
