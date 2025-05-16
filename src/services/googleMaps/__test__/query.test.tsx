@@ -60,7 +60,7 @@ describe('templateService Hooks', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper });
+      const { result } = renderHook(() => useHook(mock.PAYLOAD), { wrapper });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
@@ -72,7 +72,7 @@ describe('templateService Hooks', () => {
       service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
-        useHook(mock.PARAMS);
+        useHook(mock.PAYLOAD);
         return null;
       }
 

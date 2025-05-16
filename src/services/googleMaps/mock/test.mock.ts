@@ -160,7 +160,7 @@ const getReverseGeocodingMockResponse: PickedAxiosResponse<GetReverseGeocodingRe
 export const GOOGLE_MAPS_SERVICE_MOCK = {
   HTTP_CLIENT_ERROR: googleMapsServiceMockHttpClientError,
   POST_AUTOCOMPLETE_REGIONS: {
-    PARAMS: postAutocompleteRegionsMockPayload,
+    PAYLOAD: postAutocompleteRegionsMockPayload,
     RAW_DATA: postAutocompleteRegionsMockRawData,
     DATA: postAutocompleteRegionsMockData,
     RAW_RESPONSE: postAutocompleteRegionsMockRawResponse,
