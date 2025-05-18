@@ -31,11 +31,6 @@ export type ForecastsStoreState = {
 };
 
 export type ForecastsStoreActions = {
-  setCurrent: (state: ForecastsStoreState['current']) => void;
-  setMinutely: (state: ForecastsStoreState['minutely']) => void;
-  setHourly: (state: ForecastsStoreState['hourly']) => void;
-  setDaily: (state: ForecastsStoreState['daily']) => void;
-  setAlerts: (state: ForecastsStoreState['alerts']) => void;
   setForecasts: (
     getCurrentAndForecastsWeatherResponseData: GetCurrentAndForecastsWeatherDataResponse,
     postCurrentAirQualityResponseData: PostCurrentAirQualityResponse,

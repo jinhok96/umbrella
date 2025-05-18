@@ -8,21 +8,11 @@ import type { StateCreator } from 'zustand';
 
 /**
  * 날씨 정보 스토어
- * @ setCurrent - 현재 날씨 설정 (미세먼지 포함)
- * @ setMinutely - 1시간 단위 분별 예보 설정
- * @ setHourly - 48시간 단위 시간별 예보 설정 (미세먼지 포함)
- * @ setDaily - 8일 단위 일별 예보
- * @ setAlerts - 정부 날씨 경보 설정
  * @ setForecasts - 전체 날씨 정보 설정 - useGetCurrentAndForecastsWeatherData, useGetCurrentAirQuality, useGetAirQualityHourlyForecasts의 Response Data 가공
  * @jinhok96 25.05.18
  */
 const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
   ...INIT_FORECASTS_STORE_STATE,
-  setCurrent: current => set({ current: current || null }),
-  setMinutely: minutely => set({ minutely: minutely || null }),
-  setDaily: daily => set({ daily: daily || null }),
-  setHourly: hourly => set({ hourly: hourly || null }),
-  setAlerts: alerts => set({ alerts: alerts || null }),
   setForecasts: (
     getCurrentAndForecastsWeatherResponseData,
     postCurrentAirQualityResponseData,
