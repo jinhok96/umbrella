@@ -13,6 +13,7 @@ import type { StateCreator } from 'zustand';
  * @ setHourly - 48시간 단위 시간별 예보 설정 (미세먼지 포함)
  * @ setDaily - 8일 단위 일별 예보
  * @ setAlerts - 정부 날씨 경보 설정
+ * @ setForecasts - 전체 날씨 정보 설정 - useGetCurrentAndForecastsWeatherData, useGetCurrentAirQuality, useGetAirQualityHourlyForecasts의 Response Data 가공
  * @jinhok96 25.05.18
  */
 const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
