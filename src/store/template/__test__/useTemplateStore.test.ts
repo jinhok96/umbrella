@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { act } from 'react';
 
 import { renderHook } from '@testing-library/react';
@@ -10,57 +7,61 @@ import { INIT_TEMPLATE_STORE_STATE } from '@store/template/useTemplateStore.cons
 
 import type { TemplateStoreState } from '@store/template/useTemplateStore.type';
 
-const INIT_STATE_MOCK: TemplateStoreState = {
+type StoreState = TemplateStoreState;
+
+const INIT_STATE_MOCK: StoreState = {
   first: 'first',
   second: 'second',
   third: 'third',
 };
 
-const NEW_STATE_MOCK: TemplateStoreState = {
+const NEW_STATE_MOCK: StoreState = {
   first: 'new first',
   second: 'new second',
   third: 'new third',
 };
 
 /**
- * useTemplateStore 테스트
- * @jinhok96 25.05.13
+ * useStore 테스트
+ * @jinhok96 25.05.18
  */
-describe('useTemplateStore', () => {
+describe('useStore', () => {
+  const store = templateStore;
+  const useStore = useTemplateStore;
+
   beforeEach(() => {
     // 각 테스트 전에 스토어를 초기 상태로 리셋
-    templateStore.setState(INIT_STATE_MOCK);
+    store.setState(INIT_STATE_MOCK);
   });
 
   afterAll(() => {
     // 모든 테스트 완료 후 스토어를 초기 상태로 리셋
-    templateStore.setState(INIT_TEMPLATE_STORE_STATE);
+    store.setState(INIT_TEMPLATE_STORE_STATE);
   });
 
   test('초기 상태 확인', () => {
-    const { result } = renderHook(() => useTemplateStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
   });
 
   test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    const state = templateStore.getState();
-    expect(state).toMatchObject(INIT_STATE_MOCK);
+    expect(store.getState()).toMatchObject(INIT_STATE_MOCK);
 
     const newState = NEW_STATE_MOCK.first;
 
     act(() => {
-      templateStore.getState().setFirst(newState);
+      store.getState().setFirst(newState);
     });
 
-    expect(templateStore.getState().first).toBe(newState);
+    expect(store.getState().first).toBe(newState);
   });
 
   test('액션: setFirst', () => {
-    const { result } = renderHook(() => useTemplateStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     const newState = NEW_STATE_MOCK.first;
-    const newResult: TemplateStoreState = { ...INIT_STATE_MOCK, first: newState };
+    const newResult: StoreState = { ...INIT_STATE_MOCK, first: newState };
 
     act(() => {
       result.current.setFirst(newState);
@@ -70,11 +71,11 @@ describe('useTemplateStore', () => {
   });
 
   test('액션: setSecond', () => {
-    const { result } = renderHook(() => useTemplateStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     const newState = NEW_STATE_MOCK.second;
-    const newResult: TemplateStoreState = { ...INIT_STATE_MOCK, second: newState };
+    const newResult: StoreState = { ...INIT_STATE_MOCK, second: newState };
 
     act(() => {
       result.current.setSecond(newState);
@@ -84,11 +85,11 @@ describe('useTemplateStore', () => {
   });
 
   test('액션: setThird', () => {
-    const { result } = renderHook(() => useTemplateStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     const newState = NEW_STATE_MOCK.third;
-    const newResult: TemplateStoreState = { ...INIT_STATE_MOCK, third: newState };
+    const newResult: StoreState = { ...INIT_STATE_MOCK, third: newState };
 
     act(() => {
       result.current.setThird(newState);

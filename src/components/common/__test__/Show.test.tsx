@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import { act, render, screen } from '@testing-library/react';
 
 import Show from '@components/common/Show';

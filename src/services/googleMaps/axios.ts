@@ -214,13 +214,11 @@ export const googleMapsService = {
        * results에서 행정구역 필터링한 뒤 가장 작은 행정구역(첫번째 요소) 반환
        * @jinhok96 25.05.15
        */
-      const filteredResponseDataResult = response.data?.results
-        .filter(item => {
-          if (item.types.includes('sublocality_level_4')) return false;
-          if (!item.types.includes('sublocality')) return false;
-          return true;
-        })
-        .slice(0, 1);
+      const filteredResponseDataResult = response.data?.results.filter(item => {
+        if (item.types.includes('sublocality_level_4')) return false;
+        if (!item.types.includes('sublocality')) return false;
+        return true;
+      });
 
       const updatedResponse: PickedAxiosResponse<GetReverseGeocodingResponse | null> = {
         ...response,
