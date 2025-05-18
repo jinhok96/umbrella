@@ -1,6 +1,3 @@
-/**
- * @jest-environment jsdom
- */
 import { act } from 'react';
 
 import { renderHook } from '@testing-library/react';
@@ -15,6 +12,8 @@ import {
 import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { Location, LocationStoreState } from '@store/locationStore/useLocationStore.type';
+
+type StoreState = LocationStoreState;
 
 const LOCATION_DATA_MOCK: Record<number, Location> = {
   0: {
@@ -39,13 +38,13 @@ const LOCATION_DATA_MOCK: Record<number, Location> = {
   },
 };
 
-const INIT_STATE_MOCK: LocationStoreState = {
+const INIT_STATE_MOCK: StoreState = {
   currentLocation: null,
   recentLocationList: [],
   favoriteLocationList: [],
 };
 
-const NEW_STATE_MOCK: LocationStoreState = {
+const NEW_STATE_MOCK: StoreState = {
   currentLocation: LOCATION_DATA_MOCK[0],
   recentLocationList: [LOCATION_DATA_MOCK[0]],
   favoriteLocationList: [LOCATION_DATA_MOCK[0]],
@@ -53,46 +52,48 @@ const NEW_STATE_MOCK: LocationStoreState = {
 
 /**
  * useLocationStore 테스트
- * @jinhok96 25.05.13
+ * @jinhok96 25.05.18
  */
 describe('useLocationStore', () => {
+  const store = locationStore;
+  const useStore = useLocationStore;
+
   beforeEach(() => {
     // 각 테스트 전에 스토어를 초기 상태로 리셋
-    locationStore.setState(INIT_STATE_MOCK);
+    store.setState(INIT_STATE_MOCK);
   });
 
   afterAll(() => {
     // 모든 테스트 완료 후 스토어를 초기 상태로 리셋
-    locationStore.setState(INIT_LOCATION_STORE_STATE);
+    store.setState(INIT_LOCATION_STORE_STATE);
   });
-
   const ErrorMessage = LOCATION_STORE_ERROR_MESSAGE;
 
   test('초기 상태 확인', () => {
-    const { result } = renderHook(() => useLocationStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
   });
 
   test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    const state = locationStore.getState();
+    const state = store.getState();
     expect(state).toMatchObject(INIT_STATE_MOCK);
 
     const newState = NEW_STATE_MOCK.currentLocation;
 
     act(() => {
       if (!newState) throw new Error('newState is null');
-      locationStore.getState().setCurrentLocation(newState);
+      store.getState().setCurrentLocation(newState);
     });
 
-    expect(locationStore.getState().currentLocation).toBe(newState);
+    expect(store.getState().currentLocation).toBe(newState);
   });
 
   test('액션: setCurrentLocation', () => {
-    const { result } = renderHook(() => useLocationStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     const newState = NEW_STATE_MOCK.currentLocation;
-    const newResult: LocationStoreState = { ...INIT_STATE_MOCK, currentLocation: newState };
+    const newResult: StoreState = { ...INIT_STATE_MOCK, currentLocation: newState };
 
     act(() => {
       if (!newState) throw new Error('newState is null');
@@ -103,7 +104,7 @@ describe('useLocationStore', () => {
   });
 
   test('액션: addRecentLocation', () => {
-    const { result } = renderHook(() => useLocationStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     // 빈 배열에 요소 추가 테스트
@@ -130,7 +131,7 @@ describe('useLocationStore', () => {
     const fullLen = LOCATION_STORE_STATE_RECENT_LOCATION_LIST_MAX_LEN;
     const fullRecentLocationList = Array.from({ length: fullLen }, () => firstLocation);
     act(() => {
-      locationStore.setState({ ...INIT_STATE_MOCK, recentLocationList: fullRecentLocationList });
+      store.setState({ ...INIT_STATE_MOCK, recentLocationList: fullRecentLocationList });
     });
     expect(result.current.recentLocationList.length).toBe(fullLen);
     expect(result.current).toMatchObject({ ...INIT_STATE_MOCK, recentLocationList: fullRecentLocationList });
@@ -144,12 +145,12 @@ describe('useLocationStore', () => {
   });
 
   test('액션: removeRecentLocation', () => {
-    const { result } = renderHook(() => useLocationStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     const recentLocationList = [LOCATION_DATA_MOCK[0], LOCATION_DATA_MOCK[1]];
     act(() => {
-      locationStore.setState({ ...INIT_STATE_MOCK, recentLocationList });
+      store.setState({ ...INIT_STATE_MOCK, recentLocationList });
     });
     expect(result.current.recentLocationList).toMatchObject(recentLocationList);
 
@@ -162,12 +163,12 @@ describe('useLocationStore', () => {
   });
 
   test('액션: removeAllRecentLocation', () => {
-    const { result } = renderHook(() => useLocationStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     const recentLocationList = [LOCATION_DATA_MOCK[0], LOCATION_DATA_MOCK[1]];
     act(() => {
-      locationStore.setState({ ...INIT_STATE_MOCK, recentLocationList });
+      store.setState({ ...INIT_STATE_MOCK, recentLocationList });
     });
     expect(result.current.recentLocationList).toMatchObject(recentLocationList);
 
@@ -179,7 +180,7 @@ describe('useLocationStore', () => {
 
   test('액션: addFavoriteLocation', () => {
     const { lang } = settingStore.getState();
-    const { result } = renderHook(() => useLocationStore());
+    const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
     // 빈 배열에 요소 추가 테스트
@@ -230,7 +231,7 @@ describe('useLocationStore', () => {
     const fullLen = LOCATION_STORE_STATE_FAVORITE_LOCATION_LIST_MAX_LEN;
     const fullFavoriteLocationList = Array.from({ length: fullLen }, () => firstLocation);
     act(() => {
-      locationStore.setState({ ...INIT_STATE_MOCK, favoriteLocationList: fullFavoriteLocationList });
+      store.setState({ ...INIT_STATE_MOCK, favoriteLocationList: fullFavoriteLocationList });
     });
     expect(result.current.favoriteLocationList.length).toBe(fullLen);
     expect(result.current).toMatchObject({ ...INIT_STATE_MOCK, favoriteLocationList: fullFavoriteLocationList });
