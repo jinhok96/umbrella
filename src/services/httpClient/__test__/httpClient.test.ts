@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import nock from 'nock';
 
 import HttpClient from '@services/httpClient/httpClient';
