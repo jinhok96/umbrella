@@ -176,86 +176,19 @@ describe('useForecastsStore', () => {
   });
 
   test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    const state = store.getState();
-    expect(state).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.current;
+    expect(store.getState()).toMatchObject(INIT_STATE_MOCK);
 
     act(() => {
-      store.getState().setCurrent(newState);
+      store
+        .getState()
+        .setForecasts(
+          GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK,
+          POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK,
+          POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK,
+        );
     });
 
-    expect(store.getState().current).toBe(newState);
-  });
-
-  test('액션: setCurrent', () => {
-    const { result } = renderHook(() => useStore());
-    expect(result.current).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.current;
-    const newResult: ForecastsStoreState = { ...INIT_STATE_MOCK, current: newState };
-
-    act(() => {
-      result.current.setCurrent(newState);
-    });
-
-    expect(result.current).toMatchObject(newResult);
-  });
-
-  test('액션: setMinutely', () => {
-    const { result } = renderHook(() => useStore());
-    expect(result.current).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.minutely;
-    const newResult: ForecastsStoreState = { ...INIT_STATE_MOCK, minutely: newState };
-
-    act(() => {
-      result.current.setMinutely(newState);
-    });
-
-    expect(result.current).toMatchObject(newResult);
-  });
-
-  test('액션: setHourly', () => {
-    const { result } = renderHook(() => useStore());
-    expect(result.current).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.hourly;
-    const newResult: ForecastsStoreState = { ...INIT_STATE_MOCK, hourly: newState };
-
-    act(() => {
-      result.current.setHourly(newState);
-    });
-
-    expect(result.current).toMatchObject(newResult);
-  });
-
-  test('액션: setDaily', () => {
-    const { result } = renderHook(() => useStore());
-    expect(result.current).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.daily;
-    const newResult: ForecastsStoreState = { ...INIT_STATE_MOCK, daily: newState };
-
-    act(() => {
-      result.current.setDaily(newState);
-    });
-
-    expect(result.current).toMatchObject(newResult);
-  });
-
-  test('액션: setAlerts', () => {
-    const { result } = renderHook(() => useStore());
-    expect(result.current).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.alerts;
-    const newResult: ForecastsStoreState = { ...INIT_STATE_MOCK, alerts: newState };
-
-    act(() => {
-      result.current.setAlerts(newState);
-    });
-
-    expect(result.current).toMatchObject(newResult);
+    expect(store.getState()).toMatchObject(NEW_STATE_MOCK);
   });
 
   test('액션: setForecasts', () => {

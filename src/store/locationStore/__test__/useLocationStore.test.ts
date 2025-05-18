@@ -75,8 +75,7 @@ describe('useLocationStore', () => {
   });
 
   test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    const state = store.getState();
-    expect(state).toMatchObject(INIT_STATE_MOCK);
+    expect(store.getState()).toMatchObject(INIT_STATE_MOCK);
 
     const newState = NEW_STATE_MOCK.currentLocation;
 
