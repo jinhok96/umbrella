@@ -105,6 +105,7 @@ module.exports = {
     '@typescript-eslint/consistent-type-imports': 'error',
     // 기타 설정
     'react/jsx-no-useless-fragment': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
   settings: {
     'import/resolver': {
