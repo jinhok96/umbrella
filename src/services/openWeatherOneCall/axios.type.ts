@@ -97,6 +97,33 @@ export type GetCurrentAndForecastsWeatherDataParams = OpenWeatherOneCallAPICommo
   exclude?: Exclude[];
 };
 
+type CommonWeatherData = {
+  dt: number; // Current time, Unix, UTC
+  temp: number; // Temperature
+  feels_like: number; // Human perception of weather temperature
+  pressure: number; // Atmospheric pressure on the sea level, hPa
+  humidity: number; // Humidity, %
+  dew_point: number; // Dew point temperature
+  clouds: number; // Cloudiness, %
+  uvi: number; // Current UV index
+  visibility: number; // Average visibility, metres (max 10km)
+  wind_speed: number; // Wind speed
+  wind_gust?: number; // Wind gust (where available)
+  wind_deg: number; // Wind direction, degrees (meteorological)
+  rain?: {
+    '1h': number; // Precipitation, mm/h (where available)
+  };
+  snow?: {
+    '1h': number; // Precipitation, mm/h (where available)
+  };
+  weather: Array<{
+    id: number; // Weather condition id
+    main: string; // Group of weather parameters (Rain, Snow etc.)
+    description: string; // Weather condition description
+    icon: string; // Weather icon id
+  }>;
+};
+
 /**
  * 현재 날씨, 1시간 단위 분 예보, 48시간 단위 시간별 예보, 8일 단위 일별 예보, 정부 날씨 경보
  * @ lat: 위도, 소수점(-90; 90)
@@ -109,7 +136,7 @@ export type GetCurrentAndForecastsWeatherDataParams = OpenWeatherOneCallAPICommo
  * @ daily: 8일 단위 일별 예보
  * @ alerts: 정부 날씨 경보
  * @link https://openweathermap.org/api/one-call-3#current
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.18
  */
 export type GetCurrentAndForecastsWeatherDataResponse = {
   lat: number; // Latitude of the location, decimal (−90; 90)
@@ -117,33 +144,9 @@ export type GetCurrentAndForecastsWeatherDataResponse = {
   timezone: string; // Timezone name for the requested location
   timezone_offset: number; // Shift in seconds from UTC
 
-  current: {
-    dt: number; // Current time, Unix, UTC
+  current: CommonWeatherData & {
     sunrise?: number; // Sunrise time, Unix, UTC (optional for polar areas)
     sunset?: number; // Sunset time, Unix, UTC (optional for polar areas)
-    temp: number; // Temperature
-    feels_like: number; // Human perception of weather temperature
-    pressure: number; // Atmospheric pressure on the sea level, hPa
-    humidity: number; // Humidity, %
-    dew_point: number; // Dew point temperature
-    clouds: number; // Cloudiness, %
-    uvi: number; // Current UV index
-    visibility: number; // Average visibility, metres (max 10km)
-    wind_speed: number; // Wind speed
-    wind_gust?: number; // Wind gust (where available)
-    wind_deg: number; // Wind direction, degrees (meteorological)
-    rain?: {
-      '1h': number; // Precipitation, mm/h (where available)
-    };
-    snow?: {
-      '1h': number; // Precipitation, mm/h (where available)
-    };
-    weather: Array<{
-      id: number; // Weather condition id
-      main: string; // Group of weather parameters (Rain, Snow etc.)
-      description: string; // Weather condition description
-      icon: string; // Weather icon id
-    }>;
   };
 
   minutely?: Array<{
@@ -152,74 +155,39 @@ export type GetCurrentAndForecastsWeatherDataResponse = {
     precipitation: number; // Precipitation, mm/h
   }>;
 
-  hourly: Array<{
-    dt: number; // Time of the forecasted data, Unix, UTC
-    temp: number; // Temperature
-    feels_like: number; // Human perception of weather temperature
-    pressure: number; // Atmospheric pressure on the sea level, hPa
-    humidity: number; // Humidity, %
-    dew_point: number; // Dew point temperature
-    uvi: number; // UV index
-    clouds: number; // Cloudiness, %
-    visibility: number; // Average visibility, metres (max 10km)
-    wind_speed: number; // Wind speed
-    wind_gust?: number; // Wind gust (where available)
-    wind_deg: number; // Wind direction, degrees (meteorological)
-    pop: number; // Probability of precipitation (0-1)
-    rain?: {
-      '1h': number; // Precipitation, mm/h (where available)
-    };
-    snow?: {
-      '1h': number; // Precipitation, mm/h (where available)
-    };
-    weather: Array<{
-      id: number; // Weather condition id
-      main: string; // Group of weather parameters (Rain, Snow etc.)
-      description: string; // Weather condition description
-      icon: string; // Weather icon id
-    }>;
-  }>;
+  hourly: Array<
+    CommonWeatherData & {
+      pop?: number; // Probability of precipitation (0-1) (optional) }>;
+    }
+  >;
 
-  daily: Array<{
-    dt: number; // Time of the forecasted data, Unix, UTC
-    sunrise?: number; // Sunrise time, Unix, UTC (optional for polar areas)
-    sunset?: number; // Sunset time, Unix, UTC (optional for polar areas)
-    moonrise?: number; // Moonrise time, Unix, UTC
-    moonset?: number; // Moonset time, Unix, UTC
-    moon_phase: number; // Moon phase (0-1)
-    summary?: string; // Human-readable description of the weather conditions
-    temp: {
-      morn: number; // Morning temperature
-      day: number; // Day temperature
-      eve: number; // Evening temperature
-      night: number; // Night temperature
-      min: number; // Min daily temperature
-      max: number; // Max daily temperature
-    };
-    feels_like: {
-      morn: number; // Morning temperature perception
-      day: number; // Day temperature perception
-      eve: number; // Evening temperature perception
-      night: number; // Night temperature perception
-    };
-    pressure: number; // Atmospheric pressure on the sea level, hPa
-    humidity: number; // Humidity, %
-    dew_point: number; // Dew point temperature
-    wind_speed: number; // Wind speed
-    wind_gust?: number; // Wind gust (where available)
-    wind_deg: number; // Wind direction, degrees (meteorological)
-    clouds: number; // Cloudiness, %
-    uvi: number; // Maximum UV index for the day
-    pop: number; // Probability of precipitation (0-1)
-    rain?: number; // Precipitation volume, mm (where available)
-    snow?: number; // Snow volume, mm (where available)
-    weather: Array<{
-      id: number; // Weather condition id
-      main: string; // Group of weather parameters (Rain, Snow etc.)
-      description: string; // Weather condition description
-      icon: string; // Weather icon id
-    }>;
-  }>;
+  daily: Array<
+    Omit<CommonWeatherData, 'temp' | 'feels_like' | 'visibility' | 'rain' | 'snow'> & {
+      sunrise?: number; // Sunrise time, Unix, UTC (optional for polar areas)
+      sunset?: number; // Sunset time, Unix, UTC (optional for polar areas)
+      moonrise?: number; // Moonrise time, Unix, UTC
+      moonset?: number; // Moonset time, Unix, UTC
+      moon_phase: number; // Moon phase (0-1)
+      summary?: string; // Human-readable description of the weather conditions
+      temp: {
+        morn: number; // Morning temperature
+        day: number; // Day temperature
+        eve: number; // Evening temperature
+        night: number; // Night temperature
+        min: number; // Min daily temperature
+        max: number; // Max daily temperature
+      };
+      feels_like: {
+        morn: number; // Morning temperature perception
+        day: number; // Day temperature perception
+        eve: number; // Evening temperature perception
+        night: number; // Night temperature perception
+      };
+      pop: number; // Probability of precipitation (0-1)
+      rain?: number; // Precipitation volume, mm (where available)
+      snow?: number; // Snow volume, mm (where available)
+    }
+  >;
 
   alerts?: Array<{
     // National weather alerts (optional)
@@ -246,14 +214,14 @@ export type GetWeatherDataForTimestampParams = OpenWeatherOneCallAPICommonParams
 };
 
 /**
- * 1979년 1월 1일부터 4일 전 예보까지 모든 타임스탬프의 날씨 데이터
+ * 1979년 1월 1일부터 앞으로 4일 후 예보까지 모든 타임스탬프의 날씨 데이터
  * @ lat: 위도, 소수점(-90; 90)
  * @ lon: 경도, 소수점(-180, 180)
  * @ timezone: 요청한 위치의 타임 존
  * @ timezone_offset UTC: 시간과의 시간 차이
  * @ data: 요청한 타임스탬프의 날씨 데이터
  * @link https://openweathermap.org/api/one-call-3#history
- * @jinhok96 25.04.30
+ * @jinhok96 25.05.18
  */
 export type GetWeatherDataForTimestampResponse = {
   lat: number; // Latitude of the location, decimal (−90; 90)
