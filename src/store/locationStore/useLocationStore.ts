@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, devtools, persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 
 import {
   INIT_LOCATION_STORE_STATE,
@@ -24,7 +25,7 @@ import type { StateCreator } from 'zustand';
  * @ removeAllFavoriteLocation - 즐겨찾기 위치 목록 전체 제거
  * @jinhok96 25.05.14
  */
-const locationStoreCreator: StateCreator<LocationStore> = set => ({
+const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never]]> = set => ({
   ...INIT_LOCATION_STORE_STATE,
   // currentLocation
   setCurrentLocation: currentLocation => set({ currentLocation }),
@@ -62,10 +63,7 @@ const locationStoreCreator: StateCreator<LocationStore> = set => ({
         throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationIdDuplication[lang]);
       }
 
-      return {
-        ...state,
-        favoriteLocationList: [location, ...state.favoriteLocationList],
-      };
+      state.favoriteLocationList.unshift(location);
     }),
   updateFavoriteLocationListOrder: locationList => set({ favoriteLocationList: locationList }),
   removeFavoriteLocation: index =>
@@ -75,15 +73,18 @@ const locationStoreCreator: StateCreator<LocationStore> = set => ({
 
 export const useLocationStore = create<LocationStore>()(
   devtools(
-    persist<LocationStore, [], [], LocationStoreState>(locationStoreCreator, {
-      name: 'locationStore',
-      storage: createJSONStorage(() => AsyncStorage),
-      partialize: state => ({
-        currentLocation: state.currentLocation,
-        recentLocationList: state.recentLocationList,
-        favoriteLocationList: state.favoriteLocationList,
-      }),
-    }),
+    persist<LocationStore, [['zustand/devtools', never]], [['zustand/immer', never]], LocationStoreState>(
+      immer(locationStoreCreator),
+      {
+        name: 'locationStore',
+        storage: createJSONStorage(() => AsyncStorage),
+        partialize: state => ({
+          currentLocation: state.currentLocation,
+          recentLocationList: state.recentLocationList,
+          favoriteLocationList: state.favoriteLocationList,
+        }),
+      },
+    ),
   ),
 );
 
