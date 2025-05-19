@@ -14,9 +14,8 @@ import type { StateCreator } from 'zustand';
  * @ setLang - 앱 언어 설정
  * @ setDefaultLocationMode - 앱 시작 시 기본 위치 모드 설정
  * @ setLocationPermission - 위치 권한 설정
- * @ setFontSizeAccessibility - 접근성 폰트 크기 설정
- * @ setHighContrastAccessibility - 접근성 고대비 설정
- * @jinhok96 25.05.13
+ * @ setFontSize - 접근성 폰트 크기 설정
+ * @jinhok96 25.05.19
  */
 const settingStoreCreator: StateCreator<SettingStore> = set => ({
   ...INIT_SETTING_STORE_STATE,
@@ -30,8 +29,7 @@ const settingStoreCreator: StateCreator<SettingStore> = set => ({
   setLocationPermission: permission => set({ locationPermission: permission }),
 
   // accessibility
-  setFontSizeAccessibility: fontSize => set({ fontSizeAccessibility: fontSize }),
-  setHighContrastAccessibility: highContrast => set({ highContrastAccessibility: highContrast }),
+  setFontSize: fontSize => set({ fontSize }),
 });
 
 export const useSettingStore = create<SettingStore>()(
@@ -45,8 +43,7 @@ export const useSettingStore = create<SettingStore>()(
         lang: state.lang,
         defaultLocationMode: state.defaultLocationMode,
         locationPermission: state.locationPermission,
-        fontSizeAccessibility: state.fontSizeAccessibility,
-        highContrastAccessibility: state.highContrastAccessibility,
+        fontSize: state.fontSize,
       }),
     }),
   ),

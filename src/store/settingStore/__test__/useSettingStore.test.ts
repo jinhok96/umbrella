@@ -15,8 +15,7 @@ const INIT_STATE_MOCK: StoreState = {
   lang: 'ko',
   defaultLocationMode: 'current',
   locationPermission: false,
-  fontSizeAccessibility: 'normal',
-  highContrastAccessibility: false,
+  fontSize: 'normal',
 };
 
 const NEW_STATE_MOCK: StoreState = {
@@ -25,8 +24,7 @@ const NEW_STATE_MOCK: StoreState = {
   lang: 'en',
   defaultLocationMode: 'recent',
   locationPermission: true,
-  fontSizeAccessibility: 'large',
-  highContrastAccessibility: true,
+  fontSize: 'large',
 };
 
 /**
@@ -134,29 +132,15 @@ describe('useSettingStore', () => {
     expect(result.current).toMatchObject(newResult);
   });
 
-  test('액션: setFontSizeAccessibility', () => {
+  test('액션: setFontSize', () => {
     const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
 
-    const newState = NEW_STATE_MOCK.fontSizeAccessibility;
-    const newResult: StoreState = { ...INIT_STATE_MOCK, fontSizeAccessibility: newState };
+    const newState = NEW_STATE_MOCK.fontSize;
+    const newResult: StoreState = { ...INIT_STATE_MOCK, fontSize: newState };
 
     act(() => {
-      result.current.setFontSizeAccessibility(newState);
-    });
-
-    expect(result.current).toMatchObject(newResult);
-  });
-
-  test('액션: setHighContrastAccessibility', () => {
-    const { result } = renderHook(() => useStore());
-    expect(result.current).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.highContrastAccessibility;
-    const newResult: StoreState = { ...INIT_STATE_MOCK, highContrastAccessibility: newState };
-
-    act(() => {
-      result.current.setHighContrastAccessibility(newState);
+      result.current.setFontSize(newState);
     });
 
     expect(result.current).toMatchObject(newResult);

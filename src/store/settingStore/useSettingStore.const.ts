@@ -6,6 +6,5 @@ export const INIT_SETTING_STORE_STATE: SettingStoreState = {
   lang: 'ko',
   defaultLocationMode: 'current',
   locationPermission: false,
-  fontSizeAccessibility: 'normal',
-  highContrastAccessibility: false,
+  fontSize: 'normal',
 };
