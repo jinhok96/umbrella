@@ -30,8 +30,7 @@ const settingStoreCreator: StateCreator<SettingStore> = set => ({
   setLocationPermission: permission => set({ locationPermission: permission }),
 
   // accessibility
-  setFontSizeAccessibility: fontSize => set({ fontSizeAccessibility: fontSize }),
-  setHighContrastAccessibility: highContrast => set({ highContrastAccessibility: highContrast }),
+  setFontSize: fontSize => set({ fontSize }),
 });
 
 export const useSettingStore = create<SettingStore>()(
@@ -45,8 +44,7 @@ export const useSettingStore = create<SettingStore>()(
         lang: state.lang,
         defaultLocationMode: state.defaultLocationMode,
         locationPermission: state.locationPermission,
-        fontSizeAccessibility: state.fontSizeAccessibility,
-        highContrastAccessibility: state.highContrastAccessibility,
+        fontSize: state.fontSize,
       }),
     }),
   ),
