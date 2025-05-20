@@ -8,6 +8,7 @@ import Section from '@components/Section';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import './global.css';
+import './reanimatedSetting';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,7 @@ export default function App(): React.JSX.Element {
   return (
     <ColorThemeProvider>
       <QueryClientProvider client={queryClient}>
-        <View className="bg-morning">
+        <View className="bg-test">
           <Text className="text-black">Theme: {theme}</Text>
           <Pressable
             className="text-black"
