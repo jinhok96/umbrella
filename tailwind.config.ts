@@ -1,6 +1,36 @@
 import type { Config } from 'tailwindcss';
+import type { PluginCreator } from 'tailwindcss/types/config';
 
 const nativewindPreset = require('nativewind/preset');
+
+// transition-colors에 대응하는 속성
+const COLOR_TRANSITION_PROPERTY_LIST: Record<string, string> = {
+  bg: 'background-color',
+  text: 'color',
+  border: 'border-color',
+  fill: 'fill',
+  stroke: 'stroke',
+  decoration: 'text-decoration-color',
+};
+
+/**
+ * 컬러 전환 애니메이션 자동화 플러그인
+ * @jinhok96 25.05.21
+ */
+const autoColorTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => {
+  Object.entries(COLOR_TRANSITION_PROPERTY_LIST).forEach(([prefix, property]) => {
+    matchUtilities(
+      {
+        [prefix]: () => ({
+          'transition-property': property,
+          'transition-timing-function': 'cubic-bezier(0.4, 0, 0.2, 1)', // ease-in-out
+          'transition-duration': '150ms',
+        }),
+      },
+      { values: theme('colors') },
+    );
+  });
+};
 
 const config: Config = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -74,7 +104,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [autoColorTransitionPlugin],
 };
 
 export default config;
