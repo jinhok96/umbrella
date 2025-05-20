@@ -25,7 +25,10 @@ type AsyncBoundaryProps = PropsWithChildren<ErrorBoundaryCustomProps & SuspenseC
  */
 export default function AsyncBoundary({ children, errorFallback, loadingFallback, onError }: AsyncBoundaryProps) {
   return (
-    <ErrorBoundary FallbackComponent={errorFallback} onError={onError}>
+    <ErrorBoundary
+      FallbackComponent={errorFallback}
+      onError={onError}
+    >
       <Suspense fallback={loadingFallback}>{children}</Suspense>
     </ErrorBoundary>
   );

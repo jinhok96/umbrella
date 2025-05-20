@@ -1,8 +1,16 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { WEATHER_GC_TIME, WEATHER_STALE_TIME } from '@libs/constants/time.const';
+import { getLocalISOString } from '@libs/utils/date.util';
 import { googleMapsService } from '@services/googleMaps/axios';
+import { useSettingStore } from '@store/settingStore/useSettingStore';
 
+import type {
+  CommonAirQualityPayload,
+  CommonAutocompleteRegionsPayload,
+  PostAirQualityHourlyForecastsPayload,
+  PostCurrentAirQualityPayload,
+} from '@services/googleMaps/axios.type';
 import type {
   UseGetAirQualityHourlyForecastsParams,
   UseGetAutocompleteRegionParams,
@@ -12,18 +20,37 @@ import type {
 } from '@services/googleMaps/query.type';
 
 /**
+ * Air Quality 공통 payload
+ * @returns `{ extraComputations }`
+ */
+function getCommonAirQualityPayload(): Pick<CommonAirQualityPayload, 'extraComputations'> {
+  return {
+    extraComputations: ['POLLUTANT_CONCENTRATION'],
+  };
+}
+
+/**
  * 행정 구역 검색 자동완성
  * @payload `{ input }`
  * @returns `{ placeId, text, types }`
- * @jinhok96 25.05.16
+ * @jinhok96 25.05.20
  */
 export function useGetAutocompleteRegions(params: UseGetAutocompleteRegionParams) {
+  const lang = useSettingStore(state => state.lang);
+
+  const commonPayload: CommonAutocompleteRegionsPayload = {
+    languageCode: lang,
+    includedPrimaryTypes: ['locality', 'sublocality', 'geocode'],
+  };
+
   return useSuspenseQuery({
-    queryKey: ['useGetAutocompleteRegions', JSON.stringify(params)],
+    queryKey: ['useGetAutocompleteRegions', JSON.stringify(params), JSON.stringify(commonPayload)],
     queryFn: () => {
       const { input } = params;
       if (!input) return null;
-      return googleMapsService.postAutocompleteRegions({ input });
+
+      const fullPayload = { ...commonPayload, input };
+      return googleMapsService.postAutocompleteRegions(fullPayload);
     },
     staleTime: Infinity,
     gcTime: Infinity,
@@ -75,16 +102,25 @@ export function useGetReverseGeocoding(params: UseGetReverseGeocodingParams) {
  * @param lat number; 위도
  * @param lon number; 경도
  * @returns `{ dateTime, pm25, pm10 }`
- * @jinhok96 25.05.16
+ * @jinhok96 25.05.20
  */
 export function useGetCurrentAirQuality(params: UseGetCurrentAirQualityParams) {
+  const lang = useSettingStore(state => state.lang);
+
+  const commonPayload: Omit<PostCurrentAirQualityPayload, 'location'> = {
+    languageCode: lang,
+    ...getCommonAirQualityPayload(),
+  };
+
   return useSuspenseQuery({
-    queryKey: ['useGetCurrentAirQuality', JSON.stringify(params)],
+    queryKey: ['useGetCurrentAirQuality', JSON.stringify(params), JSON.stringify(commonPayload)],
     queryFn: () => {
       const { lat, lon } = params;
       if (!lat && lat !== 0) return null;
       if (!lon && lon !== 0) return null;
-      return googleMapsService.postCurrentAirQuality({ lat, lon });
+
+      const fullPayload = { ...commonPayload, location: { latitude: lat, longitude: lon } };
+      return googleMapsService.postCurrentAirQuality(fullPayload);
     },
     staleTime: WEATHER_STALE_TIME,
     gcTime: WEATHER_GC_TIME,
@@ -96,16 +132,30 @@ export function useGetCurrentAirQuality(params: UseGetCurrentAirQualityParams) {
  * @param lat number; 위도
  * @param lon number; 경도
  * @returns `[{ dateTime, pm25, pm10 }]`
- * @jinhok96 25.05.16
+ * @jinhok96 25.05.20
  */
 export function useGetAirQualityHourlyForecasts(params: UseGetAirQualityHourlyForecastsParams) {
+  const lang = useSettingStore(state => state.lang);
+
+  // 48시간 예보
+  const startTime = getLocalISOString({ hourOffset: 1 });
+  const endTime = getLocalISOString({ hourOffset: 48 });
+
+  const commonPayload: Omit<PostAirQualityHourlyForecastsPayload, 'location'> = {
+    period: { startTime, endTime },
+    languageCode: lang,
+    ...getCommonAirQualityPayload(),
+  };
+
   return useSuspenseQuery({
-    queryKey: ['useGetAirQualityHourlyForecasts', JSON.stringify(params)],
+    queryKey: ['useGetAirQualityHourlyForecasts', JSON.stringify(params), JSON.stringify(commonPayload)],
     queryFn: () => {
       const { lat, lon } = params;
       if (!lat && lat !== 0) return null;
       if (!lon && lon !== 0) return null;
-      return googleMapsService.postAirQualityHourlyForecasts({ lat, lon });
+
+      const fullPayload = { ...commonPayload, location: { latitude: lat, longitude: lon } };
+      return googleMapsService.postAirQualityHourlyForecasts(fullPayload);
     },
     staleTime: WEATHER_STALE_TIME,
     gcTime: WEATHER_GC_TIME,
