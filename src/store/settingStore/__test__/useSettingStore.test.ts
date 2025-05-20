@@ -1,6 +1,4 @@
-import { act } from 'react';
-
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react-native';
 
 import { settingStore, useSettingStore } from '@store/settingStore/useSettingStore';
 import { INIT_SETTING_STORE_STATE } from '@store/settingStore/useSettingStore.const';

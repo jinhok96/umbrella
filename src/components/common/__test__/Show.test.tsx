@@ -1,31 +1,42 @@
-import { act, render, screen } from '@testing-library/react';
+import { Text } from 'react-native';
+
+import { render, screen, waitFor } from '@testing-library/react-native';
 
 import Show from '@components/common/Show';
 
 describe('Show', () => {
-  test('children을 정상적으로 렌더링하는지 테스트', () => {
+  test('children을 정상적으로 렌더링하는지 테스트', async () => {
     const childrenText = 'Test Children';
 
-    act(() => {
-      render(<Show when={true}>{childrenText}</Show>);
-    });
+    render(
+      <Show when={true}>
+        <Text>{childrenText}</Text>
+      </Show>,
+    );
 
-    expect(screen.queryByText(childrenText)?.textContent).toBe(childrenText);
+    const children = await screen.findByText(childrenText);
+    expect(children).toBeOnTheScreen();
   });
 
-  test('fallback을 정상적으로 렌더링하는지 테스트', () => {
+  test('fallback을 정상적으로 렌더링하는지 테스트', async () => {
     const childrenText = 'Test Children';
     const fallbackText = 'Test Fallback';
 
-    act(() => {
-      render(
-        <Show when={false} fallback={<div>{fallbackText}</div>}>
-          {childrenText}
-        </Show>,
-      );
-    });
+    render(
+      <Show
+        when={false}
+        fallback={<Text>{fallbackText}</Text>}
+      >
+        <Text>{childrenText}</Text>
+      </Show>,
+    );
 
-    expect(screen.queryByText(fallbackText)?.textContent).toBe(fallbackText);
-    expect(screen.queryByText(childrenText)?.textContent).not.toBe(childrenText);
+    const fallback = await screen.findByText(fallbackText);
+    expect(fallback).toBeOnTheScreen();
+
+    await waitFor(() => {
+      const children = screen.queryByText(childrenText);
+      expect(children).not.toBeOnTheScreen();
+    });
   });
 });

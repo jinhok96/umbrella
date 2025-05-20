@@ -1,13 +1,11 @@
-import type { PropsWithChildren } from 'react';
+import { Text } from 'react-native';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
-
-import ErrorBoundary from 'react-native-error-boundary';
+import { render, renderHook, screen, waitFor } from '@testing-library/react-native';
 
 import { templateService } from '@services/template/axios';
 import { TEMPLATE_SERVICE_MOCK } from '@services/template/mock/test.mock';
 import { useGetTemplate } from '@services/template/query';
+import { testQueryClient, TestQueryClientProvider } from '@services/test.util';
 
 // 서비스 모듈 모킹
 jest.mock('@services/template/axios', () => ({
@@ -16,25 +14,11 @@ jest.mock('@services/template/axios', () => ({
   },
 }));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
-const wrapper = ({ children }: PropsWithChildren) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
-
 describe('templateService Hooks', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    queryClient.clear();
-
     // 터미널에 console.error 표시되지 않도록 console.error 모킹
     jest.spyOn(console, 'error').mockImplementation(() => {});
+    testQueryClient.clear();
   });
 
   afterEach(() => {
@@ -45,7 +29,7 @@ describe('templateService Hooks', () => {
 
   /**
    * useGetTemplate 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetTemplate', () => {
     const service = templateService.getTemplate as jest.Mock;
@@ -56,13 +40,14 @@ describe('templateService Hooks', () => {
       service.mockResolvedValue(mock.RESPONSE);
 
       const { result } = renderHook(() => useHook(mock.PARAMS), {
-        wrapper,
+        wrapper: TestQueryClientProvider,
       });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
@@ -73,22 +58,18 @@ describe('templateService Hooks', () => {
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 });

@@ -1,9 +1,6 @@
-import type { PropsWithChildren } from 'react';
+import { Text } from 'react-native';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
-
-import ErrorBoundary from 'react-native-error-boundary';
+import { render, renderHook, screen, waitFor } from '@testing-library/react-native';
 
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/test.mock';
@@ -12,6 +9,7 @@ import {
   useGetDailyAggregation,
   useGetWeatherDataForTimestamp,
 } from '@services/openWeatherOneCall/query';
+import { TestQueryClientProvider, testQueryClient } from '@services/test.util';
 
 // 서비스 모듈 모킹
 jest.mock('@services/openWeatherOneCall/axios', () => ({
@@ -22,25 +20,11 @@ jest.mock('@services/openWeatherOneCall/axios', () => ({
   },
 }));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
-const wrapper = ({ children }: PropsWithChildren) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
-
 describe('OpenWeatherOneCallService Hooks', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    queryClient.clear();
-
     // 터미널에 console.error 표시되지 않도록 console.error 모킹
     jest.spyOn(console, 'error').mockImplementation(() => {});
+    testQueryClient.clear();
   });
 
   afterEach(() => {
@@ -51,7 +35,7 @@ describe('OpenWeatherOneCallService Hooks', () => {
 
   /**
    * useGetCurrentAndForecastsWeatherData 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetCurrentAndForecastsWeatherData', () => {
     const service = openWeatherOneCallService.getCurrentAndForecastsWeatherData as jest.Mock;
@@ -61,12 +45,13 @@ describe('OpenWeatherOneCallService Hooks', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper });
+      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper: TestQueryClientProvider });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
@@ -77,28 +62,24 @@ describe('OpenWeatherOneCallService Hooks', () => {
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 
   /**
    * useGetWeatherDataForTimestamp 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetWeatherDataForTimestamp', () => {
     const service = openWeatherOneCallService.getWeatherDataForTimestamp as jest.Mock;
@@ -108,12 +89,15 @@ describe('OpenWeatherOneCallService Hooks', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper });
+      const { result } = renderHook(() => useHook(mock.PARAMS), {
+        wrapper: TestQueryClientProvider,
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
@@ -124,28 +108,24 @@ describe('OpenWeatherOneCallService Hooks', () => {
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 
   /**
    * useGetDailyAggregation 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetDailyAggregation', () => {
     const service = openWeatherOneCallService.getDailyAggregation as jest.Mock;
@@ -155,12 +135,15 @@ describe('OpenWeatherOneCallService Hooks', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper });
+      const { result } = renderHook(() => useHook(mock.PARAMS), {
+        wrapper: TestQueryClientProvider,
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
@@ -171,22 +154,18 @@ describe('OpenWeatherOneCallService Hooks', () => {
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 });

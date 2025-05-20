@@ -1,4 +1,6 @@
-import { act, render, screen } from '@testing-library/react';
+import { Text } from 'react-native';
+
+import { render, screen } from '@testing-library/react-native';
 
 import AsyncBoundary from '@components/common/AsyncBoundary';
 
@@ -12,21 +14,20 @@ describe('AsyncBoundary', () => {
     jest.restoreAllMocks();
   });
 
-  test('children을 정상적으로 렌더링하는지 테스트', () => {
+  test('children을 정상적으로 렌더링하는지 테스트', async () => {
     const childrenText = 'Test Children';
 
-    act(() => {
-      render(
-        <AsyncBoundary>
-          <div>{childrenText}</div>
-        </AsyncBoundary>,
-      );
-    });
+    render(
+      <AsyncBoundary>
+        <Text>{childrenText}</Text>
+      </AsyncBoundary>,
+    );
 
-    expect(screen.queryByText(childrenText)?.textContent).toBe(childrenText);
+    const children = await screen.findByText(childrenText);
+    expect(children).toBeOnTheScreen();
   });
 
-  test('에러 발생 시 errorFallback이 렌더링되는지 테스트', () => {
+  test('에러 발생 시 errorFallback이 렌더링되는지 테스트', async () => {
     const errorText = 'Test Error';
 
     function TestComponent({ isError }: { isError: boolean }) {
@@ -34,18 +35,17 @@ describe('AsyncBoundary', () => {
       return null;
     }
 
-    act(() => {
-      render(
-        <AsyncBoundary errorFallback={error => <div>{error.error.message}</div>}>
-          <TestComponent isError />
-        </AsyncBoundary>,
-      );
-    });
+    render(
+      <AsyncBoundary errorFallback={error => <Text>{error.error.message}</Text>}>
+        <TestComponent isError />
+      </AsyncBoundary>,
+    );
 
-    expect(screen.queryByText(errorText)?.textContent).toBe(errorText);
+    const children = await screen.findByText(errorText);
+    expect(children).toBeOnTheScreen();
   });
 
-  test('로딩 중일 때 loadingFallback이 렌더링되는지 테스트', () => {
+  test('로딩 중일 때 loadingFallback이 렌더링되는지 테스트', async () => {
     const loadingText = 'Test Loading';
 
     function TestComponent({ isLoading }: { isLoading: boolean }) {
@@ -53,15 +53,14 @@ describe('AsyncBoundary', () => {
       return null;
     }
 
-    act(() => {
-      render(
-        <AsyncBoundary loadingFallback={<div>{loadingText}</div>}>
-          <TestComponent isLoading />
-        </AsyncBoundary>,
-      );
-    });
+    render(
+      <AsyncBoundary loadingFallback={<Text>{loadingText}</Text>}>
+        <TestComponent isLoading />
+      </AsyncBoundary>,
+    );
 
-    expect(screen.queryByText(loadingText)?.textContent).toBe(loadingText);
+    const children = await screen.findByText(loadingText);
+    expect(children).toBeOnTheScreen();
   });
 
   test('onError 콜백이 에러 발생 시 호출되는지 테스트', () => {
@@ -77,17 +76,16 @@ describe('AsyncBoundary', () => {
       stackTrace: '',
     };
 
-    act(() => {
-      render(
-        <AsyncBoundary
-          onError={(error, stackTrace) => {
-            onErrorResult.errorMessage = error.message;
-            onErrorResult.stackTrace = stackTrace;
-          }}>
-          <TestComponent isError />
-        </AsyncBoundary>,
-      );
-    });
+    render(
+      <AsyncBoundary
+        onError={(error, stackTrace) => {
+          onErrorResult.errorMessage = error.message;
+          onErrorResult.stackTrace = stackTrace;
+        }}
+      >
+        <TestComponent isError />
+      </AsyncBoundary>,
+    );
 
     expect(onErrorResult.errorMessage).toBe(errorText);
     expect(onErrorResult.stackTrace).not.toBe('');

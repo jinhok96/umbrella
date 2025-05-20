@@ -1,6 +1,4 @@
-import { act } from 'react';
-
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react-native';
 
 import { templateStore, useTemplateStore } from '@store/template/useTemplateStore';
 import { INIT_TEMPLATE_STORE_STATE } from '@store/template/useTemplateStore.const';
@@ -23,7 +21,7 @@ const NEW_STATE_MOCK: StoreState = {
 
 /**
  * useStore 테스트
- * @jinhok96 25.05.18
+ * @jinhok96 25.05.20
  */
 describe('useStore', () => {
   const store = templateStore;
