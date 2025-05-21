@@ -1,3 +1,5 @@
+import { platformSelect } from 'nativewind/theme';
+
 import type { Config } from 'tailwindcss';
 import type { PluginCreator } from 'tailwindcss/types/config';
 
@@ -38,6 +40,51 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      // format: ${font}-${weight}
+      fontFamily: {
+        // Pretendard
+        'pretendard-regular': platformSelect({
+          default: 'Pretendard-Regular',
+          android: 'Pretendard-Regular',
+          ios: 'Pretendard-Regular',
+        }),
+        'pretendard-medium': platformSelect({
+          default: 'Pretendard-Medium',
+          android: 'Pretendard-Medium',
+          ios: 'Pretendard-Medium',
+        }),
+        'pretendard-semibold': platformSelect({
+          default: 'Pretendard-SemiBold',
+          android: 'Pretendard-SemiBold',
+          ios: 'Pretendard-SemiBold',
+        }),
+        'pretendard-bold': platformSelect({
+          default: 'Pretendard-Bold',
+          android: 'Pretendard-Bold',
+          ios: 'Pretendard-Bold',
+        }),
+        // Montserrat
+        'montserrat-regular': platformSelect({
+          default: 'Montserrat-Regular',
+          android: 'Montserrat-Regular',
+          ios: 'Montserrat-Regular',
+        }),
+        'montserrat-medium': platformSelect({
+          default: 'Montserrat-Medium',
+          android: 'Montserrat-Medium',
+          ios: 'Montserrat-Medium',
+        }),
+        'montserrat-semibold': platformSelect({
+          default: 'Montserrat-SemiBold',
+          android: 'Montserrat-SemiBold',
+          ios: 'Montserrat-SemiBold',
+        }),
+        'montserrat-bold': platformSelect({
+          default: 'Montserrat-Bold',
+          android: 'Montserrat-Bold',
+          ios: 'Montserrat-Bold',
+        }),
+      },
       colors: {
         // Test
         test: 'var(--color-test)',
