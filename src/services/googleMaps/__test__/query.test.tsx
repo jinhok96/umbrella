@@ -1,9 +1,6 @@
-import type { PropsWithChildren } from 'react';
+import { Text } from 'react-native';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { act, render, renderHook, screen, waitFor } from '@testing-library/react';
-
-import ErrorBoundary from 'react-native-error-boundary';
+import { render, renderHook, screen, waitFor } from '@testing-library/react-native';
 
 import { googleMapsService } from '@services/googleMaps/axios';
 import { GOOGLE_MAPS_SERVICE_MOCK } from '@services/googleMaps/mock/test.mock';
@@ -14,6 +11,7 @@ import {
   useGetPlaceGeocoding,
   useGetReverseGeocoding,
 } from '@services/googleMaps/query';
+import { TestQueryClientProvider, testQueryClient } from '@services/test.util';
 
 // 서비스 모듈 모킹
 jest.mock('@services/googleMaps/axios', () => ({
@@ -26,25 +24,11 @@ jest.mock('@services/googleMaps/axios', () => ({
   },
 }));
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
-
-const wrapper = ({ children }: PropsWithChildren) => (
-  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-);
-
 describe('googleMapsService Hooks - Places, Geocoding', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    queryClient.clear();
-
     // 터미널에 console.error 표시되지 않도록 console.error 모킹
     jest.spyOn(console, 'error').mockImplementation(() => {});
+    testQueryClient.clear();
   });
 
   afterEach(() => {
@@ -55,7 +39,7 @@ describe('googleMapsService Hooks - Places, Geocoding', () => {
 
   /**
    * useGetAutocompleteRegions 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetAutocompleteRegions', () => {
     const service = googleMapsService.postAutocompleteRegions as jest.Mock;
@@ -65,44 +49,43 @@ describe('googleMapsService Hooks - Places, Geocoding', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PAYLOAD), { wrapper });
+      const { result } = renderHook(() => useHook(mock.USE_PARAMS), {
+        wrapper: TestQueryClientProvider,
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current?.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
       service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
-        useHook(mock.PAYLOAD);
+        useHook(mock.USE_PARAMS);
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 
   /**
    * useGetPlaceGeocoding 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetPlaceGeocoding', () => {
     const service = googleMapsService.getPlaceGeocoding as jest.Mock;
@@ -112,12 +95,15 @@ describe('googleMapsService Hooks - Places, Geocoding', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper });
+      const { result } = renderHook(() => useHook(mock.PARAMS), {
+        wrapper: TestQueryClientProvider,
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current?.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
@@ -128,28 +114,24 @@ describe('googleMapsService Hooks - Places, Geocoding', () => {
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 
   /**
    * useGetReverseGeocoding 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetReverseGeocoding', () => {
     const service = googleMapsService.getReverseGeocoding as jest.Mock;
@@ -159,12 +141,15 @@ describe('googleMapsService Hooks - Places, Geocoding', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PARAMS), { wrapper });
+      const { result } = renderHook(() => useHook(mock.PARAMS), {
+        wrapper: TestQueryClientProvider,
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current?.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
@@ -175,22 +160,18 @@ describe('googleMapsService Hooks - Places, Geocoding', () => {
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 });
@@ -198,7 +179,7 @@ describe('googleMapsService Hooks - Places, Geocoding', () => {
 describe('googleMapsService Hooks - Air Quality', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    queryClient.clear();
+    testQueryClient.clear();
 
     // 터미널에 console.error 표시되지 않도록 console.error 모킹
     jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -212,7 +193,7 @@ describe('googleMapsService Hooks - Air Quality', () => {
 
   /**
    * useGetCurrentAirQuality 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetCurrentAirQuality', () => {
     const service = googleMapsService.postCurrentAirQuality as jest.Mock;
@@ -222,44 +203,43 @@ describe('googleMapsService Hooks - Air Quality', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PAYLOAD), { wrapper });
+      const { result } = renderHook(() => useHook(mock.USE_PARAMS), {
+        wrapper: TestQueryClientProvider,
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current?.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
       service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
-        useHook(mock.PAYLOAD);
+        useHook(mock.USE_PARAMS);
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 
   /**
    * useGetCurrentAirQuality 테스트
-   * @jinhok96 25.05.16
+   * @jinhok96 25.05.20
    */
   describe('useGetAirQualityHourlyForecasts', () => {
     const service = googleMapsService.postAirQualityHourlyForecasts as jest.Mock;
@@ -269,38 +249,37 @@ describe('googleMapsService Hooks - Air Quality', () => {
     test('API 응답 성공', async () => {
       service.mockResolvedValue(mock.RESPONSE);
 
-      const { result } = renderHook(() => useHook(mock.PAYLOAD), { wrapper });
+      const { result } = renderHook(() => useHook(mock.USE_PARAMS), {
+        wrapper: TestQueryClientProvider,
+      });
 
       await waitFor(() => {
         expect(result.current.isSuccess).toBe(true);
-        expect(result.current?.data).toEqual(mock.RESPONSE);
       });
+
+      expect(result.current.data).toEqual(mock.RESPONSE);
     });
 
     test('에러 throw 테스트', async () => {
       service.mockRejectedValue(new Error(errorMessageMock));
 
       function TestComponent() {
-        useHook(mock.PAYLOAD);
+        useHook(mock.USE_PARAMS);
         return null;
       }
 
-      await act(async () => {
-        render(
-          <ErrorBoundary
-            FallbackComponent={error => <div>{error.error.message}</div>}
-            onError={error => {
-              expect(error).toBeInstanceOf(Error);
-              expect(error.message).toBe(errorMessageMock);
-            }}>
-            {wrapper({ children: <TestComponent /> })}
-          </ErrorBoundary>,
-        );
-      });
+      function FallbackComponent({ error }: { error: Error }) {
+        return <Text>{error.message}</Text>;
+      }
 
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessageMock)?.textContent).toBe(errorMessageMock);
-      });
+      render(
+        <TestQueryClientProvider FallbackComponent={({ error }) => <FallbackComponent error={error} />}>
+          <TestComponent />
+        </TestQueryClientProvider>,
+      );
+
+      const children = await screen.findByText(errorMessageMock);
+      expect(children).toBeOnTheScreen();
     });
   });
 });

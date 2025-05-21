@@ -1,6 +1,4 @@
-import { act } from 'react';
-
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react-native';
 
 import { locationStore, useLocationStore } from '@store/locationStore/useLocationStore';
 import {

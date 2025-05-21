@@ -8,10 +8,11 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@tanstack/query/recommended',
     'plugin:jest-dom/recommended',
+    'plugin:testing-library/react',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'import', 'jest'],
+  plugins: ['@typescript-eslint', 'import', 'jest', 'prettier'],
   env: {
     'jest/globals': true,
   },
@@ -21,12 +22,12 @@ module.exports = {
       {
         // .prettierrc.js와 동일
         arrowParens: 'avoid',
-        bracketSameLine: true,
         bracketSpacing: true,
         singleQuote: true,
         trailingComma: 'all',
         endOfLine: 'auto',
         printWidth: 120,
+        singleAttributePerLine: true,
       },
     ],
     'react/jsx-filename-extension': [

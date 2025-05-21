@@ -21,6 +21,13 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx", "src/__mocks__/react-native-config.js"],
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/__mocks__/react-native-config.js",
+    "nativewind-env.d.ts"
+  ],
   "exclude": ["node_modules", "android", "ios"]
 }

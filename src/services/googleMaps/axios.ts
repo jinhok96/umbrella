@@ -1,9 +1,7 @@
 import Config from 'react-native-config';
 
-import { getLocalISOString } from '@libs/utils/date.util';
 import HttpClient from '@services/httpClient/httpClient';
 import { httpClientError } from '@services/httpClient/httpClient.util';
-import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type {
   GeocodingResult,
@@ -27,20 +25,6 @@ import type {
 } from '@services/googleMaps/axios.type';
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
-type PostCurrentAirQualityFullPayload = {
-  location: { latitude: number; longitude: number };
-  languageCode: 'ko' | 'en'; // IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
-  extraComputations: ['POLLUTANT_CONCENTRATION'];
-};
-
-type PostAirQualityHourlyForecastsFullPayload = {
-  location: { latitude: number; longitude: number };
-  period: { startTime: string; endTime: string };
-  languageCode: 'ko' | 'en'; // IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
-  extraComputations: ['POLLUTANT_CONCENTRATION'];
-  pageToken?: string;
-};
-
 function throwError(error: unknown): void {
   const { data, statusText } = httpClientError<GoogleMapsServicePlacesGeocodingError>(error);
   if (data?.message) throw new Error(data.message);
@@ -51,21 +35,6 @@ function throwAirQualityError(error: unknown): void {
   const { data, statusText } = httpClientError<GoogleMapsServiceAirQualityError>(error);
   if (data?.error.message) throw new Error(data.error.message);
   throw new Error(statusText);
-}
-
-/**
- * Air Quality API 공통 payload
- * @returns `{ languageCode, extraComputations }`
- */
-function getAirQualityCommonPayload(): {
-  languageCode: 'ko' | 'en'; // IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
-  extraComputations: ['POLLUTANT_CONCENTRATION'];
-} {
-  const { lang } = settingStore.getState();
-  return {
-    languageCode: lang,
-    extraComputations: ['POLLUTANT_CONCENTRATION'],
-  };
 }
 
 const GOOGLE_MAPS_PLACES_API_BASE_URL = Config.GOOGLE_MAPS_PLACES_API_BASE_URL || '';
@@ -124,27 +93,16 @@ function filterGeocodingResult(data: GeocodingResult & Record<string, unknown>) 
 
 /**
  * Google Maps API 서비스
- * @jinhok96 25.05.16
+ * @jinhok96 25.05.20
  */
 export const googleMapsService = {
   postAutocompleteRegions: async (
     payload: PostAutocompleteRegionsPayload,
   ): Promise<PickedAxiosResponse<PostAutocompleteRegionsResponse | null> | undefined> => {
     try {
-      const { lang } = settingStore.getState();
-
-      const fullPayload: PostAutocompleteRegionsPayload & {
-        languageCode: 'ko' | 'en'; // IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
-        includedPrimaryTypes: '(regions)' | '(cities)' | Array<'locality' | 'sublocality' | 'geocode'>; // 지역 또는 구역 (ex: 동네, 우편번호) 필터링 (https://developers.google.com/maps/documentation/places/web-service/place-autocomplete?hl=ko#includedPrimaryTypes)
-      } = {
-        ...payload,
-        languageCode: lang,
-        includedPrimaryTypes: ['locality', 'sublocality', 'geocode'],
-      };
-
       const response = await placesAxiosInstance.post<PostAutocompleteRegionsRawResponse>(
         '/v1/places:autocomplete',
-        fullPayload,
+        payload,
         {
           headers: {
             'X-Goog-FieldMask':
@@ -234,14 +192,9 @@ export const googleMapsService = {
     payload: PostCurrentAirQualityPayload,
   ): Promise<PickedAxiosResponse<PostCurrentAirQualityResponse | null> | undefined> => {
     try {
-      const fullPayload: PostCurrentAirQualityFullPayload = {
-        location: { latitude: payload.lat, longitude: payload.lon },
-        ...getAirQualityCommonPayload(),
-      };
-
       const response = await airQualityAxiosInstance.post<PostCurrentAirQualityRawResponse>(
         `/v1/currentConditions:lookup?key=${GOOGLE_MAPS_API_KEY}`,
-        fullPayload,
+        payload,
       );
 
       if (!response.data?.pollutants.length) {
@@ -269,16 +222,6 @@ export const googleMapsService = {
     payload: PostAirQualityHourlyForecastsPayload,
   ): Promise<PickedAxiosResponse<PostAirQualityHourlyForecastsResponse | null> | undefined> => {
     try {
-      // 48시간 예보
-      const startTime = getLocalISOString({ hourOffset: 1 });
-      const endTime = getLocalISOString({ hourOffset: 48 });
-
-      const fullPayload: PostAirQualityHourlyForecastsFullPayload = {
-        location: { latitude: payload.lat, longitude: payload.lon },
-        period: { startTime, endTime },
-        ...getAirQualityCommonPayload(),
-      };
-
       // 전체 데이터
       const allResponseData: PostAirQualityHourlyForecastsResponse = [];
       let nextPageToken: string | undefined;
@@ -286,7 +229,7 @@ export const googleMapsService = {
 
       // 모든 페이지 데이터 가져오기
       do {
-        const nextPayload = nextPageToken ? { ...fullPayload, pageToken: nextPageToken } : fullPayload;
+        const nextPayload: PostAirQualityHourlyForecastsPayload = { ...payload, pageToken: nextPageToken };
         // 이 로직에서 반복문 내 await 사용이 필수이므로 eslint 룰 비활성화
         // eslint-disable-next-line no-await-in-loop
         const response = await airQualityAxiosInstance.post<PostAirQualityHourlyForecastsRawResponse>(

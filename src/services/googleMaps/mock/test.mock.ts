@@ -22,6 +22,11 @@ import type {
   PostCurrentAirQualityRawResponse,
   PostCurrentAirQualityResponse,
 } from '@services/googleMaps/axios.type';
+import type {
+  UseGetAirQualityHourlyForecastsParams,
+  UseGetAutocompleteRegionParams,
+  UseGetCurrentAirQualityParams,
+} from '@services/googleMaps/query.type';
 import type { PickedAxiosResponse } from '@services/httpClient/httpClient.type';
 
 const PLACE_ID = 'testId';
@@ -143,9 +148,14 @@ const googleMapsServiceAirQualityMockHttpClientError: PickedAxiosResponse<Google
 
 /**
  * postAutocompleteRegions Mock
- * @jinhok96 25.05.16
+ * @jinhok96 25.05.20
  */
-const postAutocompleteRegionsMockPayload: PostAutocompleteRegionsPayload = { input: 'test' };
+const postAutocompleteRegionsMockPayload: PostAutocompleteRegionsPayload = {
+  input: 'test',
+  languageCode: 'ko',
+  includedPrimaryTypes: ['locality', 'sublocality', 'geocode'],
+};
+const useGetAutocompleteRegionParams: UseGetAutocompleteRegionParams = { input: 'test' };
 const postAutocompleteRegionsMockRawData: PostAutocompleteRegionsRawResponse = {
   suggestions: [
     {
@@ -226,9 +236,17 @@ const getReverseGeocodingMockResponse: PickedAxiosResponse<GetReverseGeocodingRe
 
 /**
  * postCurrentAirQuality Mock
- * @jinhok96 25.05.16
+ * @jinhok96 25.05.20
  */
-const postCurrentAirQualityMockPayload: PostCurrentAirQualityPayload = { lat: LAT, lon: LON };
+const postCurrentAirQualityMockPayload: PostCurrentAirQualityPayload = {
+  location: { latitude: LAT, longitude: LON },
+  languageCode: 'ko',
+  extraComputations: ['POLLUTANT_CONCENTRATION'],
+};
+const useGetCurrentAirQualityMockParams: UseGetCurrentAirQualityParams = {
+  lat: postCurrentAirQualityMockPayload.location.latitude,
+  lon: postCurrentAirQualityMockPayload.location.longitude,
+};
 const postCurrentAirQualityMockRawData: PostCurrentAirQualityRawResponse = {
   dateTime: AQI_DATE_TIME,
   indexes: [AQI_INDEX],
@@ -251,9 +269,18 @@ const postCurrentAirQualityMockResponse: PickedAxiosResponse<PostCurrentAirQuali
 
 /**
  * postAirQualityHourlyForecasts Mock
- * @jinhok96 25.05.16
+ * @jinhok96 25.05.20
  */
-const postAirQualityHourlyForecastsMockPayload: PostAirQualityHourlyForecastsPayload = { lat: LAT, lon: LON };
+const postAirQualityHourlyForecastsMockPayload: PostAirQualityHourlyForecastsPayload = {
+  location: { latitude: LAT, longitude: LON },
+  period: { startTime: AQI_DATE_TIME, endTime: AQI_DATE_TIME },
+  languageCode: 'ko',
+  extraComputations: ['POLLUTANT_CONCENTRATION'],
+};
+const useGetAirQualityHourlyForecastsMockParams: UseGetAirQualityHourlyForecastsParams = {
+  lat: postAirQualityHourlyForecastsMockPayload.location.latitude,
+  lon: postAirQualityHourlyForecastsMockPayload.location.longitude,
+};
 const postAirQualityHourlyForecastsMockRawData: PostAirQualityHourlyForecastsRawResponse = {
   hourlyForecasts: new Array(48).fill({
     dateTime: AQI_DATE_TIME,
@@ -281,6 +308,7 @@ export const GOOGLE_MAPS_SERVICE_MOCK = {
   HTTP_CLIENT_AIR_QUALITY_ERROR: googleMapsServiceAirQualityMockHttpClientError,
   POST_AUTOCOMPLETE_REGIONS: {
     PAYLOAD: postAutocompleteRegionsMockPayload,
+    USE_PARAMS: useGetAutocompleteRegionParams,
     RAW_DATA: postAutocompleteRegionsMockRawData,
     DATA: postAutocompleteRegionsMockData,
     RAW_RESPONSE: postAutocompleteRegionsMockRawResponse,
@@ -302,6 +330,7 @@ export const GOOGLE_MAPS_SERVICE_MOCK = {
   },
   POST_CURRENT_AIR_QUALITY: {
     PAYLOAD: postCurrentAirQualityMockPayload,
+    USE_PARAMS: useGetCurrentAirQualityMockParams,
     RAW_DATA: postCurrentAirQualityMockRawData,
     DATA: postCurrentAirQualityMockData,
     RAW_RESPONSE: postCurrentAirQualityMockRawResponse,
@@ -309,6 +338,7 @@ export const GOOGLE_MAPS_SERVICE_MOCK = {
   },
   POST_AIR_QUALITY_HOURLY_FORECASTS: {
     PAYLOAD: postAirQualityHourlyForecastsMockPayload,
+    USE_PARAMS: useGetAirQualityHourlyForecastsMockParams,
     RAW_DATA: postAirQualityHourlyForecastsMockRawData,
     DATA: postAirQualityHourlyForecastsMockData,
     RAW_RESPONSE: postAirQualityHourlyForecastsMockRawResponse,

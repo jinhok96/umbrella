@@ -13,7 +13,18 @@ export type GoogleMapsServiceAirQualityError = {
   };
 };
 
-export type PostAutocompleteRegionsPayload = {
+/**
+ * Autocomplete Regions 공통 payload
+ * @ languageCode - IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
+ * @ includedPrimaryTypes - 지역 또는 구역 (ex: 동네, 우편번호) 필터링 (https://developers.google.com/maps/documentation/places/web-service/place-autocomplete?hl=ko#includedPrimaryTypes)f
+ * @jinhok96 25.05.20
+ */
+export type CommonAutocompleteRegionsPayload = {
+  languageCode: 'ko' | 'en';
+  includedPrimaryTypes: '(regions)' | '(cities)' | Array<'locality' | 'sublocality' | 'geocode'>;
+};
+
+export type PostAutocompleteRegionsPayload = CommonAutocompleteRegionsPayload & {
   input: string;
 };
 
@@ -95,7 +106,13 @@ export type GetReverseGeocodingRawResponse = {
 
 export type GetReverseGeocodingResponse = GeocodingResult;
 
-export type PostCurrentAirQualityPayload = { lat: number; lon: number };
+export type CommonAirQualityPayload = {
+  location: { latitude: number; longitude: number };
+  languageCode: 'ko' | 'en'; // IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
+  extraComputations: ['POLLUTANT_CONCENTRATION'];
+};
+
+export type PostCurrentAirQualityPayload = CommonAirQualityPayload;
 
 export type AqiIndex = {
   code: string;
@@ -137,9 +154,9 @@ export type PostCurrentAirQualityRawResponse = {
 
 export type PostCurrentAirQualityResponse = AqiPmData;
 
-export type PostAirQualityHourlyForecastsPayload = {
-  lat: number;
-  lon: number;
+export type PostAirQualityHourlyForecastsPayload = CommonAirQualityPayload & {
+  period: { startTime: string; endTime: string };
+  pageToken?: string;
 };
 
 export type PostAirQualityHourlyForecastsRawResponse = {

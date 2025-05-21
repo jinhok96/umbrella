@@ -1,6 +1,4 @@
-import { act } from 'react';
-
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react-native';
 
 import { forecastsStore, useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 import { INIT_FORECASTS_STORE_STATE } from '@store/forecastsStore/useForecastsStore.const';
@@ -154,7 +152,7 @@ const NEW_STATE_MOCK: StoreState = {
 
 /**
  * useForecastsStore 테스트
- * @jinhok96 25.05.18
+ * @jinhok96 25.05.20
  */
 describe('useForecastsStore', () => {
   const store = forecastsStore;
