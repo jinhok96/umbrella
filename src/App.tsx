@@ -24,126 +24,58 @@ export default function App(): React.JSX.Element {
         <View className="bg-test">
           <Text className="text-xl">Theme: {theme} (System Default)</Text>
           <View className="border">
-            <PretendardText className="text-xl">Theme: {theme} (Pretendard Regular)</PretendardText>
-            <PretendardText
-              className="text-xl"
-              weight="medium"
-            >
-              Theme: {theme} (Pretendard Medium)
-            </PretendardText>
-            <PretendardText
-              className="text-xl"
-              weight="semibold"
-            >
-              Theme: {theme} (Pretendard SemiBold)
-            </PretendardText>
-            <PretendardText
-              className="text-xl"
-              weight="bold"
-            >
-              Theme: {theme} (Pretendard Bold)
-            </PretendardText>
-            <MontserratText className="text-xl">Theme: {theme} (Montserrat Regular)</MontserratText>
-            <MontserratText
-              className="text-xl"
-              weight="medium"
-            >
-              Theme: {theme} (Montserrat Medium)
-            </MontserratText>
-            <MontserratText
-              className="text-xl"
-              weight="semibold"
-            >
-              Theme: {theme} (Montserrat SemiBold)
-            </MontserratText>
-            <MontserratText
-              className="text-xl"
-              weight="bold"
-            >
-              Theme: {theme} (Montserrat Bold)
-            </MontserratText>
+            <PretendardText typo="body-1">Theme: {theme} (Pretendard Regular)</PretendardText>
+            <PretendardText typo="caption-1">Theme: {theme} (Pretendard Medium)</PretendardText>
+            <PretendardText typo="button-1">Theme: {theme} (Pretendard SemiBold)</PretendardText>
+            <PretendardText typo="title-4">Theme: {theme} (Pretendard Bold)</PretendardText>
+            <MontserratText typo="body-1">Theme: {theme} (Montserrat Regular)</MontserratText>
+            <MontserratText typo="caption-1">Theme: {theme} (Montserrat Medium)</MontserratText>
+            <MontserratText typo="button-1">Theme: {theme} (Montserrat SemiBold)</MontserratText>
+            <MontserratText typo="title-4">Theme: {theme} (Montserrat Bold)</MontserratText>
           </View>
           <View className="border">
-            <PretendardText
-              className="text-title-1"
-              weight="bold"
-            >
-              Title1
-            </PretendardText>
-            <PretendardText
-              className="text-title-2"
-              weight="bold"
-            >
-              Title2
-            </PretendardText>
-            <PretendardText
-              className="text-title-3"
-              weight="bold"
-            >
-              Title3
-            </PretendardText>
-            <PretendardText
-              className="text-title-4"
-              weight="bold"
-            >
-              Title4
-            </PretendardText>
-            <PretendardText
-              className="text-title-5"
-              weight="bold"
-            >
-              Title5
-            </PretendardText>
-            <PretendardText className="text-body-1">Body1</PretendardText>
-            <PretendardText className="text-body-2">Body2</PretendardText>
-            <PretendardText className="text-body-3">Body3</PretendardText>
-            <PretendardText className="text-body-4">Body4</PretendardText>
-            <PretendardText
-              className="text-caption-1"
-              weight="medium"
-            >
-              Caption1
-            </PretendardText>
-            <PretendardText
-              className="text-caption-2"
-              weight="medium"
-            >
-              Caption2
-            </PretendardText>
-            <PretendardText
-              className="text-caption-3"
-              weight="medium"
-            >
-              Caption3
-            </PretendardText>
-            <PretendardText
-              className="text-caption-4"
-              weight="medium"
-            >
-              Caption4
-            </PretendardText>
-            <PretendardText
-              className="text-button-1"
-              weight="semibold"
-            >
-              Button1
-            </PretendardText>
-            <PretendardText
-              className="text-button-2"
-              weight="semibold"
-            >
-              Button2
-            </PretendardText>
+            <PretendardText typo="title-1">Pretendard Title1</PretendardText>
+            <PretendardText typo="title-2">Pretendard Title2</PretendardText>
+            <PretendardText typo="title-3">Pretendard Title3</PretendardText>
+            <PretendardText typo="title-4">Pretendard Title4</PretendardText>
+            <PretendardText typo="title-5">Pretendard Title5</PretendardText>
+            <PretendardText typo="body-1">Pretendard Body1</PretendardText>
+            <PretendardText typo="body-2">Pretendard Body2</PretendardText>
+            <PretendardText typo="body-3">Pretendard Body3</PretendardText>
+            <PretendardText typo="body-4">Pretendard Body4</PretendardText>
+            <PretendardText typo="caption-1">Pretendard Caption1</PretendardText>
+            <PretendardText typo="caption-2">Pretendard Caption2</PretendardText>
+            <PretendardText typo="caption-3">Pretendard Caption3</PretendardText>
+            <PretendardText typo="caption-4">Pretendard Caption4</PretendardText>
+            <PretendardText typo="button-1">Pretendard Button1</PretendardText>
+            <PretendardText typo="button-2">Pretendard Button2</PretendardText>
+          </View>
+          <View className="border">
+            <MontserratText typo="title-1">Montserrat Title1</MontserratText>
+            <MontserratText typo="title-2">Montserrat Title2</MontserratText>
+            <MontserratText typo="title-3">Montserrat Title3</MontserratText>
+            <MontserratText typo="title-4">Montserrat Title4</MontserratText>
+            <MontserratText typo="title-5">Montserrat Title5</MontserratText>
+            <MontserratText typo="body-1">Montserrat Body1</MontserratText>
+            <MontserratText typo="body-2">Montserrat Body2</MontserratText>
+            <MontserratText typo="body-3">Montserrat Body3</MontserratText>
+            <MontserratText typo="body-4">Montserrat Body4</MontserratText>
+            <MontserratText typo="caption-1">Montserrat Caption1</MontserratText>
+            <MontserratText typo="caption-2">Montserrat Caption2</MontserratText>
+            <MontserratText typo="caption-3">Montserrat Caption3</MontserratText>
+            <MontserratText typo="caption-4">Montserrat Caption4</MontserratText>
+            <MontserratText typo="button-1">Montserrat Button1</MontserratText>
+            <MontserratText typo="button-2">Montserrat Button2</MontserratText>
           </View>
           <View className="border">
             <Pressable onPress={() => setTheme('light')}>
-              <PretendardText className="text-2xl">Change Theme Light</PretendardText>
+              <PretendardText typo="button-1">Change Theme Light</PretendardText>
             </Pressable>
             <Pressable onPress={() => setTheme('dark')}>
-              <PretendardText className="text-2xl">Change Theme Dark</PretendardText>
+              <PretendardText typo="button-1">Change Theme Dark</PretendardText>
             </Pressable>
             <Pressable onPress={() => setTheme('highContrast')}>
-              <PretendardText className="text-2xl">Change Theme HighContrast</PretendardText>
+              <PretendardText typo="button-1">Change Theme HighContrast</PretendardText>
             </Pressable>
           </View>
           <Section title="Step One">
