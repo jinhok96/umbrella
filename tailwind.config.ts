@@ -34,6 +34,44 @@ const autoColorTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => 
   });
 };
 
+// px -> rem 변환 상수
+const REM = 0.0625;
+const generateFontSize = (size: number) => `${size * REM}rem`;
+const generateLetterSpacing = (size: number, letterSpacing: number) => `${size * letterSpacing * REM}px`;
+const generateTextStyle = (size: number, lineHeight: string, letterSpacing: number) => ({
+  fontSize: generateFontSize(size),
+  lineHeight,
+  letterSpacing: generateLetterSpacing(size, letterSpacing),
+});
+
+/**
+ * 타이포그래피 스타일을 생성하는 플러그인
+ * @jinhok96 25.05.21
+ */
+const typoPlugin: PluginCreator = ({ addUtilities }) => {
+  addUtilities({
+    // Title
+    '.text-title-1': generateTextStyle(28, '140%', -0.03),
+    '.text-title-2': generateTextStyle(24, '140%', -0.03),
+    '.text-title-3': generateTextStyle(20, '145%', -0.03),
+    '.text-title-4': generateTextStyle(16, '145%', -0.03),
+    '.text-title-5': generateTextStyle(14, '145%', -0.03),
+    // Body
+    '.text-body-1': generateTextStyle(16, '160%', -0.03),
+    '.text-body-2': generateTextStyle(14, '160%', -0.03),
+    '.text-body-3': generateTextStyle(13, '160%', -0.03),
+    '.text-body-4': generateTextStyle(12, '160%', -0.03),
+    // Caption
+    '.text-caption-1': generateTextStyle(16, '150%', -0.03),
+    '.text-caption-2': generateTextStyle(14, '150%', -0.03),
+    '.text-caption-3': generateTextStyle(13, '150%', -0.03),
+    '.text-caption-4': generateTextStyle(12, '150%', -0.03),
+    // Button
+    '.text-button-1': generateTextStyle(16, '130%', -0.02),
+    '.text-button-2': generateTextStyle(14, '130%', -0.02),
+  });
+};
+
 const config: Config = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   presets: [nativewindPreset],
@@ -151,7 +189,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [autoColorTransitionPlugin],
+  plugins: [autoColorTransitionPlugin, typoPlugin],
 };
 
 export default config;
