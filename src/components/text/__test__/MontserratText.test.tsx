@@ -3,24 +3,16 @@ import { render, screen } from '@testing-library/react-native';
 import MontserratText from '@components/text/MontserratText';
 
 describe('FontText', () => {
-  test('children이 정상적으로 렌더링되는지 테스트', async () => {
+  test('children, className, typo가 정상적으로 렌더링되는지 테스트', async () => {
     const testChildren = 'Test Children';
-
-    render(<MontserratText>{testChildren}</MontserratText>);
-
-    const children = await screen.findByText(testChildren);
-    expect(children).toBeOnTheScreen();
-  });
-
-  test('className, weight가 정상적으로 적용되는지 테스트', async () => {
-    const testChildren = 'Test Children';
-    const className = 'text-xl';
-    const weight = 'semibold';
+    const className = 'text-test';
+    const typo = 'body-1';
+    const weight = 'regular';
 
     render(
       <MontserratText
         className={className}
-        weight={weight}
+        typo={typo}
       >
         {testChildren}
       </MontserratText>,
@@ -32,5 +24,6 @@ describe('FontText', () => {
     const classNameAttribute: string = children.props.className;
     expect(classNameAttribute.includes(className)).toBe(true);
     expect(classNameAttribute.includes(`font-montserrat-${weight}`)).toBe(true);
+    expect(classNameAttribute.includes(`text-montserrat-${typo}`)).toBe(true);
   });
 });
