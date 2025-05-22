@@ -2,9 +2,9 @@ import CheckSvg from '@assets/svg/Check.svg';
 import { getIconColor } from '@components/icon/Icon.util';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { DefaultIconProps } from '@components/icon/Icon.type';
+import type { IconProps } from '@components/icon/Icon.type';
 
-export default function CheckIcon({ color }: DefaultIconProps) {
+export default function CheckIcon({ color }: IconProps) {
   const theme = useSettingStore(state => state.theme);
   return <CheckSvg color={getIconColor(theme, color)} />;
 }
