@@ -10,16 +10,22 @@ type LocationIconProps = IconProps<{
   clicked?: boolean;
 }>;
 
-export default function HelpCircleIcon({ color, clicked = false }: LocationIconProps) {
+export default function HelpCircleIcon({ color, clicked = false, ...props }: LocationIconProps) {
   const theme = useSettingStore(state => state.theme);
   const currentColor = getIconColor(theme, color);
   return (
     <>
       <Show when={!clicked}>
-        <HelpCircleDefaultSvg color={currentColor} />
+        <HelpCircleDefaultSvg
+          {...props}
+          color={currentColor}
+        />
       </Show>
       <Show when={clicked}>
-        <HelpCircleOnClickSvg color={currentColor} />
+        <HelpCircleOnClickSvg
+          {...props}
+          color={currentColor}
+        />
       </Show>
     </>
   );

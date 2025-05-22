@@ -10,16 +10,22 @@ type LocationIconProps = IconProps<{
   filled?: boolean;
 }>;
 
-export default function LocationIcon({ color, filled = false }: LocationIconProps) {
+export default function LocationIcon({ color, filled = false, ...props }: LocationIconProps) {
   const theme = useSettingStore(state => state.theme);
   const currentColor = getIconColor(theme, color);
   return (
     <>
       <Show when={!filled}>
-        <LocationDefaultSvg color={currentColor} />
+        <LocationDefaultSvg
+          {...props}
+          color={currentColor}
+        />
       </Show>
       <Show when={filled}>
-        <LocationFilledSvg color={currentColor} />
+        <LocationFilledSvg
+          {...props}
+          color={currentColor}
+        />
       </Show>
     </>
   );

@@ -4,7 +4,12 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { IconProps } from '@components/icon/Icon.type';
 
-export default function PlusCircleIcon({ color }: IconProps) {
+export default function PlusCircleIcon({ color, ...props }: IconProps) {
   const theme = useSettingStore(state => state.theme);
-  return <PlusCircleSvg color={getIconColor(theme, color)} />;
+  return (
+    <PlusCircleSvg
+      {...props}
+      color={getIconColor(theme, color)}
+    />
+  );
 }

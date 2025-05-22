@@ -4,7 +4,12 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { IconProps } from '@components/icon/Icon.type';
 
-export default function SearchIcon({ color }: IconProps) {
+export default function SearchIcon({ color, ...props }: IconProps) {
   const theme = useSettingStore(state => state.theme);
-  return <SearchSvg color={getIconColor(theme, color)} />;
+  return (
+    <SearchSvg
+      {...props}
+      color={getIconColor(theme, color)}
+    />
+  );
 }

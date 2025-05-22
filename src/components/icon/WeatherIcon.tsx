@@ -9,55 +9,59 @@ import SnowSvg from '@assets/svg/weather/WeatherSnow.svg';
 import ThunderstormSvg from '@assets/svg/weather/WeatherThunderstorm.svg';
 import Show from '@components/common/Show';
 
+import type { IconProps } from '@components/icon/Icon.type';
 import type { WeatherIcon } from '@services/openWeatherOneCall/axios.type';
 
-type WeatherIconProps = {
-  icon: WeatherIcon;
-};
+type WeatherIconProps = Omit<
+  IconProps<{
+    icon: WeatherIcon;
+  }>,
+  'color'
+>;
 
 /**
  * 날씨 아이콘 컴포넌트
  * @param icon 날씨 아이콘 id
  * @jinhok96 25.05.22
  */
-export default function WeatherIcon({ icon }: WeatherIconProps) {
+export default function WeatherIcon({ icon, ...props }: WeatherIconProps) {
   return (
     <>
       <Show when={icon === '01d'}>
-        <ClearSkySvg />
+        <ClearSkySvg {...props} />
       </Show>
       <Show when={icon === '01n'}>
-        <ClearSkySvg />
+        <ClearSkySvg {...props} />
       </Show>
       <Show when={icon === '02d'}>
-        <FewCloudsSvg />
+        <FewCloudsSvg {...props} />
       </Show>
       <Show when={icon === '02n'}>
-        <FewCloudsSvg />
+        <FewCloudsSvg {...props} />
       </Show>
       <Show when={icon === '03d' || icon === '03n'}>
-        <ScatteredCloudsSvg />
+        <ScatteredCloudsSvg {...props} />
       </Show>
       <Show when={icon === '04d' || icon === '04n'}>
-        <BrokenCloudsSvg />
+        <BrokenCloudsSvg {...props} />
       </Show>
       <Show when={icon === '09d' || icon === '09n'}>
-        <ShowerRainSvg />
+        <ShowerRainSvg {...props} />
       </Show>
       <Show when={icon === '10d'}>
-        <RainSvg />
+        <RainSvg {...props} />
       </Show>
       <Show when={icon === '10n'}>
-        <RainSvg />
+        <RainSvg {...props} />
       </Show>
       <Show when={icon === '11d' || icon === '11n'}>
-        <ThunderstormSvg />
+        <ThunderstormSvg {...props} />
       </Show>
       <Show when={icon === '13d' || icon === '13n'}>
-        <SnowSvg />
+        <SnowSvg {...props} />
       </Show>
       <Show when={icon === '50d' || icon === '50n'}>
-        <MistSvg />
+        <MistSvg {...props} />
       </Show>
     </>
   );

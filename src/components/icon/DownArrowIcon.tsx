@@ -4,7 +4,12 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { IconProps } from '@components/icon/Icon.type';
 
-export default function DownArrowIcon({ color }: IconProps) {
+export default function DownArrowIcon({ color, ...props }: IconProps) {
   const theme = useSettingStore(state => state.theme);
-  return <DownArrowSvg color={getIconColor(theme, color)} />;
+  return (
+    <DownArrowSvg
+      {...props}
+      color={getIconColor(theme, color)}
+    />
+  );
 }

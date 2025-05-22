@@ -4,7 +4,12 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { IconProps } from '@components/icon/Icon.type';
 
-export default function CheckIcon({ color }: IconProps) {
+export default function CheckIcon({ color, ...props }: IconProps) {
   const theme = useSettingStore(state => state.theme);
-  return <CheckSvg color={getIconColor(theme, color)} />;
+  return (
+    <CheckSvg
+      {...props}
+      color={getIconColor(theme, color)}
+    />
+  );
 }

@@ -4,7 +4,12 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { IconProps } from '@components/icon/Icon.type';
 
-export default function MyLocationIcon({ color }: IconProps) {
+export default function MyLocationIcon({ color, ...props }: IconProps) {
   const theme = useSettingStore(state => state.theme);
-  return <MyLocationSvg color={getIconColor(theme, color)} />;
+  return (
+    <MyLocationSvg
+      {...props}
+      color={getIconColor(theme, color)}
+    />
+  );
 }
