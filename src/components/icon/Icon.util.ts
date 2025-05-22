@@ -1,7 +1,15 @@
 import { colorThemeVarList } from '@libs/utils/themes.util';
 
+import type { ColorVar } from '@libs/utils/themes.type';
 import type { Theme } from '@store/settingStore/useSettingStore.type';
 
-export function getIconColor(theme: Theme) {
-  return colorThemeVarList[theme]['--color-gray-90'];
+/**
+ * 동적 테마에 따라 아이콘 색을 가져오는 함수
+ * @param theme 전역 테마
+ * @param color 색 이름 (var)
+ * @returns HEX 코드
+ * @jinhok96 25.05.22
+ */
+export function getIconColor(theme: Theme, color: ColorVar = '--color-gray-90') {
+  return colorThemeVarList[theme][color];
 }
