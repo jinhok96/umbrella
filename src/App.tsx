@@ -17,6 +17,7 @@ import PlusCircleIcon from '@components/icon/PlusCircleIcon';
 import RightArrowIcon from '@components/icon/RightArrowIcon';
 import SearchIcon from '@components/icon/SearchIcon';
 import UpArrowIcon from '@components/icon/UpArrowIcon';
+import WeatherIcon from '@components/icon/WeatherIcon';
 import Section from '@components/Section';
 import MontserratText from '@components/text/MontserratText';
 import PretendardText from '@components/text/PretendardText';
@@ -83,8 +84,35 @@ export default function App(): React.JSX.Element {
             </View>
           </View>
           <View className="flex h-fit flex-row items-center border-b">
-            <View className="size-12">
+            <View className="size-10">
               <EmptyIcon />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="01d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="02d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="03d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="04d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="09d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="10d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="11d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="13d" />
+            </View>
+            <View className="size-10">
+              <WeatherIcon icon="50d" />
             </View>
           </View>
           <View className="border-b">
