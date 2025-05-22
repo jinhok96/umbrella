@@ -4,6 +4,7 @@ import { Pressable, Text, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import ColorThemeProvider from '@components/common/ColorThemeProvider';
+import CheckIcon from '@components/icon/CheckIcon';
 import Section from '@components/Section';
 import MontserratText from '@components/text/MontserratText';
 import PretendardText from '@components/text/PretendardText';
@@ -23,6 +24,9 @@ export default function App(): React.JSX.Element {
       <QueryClientProvider client={queryClient}>
         <View className="bg-test">
           <Text className="text-xl">Theme: {theme} (System Default)</Text>
+          <View className="flex size-6 flex-row items-center">
+            <CheckIcon />
+          </View>
           <View className="border">
             <PretendardText typo="body-1">Theme: {theme} (Pretendard Regular)</PretendardText>
             <PretendardText typo="caption-1">Theme: {theme} (Pretendard Medium)</PretendardText>
