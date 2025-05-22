@@ -1,6 +1,6 @@
 import type { Theme } from '@store/settingStore/useSettingStore.type';
 
-type ColorVar =
+export type ColorVar =
   | '--color-test'
   | '--color-gray-90'
   | '--color-gray-80'

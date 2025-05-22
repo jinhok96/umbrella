@@ -97,6 +97,31 @@ export type GetCurrentAndForecastsWeatherDataParams = OpenWeatherOneCallAPICommo
   exclude?: Exclude[];
 };
 
+/**
+ * 날씨 아이콘 id
+ * @link https://openweathermap.org/weather-conditions#Icon-list
+ * @jinhok96 25.05.22
+ */
+export type WeatherIcon =
+  | '01d'
+  | '02d'
+  | '03d'
+  | '04d'
+  | '09d'
+  | '10d'
+  | '11d'
+  | '13d'
+  | '50d'
+  | '01n'
+  | '02n'
+  | '03n'
+  | '04n'
+  | '09n'
+  | '10n'
+  | '11n'
+  | '13n'
+  | '50n';
+
 type CommonWeatherData = {
   dt: number; // Current time, Unix, UTC
   temp: number; // Temperature
@@ -120,7 +145,7 @@ type CommonWeatherData = {
     id: number; // Weather condition id
     main: string; // Group of weather parameters (Rain, Snow etc.)
     description: string; // Weather condition description
-    icon: string; // Weather icon id
+    icon: WeatherIcon; // Weather icon id
   }>;
 };
 

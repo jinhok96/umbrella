@@ -107,6 +107,7 @@ module.exports = {
     // 기타 설정
     'react/jsx-no-useless-fragment': 'off',
     'react-hooks/exhaustive-deps': 'off',
+    '@typescript-eslint/no-empty-object-type': 'off',
   },
   settings: {
     'import/resolver': {
