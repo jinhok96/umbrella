@@ -15,6 +15,11 @@ type WeatherIconProps = {
   icon: WeatherIcon;
 };
 
+/**
+ * 날씨 아이콘 컴포넌트
+ * @param icon 날씨 아이콘 id
+ * @jinhok96 25.05.22
+ */
 export default function WeatherIcon({ icon }: WeatherIconProps) {
   return (
     <>
