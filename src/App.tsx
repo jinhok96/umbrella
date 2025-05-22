@@ -4,7 +4,19 @@ import { Pressable, Text, View } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import ColorThemeProvider from '@components/common/ColorThemeProvider';
+import CaretIcon from '@components/icon/CaretIcon';
 import CheckIcon from '@components/icon/CheckIcon';
+import DownArrowIcon from '@components/icon/DownArrowIcon';
+import EmptyIcon from '@components/icon/EmptyIcon';
+import HelpCircleIcon from '@components/icon/HelpCircleIcon';
+import LeftArrowIcon from '@components/icon/LeftArrowIcon';
+import LocationIcon from '@components/icon/LocationIcon';
+import MenuIcon from '@components/icon/MenuIcon';
+import MyLocationIcon from '@components/icon/MyLocationIcon';
+import PlusCircleIcon from '@components/icon/PlusCircleIcon';
+import RightArrowIcon from '@components/icon/RightArrowIcon';
+import SearchIcon from '@components/icon/SearchIcon';
+import UpArrowIcon from '@components/icon/UpArrowIcon';
 import Section from '@components/Section';
 import MontserratText from '@components/text/MontserratText';
 import PretendardText from '@components/text/PretendardText';
@@ -23,21 +35,59 @@ export default function App(): React.JSX.Element {
     <ColorThemeProvider>
       <QueryClientProvider client={queryClient}>
         <View className="bg-test">
-          <Text className="text-xl">Theme: {theme} (System Default)</Text>
-          <View className="flex size-6 flex-row items-center">
-            <CheckIcon />
+          <Text className="border-b text-xl">Theme: {theme} (System Default)</Text>
+          <View className="flex h-fit flex-row items-center border-b">
+            <View className="size-6">
+              <CheckIcon />
+            </View>
+            <View className="size-6">
+              <MenuIcon />
+            </View>
+            <View className="size-6">
+              <PlusCircleIcon />
+            </View>
+            <View className="size-6">
+              <MyLocationIcon />
+            </View>
+            <View className="size-6">
+              <SearchIcon />
+            </View>
+            <View className="size-6">
+              <LeftArrowIcon />
+            </View>
+            <View className="size-6">
+              <RightArrowIcon />
+            </View>
+            <View className="size-6">
+              <UpArrowIcon />
+            </View>
+            <View className="size-6">
+              <DownArrowIcon />
+            </View>
           </View>
-          <View className="border">
-            <PretendardText typo="body-1">Theme: {theme} (Pretendard Regular)</PretendardText>
-            <PretendardText typo="caption-1">Theme: {theme} (Pretendard Medium)</PretendardText>
-            <PretendardText typo="button-1">Theme: {theme} (Pretendard SemiBold)</PretendardText>
-            <PretendardText typo="title-4">Theme: {theme} (Pretendard Bold)</PretendardText>
-            <MontserratText typo="body-1">Theme: {theme} (Montserrat Regular)</MontserratText>
-            <MontserratText typo="caption-1">Theme: {theme} (Montserrat Medium)</MontserratText>
-            <MontserratText typo="button-1">Theme: {theme} (Montserrat SemiBold)</MontserratText>
-            <MontserratText typo="title-4">Theme: {theme} (Montserrat Bold)</MontserratText>
+          <View className="flex h-fit flex-row items-center border-b">
+            <View className="size-6">
+              <LocationIcon />
+            </View>
+            <View className="size-6">
+              <LocationIcon filled />
+            </View>
+            <View className="size-3">
+              <CaretIcon />
+            </View>
+            <View className="size-6">
+              <HelpCircleIcon />
+            </View>
+            <View className="size-6">
+              <HelpCircleIcon clicked />
+            </View>
           </View>
-          <View className="border">
+          <View className="flex h-fit flex-row items-center border-b">
+            <View className="size-12">
+              <EmptyIcon />
+            </View>
+          </View>
+          <View className="border-b">
             <PretendardText typo="title-1">Pretendard Title1</PretendardText>
             <PretendardText typo="title-2">Pretendard Title2</PretendardText>
             <PretendardText typo="title-3">Pretendard Title3</PretendardText>
@@ -54,7 +104,7 @@ export default function App(): React.JSX.Element {
             <PretendardText typo="button-1">Pretendard Button1</PretendardText>
             <PretendardText typo="button-2">Pretendard Button2</PretendardText>
           </View>
-          <View className="border">
+          <View className="border-b">
             <MontserratText typo="title-1">Montserrat Title1</MontserratText>
             <MontserratText typo="title-2">Montserrat Title2</MontserratText>
             <MontserratText typo="title-3">Montserrat Title3</MontserratText>
@@ -71,15 +121,39 @@ export default function App(): React.JSX.Element {
             <MontserratText typo="button-1">Montserrat Button1</MontserratText>
             <MontserratText typo="button-2">Montserrat Button2</MontserratText>
           </View>
-          <View className="border">
-            <Pressable onPress={() => setTheme('light')}>
-              <PretendardText typo="button-1">Change Theme Light</PretendardText>
+          <View className="flex flex-row justify-between border-b">
+            <Pressable
+              className="w-1/3 border bg-morning"
+              onPress={() => setTheme('light')}
+            >
+              <PretendardText
+                className="text-center"
+                typo="button-1"
+              >
+                Theme Light
+              </PretendardText>
             </Pressable>
-            <Pressable onPress={() => setTheme('dark')}>
-              <PretendardText typo="button-1">Change Theme Dark</PretendardText>
+            <Pressable
+              className="w-1/3 border bg-error"
+              onPress={() => setTheme('dark')}
+            >
+              <PretendardText
+                className="text-center"
+                typo="button-1"
+              >
+                Theme Dark
+              </PretendardText>
             </Pressable>
-            <Pressable onPress={() => setTheme('highContrast')}>
-              <PretendardText typo="button-1">Change Theme HighContrast</PretendardText>
+            <Pressable
+              className="w-1/3 border bg-success"
+              onPress={() => setTheme('highContrast')}
+            >
+              <PretendardText
+                className="text-center"
+                typo="button-1"
+              >
+                Theme HighContrast
+              </PretendardText>
             </Pressable>
           </View>
           <Section title="Step One">
