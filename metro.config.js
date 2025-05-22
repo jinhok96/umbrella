@@ -5,8 +5,12 @@ const { withNativeWind } = require('nativewind/metro');
 const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro-config');
 
 const defaultConfig = getDefaultConfig(__dirname);
+const { assetExts, sourceExts } = defaultConfig.resolver;
 
 const config = {
+  transformer: {
+    babelTransformerPath: require.resolve('react-native-svg-transformer/react-native'),
+  },
   resolver: {
     unstable_enableSymlinks: true, // Windows 대응
     unstable_enablePackageExports: true,
@@ -14,7 +18,8 @@ const config = {
       path.resolve(__dirname, 'node_modules'),
       path.resolve(__dirname, 'src'), // src 디렉토리 인식 추가
     ],
-    sourceExts: ['tsx', 'ts', 'jsx', 'js', 'json'], // 확장자 처리, 순서 중요
+    assetExts: assetExts.filter(ext => ext !== 'svg'),
+    sourceExts: [...sourceExts, 'tsx', 'ts', 'jsx', 'js', 'json', 'svg'], // 확장자 처리, 순서 중요
     // tsconfig.json, babel.config.js와 통일
     alias: {
       '@assets': path.resolve(__dirname, 'src/assets'),
