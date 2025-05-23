@@ -26,14 +26,14 @@ jobs:
         with:
           script: |
             const { graphql } = require("@octokit/graphql");
-            const github = require("@actions/github");
+            const { context } = require("@actions/github");
 
             const issueNumber = process.env.ISSUE_NUMBER;
             const projectName = "umbrella";
             const targetStatus = "진행중";
 
             try {
-              const { owner, repo } = github.context.repo;
+              const { owner, repo } = context.repo;
 
               // 📌 프로젝트 ID 자동 조회
               const projectQuery = await graphql(
