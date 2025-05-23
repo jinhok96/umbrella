@@ -26,7 +26,6 @@ jobs:
         with:
           script: |
             const { graphql } = require("@octokit/graphql");
-            const { context } = require("@actions/github");
 
             const issueNumber = process.env.ISSUE_NUMBER;
             const projectName = "umbrella";
