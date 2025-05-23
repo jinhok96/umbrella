@@ -1,0 +1,75 @@
+name: Update Project Status when Branch Assigned
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  update-project-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if assigned to Development
+        id: check-development
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const projectField = 'umbrella'; // 여기에 실제 프로젝트 필드 이름을 입력하세요
+
+            // 이슈에 할당된 브랜치 확인
+            const branchPattern = /^(\w+\/)?(development|dev|feature)\//i;
+            const branchNames = issue.labels
+              .filter(label => branchPattern.test(label.name))
+              .map(label => label.name);
+
+            // Development 브랜치가 할당되었는지 확인
+            if (branchNames.length > 0) {
+              return true;
+            }
+            return false;
+          result-encoding: string
+
+      - name: Update Project Status to '진행중'
+        if: steps.check-development.outputs.result == 'true'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue, repository } = context.payload;
+            const projectColumnName = '진행중'; // 여기에 실제 진행중 컬럼 이름을 입력하세요
+
+            try {
+              // 프로젝트 정보 가져오기
+              const projects = await github.rest.projects.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+              });
+              
+              const project = projects.data.find(p => p.name === 'umbrella'); // 여기에 프로젝트 이름 입력
+              if (!project) {
+                console.log('Project not found');
+                return;
+              }
+              
+              // 프로젝트 컬럼 가져오기
+              const columns = await github.rest.projects.listColumns({
+                project_id: project.id,
+              });
+              
+              const targetColumn = columns.data.find(c => c.name === projectColumnName);
+              if (!targetColumn) {
+                console.log(`Column '${projectColumnName}' not found`);
+                return;
+              }
+              
+              // 이슈를 진행중 컬럼으로 이동
+              await github.rest.projects.createCard({
+                column_id: targetColumn.id,
+                content_id: issue.id,
+                content_type: 'Issue',
+              });
+              
+              console.log(`Moved issue #${issue.number} to '${projectColumnName}' column`);
+            } catch (error) {
+              console.error('Error updating project status:', error);
+            }
