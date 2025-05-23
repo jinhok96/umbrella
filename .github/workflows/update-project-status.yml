@@ -21,65 +21,65 @@ jobs:
           echo "::set-output name=issue_number::$ISSUE_NUMBER"
           echo "Extracted issue number: $ISSUE_NUMBER"
 
-      - name: Move issue to "In Progress" column
+      - name: Move issue to "진행중" column
         uses: actions/github-script@v6
         with:
           script: |
+            const { graphql } = require("@octokit/graphql");
+
             const issueNumber = process.env.ISSUE_NUMBER;
             const projectName = "umbrella";
-            const sourceColumnName = "할 일";
-            const targetColumnName = "진행중";
+            const targetStatus = "진행중";
 
             try {
-              // 1. 이슈 정보 가져오기
-              const issue = await github.rest.issues.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issueNumber,
-              });
-
-              // 2. 프로젝트(umbrella) 찾기
-              const projects = await github.rest.projects.listForRepo({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-              });
-              const project = projects.data.find(p => p.name === projectName);
-
-              if (!project) throw new Error(`Project '${projectName}' not found.`);
-
-              // 3. 프로젝트의 모든 컬럼 가져오기
-              const columns = await github.rest.projects.listColumns({
-                project_id: project.id,
-              });
-
-              // 4. sourceColumnName 컬럼에서 이슈 카드 찾기
-              const todoColumn = columns.data.find(c => c.name === sourceColumnName);
-              if (!todoColumn) throw new Error(`Column ${sourceColumnName} not found.`);
-
-              const todoCards = await github.rest.projects.listCards({
-                column_id: todoColumn.id,
-              });
-
-              const targetCard = todoCards.data.find(card => 
-                card.content_url?.endsWith(`/issues/${issueNumber}`)
+              const response = await graphql(
+                `
+                query($owner: String!, $repo: String!, $issueNumber: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    issue(number: $issueNumber) {
+                      id
+                    }
+                  }
+                }
+                `,
+                {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issueNumber: parseInt(issueNumber),
+                  headers: {
+                    authorization: `token ${process.env.GITHUB_TOKEN}`,
+                  },
+                }
               );
 
-              if (!targetCard) throw new Error(`Issue #${issueNumber} not found in ${sourceColumnName} column.`);
+              const issueId = response.repository.issue.id;
+              if (!issueId) throw new Error(`Issue #${issueNumber} not found.`);
 
-              // 5. targetColumnName 컬럼으로 이동
-              const inProgressColumn = columns.data.find(c => c.name === targetColumnName);
-              if (!inProgressColumn) throw new Error(`Column "${targetColumnName}" not found.`);
+              // 새로운 Projects API에 맞게 카드 상태 업데이트
+              await graphql(
+                `
+                mutation($issueId: ID!, $status: String!) {
+                  updateIssue(input: { id: $issueId, status: $status }) {
+                    issue {
+                      id
+                      status
+                    }
+                  }
+                }
+                `,
+                {
+                  issueId: issueId,
+                  status: targetStatus,
+                  headers: {
+                    authorization: `token ${process.env.GITHUB_TOKEN}`,
+                  },
+                }
+              );
 
-              await github.rest.projects.moveCard({
-                card_id: targetCard.id,
-                position: "top",
-                column_id: inProgressColumn.id,
-              });
-
-              console.log(`Moved issue #${issueNumber} to "${targetColumnName}" column.`);
+              console.log(`Moved issue #${issueNumber} to "${targetStatus}" status.`);
             } catch (error) {
               console.error("Error:", error);
-              throw error; // Fail the step on error
+              throw error;
             }
         env:
           ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
