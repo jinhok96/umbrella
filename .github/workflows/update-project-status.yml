@@ -25,8 +25,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { graphql } = require("@octokit/graphql");
-
             const issueNumber = process.env.ISSUE_NUMBER;
             const projectName = "umbrella";
             const targetStatus = "진행중";
