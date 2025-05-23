@@ -18,7 +18,7 @@ jobs:
             echo "Error: No issue number found in branch name."
             exit 1
           fi
-          echo "::set-output name=issue_number::$ISSUE_NUMBER"
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> "$GITHUB_ENV"
           echo "Extracted issue number: $ISSUE_NUMBER"
 
       - name: Move issue to "진행중" column
@@ -26,13 +26,42 @@ jobs:
         with:
           script: |
             const { graphql } = require("@octokit/graphql");
+            const github = require("@actions/github");
 
             const issueNumber = process.env.ISSUE_NUMBER;
             const projectName = "umbrella";
             const targetStatus = "진행중";
 
             try {
-              const response = await graphql(
+              const { owner, repo } = github.context.repo;
+
+              // 📌 프로젝트 ID 자동 조회
+              const projectQuery = await graphql(
+                `
+                query($owner: String!, $projectName: String!) {
+                  repository(owner: $owner, name: $projectName) {
+                    projectsV2(first: 1) {
+                      nodes {
+                        id
+                      }
+                    }
+                  }
+                }
+                `,
+                {
+                  owner: owner,
+                  projectName: repo, // 프로젝트가 저장소 레벨에 있을 경우
+                  headers: {
+                    authorization: `token ${process.env.GITHUB_TOKEN}`,
+                  },
+                }
+              );
+
+              const projectId = projectQuery.repository.projectsV2.nodes[0]?.id;
+              if (!projectId) throw new Error(`Project '${projectName}' not found.`);
+
+              // 📌 이슈 ID 가져오기
+              const issueQuery = await graphql(
                 `
                 query($owner: String!, $repo: String!, $issueNumber: Int!) {
                   repository(owner: $owner, name: $repo) {
@@ -43,8 +72,8 @@ jobs:
                 }
                 `,
                 {
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
+                  owner: owner,
+                  repo: repo,
                   issueNumber: parseInt(issueNumber),
                   headers: {
                     authorization: `token ${process.env.GITHUB_TOKEN}`,
@@ -52,15 +81,15 @@ jobs:
                 }
               );
 
-              const issueId = response.repository.issue.id;
+              const issueId = issueQuery.repository.issue.id;
               if (!issueId) throw new Error(`Issue #${issueNumber} not found.`);
 
-              // 새로운 Projects API에 맞게 카드 상태 업데이트
-              await graphql(
+              // 📌 프로젝트 카드 업데이트 API
+              const updateResponse = await graphql(
                 `
-                mutation($issueId: ID!, $status: String!) {
-                  updateIssue(input: { id: $issueId, status: $status }) {
-                    issue {
+                mutation($projectId: ID!, $issueId: ID!, $status: String!) {
+                  updateProjectItem(input: { projectId: $projectId, itemId: $issueId, status: $status }) {
+                    item {
                       id
                       status
                     }
@@ -68,6 +97,7 @@ jobs:
                 }
                 `,
                 {
+                  projectId: projectId,
                   issueId: issueId,
                   status: targetStatus,
                   headers: {
@@ -76,11 +106,11 @@ jobs:
                 }
               );
 
-              console.log(`Moved issue #${issueNumber} to "${targetStatus}" status.`);
+              console.log(`Moved issue #${issueNumber} to "${targetStatus}" in project ID: ${projectId}`);
             } catch (error) {
               console.error("Error:", error);
               throw error;
             }
         env:
-          ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
+          ISSUE_NUMBER: ${{ env.ISSUE_NUMBER }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
