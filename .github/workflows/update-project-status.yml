@@ -1,87 +1,86 @@
-name: Update Project Status when Branch Assigned
+name: Update Project Status on Push
 
 on:
-  issues:
-    types: [assigned]
+  push:
+    branches:
+      - '*-*' # ex) 51-issue-name
 
 jobs:
-  update-project-status:
+  update_project_status:
     runs-on: ubuntu-latest
     steps:
-      - name: Update Project Status to '진행중'
+      - name: Extract issue number from branch name
+        id: extract_issue
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          ISSUE_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '^[0-9]+')
+          if [ -z "$ISSUE_NUMBER" ]; then
+            echo "Error: No issue number found in branch name."
+            exit 1
+          fi
+          echo "::set-output name=issue_number::$ISSUE_NUMBER"
+          echo "Extracted issue number: $ISSUE_NUMBER"
+
+      - name: Move issue to "In Progress" column
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { issue } = context.payload;
-            const projectName = 'umbrella';
-            const targetColumnName = '진행중';
+            const issueNumber = process.env.ISSUE_NUMBER;
+            const projectName = "umbrella";
+            const sourceColumnName = "할 일";
+            const targetColumnName = "진행중";
 
             try {
-              // 1. 프로젝트 정보 가져오기
+              // 1. 이슈 정보 가져오기
+              const issue = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+              });
+
+              // 2. 프로젝트(umbrella) 찾기
               const projects = await github.rest.projects.listForRepo({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
               });
-              
               const project = projects.data.find(p => p.name === projectName);
-              if (!project) {
-                console.log(`프로젝트 '${projectName}'을 찾을 수 없습니다`);
-                return;
-              }
-              
-              // 2. 프로젝트 컬럼 목록 가져오기
+
+              if (!project) throw new Error(`Project '${projectName}' not found.`);
+
+              // 3. 프로젝트의 모든 컬럼 가져오기
               const columns = await github.rest.projects.listColumns({
                 project_id: project.id,
               });
-              
-              const targetColumn = columns.data.find(c => c.name === targetColumnName);
-              if (!targetColumn) {
-                console.log(`컬럼 '${targetColumnName}'을 찾을 수 없습니다. 가능한 컬럼: ${columns.data.map(c => c.name).join(', ')}`);
-                return;
-              }
 
-              // 3. 기존 카드 찾기 (모든 컬럼에서 검색)
-              let existingCard = null;
-              let currentColumnId = null;
-              
-              for (const column of columns.data) {
-                const cards = await github.rest.projects.listCards({
-                  column_id: column.id,
-                });
-                const card = cards.data.find(c => c.content_url && c.content_url.endsWith(`/issues/${issue.number}`));
-                if (card) {
-                  existingCard = card;
-                  currentColumnId = column.id;
-                  break;
-                }
-              }
+              // 4. sourceColumnName 컬럼에서 이슈 카드 찾기
+              const todoColumn = columns.data.find(c => c.name === sourceColumnName);
+              if (!todoColumn) throw new Error(`Column ${sourceColumnName} not found.`);
 
-              // 4. 카드 이동 또는 생성
-              if (existingCard) {
-                // 이미 진행중 컬럼에 있는 경우
-                if (currentColumnId === targetColumn.id) {
-                  console.log(`이슈 #${issue.number}는 이미 '${targetColumnName}' 컬럼에 있습니다`);
-                  return;
-                }
-                
-                // 다른 컬럼에 있는 경우 이동
-                await github.rest.projects.moveCard({
-                  card_id: existingCard.id,
-                  position: 'top',
-                  column_id: targetColumn.id
-                });
-                console.log(`이슈 #${issue.number}를 '${targetColumnName}' 컬럼으로 이동했습니다`);
-              } else {
-                // 새 카드 생성
-                await github.rest.projects.createCard({
-                  column_id: targetColumn.id,
-                  content_id: issue.id,
-                  content_type: 'Issue',
-                });
-                console.log(`이슈 #${issue.number}를 '${targetColumnName}' 컬럼에 생성했습니다`);
-              }
-              
+              const todoCards = await github.rest.projects.listCards({
+                column_id: todoColumn.id,
+              });
+
+              const targetCard = todoCards.data.find(card => 
+                card.content_url?.endsWith(`/issues/${issueNumber}`)
+              );
+
+              if (!targetCard) throw new Error(`Issue #${issueNumber} not found in ${sourceColumnName} column.`);
+
+              // 5. targetColumnName 컬럼으로 이동
+              const inProgressColumn = columns.data.find(c => c.name === targetColumnName);
+              if (!inProgressColumn) throw new Error(`Column "${targetColumnName}" not found.`);
+
+              await github.rest.projects.moveCard({
+                card_id: targetCard.id,
+                position: "top",
+                column_id: inProgressColumn.id,
+              });
+
+              console.log(`Moved issue #${issueNumber} to "${targetColumnName}" column.`);
             } catch (error) {
-              console.error('프로젝트 상태 업데이트 중 오류 발생:', error);
+              console.error("Error:", error);
+              throw error; // Fail the step on error
             }
+        env:
+          ISSUE_NUMBER: ${{ steps.extract_issue.outputs.issue_number }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
