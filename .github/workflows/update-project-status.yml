@@ -1,87 +1,116 @@
-name: Update Project Status when Branch Assigned
+name: Update Project Status on Push
 
 on:
-  issues:
-    types: [assigned]
+  push:
+    branches:
+      - '*-*' # ex) 51-issue-name
 
 jobs:
-  update-project-status:
+  update_project_status:
     runs-on: ubuntu-latest
     steps:
-      - name: Update Project Status to '진행중'
+      - name: Extract issue number from branch name
+        id: extract_issue
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          ISSUE_NUMBER=$(echo "$BRANCH_NAME" | grep -oE '^[0-9]+')
+          if [ -z "$ISSUE_NUMBER" ]; then
+            echo "Error: No issue number found in branch name."
+            exit 1
+          fi
+          echo "ISSUE_NUMBER=$ISSUE_NUMBER" >> "$GITHUB_ENV"
+          echo "Extracted issue number: $ISSUE_NUMBER"
+
+      - name: Move issue to "진행중" column
         uses: actions/github-script@v6
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { issue } = context.payload;
-            const projectName = 'umbrella';
-            const targetColumnName = '진행중';
+            const { graphql } = require("@octokit/graphql");
+            const github = require("@actions/github");
+
+            const issueNumber = process.env.ISSUE_NUMBER;
+            const projectName = "umbrella";
+            const targetStatus = "진행중";
 
             try {
-              // 1. 프로젝트 정보 가져오기
-              const projects = await github.rest.projects.listForRepo({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-              });
-              
-              const project = projects.data.find(p => p.name === projectName);
-              if (!project) {
-                console.log(`프로젝트 '${projectName}'을 찾을 수 없습니다`);
-                return;
-              }
-              
-              // 2. 프로젝트 컬럼 목록 가져오기
-              const columns = await github.rest.projects.listColumns({
-                project_id: project.id,
-              });
-              
-              const targetColumn = columns.data.find(c => c.name === targetColumnName);
-              if (!targetColumn) {
-                console.log(`컬럼 '${targetColumnName}'을 찾을 수 없습니다. 가능한 컬럼: ${columns.data.map(c => c.name).join(', ')}`);
-                return;
-              }
+              const { owner, repo } = github.context.repo;
 
-              // 3. 기존 카드 찾기 (모든 컬럼에서 검색)
-              let existingCard = null;
-              let currentColumnId = null;
-              
-              for (const column of columns.data) {
-                const cards = await github.rest.projects.listCards({
-                  column_id: column.id,
-                });
-                const card = cards.data.find(c => c.content_url && c.content_url.endsWith(`/issues/${issue.number}`));
-                if (card) {
-                  existingCard = card;
-                  currentColumnId = column.id;
-                  break;
+              // 📌 프로젝트 ID 자동 조회
+              const projectQuery = await graphql(
+                `
+                query($owner: String!, $projectName: String!) {
+                  repository(owner: $owner, name: $projectName) {
+                    projectsV2(first: 1) {
+                      nodes {
+                        id
+                      }
+                    }
+                  }
                 }
-              }
+                `,
+                {
+                  owner: owner,
+                  projectName: repo, // 프로젝트가 저장소 레벨에 있을 경우
+                  headers: {
+                    authorization: `token ${process.env.GITHUB_TOKEN}`,
+                  },
+                }
+              );
 
-              // 4. 카드 이동 또는 생성
-              if (existingCard) {
-                // 이미 진행중 컬럼에 있는 경우
-                if (currentColumnId === targetColumn.id) {
-                  console.log(`이슈 #${issue.number}는 이미 '${targetColumnName}' 컬럼에 있습니다`);
-                  return;
+              const projectId = projectQuery.repository.projectsV2.nodes[0]?.id;
+              if (!projectId) throw new Error(`Project '${projectName}' not found.`);
+
+              // 📌 이슈 ID 가져오기
+              const issueQuery = await graphql(
+                `
+                query($owner: String!, $repo: String!, $issueNumber: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    issue(number: $issueNumber) {
+                      id
+                    }
+                  }
                 }
-                
-                // 다른 컬럼에 있는 경우 이동
-                await github.rest.projects.moveCard({
-                  card_id: existingCard.id,
-                  position: 'top',
-                  column_id: targetColumn.id
-                });
-                console.log(`이슈 #${issue.number}를 '${targetColumnName}' 컬럼으로 이동했습니다`);
-              } else {
-                // 새 카드 생성
-                await github.rest.projects.createCard({
-                  column_id: targetColumn.id,
-                  content_id: issue.id,
-                  content_type: 'Issue',
-                });
-                console.log(`이슈 #${issue.number}를 '${targetColumnName}' 컬럼에 생성했습니다`);
-              }
-              
+                `,
+                {
+                  owner: owner,
+                  repo: repo,
+                  issueNumber: parseInt(issueNumber),
+                  headers: {
+                    authorization: `token ${process.env.GITHUB_TOKEN}`,
+                  },
+                }
+              );
+
+              const issueId = issueQuery.repository.issue.id;
+              if (!issueId) throw new Error(`Issue #${issueNumber} not found.`);
+
+              // 📌 프로젝트 카드 업데이트 API
+              const updateResponse = await graphql(
+                `
+                mutation($projectId: ID!, $issueId: ID!, $status: String!) {
+                  updateProjectItem(input: { projectId: $projectId, itemId: $issueId, status: $status }) {
+                    item {
+                      id
+                      status
+                    }
+                  }
+                }
+                `,
+                {
+                  projectId: projectId,
+                  issueId: issueId,
+                  status: targetStatus,
+                  headers: {
+                    authorization: `token ${process.env.GITHUB_TOKEN}`,
+                  },
+                }
+              );
+
+              console.log(`Moved issue #${issueNumber} to "${targetStatus}" in project ID: ${projectId}`);
             } catch (error) {
-              console.error('프로젝트 상태 업데이트 중 오류 발생:', error);
+              console.error("Error:", error);
+              throw error;
             }
+        env:
+          ISSUE_NUMBER: ${{ env.ISSUE_NUMBER }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
