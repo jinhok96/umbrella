@@ -4,15 +4,19 @@ import Show from '@components/common/Show';
 import { getColorHex } from '@libs/utils/getColorHex.util';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { GetColorHexProps } from '@libs/utils/getColorHex.type';
+import type { IconProps } from '@components/icon/Icon.type';
 
-type LocationIconProps = GetColorHexProps<{
-  filled?: boolean;
-}>;
+type LocationIconProps = Omit<
+  IconProps<{
+    filled?: boolean;
+  }>,
+  'color'
+>;
 
-export default function LocationIcon({ color, filled = false, ...props }: LocationIconProps) {
+export default function LocationIcon({ filled = false, ...props }: LocationIconProps) {
   const theme = useSettingStore(state => state.theme);
-  const currentColor = getColorHex(theme, color);
+  const currentColor = getColorHex(theme, '--color-morning');
+
   return (
     <>
       <Show when={!filled}>

@@ -24,7 +24,7 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 import type { ColorVar } from '@libs/utils/themes.type';
 
 const ACTIVE_COLOR_VAR: ColorVar = '--color-morning';
-const INACTIVE_COLOR_VAR: ColorVar = '--color-gray-50';
+const INACTIVE_COLOR_VAR: ColorVar = '--color-text-06';
 
 const getIconColor = (focused: boolean) => (focused ? ACTIVE_COLOR_VAR : INACTIVE_COLOR_VAR);
 

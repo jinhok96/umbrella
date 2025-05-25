@@ -11,8 +11,8 @@ const TEST_ID = 'testId';
 describe('MenuIcon', () => {
   const { theme } = settingStore.getState();
 
-  test('color 기본값이 gray-90인지 테스트', async () => {
-    const colorVar: ColorVar = '--color-gray-90';
+  test('color 기본값이 text-01인지 테스트', async () => {
+    const colorVar: ColorVar = '--color-text-01';
     render(<MenuIcon testID={TEST_ID} />);
 
     const element = await screen.findByTestId(TEST_ID);
