@@ -1,15 +1,15 @@
 import CheckSvg from '@assets/svg/Check.svg';
-import { getIconColor } from '@components/icon/Icon.util';
+import { getColorHex } from '@libs/utils/getColorHex.util';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { IconProps } from '@components/icon/Icon.type';
+import type { GetColorHexProps } from '@libs/utils/getColorHex.type';
 
-export default function CheckIcon({ color, ...props }: IconProps) {
+export default function CheckIcon({ color, ...props }: GetColorHexProps) {
   const theme = useSettingStore(state => state.theme);
   return (
     <CheckSvg
       {...props}
-      color={getIconColor(theme, color)}
+      color={getColorHex(theme, color)}
     />
   );
 }

@@ -2,6 +2,7 @@ import { Text } from 'react-native';
 
 import { render, renderHook, screen, waitFor } from '@testing-library/react-native';
 
+import { TestQueryClientProvider, testQueryClient } from '@components/test/TestQueryClientProvider';
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/test.mock';
 import {
@@ -9,7 +10,6 @@ import {
   useGetDailyAggregation,
   useGetWeatherDataForTimestamp,
 } from '@services/openWeatherOneCall/query';
-import { TestQueryClientProvider, testQueryClient } from '@services/test.util';
 
 // 서비스 모듈 모킹
 jest.mock('@services/openWeatherOneCall/axios', () => ({

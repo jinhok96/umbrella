@@ -2,10 +2,10 @@ import { Text } from 'react-native';
 
 import { render, renderHook, screen, waitFor } from '@testing-library/react-native';
 
+import { testQueryClient, TestQueryClientProvider } from '@components/test/TestQueryClientProvider';
 import { templateService } from '@services/template/axios';
 import { TEMPLATE_SERVICE_MOCK } from '@services/template/mock/test.mock';
 import { useGetTemplate } from '@services/template/query';
-import { testQueryClient, TestQueryClientProvider } from '@services/test.util';
 
 // 서비스 모듈 모킹
 jest.mock('@services/template/axios', () => ({

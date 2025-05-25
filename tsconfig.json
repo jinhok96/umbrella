@@ -2,7 +2,8 @@
   "extends": ["@react-native/typescript-config/tsconfig.json", "@tsconfig/react-native/tsconfig.json"],
   "compilerOptions": {
     "types": ["react", "react-native", "react-test-renderer", "jest"],
-    "moduleResolution": "node16",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "baseUrl": ".", // 반드시 루트 디렉토리로 설정
     "paths": {
       // babel.config.js, metro.config.js와 통일
@@ -19,7 +20,8 @@
     "skipLibCheck": true,
     "lib": ["es2017", "dom"],
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strict": true
   },
   "include": [
     "src/**/*.js",

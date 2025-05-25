@@ -15,11 +15,25 @@ export const testQueryClient = new QueryClient({
   },
 });
 
-export function TestQueryClientProvider({ children, fallback, ...props }: ErrorBoundaryProps & SuspenseProps) {
+export function TestQueryClientProvider({
+  children,
+  fallback,
+  name,
+  FallbackComponent = () => null,
+  ...props
+}: Partial<ErrorBoundaryProps> & SuspenseProps) {
   return (
     <QueryClientProvider client={testQueryClient}>
-      <ErrorBoundary {...props}>
-        <Suspense fallback={fallback}>{children}</Suspense>
+      <ErrorBoundary
+        {...props}
+        FallbackComponent={FallbackComponent}
+      >
+        <Suspense
+          fallback={fallback}
+          name={name}
+        >
+          {children}
+        </Suspense>
       </ErrorBoundary>
     </QueryClientProvider>
   );

@@ -10,6 +10,6 @@ import type { Theme } from '@store/settingStore/useSettingStore.type';
  * @returns HEX 코드
  * @jinhok96 25.05.22
  */
-export function getIconColor(theme: Theme, color: ColorVar = '--color-gray-90') {
+export function getColorHex(theme: Theme, color: ColorVar = '--color-gray-90') {
   return colorThemeVarList[theme][color];
 }

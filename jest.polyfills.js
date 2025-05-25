@@ -13,6 +13,7 @@
 const { Blob, File } = require('node:buffer');
 const { ReadableStream, TransformStream } = require('node:stream/web');
 const { TextDecoder, TextEncoder } = require('node:util');
+const { setImmediate, clearImmediate } = require('timers');
 
 Object.defineProperties(globalThis, {
   TextDecoder: { value: TextDecoder },
@@ -29,4 +30,10 @@ Object.defineProperties(globalThis, {
   FormData: { value: FormData },
   Request: { value: Request },
   Response: { value: Response },
+});
+
+// ReferenceError: ${property} is not defined 오류가 출력되면 추가
+Object.defineProperties(globalThis, {
+  setImmediate: { value: setImmediate },
+  clearImmediate: { value: clearImmediate },
 });

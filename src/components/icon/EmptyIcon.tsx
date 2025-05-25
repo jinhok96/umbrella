@@ -1,7 +1,7 @@
 import EmptySvg from '@assets/svg/Empty.svg';
 
-import type { IconProps } from '@components/icon/Icon.type';
+import type { GetColorHexProps } from '@libs/utils/getColorHex.type';
 
-export default function EmptyIcon(props: Omit<IconProps, 'color'>) {
+export default function EmptyIcon(props: Omit<GetColorHexProps, 'color'>) {
   return <EmptySvg {...props} />;
 }

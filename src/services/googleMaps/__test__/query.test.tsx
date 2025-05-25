@@ -2,6 +2,7 @@ import { Text } from 'react-native';
 
 import { render, renderHook, screen, waitFor } from '@testing-library/react-native';
 
+import { testQueryClient, TestQueryClientProvider } from '@components/test/TestQueryClientProvider';
 import { googleMapsService } from '@services/googleMaps/axios';
 import { GOOGLE_MAPS_SERVICE_MOCK } from '@services/googleMaps/mock/test.mock';
 import {
@@ -11,7 +12,6 @@ import {
   useGetPlaceGeocoding,
   useGetReverseGeocoding,
 } from '@services/googleMaps/query';
-import { TestQueryClientProvider, testQueryClient } from '@services/test.util';
 
 // 서비스 모듈 모킹
 jest.mock('@services/googleMaps/axios', () => ({
