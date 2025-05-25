@@ -6,10 +6,15 @@
 
 import { Easing } from 'react-native-reanimated';
 
-import CheckIcon from '@components/icon/CheckIcon';
+import CalenderIcon from '@components/icon/CalenderIcon';
+import ClockIcon from '@components/icon/ClockIcon';
+import HomeIcon from '@components/icon/HomeIcon';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
 import { getColorHex } from '@libs/utils/getColorHex.util';
+import { OtherThemeVarList } from '@libs/utils/themes.util';
 import StyledBottomTabBar from '@navigation/components/StyledBottomTabBar';
+import StyledBottomTabBarButton from '@navigation/components/StyledBottomTabBarButton';
+import StyledBottomTabBarIcon from '@navigation/components/StyledBottomTabBarIcon';
 import StyledBottomTabBarLabel from '@navigation/components/StyledBottomTabBarLabel';
 import {
   HOME_BOTTOM_TAB_BAR_LABEL_LIST,
@@ -26,8 +31,6 @@ import type { ColorVar } from '@libs/utils/themes.type';
 const ACTIVE_COLOR_VAR: ColorVar = '--color-morning';
 const INACTIVE_COLOR_VAR: ColorVar = '--color-text-06';
 
-const getIconColor = (focused: boolean) => (focused ? ACTIVE_COLOR_VAR : INACTIVE_COLOR_VAR);
-
 export default function HomeNavigation() {
   const theme = useSettingStore(state => state.theme);
 
@@ -35,15 +38,11 @@ export default function HomeNavigation() {
     <HomeTab.Navigator
       tabBar={props => <StyledBottomTabBar {...props} />}
       screenOptions={{
-        tabBarShowLabel: false,
         headerShown: false,
+        tabBarButton: props => <StyledBottomTabBarButton {...props} />,
         tabBarActiveTintColor: getColorHex(theme, ACTIVE_COLOR_VAR),
         tabBarInactiveTintColor: getColorHex(theme, INACTIVE_COLOR_VAR),
         animation: 'shift',
-        tabBarStyle: {
-          backgroundColor: 'transparent',
-          shadowColor: 'transparent',
-        },
         transitionSpec: {
           animation: 'timing',
           config: {
@@ -51,14 +50,21 @@ export default function HomeNavigation() {
             easing: Easing.inOut(Easing.ease),
           },
         },
+        tabBarStyle: {
+          boxShadow: OtherThemeVarList.shadow['--shadow-bottom-tab-bar'],
+        },
       }}
     >
       <HomeTab.Screen
         name={HOME_NAVIGATION_ROUTE_NAME_LIST.CurrentForecast}
         component={CurrentForecastScreen}
         options={{
-          tabBarShowLabel: true,
-          tabBarIcon: ({ focused }) => <CheckIcon color={getIconColor(focused)} />,
+          tabBarIcon: ({ focused }) => (
+            <StyledBottomTabBarIcon
+              focused={focused}
+              icon={HomeIcon}
+            />
+          ),
           tabBarLabel: ({ focused }) => (
             <StyledBottomTabBarLabel
               text={HOME_BOTTOM_TAB_BAR_LABEL_LIST.CurrentForecast}
@@ -71,8 +77,12 @@ export default function HomeNavigation() {
         name={HOME_NAVIGATION_ROUTE_NAME_LIST.HourlyForecast}
         component={HourlyForecastScreen}
         options={{
-          tabBarShowLabel: true,
-          tabBarIcon: ({ focused }) => <CheckIcon color={getIconColor(focused)} />,
+          tabBarIcon: ({ focused }) => (
+            <StyledBottomTabBarIcon
+              focused={focused}
+              icon={ClockIcon}
+            />
+          ),
           tabBarLabel: ({ focused }) => (
             <StyledBottomTabBarLabel
               text={HOME_BOTTOM_TAB_BAR_LABEL_LIST.HourlyForecast}
@@ -85,8 +95,12 @@ export default function HomeNavigation() {
         name={HOME_NAVIGATION_ROUTE_NAME_LIST.DailyForecast}
         component={DailyForecastScreen}
         options={{
-          tabBarShowLabel: true,
-          tabBarIcon: ({ focused }) => <CheckIcon color={getIconColor(focused)} />,
+          tabBarIcon: ({ focused }) => (
+            <StyledBottomTabBarIcon
+              focused={focused}
+              icon={CalenderIcon}
+            />
+          ),
           tabBarLabel: ({ focused }) => (
             <StyledBottomTabBarLabel
               text={HOME_BOTTOM_TAB_BAR_LABEL_LIST.DailyForecast}
