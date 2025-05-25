@@ -1,7 +1,7 @@
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import { BottomTabBar } from '@react-navigation/bottom-tabs';
+import BottomTabBar from '@components/@react-navigation/bottom-tabs/BottomTabBar';
 
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
@@ -10,7 +10,7 @@ type StyledBottomTabBarProps = Omit<ViewProps, 'className' | 'children'> & Botto
 /**
  * 스타일이 적용된 `BottomTabBar` 컴포넌트
  * @param props `BottomTabBarProps`
- * @jinhok96 25.05.25
+ * @jinhok96 25.05.26
  */
 export default function StyledBottomTabBar({
   state,
@@ -22,7 +22,7 @@ export default function StyledBottomTabBar({
   return (
     <View
       {...props}
-      className="border-t border-gray-50 bg-test"
+      className="bg-background-02"
     >
       <BottomTabBar
         state={state}

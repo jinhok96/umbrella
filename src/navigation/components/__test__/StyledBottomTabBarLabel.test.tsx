@@ -14,7 +14,7 @@ const LABEL: LocalizedText = {
 
 const LABEL_CLASS_NAME = {
   focused: 'text-morning',
-  unfocused: 'text-gray-50',
+  unfocused: 'text-text-06',
 };
 
 describe('StyledBottomTabBarLabel', () => {

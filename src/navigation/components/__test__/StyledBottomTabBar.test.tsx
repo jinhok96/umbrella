@@ -4,10 +4,8 @@ import StyledBottomTabBar from '@navigation/components/StyledBottomTabBar';
 
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-// react-navigation의 모듈 모킹
-jest.mock('@react-navigation/bottom-tabs', () => ({
-  BottomTabBar: jest.fn(() => null),
-}));
+// BottomTabBar 모킹
+jest.mock('@components/@react-navigation/bottom-tabs/BottomTabBar', () => jest.fn(() => null));
 
 describe('StyledBottomTabBar', () => {
   afterAll(() => {
@@ -15,8 +13,7 @@ describe('StyledBottomTabBar', () => {
   });
 
   test('정상적으로 렌더링되는지 테스트', async () => {
-    // @ts-expect-error - BottomTabBar를 null로 모킹했기 때문에 props도 null로 모킹
-    const mockProps = null as BottomTabBarProps;
+    const mockProps = {} as BottomTabBarProps;
     const testId = 'testId';
 
     render(
