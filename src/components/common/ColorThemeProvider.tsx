@@ -13,7 +13,7 @@ export default function ColorThemeProvider({ children }: PropsWithChildren) {
       style={colorTheme[theme] as Record<string, string>}
       needsOffscreenAlphaCompositing={true}
     >
-      {children}
+      <View className="flex-1 bg-test">{children}</View>
     </View>
   );
 }
