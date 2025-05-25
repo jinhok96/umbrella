@@ -1,18 +1,18 @@
 import LocationDefaultSvg from '@assets/svg/LocationDefault.svg';
 import LocationFilledSvg from '@assets/svg/LocationFilled.svg';
 import Show from '@components/common/Show';
-import { getIconColor } from '@components/icon/Icon.util';
+import { getColorHex } from '@libs/utils/getColorHex.util';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { IconProps } from '@components/icon/Icon.type';
+import type { GetColorHexProps } from '@libs/utils/getColorHex.type';
 
-type LocationIconProps = IconProps<{
+type LocationIconProps = GetColorHexProps<{
   filled?: boolean;
 }>;
 
 export default function LocationIcon({ color, filled = false, ...props }: LocationIconProps) {
   const theme = useSettingStore(state => state.theme);
-  const currentColor = getIconColor(theme, color);
+  const currentColor = getColorHex(theme, color);
   return (
     <>
       <Show when={!filled}>

@@ -9,11 +9,11 @@ import SnowSvg from '@assets/svg/weather/WeatherSnow.svg';
 import ThunderstormSvg from '@assets/svg/weather/WeatherThunderstorm.svg';
 import Show from '@components/common/Show';
 
-import type { IconProps } from '@components/icon/Icon.type';
+import type { GetColorHexProps } from '@libs/utils/getColorHex.type';
 import type { WeatherIcon } from '@services/openWeatherOneCall/axios.type';
 
 type WeatherIconProps = Omit<
-  IconProps<{
+  GetColorHexProps<{
     icon: WeatherIcon;
   }>,
   'color'
