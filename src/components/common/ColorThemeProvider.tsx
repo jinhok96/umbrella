@@ -1,18 +1,15 @@
 import type { PropsWithChildren } from 'react';
-import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
 import { colorTheme } from '@libs/utils/themes.util';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-type ColorThemeProviderProps = PropsWithChildren<Omit<ViewProps, 'style' | 'needsOffscreenAlphaCompositing'>>;
-
-export default function ColorThemeProvider({ children, ...props }: ColorThemeProviderProps) {
+export default function ColorThemeProvider({ children }: PropsWithChildren) {
   const theme = useSettingStore(state => state.theme);
 
   return (
     <View
-      {...props}
+      className="flex-1"
       style={colorTheme[theme] as Record<string, string>}
       needsOffscreenAlphaCompositing={true}
     >
