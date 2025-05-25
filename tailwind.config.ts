@@ -48,7 +48,7 @@ const generateTypography = (size: number, lineHeight: string, letterSpacing: num
 /**
  * 타이포그래피 생성 플러그인
  * `.text-${font}-${name}`
- * @jinhok96 25.05.21
+ * @jinhok96 25.05.25
  */
 const typographyPlugin: PluginCreator = ({ addUtilities }) => {
   addUtilities({
@@ -74,24 +74,24 @@ const typographyPlugin: PluginCreator = ({ addUtilities }) => {
     '.text-pretendard-button-2': generateTypography(14, '130%', -0.02),
     // Montserrat
     // Title
-    '.text-montserrat-title-1': generateTypography(28, '140%', -0.03),
-    '.text-montserrat-title-2': generateTypography(24, '140%', -0.03),
-    '.text-montserrat-title-3': generateTypography(20, '145%', -0.03),
-    '.text-montserrat-title-4': generateTypography(16, '145%', -0.03),
+    '.text-montserrat-title-1': generateTypography(32, '140%', -0.04),
+    '.text-montserrat-title-2': generateTypography(24, '140%', -0.04),
+    '.text-montserrat-title-3': generateTypography(20, '145%', -0.04),
+    '.text-montserrat-title-4': generateTypography(16, '145%', -0.04),
     '.text-montserrat-title-5': generateTypography(14, '145%', -0.03),
     // Body
-    '.text-montserrat-body-1': generateTypography(16, '160%', -0.03),
+    '.text-montserrat-body-1': generateTypography(16, '160%', -0.04),
     '.text-montserrat-body-2': generateTypography(14, '160%', -0.03),
     '.text-montserrat-body-3': generateTypography(13, '160%', -0.03),
     '.text-montserrat-body-4': generateTypography(12, '160%', -0.03),
     // Caption
-    '.text-montserrat-caption-1': generateTypography(16, '150%', -0.03),
+    '.text-montserrat-caption-1': generateTypography(16, '150%', -0.04),
     '.text-montserrat-caption-2': generateTypography(14, '150%', -0.03),
     '.text-montserrat-caption-3': generateTypography(13, '150%', -0.03),
     '.text-montserrat-caption-4': generateTypography(12, '150%', -0.03),
     // Button
-    '.text-montserrat-button-1': generateTypography(16, '130%', -0.02),
-    '.text-montserrat-button-2': generateTypography(14, '130%', -0.02),
+    '.text-montserrat-button-1': generateTypography(16, '130%', -0.04),
+    '.text-montserrat-button-2': generateTypography(14, '130%', -0.03),
   });
 };
 
