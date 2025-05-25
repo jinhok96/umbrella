@@ -98,7 +98,7 @@ const colorTokenList = {
 
 /**
  * 동적 테마 컬러 토큰 리스트
- * dark, highContrast 수정 예정
+ * highContrast 수정 예정
  * @jinhok96 25.05.21
  */
 export const colorThemeVarList: ColorTheme = {
@@ -106,8 +106,8 @@ export const colorThemeVarList: ColorTheme = {
     '--color-test': colorTokenList.blue.default,
     '--color-white': colorTokenList.gray[0],
     '--color-background-01': colorTokenList.gray[10],
-    '--color-background-02': colorTokenList.gray[20],
-    '--color-background-03': colorTokenList.gray[30],
+    '--color-background-02': colorTokenList.gray[0],
+    '--color-background-03': colorTokenList.gray[10],
     '--color-text-01': colorTokenList.gray[90],
     '--color-text-02': colorTokenList.gray[80],
     '--color-text-03': colorTokenList.gray[70],
@@ -143,9 +143,9 @@ export const colorThemeVarList: ColorTheme = {
   dark: {
     '--color-test': colorTokenList.red.default,
     '--color-white': colorTokenList.gray[0],
-    '--color-background-01': colorTokenList.gray[10],
-    '--color-background-02': colorTokenList.gray[0],
-    '--color-background-03': colorTokenList.gray[10],
+    '--color-background-01': colorTokenList.gray[90],
+    '--color-background-02': colorTokenList.gray[80],
+    '--color-background-03': colorTokenList.gray[70],
     '--color-text-01': colorTokenList.gray[0],
     '--color-text-02': colorTokenList.gray[5],
     '--color-text-03': colorTokenList.gray[10],
@@ -222,4 +222,18 @@ export const colorTheme: ColorTheme = {
   light: vars(colorThemeVarList.light),
   dark: vars(colorThemeVarList.dark),
   highContrast: vars(colorThemeVarList.highContrast),
+};
+
+/**
+ * 기타 디자인 토큰 리스트
+ * @jinhok96 25.05.25
+ */
+export const OtherThemeVarList = {
+  shadow: {
+    '--shadow-bottom-tab-bar': '0 -8px 24px 0 rgba(0, 0, 0, 0.04)',
+  },
+};
+
+export const OtherTheme = {
+  shadow: vars(OtherThemeVarList.shadow),
 };

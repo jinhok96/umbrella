@@ -5,6 +5,11 @@ import type { PluginCreator } from 'tailwindcss/types/config';
 
 const nativewindPreset = require('nativewind/preset');
 
+const ANIMATION_STYLE = {
+  'transition-timing-function': 'cubic-bezier(0.4, 0, 0.2, 1)', // ease-in-out
+  'transition-duration': '150ms',
+};
+
 // transition-colors에 대응하는 속성
 const COLOR_TRANSITION_PROPERTY_LIST: Record<string, string> = {
   bg: 'background-color',
@@ -25,13 +30,28 @@ const autoColorTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => 
       {
         [prefix]: () => ({
           'transition-property': property,
-          'transition-timing-function': 'cubic-bezier(0.4, 0, 0.2, 1)', // ease-in-out
-          'transition-duration': '150ms',
+          ...ANIMATION_STYLE,
         }),
       },
       { values: theme('colors') },
     );
   });
+};
+
+/**
+ * 투명도 전환 애니메이션 자동화 플러그인
+ * @jinhok96 25.05.25
+ */
+const autoOpacityTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => {
+  matchUtilities(
+    {
+      opacity: () => ({
+        'transition-property': 'opacity',
+        ...ANIMATION_STYLE,
+      }),
+    },
+    { values: theme('opacity') },
+  );
 };
 
 // px -> rem 변환 상수 (1/16)
@@ -192,9 +212,12 @@ const config: Config = {
         'transparency-09': 'var(--color-transparency-09)',
         'transparency-10': 'var(--color-transparency-10)',
       },
+      boxShadow: {
+        'bottom-tab-bar': 'var(--shadow-bottom-tab-bar)',
+      },
     },
   },
-  plugins: [autoColorTransitionPlugin, typographyPlugin],
+  plugins: [autoColorTransitionPlugin, autoOpacityTransitionPlugin, typographyPlugin],
 };
 
 export default config;
