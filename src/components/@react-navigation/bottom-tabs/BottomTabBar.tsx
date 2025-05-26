@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable react/no-unstable-nested-components */
+
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import type { LayoutChangeEvent, StyleProp, ViewStyle } from 'react-native';
@@ -13,7 +13,6 @@ import {
   NavigationRouteContext,
   useLinkBuilder,
   useLocale,
-  useTheme,
 } from '@react-navigation/native';
 
 import type { EdgeInsets } from 'react-native-safe-area-context';
@@ -137,7 +136,7 @@ export const getTabBarHeight = ({
  * @jinhok96 25.05.26
  */
 export default function BottomTabBar({ state, navigation, descriptors, insets, style }: Props) {
-  const { colors } = useTheme();
+  // const { colors } = useTheme();
   const { direction } = useLocale();
   const { buildHref } = useLinkBuilder();
 
@@ -287,8 +286,8 @@ export default function BottomTabBar({ state, navigation, descriptors, insets, s
               ? { borderBottomWidth: StyleSheet.hairlineWidth }
               : { borderTopWidth: StyleSheet.hairlineWidth },
         {
-          backgroundColor: tabBarBackgroundElement != null ? 'transparent' : colors.card,
-          borderColor: colors.border,
+          // backgroundColor: tabBarBackgroundElement != null ? 'transparent' : colors.card,
+          // borderColor: colors.border,
         },
         sidebar
           ? {
