@@ -1,9 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
-/**
- * react-navigation에서 nested component를 메모이징하므로 react/no-unstable-nested-components 예외 적용
- * @jinhok96 25.05.25
- */
-
 import { Easing } from 'react-native-reanimated';
 
 import CalenderIcon from '@components/icon/CalenderIcon';
@@ -12,10 +6,10 @@ import HomeIcon from '@components/icon/HomeIcon';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
 import { getColorHex } from '@libs/utils/getColorHex.util';
 import { OtherThemeVarList } from '@libs/utils/themes.util';
-import StyledBottomTabBar from '@navigation/components/StyledBottomTabBar';
-import StyledBottomTabBarButton from '@navigation/components/StyledBottomTabBarButton';
-import StyledBottomTabBarIcon from '@navigation/components/StyledBottomTabBarIcon';
-import StyledBottomTabBarLabel from '@navigation/components/StyledBottomTabBarLabel';
+import StyledBottomTabBar from '@navigation/components/styledBottomTabBar/StyledBottomTabBar';
+import StyledBottomTabBarButton from '@navigation/components/styledBottomTabBar/StyledBottomTabBarButton';
+import StyledBottomTabBarIcon from '@navigation/components/styledBottomTabBar/StyledBottomTabBarIcon';
+import StyledBottomTabBarLabel from '@navigation/components/styledBottomTabBar/StyledBottomTabBarLabel';
 import {
   HOME_BOTTOM_TAB_BAR_LABEL_LIST,
   HOME_NAVIGATION_ROUTE_NAME_LIST,
