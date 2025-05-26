@@ -19,7 +19,7 @@ function SettingHeader({ options }: NativeStackHeaderProps) {
   return (
     <StyledHeader>
       <StyledHeaderBackButton />
-      <StyledHeaderTitle>{options.title}</StyledHeaderTitle>
+      <StyledHeaderTitle className="text-text-01">{options.title}</StyledHeaderTitle>
       <StyledHeaderButton />
     </StyledHeader>
   );
