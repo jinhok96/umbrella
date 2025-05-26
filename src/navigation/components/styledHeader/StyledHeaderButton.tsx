@@ -9,13 +9,13 @@ export default function StyledHeaderButton({
   ...props
 }: PropsWithChildren<PressableProps>) {
   return (
-    <View className={`flex-shrink-0 ${className}`}>
+    <View className={`size-6 flex-shrink-0 ${className}`}>
       <Pressable
         {...props}
         onPress={onPress}
         className={`size-full items-center justify-center ${!onPress && 'pointer-events-none'}`}
       >
-        <View className="size-6">{children}</View>
+        <View className="size-full">{children}</View>
       </Pressable>
     </View>
   );
