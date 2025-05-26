@@ -108,6 +108,7 @@ module.exports = {
     'react/jsx-no-useless-fragment': 'off',
     'react-hooks/exhaustive-deps': 'off',
     '@typescript-eslint/no-empty-object-type': 'off',
+    'react/no-unstable-nested-components': 'off',
   },
   settings: {
     'import/resolver': {
