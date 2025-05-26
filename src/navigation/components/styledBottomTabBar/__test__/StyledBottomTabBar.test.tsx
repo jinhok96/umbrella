@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 
-import StyledBottomTabBar from '@navigation/components/StyledBottomTabBar';
+import StyledBottomTabBar from '@navigation/components/styledBottomTabBar/StyledBottomTabBar';
 
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
