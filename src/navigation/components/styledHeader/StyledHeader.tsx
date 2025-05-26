@@ -5,6 +5,10 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 type StyledHeaderProps = ViewProps;
 
+/**
+ * 상단 헤더 컨테이너
+ * @jinhok96 25.05.26
+ */
 export default function StyledHeader({ children, className, ...props }: StyledHeaderProps) {
   const theme = useSettingStore(state => state.theme);
 

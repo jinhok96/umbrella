@@ -5,6 +5,10 @@ import StyledHeaderTitle from '@navigation/components/styledHeader/StyledHeaderT
 
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
+/**
+ * 공통 상단 헤더 컴포넌트
+ * @jinhok96 25.05.26
+ */
 export default function GlobalStackHeader({ options }: NativeStackHeaderProps) {
   return (
     <StyledHeader>

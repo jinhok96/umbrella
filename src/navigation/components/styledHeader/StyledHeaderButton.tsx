@@ -2,6 +2,10 @@ import type { PropsWithChildren } from 'react';
 import type { PressableProps } from 'react-native';
 import { Pressable, View } from 'react-native';
 
+/**
+ * 상단 헤더 버튼 컴포넌트
+ * @jinhok96 25.05.26
+ */
 export default function StyledHeaderButton({
   className,
   children,
