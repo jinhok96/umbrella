@@ -1,6 +1,8 @@
 import type { ViewProps } from 'react-native';
 import { ScrollView, View } from 'react-native';
 
+import LocationHeader from '@screens/HomeScreen/components/locationHeader/LocationHeader';
+
 type HomeScreenWrapperProps = ViewProps;
 
 export default function HomeScreenWrapper({ children, className, ...props }: HomeScreenWrapperProps) {
@@ -9,7 +11,12 @@ export default function HomeScreenWrapper({ children, className, ...props }: Hom
       {...props}
       className={`flex-1 ${className}`}
     >
-      <ScrollView>{children}</ScrollView>
+      <ScrollView>
+        <View className="pt-safe">
+          <LocationHeader />
+        </View>
+        <View className="flex-1 p-5">{children}</View>
+      </ScrollView>
     </View>
   );
 }
