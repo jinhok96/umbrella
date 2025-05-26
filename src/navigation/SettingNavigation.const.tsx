@@ -44,6 +44,21 @@ export const SETTING_HEADER_LABEL_LIST: LocalizedTextMap<SettingNavigationRouteN
 };
 
 /**
+ * SettingNavigation 라벨
+ * @jinhok96 25.05.26
+ */
+export const SETTING_NAVIGATION_LABEL_LIST: LocalizedTextMap<SettingNavigationRouteName> = {
+  SettingMenu: { en: 'Setting', ko: '설정' },
+  SetTheme: { en: 'Theme', ko: '테마' },
+  SetLang: { en: 'Language', ko: '언어' },
+  SetUnits: { en: 'Units', ko: '측정 단위' },
+  SetDefaultLocation: { en: 'Default Location On Launch', ko: '앱 시작 시 기본 위치' },
+  License: { en: 'License', ko: '라이센스' },
+  Info: { en: 'Information', ko: '날씨 기준' },
+  Inquiry: { en: 'Inquiry', ko: '문의하기' },
+};
+
+/**
  * SettingNavigation 테스트용 ID
  * @jinhok96 25.05.26
  */

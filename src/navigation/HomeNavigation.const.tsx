@@ -14,10 +14,14 @@ export const HOME_NAVIGATION_ROUTE_NAME_LIST: Record<HomeNavigationRouteName, Ho
   DailyForecast: 'DailyForecast',
 };
 
+/**
+ * HomeNavigation 라벨
+ * @jinhok96 25.05.26
+ */
 export const HOME_BOTTOM_TAB_BAR_LABEL_LIST: LocalizedTextMap<HomeNavigationRouteName> = {
   CurrentForecast: { en: 'Home', ko: '홈' },
-  HourlyForecast: { en: 'Hourly Forecasts', ko: '시간별 예보' },
-  DailyForecast: { en: 'Daily Forecasts', ko: '일별 예보' },
+  HourlyForecast: { en: 'Hourly', ko: '시간별' },
+  DailyForecast: { en: 'Daily', ko: '요일별' },
 };
 
 /**

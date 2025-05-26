@@ -9,7 +9,7 @@ export default function StyledHeaderTitle({ children, className, ...props }: Sty
     <PretendardText
       {...props}
       typo="title-3"
-      className={`flex-shrink text-center ${className}`}
+      className={`flex-shrink text-center text-text-01 ${className}`}
     >
       {children}
     </PretendardText>
