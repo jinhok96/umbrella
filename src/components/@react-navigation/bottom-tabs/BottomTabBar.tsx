@@ -266,7 +266,7 @@ export default function BottomTabBar({ state, navigation, descriptors, insets, s
 
   return (
     <Animated.View
-      className="border bg-none p-0 shadow-none"
+      className="bg-none p-0 shadow-none"
       style={[
         tabBarPosition === 'left' ? styles.start : tabBarPosition === 'right' ? styles.end : styles.bottom,
         (
