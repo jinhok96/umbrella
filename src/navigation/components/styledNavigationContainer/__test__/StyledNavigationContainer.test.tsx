@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 
 import { render, screen } from '@testing-library/react-native';
 
-import StyledNavigationContainer from '@navigation/components/styledBottomTabBar/StyledNavigationContainer';
+import StyledNavigationContainer from '@navigation/components/styledNavigationContainer/StyledNavigationContainer';
 
 describe('StyledNavigationContainer', () => {
   test('children이 정상적으로 렌더링되는지 테스트', async () => {
