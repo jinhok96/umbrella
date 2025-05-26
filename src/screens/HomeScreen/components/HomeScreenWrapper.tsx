@@ -7,7 +7,7 @@ export default function HomeScreenWrapper({ children, className, ...props }: Hom
   return (
     <View
       {...props}
-      className={`pt-safe flex-1 ${className}`}
+      className={`flex-1 ${className}`}
     >
       <ScrollView>{children}</ScrollView>
     </View>
