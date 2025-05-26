@@ -27,7 +27,7 @@ export default function LocationHeader() {
   const handleSettingScreenButtonPress = () => navigate('Setting');
 
   return (
-    <View className="flex w-full flex-row items-center justify-between border px-5 py-4">
+    <View className="flex w-full flex-row items-center justify-between px-5 py-4">
       <Pressable
         className="flex flex-row items-center gap-1"
         onPress={handleLocationScreenButtonPress}
