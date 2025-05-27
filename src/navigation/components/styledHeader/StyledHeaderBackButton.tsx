@@ -17,6 +17,7 @@ export function StyledHeaderBackButton({ ...props }: PressableProps) {
   return (
     <StyledHeaderButton
       {...props}
+      testID="styled-header-back-button"
       onPress={handleGoBackButtonPress}
     >
       <LeftArrowIcon />
