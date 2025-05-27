@@ -2,7 +2,7 @@ import { Pressable, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import HitSlopPressable from '@components/common/HitSlopPressable';
+import PressableHitSlop from '@components/common/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
 import CaretIcon from '@components/icon/CaretIcon';
 import SettingIcon from '@components/icon/SettingIcon';
@@ -37,13 +37,13 @@ export default function LocationHeader() {
           <CaretIcon color="--color-white" />
         </View>
       </Pressable>
-      <HitSlopPressable
+      <PressableHitSlop
         testID="navigate-setting-screen-button"
         className="size-6"
         onPress={handleSettingScreenButtonPress}
       >
         <SettingIcon color="--color-white" />
-      </HitSlopPressable>
+      </PressableHitSlop>
     </View>
   );
 }
