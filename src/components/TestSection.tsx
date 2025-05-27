@@ -77,7 +77,7 @@ export default function TestSection() {
   const theme = useSettingStore(state => state.theme);
 
   return (
-    <View className="bg-test">
+    <View>
       <Text className="border-b text-xl">Theme: {theme} (System Default)</Text>
       <FlexSection>
         <View className="size-6">

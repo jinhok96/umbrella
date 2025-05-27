@@ -11,7 +11,7 @@ export default function HomeScreenWrapper({ children, className, ...props }: Hom
       {...props}
       className={`flex-1 ${className}`}
     >
-      <View className="pt-safe border-b">
+      <View className="pt-safe border-b bg-morning">
         <LocationHeader />
         <View className="p-5">
           <Text>이 위치에 오늘 날씨 정보</Text>
