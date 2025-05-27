@@ -4,6 +4,12 @@ import { TextInput, View } from 'react-native';
 
 import type { TextFieldProps } from '@components/textField/TextField.type';
 
+/**
+ * 커스텀 `TextInput` 컴포넌트
+ *
+ * 기본 스타일 적용
+ * @jinhok96 25.05.28
+ */
 export default forwardRef<TextInput, TextFieldProps>(function TextField(
   { className, value = '', onChangeText, onFocus, onBlur, children, isError, testID, ...props }: TextFieldProps,
   ref,
