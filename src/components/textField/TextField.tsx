@@ -5,7 +5,7 @@ import { TextInput, View } from 'react-native';
 import type { TextFieldProps } from '@components/textField/TextField.type';
 
 export default forwardRef<TextInput, TextFieldProps>(function TextField(
-  { className, value = '', onChangeText, onFocus, onBlur, children, isError, ...props }: TextFieldProps,
+  { className, value = '', onChangeText, onFocus, onBlur, children, isError, testID, ...props }: TextFieldProps,
   ref,
 ) {
   const [isFocused, setIsFocused] = useState(false);
@@ -22,7 +22,8 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
 
   return (
     <View
-      className={`flex h-fit shrink flex-row items-center gap-2.5 rounded-lg border border-background-01 bg-background-01 px-4 ${isError ? 'border-error' : isFocused && 'border-morning'} ${className}`}
+      className={`flex h-fit shrink flex-row items-center gap-2.5 rounded-lg border bg-background-01 px-4 ${isError ? 'border-error' : isFocused ? 'border-morning' : 'border-background-01'} ${className}`}
+      testID={`${testID}_container`}
     >
       <TextInput
         {...props}
@@ -32,6 +33,7 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
         onChangeText={onChangeText}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        testID={testID}
         ref={ref}
       />
       {children}
