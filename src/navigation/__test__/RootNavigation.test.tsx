@@ -1,6 +1,6 @@
 import { act, render, screen } from '@testing-library/react-native';
 
-import TestNavigationContainer from '@components/test/TestNavigationContainer';
+import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
 import { RootNavigation } from '@navigation/RootNavigation';
 import { ROOT_NAVIGATION_TEST_ID_LIST } from '@navigation/RootNavigation.const';
 

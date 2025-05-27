@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 
 import { render, screen } from '@testing-library/react-native';
 
-import { TestQueryClientProvider } from '@components/test/TestQueryClientProvider';
+import { TestQueryClientProvider } from '@components/testComponent/TestQueryClientProvider';
 
 describe('TestQueryClientProvider', () => {
   beforeAll(() => {

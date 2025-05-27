@@ -1,6 +1,6 @@
-import FontText from '@components/text/FontText';
+import FontText from '@components/fontText/FontText';
 
-import type { PretendardTextProps } from '@components/text/PretendardText.type';
+import type { PretendardTextProps } from '@components/fontText/PretendardText.type';
 
 /**
  * `font-pretendard-${weight}`를 적용하는 커스텀 Text 컴포넌트

@@ -1,23 +1,21 @@
 import { render, screen } from '@testing-library/react-native';
 
-import FontText from '@components/text/FontText';
+import PretendardText from '@components/fontText/PretendardText';
 
 describe('FontText', () => {
-  test('children, className, font, typo가 정상적으로 렌더링되는지 테스트', async () => {
+  test('children, className, typo가 정상적으로 렌더링되는지 테스트', async () => {
     const testChildren = 'Test Children';
-    const className = 'text-xl';
-    const font = 'pretendard';
+    const className = 'text-test';
     const typo = 'body-1';
     const weight = 'regular';
 
     render(
-      <FontText
+      <PretendardText
         className={className}
-        font={font}
         typo={typo}
       >
         {testChildren}
-      </FontText>,
+      </PretendardText>,
     );
 
     const children = await screen.findByText(testChildren);
@@ -25,7 +23,7 @@ describe('FontText', () => {
 
     const classNameAttribute: string = children.props.className;
     expect(classNameAttribute.includes(className)).toBe(true);
-    expect(classNameAttribute.includes(`font-${font}-${weight}`)).toBe(true);
-    expect(classNameAttribute.includes(`text-${font}-${typo}`)).toBe(true);
+    expect(classNameAttribute.includes(`font-pretendard-${weight}`)).toBe(true);
+    expect(classNameAttribute.includes(`text-pretendard-${typo}`)).toBe(true);
   });
 });

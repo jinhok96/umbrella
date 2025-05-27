@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import TestNavigationContainer from '@components/test/TestNavigationContainer';
+import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
 import LocationHeader from '@screens/HomeScreen/components/locationHeader/LocationHeader';
 import { LocationNamePlaceholder } from '@screens/HomeScreen/components/locationHeader/LocationHeader.const';
 import { locationStore } from '@store/locationStore/useLocationStore';

@@ -5,7 +5,7 @@ import type {
   MontserratTypography,
   PretendardTypography,
   Typography,
-} from '@components/text/FontText.type';
+} from '@components/fontText/FontText.type';
 
 type FontClassNameListType = {
   pretendard: Record<FontTextProps<PretendardTypography>['typo'], string>;

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 
-import PretendardText from '@components/text/PretendardText';
+import MontserratText from '@components/fontText/MontserratText';
 
 describe('FontText', () => {
   test('children, className, typo가 정상적으로 렌더링되는지 테스트', async () => {
@@ -10,12 +10,12 @@ describe('FontText', () => {
     const weight = 'regular';
 
     render(
-      <PretendardText
+      <MontserratText
         className={className}
         typo={typo}
       >
         {testChildren}
-      </PretendardText>,
+      </MontserratText>,
     );
 
     const children = await screen.findByText(testChildren);
@@ -23,7 +23,7 @@ describe('FontText', () => {
 
     const classNameAttribute: string = children.props.className;
     expect(classNameAttribute.includes(className)).toBe(true);
-    expect(classNameAttribute.includes(`font-pretendard-${weight}`)).toBe(true);
-    expect(classNameAttribute.includes(`text-pretendard-${typo}`)).toBe(true);
+    expect(classNameAttribute.includes(`font-montserrat-${weight}`)).toBe(true);
+    expect(classNameAttribute.includes(`text-montserrat-${typo}`)).toBe(true);
   });
 });

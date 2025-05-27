@@ -1,6 +1,6 @@
-import FontText from '@components/text/FontText';
+import FontText from '@components/fontText/FontText';
 
-import type { MontserratTextProps } from '@components/text/MontserratText.type';
+import type { MontserratTextProps } from '@components/fontText/MontserratText.type';
 
 /**
  * `font-montserrat-${weight}`를 적용하는 커스텀 Text 컴포넌트

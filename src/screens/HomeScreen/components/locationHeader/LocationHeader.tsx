@@ -3,9 +3,9 @@ import { Pressable, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import HitSlopPressable from '@components/common/HitSlopPressable';
+import PretendardText from '@components/fontText/PretendardText';
 import CaretIcon from '@components/icon/CaretIcon';
 import SettingIcon from '@components/icon/SettingIcon';
-import PretendardText from '@components/text/PretendardText';
 import { LocationNamePlaceholder } from '@screens/HomeScreen/components/locationHeader/LocationHeader.const';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';

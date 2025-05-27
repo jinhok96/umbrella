@@ -1,6 +1,6 @@
-import PretendardText from '@components/text/PretendardText';
+import PretendardText from '@components/fontText/PretendardText';
 
-import type { PretendardTextProps } from '@components/text/PretendardText.type';
+import type { PretendardTextProps } from '@components/fontText/PretendardText.type';
 
 type StyledHeaderTitleProps = Omit<PretendardTextProps, 'typo'>;
 

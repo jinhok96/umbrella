@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react-native';
 
-import TestNavigationContainer from '@components/test/TestNavigationContainer';
+import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
 import HomeNavigation from '@navigation/HomeNavigation';
 import { HOME_BOTTOM_TAB_BAR_LABEL_LIST, HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/HomeNavigation.const';
 import { settingStore } from '@store/settingStore/useSettingStore';
