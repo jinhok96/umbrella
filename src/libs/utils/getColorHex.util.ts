@@ -8,8 +8,8 @@ import type { Theme } from '@store/settingStore/useSettingStore.type';
  * @param theme 전역 테마
  * @param color 색 이름 (var)
  * @returns HEX 코드
- * @jinhok96 25.05.22
+ * @jinhok96 25.05.25
  */
-export function getColorHex(theme: Theme, color: ColorVar = '--color-gray-90') {
+export function getColorHex(theme: Theme, color: ColorVar) {
   return colorThemeVarList[theme][color];
 }

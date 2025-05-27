@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from 'react';
+import type { TextProps } from 'react-native';
 
 type Font = 'pretendard' | 'montserrat';
 
@@ -46,8 +47,10 @@ export type MontserratTypography =
 
 export type Typography = PretendardTypography | MontserratTypography;
 
-export type FontTextProps<T extends Typography> = PropsWithChildren<{
-  className?: string;
-  font: Font;
-  typo: T;
-}>;
+export type FontTextProps<T extends Typography> = PropsWithChildren<
+  TextProps & {
+    className?: string;
+    font: Font;
+    typo: T;
+  }
+>;

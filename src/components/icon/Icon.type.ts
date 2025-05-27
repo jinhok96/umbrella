@@ -2,7 +2,8 @@ import type { SvgProps } from 'react-native-svg';
 
 import type { ColorVar } from '@libs/utils/themes.type';
 
-export type GetColorHexProps<T extends Record<string, unknown> = {}> = T &
+export type IconProps<T extends Record<string, unknown> = {}> = T &
   Omit<SvgProps, 'color'> & {
+    className?: string;
     color?: ColorVar;
   };

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react-native';
 
-import StyledBottomTabBarLabel from '@navigation/components/StyledBottomTabBarLabel';
+import StyledBottomTabBarLabel from '@navigation/components/styledBottomTabBar/StyledBottomTabBarLabel';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
@@ -14,7 +14,7 @@ const LABEL: LocalizedText = {
 
 const LABEL_CLASS_NAME = {
   focused: 'text-morning',
-  unfocused: 'text-gray-50',
+  unfocused: 'text-text-06',
 };
 
 describe('StyledBottomTabBarLabel', () => {

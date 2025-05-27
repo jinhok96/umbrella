@@ -122,7 +122,7 @@ export default function TestSection() {
           <HelpCircleIcon />
         </View>
         <View className="size-6">
-          <HelpCircleIcon clicked />
+          <HelpCircleIcon pressed />
         </View>
       </FlexSection>
       <FlexSection>

@@ -2,17 +2,17 @@ import { Pressable, Text, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { ROOT_NAVIGATION_TEST_ID_LIST } from '@navigation/RootNavigation.const';
+import { SETTING_NAVIGATION_TEST_ID_LIST } from '@navigation/SettingNavigation.const';
 
-export default function SettingScreen() {
+export default function SettingMenuScreen() {
   const { navigate } = useNavigation();
 
   return (
     <View
-      testID={ROOT_NAVIGATION_TEST_ID_LIST.Setting}
+      testID={SETTING_NAVIGATION_TEST_ID_LIST.SettingMenu}
       className="flex-1 items-center justify-center"
     >
-      <Text>SettingScreen</Text>
+      <Text>SettingMenuScreen</Text>
       <Pressable
         onPress={() => {
           navigate('Home');

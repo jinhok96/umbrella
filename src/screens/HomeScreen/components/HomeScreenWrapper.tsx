@@ -1,18 +1,25 @@
-import { ScrollView } from 'react-native';
+import type { ViewProps } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 
-import SafeView from '@components/common/SafeView';
+import LocationHeader from '@screens/HomeScreen/components/locationHeader/LocationHeader';
 
-import type { SafeViewProps } from '@components/common/SafeView.type';
-
-type HomeScreenWrapperProps = SafeViewProps;
+type HomeScreenWrapperProps = ViewProps;
 
 export default function HomeScreenWrapper({ children, className, ...props }: HomeScreenWrapperProps) {
   return (
-    <SafeView
+    <View
       {...props}
       className={`flex-1 ${className}`}
     >
-      <ScrollView>{children}</ScrollView>
-    </SafeView>
+      <View className="pt-safe border-b">
+        <LocationHeader />
+        <View className="p-5">
+          <Text>이 위치에 오늘 날씨 정보</Text>
+        </View>
+      </View>
+      <ScrollView>
+        <View className="flex-1 p-5">{children}</View>
+      </ScrollView>
+    </View>
   );
 }

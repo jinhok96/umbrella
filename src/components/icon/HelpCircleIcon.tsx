@@ -1,31 +1,24 @@
 import HelpCircleDefaultSvg from '@assets/svg/HelpCircleDefault.svg';
-import HelpCircleOnClickSvg from '@assets/svg/HelpCircleOnClick.svg';
+import HelpCirclePressedSvg from '@assets/svg/HelpCirclePressed.svg';
 import Show from '@components/common/Show';
-import { getColorHex } from '@libs/utils/getColorHex.util';
-import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { GetColorHexProps } from '@libs/utils/getColorHex.type';
+import type { IconProps } from '@components/icon/Icon.type';
 
-type LocationIconProps = GetColorHexProps<{
-  clicked?: boolean;
-}>;
+type HelpCircleIconProps = Omit<
+  IconProps<{
+    pressed?: boolean;
+  }>,
+  'color'
+>;
 
-export default function HelpCircleIcon({ color, clicked = false, ...props }: LocationIconProps) {
-  const theme = useSettingStore(state => state.theme);
-  const currentColor = getColorHex(theme, color);
+export default function HelpCircleIcon({ pressed = false, ...props }: HelpCircleIconProps) {
   return (
     <>
-      <Show when={!clicked}>
-        <HelpCircleDefaultSvg
-          {...props}
-          color={currentColor}
-        />
+      <Show when={!pressed}>
+        <HelpCircleDefaultSvg {...props} />
       </Show>
-      <Show when={clicked}>
-        <HelpCircleOnClickSvg
-          {...props}
-          color={currentColor}
-        />
+      <Show when={pressed}>
+        <HelpCirclePressedSvg {...props} />
       </Show>
     </>
   );
