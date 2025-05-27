@@ -21,15 +21,15 @@ const COLOR_TRANSITION_PROPERTY_LIST: Record<string, string> = {
 };
 
 /**
- * 컬러 전환 애니메이션 자동화 플러그인
- * @jinhok96 25.05.21
+ * 컬러 애니메이션 자동화 플러그인
+ * @jinhok96 25.05.28
  */
 const autoColorTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => {
-  Object.entries(COLOR_TRANSITION_PROPERTY_LIST).forEach(([prefix, property]) => {
+  Object.entries(COLOR_TRANSITION_PROPERTY_LIST).forEach(([key, value]) => {
     matchUtilities(
       {
-        [prefix]: () => ({
-          'transition-property': property,
+        [key]: () => ({
+          'transition-property': value,
           ...ANIMATION_STYLE,
         }),
       },
@@ -38,20 +38,44 @@ const autoColorTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => 
   });
 };
 
+const COLOR_TRANSITION_PROPERTY_VALUE_STRING: string = Object.values(COLOR_TRANSITION_PROPERTY_LIST).join(', ');
+
 /**
- * 투명도 전환 애니메이션 자동화 플러그인
- * @jinhok96 25.05.25
+ * 추가 transition 속성 목록
+ * @jinhok96 25.05.28
  */
-const autoOpacityTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => {
-  matchUtilities(
-    {
-      opacity: () => ({
-        'transition-property': 'opacity',
-        ...ANIMATION_STYLE,
-      }),
+const OTHER_TRANSITION_PROPERTY_VALUE_STRING: string = [
+  'opacity',
+  'width',
+  'height',
+  'min-width',
+  'min-height',
+  'max-width',
+  'max-height',
+  'margin',
+  'margin-left',
+  'margin-right',
+  'margin-top',
+  'margin-bottom',
+  'padding',
+  'padding-left',
+  'padding-right',
+  'padding-top',
+  'padding-bottom',
+  'gap',
+].join(', ');
+
+/**
+ * `COLOR_TRANSITION_PROPERTY_LIST`를 포함하여 transition 속성을 추가하는 플러그인
+ * @jinhok96 25.05.28
+ */
+const autoTransitionPlugin: PluginCreator = ({ addComponents }) => {
+  addComponents({
+    '.transition-auto': {
+      transitionProperty: [COLOR_TRANSITION_PROPERTY_VALUE_STRING, OTHER_TRANSITION_PROPERTY_VALUE_STRING].join(', '),
+      ...ANIMATION_STYLE,
     },
-    { values: theme('opacity') },
-  );
+  });
 };
 
 // px -> rem 변환 상수 (1/16)
@@ -217,7 +241,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [autoColorTransitionPlugin, autoOpacityTransitionPlugin, typographyPlugin],
+  plugins: [autoColorTransitionPlugin, autoTransitionPlugin, typographyPlugin],
 };
 
 export default config;
