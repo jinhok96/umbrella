@@ -2,6 +2,8 @@ import { forwardRef, useState } from 'react';
 import type { TextInputProps } from 'react-native';
 import { TextInput, View } from 'react-native';
 
+import classNames from 'classnames';
+
 import type { TextFieldProps } from '@components/textField/TextField.type';
 
 /**
@@ -26,9 +28,16 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
     onBlur?.(e);
   };
 
+  const containerClassName = classNames(
+    isError && 'border-error',
+    !isError && isFocused && 'border-morning',
+    !isError && !isFocused && 'border-background-01',
+    className,
+  );
+
   return (
     <View
-      className={`flex h-fit shrink flex-row items-center gap-2.5 rounded-lg border bg-background-01 px-4 ${isError ? 'border-error' : isFocused ? 'border-morning' : 'border-background-01'} ${className}`}
+      className={`flex h-fit shrink flex-row items-center gap-2.5 rounded-lg border bg-background-01 px-4 ${containerClassName}`}
       testID={`${testID}_container`}
     >
       <TextInput

@@ -1,5 +1,7 @@
 import { Text } from 'react-native';
 
+import classNames from 'classnames';
+
 import type {
   FontTextProps,
   MontserratTypography,
@@ -55,9 +57,10 @@ const FONT_CLASS_NAME_LIST: FontClassNameListType = {
  * @param font 폰트 종류 `pretendard | montserrat`
  * @param typo 타이포그래피
  * @returns `Text` 컴포넌트
- * @jinhok96 25.05.21
+ * @jinhok96 25.05.28
  */
 export default function FontText<T extends Typography>({ children, className = '', font, typo }: FontTextProps<T>) {
-  const fontClassName = FONT_CLASS_NAME_LIST[font][typo];
-  return <Text className={`${className} ${fontClassName}`}>{children}</Text>;
+  const textClassName = classNames(FONT_CLASS_NAME_LIST[font][typo], className);
+
+  return <Text className={textClassName}>{children}</Text>;
 }

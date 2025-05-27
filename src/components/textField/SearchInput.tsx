@@ -2,6 +2,8 @@ import { useRef } from 'react';
 import type { TextInput } from 'react-native';
 import { View } from 'react-native';
 
+import classNames from 'classnames';
+
 import PressableHitSlop from '@components/common/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
 import SearchIcon from '@components/icon/SearchIcon';
@@ -22,7 +24,7 @@ const SEARCH_INPUT_TEXT: LocalizedTextMap<'cancel' | 'placeholder'> = {
   },
 };
 
-type SearchInputProps = TextFieldProps;
+type SearchInputProps = Omit<TextFieldProps, 'className'>;
 
 /**
  * 검색 인풋 컴포넌트
@@ -42,12 +44,14 @@ export default function SearchInput({ value, onChangeText, ...props }: SearchInp
     textFieldRef.current?.focus();
   };
 
+  const textFieldClassName = classNames(value && 'min-w-0', !value && 'min-w-full');
+
   return (
     <View className="flex flex-row items-center gap-0 overflow-hidden">
       {/* 인풋 */}
       <TextField
         {...props}
-        className={`transition-auto w-full ${!value ? 'min-w-full' : 'min-w-0'}`}
+        className={`transition-auto w-full ${textFieldClassName}`}
         value={value}
         onChangeText={onChangeText}
         placeholder={SEARCH_INPUT_TEXT.placeholder[lang]}

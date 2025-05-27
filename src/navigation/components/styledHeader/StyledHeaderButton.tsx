@@ -1,6 +1,8 @@
 import type { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 
+import classNames from 'classnames';
+
 import PressableHitSlop from '@components/common/PressableHitSlop';
 
 import type { PressableHitSlopProps } from '@components/common/PressableHitSlop.type';
@@ -15,12 +17,14 @@ export default function StyledHeaderButton({
   onPress,
   ...props
 }: PropsWithChildren<PressableHitSlopProps>) {
+  const disabledClassName = classNames(!onPress && 'pointer-events-none');
+
   return (
     <View className={`size-6 shrink-0 ${className}`}>
       <PressableHitSlop
         {...props}
         onPress={onPress}
-        className={`size-full items-center justify-center ${!onPress && 'pointer-events-none'}`}
+        className={`size-full items-center justify-center ${disabledClassName}`}
       >
         <View className="size-full">{children}</View>
       </PressableHitSlop>
