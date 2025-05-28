@@ -4,10 +4,15 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
-import LocationHeader from '@screens/HomeScreen/_components/locationHeader/LocationHeader';
-import { LocationNamePlaceholder } from '@screens/HomeScreen/_components/locationHeader/LocationHeader.const';
+import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
+import {
+  LOCATION_HEADER_TEST_ID_LIST,
+  LocationNamePlaceholder,
+} from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader.const';
 import { locationStore } from '@store/locationStore/useLocationStore';
 import { INIT_LOCATION_STORE_STATE } from '@store/locationStore/useLocationStore.const';
+import { routeStore } from '@store/routeStore/useRouteStore';
+import { INIT_ROUTE_STORE_STATE } from '@store/routeStore/useRouteStore.const';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { Location } from '@store/locationStore/useLocationStore.type';
@@ -23,6 +28,11 @@ function TestComponent() {
 describe('LocationHeader', () => {
   beforeEach(() => {
     locationStore.setState(INIT_LOCATION_STORE_STATE);
+    routeStore.setState({ isReady: true });
+  });
+
+  afterAll(() => {
+    routeStore.setState(INIT_ROUTE_STORE_STATE);
   });
 
   test('currentLocation.name이 렌더링되는지 테스트', async () => {
@@ -68,7 +78,7 @@ describe('LocationHeader', () => {
     expect(element).toBeOnTheScreen();
   });
 
-  test('handleLocationScreenButtonPress 테스트', async () => {
+  test('handleNavigateLocationScreenButtonPress 테스트', async () => {
     render(
       <TestNavigationContainer>
         <Stack.Navigator>
@@ -84,14 +94,14 @@ describe('LocationHeader', () => {
       </TestNavigationContainer>,
     );
 
-    const button = await screen.findByTestId('navigate-location-screen-button');
+    const button = await screen.findByTestId(LOCATION_HEADER_TEST_ID_LIST.navigateLocationScreenButton);
     fireEvent.press(button);
 
     const element = await screen.findByText(TEST_CHIlDREN);
     expect(element).toBeOnTheScreen();
   });
 
-  test('handleSettingScreenButtonPress 테스트', async () => {
+  test('handleNavigateSettingScreenButtonPress 테스트', async () => {
     render(
       <TestNavigationContainer>
         <Stack.Navigator>
@@ -107,7 +117,7 @@ describe('LocationHeader', () => {
       </TestNavigationContainer>,
     );
 
-    const button = await screen.findByTestId('navigate-setting-screen-button');
+    const button = await screen.findByTestId(LOCATION_HEADER_TEST_ID_LIST.navigateSettingScreenButton);
     fireEvent.press(button);
 
     const element = await screen.findByText(TEST_CHIlDREN);
