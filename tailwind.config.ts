@@ -236,9 +236,6 @@ const config: Config = {
         'transparency-09': 'var(--color-transparency-09)',
         'transparency-10': 'var(--color-transparency-10)',
       },
-      boxShadow: {
-        'bottom-tab-bar': 'var(--shadow-bottom-tab-bar)',
-      },
     },
   },
   plugins: [autoColorTransitionPlugin, autoTransitionPlugin, typographyPlugin],

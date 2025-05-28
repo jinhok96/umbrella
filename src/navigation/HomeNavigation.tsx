@@ -6,7 +6,6 @@ import CalenderIcon from '@components/icon/CalenderIcon';
 import ClockIcon from '@components/icon/ClockIcon';
 import HomeIcon from '@components/icon/HomeIcon';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
-import { OtherThemeVarList } from '@libs/utils/themes.util';
 import StyledBottomTabBar from '@navigation/_components/styledBottomTabBar/StyledBottomTabBar';
 import StyledBottomTabBarButton from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarButton';
 import StyledBottomTabBarIcon from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarIcon';
@@ -32,9 +31,6 @@ export default function HomeNavigation() {
             duration: ANIMATION_DURATION,
             easing: Easing.inOut(Easing.ease),
           },
-        },
-        tabBarStyle: {
-          boxShadow: OtherThemeVarList.shadow['--shadow-bottom-tab-bar'],
         },
       }}
     >

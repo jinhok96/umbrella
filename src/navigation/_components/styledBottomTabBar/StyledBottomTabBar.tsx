@@ -2,6 +2,7 @@ import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
 import BottomTabBar from '@components/@react-navigation/bottom-tabs/BottomTabBar';
+import { shadowStyleList } from '@libs/utils/themes.util';
 
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
@@ -23,6 +24,7 @@ export default function StyledBottomTabBar({
     <View
       {...props}
       className="bg-background-02"
+      style={{ boxShadow: shadowStyleList.bottomTabBar }}
     >
       <BottomTabBar
         state={state}
