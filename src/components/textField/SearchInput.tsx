@@ -2,9 +2,8 @@ import { useRef } from 'react';
 import type { TextInput } from 'react-native';
 import { View } from 'react-native';
 
-import classNames from 'classnames';
-
 import PressableHitSlop from '@components/common/PressableHitSlop';
+import Show from '@components/common/Show';
 import PretendardText from '@components/fontText/PretendardText';
 import SearchIcon from '@components/icon/SearchIcon';
 import TextField from '@components/textField/TextField';
@@ -28,7 +27,7 @@ type SearchInputProps = Omit<TextFieldProps, 'className'>;
 
 /**
  * 검색 인풋 컴포넌트
- * @jinhok96 25.05.28
+ * @jinhok96 25.05.29
  */
 export default function SearchInput({ value, onChangeText, ...props }: SearchInputProps) {
   const lang = useSettingStore(state => state.lang);
@@ -44,14 +43,11 @@ export default function SearchInput({ value, onChangeText, ...props }: SearchInp
     textFieldRef.current?.focus();
   };
 
-  const textFieldClassName = classNames(value && 'min-w-0', !value && 'min-w-full');
-
   return (
     <View className="flex flex-row items-center gap-0 overflow-hidden">
       {/* 인풋 */}
       <TextField
         {...props}
-        className={`transition-auto w-full ${textFieldClassName}`}
         value={value}
         onChangeText={onChangeText}
         placeholder={SEARCH_INPUT_TEXT.placeholder[lang]}
@@ -65,15 +61,18 @@ export default function SearchInput({ value, onChangeText, ...props }: SearchInp
         </PressableHitSlop>
       </TextField>
       {/* 취소 버튼 */}
-      <View className="overflow-hidden pl-2">
-        <PressableHitSlop
-          className="flex h-12 justify-center px-2"
-          onPress={handleCancelButtonPress}
-          hitSlopX={8}
-        >
-          <PretendardText typo="button-2">{SEARCH_INPUT_TEXT.cancel[lang]}</PretendardText>
-        </PressableHitSlop>
-      </View>
+      <Show when={!!value}>
+        <View className="pl-2">
+          <PressableHitSlop
+            className="flex justify-center px-2"
+            onPress={handleCancelButtonPress}
+            hitSlopX={8}
+            hitSlopY={12}
+          >
+            <PretendardText typo="button-2">{SEARCH_INPUT_TEXT.cancel[lang]}</PretendardText>
+          </PressableHitSlop>
+        </View>
+      </Show>
     </View>
   );
 }
