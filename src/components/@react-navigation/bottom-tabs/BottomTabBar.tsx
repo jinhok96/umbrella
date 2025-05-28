@@ -281,10 +281,16 @@ export default function BottomTabBar({ state, navigation, descriptors, insets, s
                   : (direction === 'rtl' && tabBarPosition === 'right') ||
                     (direction !== 'rtl' && tabBarPosition === 'left')
               )
-            ? { borderRightWidth: StyleSheet.hairlineWidth }
+            ? {
+                // borderRightWidth: StyleSheet.hairlineWidth
+              }
             : tabBarPosition === 'top'
-              ? { borderBottomWidth: StyleSheet.hairlineWidth }
-              : { borderTopWidth: StyleSheet.hairlineWidth },
+              ? {
+                  // borderBottomWidth: StyleSheet.hairlineWidth
+                }
+              : {
+                  // borderTopWidth: StyleSheet.hairlineWidth
+                },
         {
           // backgroundColor: tabBarBackgroundElement != null ? 'transparent' : colors.card,
           // borderColor: colors.border,

@@ -1,6 +1,8 @@
 import type { PropsWithChildren } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import MontserratText from '@components/fontText/MontserratText';
+import PretendardText from '@components/fontText/PretendardText';
 import CaretIcon from '@components/icon/CaretIcon';
 import CheckIcon from '@components/icon/CheckIcon';
 import ChecklistLongSleeveIcon from '@components/icon/checklist/ChecklistLongSleeveIcon';
@@ -19,8 +21,6 @@ import RightArrowIcon from '@components/icon/RightArrowIcon';
 import SearchIcon from '@components/icon/SearchIcon';
 import UpArrowIcon from '@components/icon/UpArrowIcon';
 import WeatherIcon from '@components/icon/WeatherIcon';
-import MontserratText from '@components/text/MontserratText';
-import PretendardText from '@components/text/PretendardText';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 function FlexSection({ children }: PropsWithChildren) {
@@ -77,7 +77,7 @@ export default function TestSection() {
   const theme = useSettingStore(state => state.theme);
 
   return (
-    <View className="bg-test">
+    <View>
       <Text className="border-b text-xl">Theme: {theme} (System Default)</Text>
       <FlexSection>
         <View className="size-6">

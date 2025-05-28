@@ -2,7 +2,7 @@ import { Text } from 'react-native';
 
 import { render, renderHook, screen, waitFor } from '@testing-library/react-native';
 
-import { TestQueryClientProvider, testQueryClient } from '@components/test/TestQueryClientProvider';
+import { TestQueryClientProvider, testQueryClient } from '@components/testComponent/TestQueryClientProvider';
 import { openWeatherOneCallService } from '@services/openWeatherOneCall/axios';
 import { OPEN_WEATHER_ONE_CALL_SERVICE_MOCK } from '@services/openWeatherOneCall/mock/test.mock';
 import {

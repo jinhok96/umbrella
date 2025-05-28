@@ -4,36 +4,40 @@ import { useNavigation } from '@react-navigation/native';
 
 import TestSection from '@components/TestSection';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/HomeNavigation.const';
-import HomeScreenWrapper from '@screens/HomeScreen/components/HomeScreenWrapper';
+import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
+import WeatherInfoHeader from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader';
 
 export default function CurrentForecastScreen() {
   const { navigate } = useNavigation();
 
   return (
-    <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.CurrentForecast}>
-      <Text>CurrentForecastScreen</Text>
-      <TestSection />
-      <Pressable
-        onPress={() => {
-          navigate('Home');
-        }}
-      >
+    <>
+      <WeatherInfoHeader />
+      <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.CurrentForecast}>
         <Text>CurrentForecastScreen</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigate('Location');
-        }}
-      >
-        <Text>LocationScreen</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigate('Setting');
-        }}
-      >
-        <Text>SettingScreen</Text>
-      </Pressable>
-    </HomeScreenWrapper>
+        <TestSection />
+        <Pressable
+          onPress={() => {
+            navigate('Home');
+          }}
+        >
+          <Text>CurrentForecastScreen</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            navigate('Location');
+          }}
+        >
+          <Text>LocationScreen</Text>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            navigate('Setting');
+          }}
+        >
+          <Text>SettingScreen</Text>
+        </Pressable>
+      </HomeScreenWrapper>
+    </>
   );
 }

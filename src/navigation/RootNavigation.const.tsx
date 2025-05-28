@@ -33,7 +33,7 @@ export const ROOT_NAVIGATION_TEST_ID_LIST: Record<RootNavigationRouteName, strin
 };
 
 /**
- * RootNavigation
+ * navigation.d.ts용 RootStack
  * @jinhok96 25.05.26
  */
 export const RootStack = createNativeStackNavigator({

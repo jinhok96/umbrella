@@ -1,22 +1,21 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { Easing } from 'react-native-reanimated';
 
 import CalenderIcon from '@components/icon/CalenderIcon';
 import ClockIcon from '@components/icon/ClockIcon';
 import HomeIcon from '@components/icon/HomeIcon';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
-import { OtherThemeVarList } from '@libs/utils/themes.util';
-import StyledBottomTabBar from '@navigation/components/styledBottomTabBar/StyledBottomTabBar';
-import StyledBottomTabBarButton from '@navigation/components/styledBottomTabBar/StyledBottomTabBarButton';
-import StyledBottomTabBarIcon from '@navigation/components/styledBottomTabBar/StyledBottomTabBarIcon';
-import StyledBottomTabBarLabel from '@navigation/components/styledBottomTabBar/StyledBottomTabBarLabel';
-import {
-  HOME_BOTTOM_TAB_BAR_LABEL_LIST,
-  HOME_NAVIGATION_ROUTE_NAME_LIST,
-  HomeTab,
-} from '@navigation/HomeNavigation.const';
+import StyledBottomTabBar from '@navigation/_components/styledBottomTabBar/StyledBottomTabBar';
+import StyledBottomTabBarButton from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarButton';
+import StyledBottomTabBarIcon from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarIcon';
+import StyledBottomTabBarLabel from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarLabel';
+import { HOME_BOTTOM_TAB_BAR_LABEL_LIST, HOME_NAVIGATION_ROUTE_NAME_LIST } from '@navigation/HomeNavigation.const';
 import CurrentForecastScreen from '@screens/HomeScreen/CurrentForecastScreen/CurrentForecastScreen';
 import DailyForecastScreen from '@screens/HomeScreen/DailyForecastScreen/DailyForecastScreen';
 import HourlyForecastScreen from '@screens/HomeScreen/HourlyForecastScreen/HourlyForecastScreen';
+
+const HomeTab = createBottomTabNavigator();
 
 export default function HomeNavigation() {
   return (
@@ -32,9 +31,6 @@ export default function HomeNavigation() {
             duration: ANIMATION_DURATION,
             easing: Easing.inOut(Easing.ease),
           },
-        },
-        tabBarStyle: {
-          boxShadow: OtherThemeVarList.shadow['--shadow-bottom-tab-bar'],
         },
       }}
     >

@@ -1,10 +1,8 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
-import GlobalStackHeader from '@navigation/components/styledHeader/GlobalStackHeader';
-import {
-  SETTING_NAVIGATION_LABEL_LIST,
-  SETTING_NAVIGATION_ROUTE_NAME_LIST,
-  SettingStack,
-} from '@navigation/SettingNavigation.const';
+import GlobalStackHeader from '@navigation/_components/styledHeader/GlobalStackHeader';
+import { SETTING_NAVIGATION_LABEL_LIST, SETTING_NAVIGATION_ROUTE_NAME_LIST } from '@navigation/SettingNavigation.const';
 import InfoScreen from '@screens/SettingScreen/InfoScreen/InfoScreen';
 import InquiryScreen from '@screens/SettingScreen/InquiryScreen/InquiryScreen';
 import LicenseScreen from '@screens/SettingScreen/LicenseScreen/LicenseScreen';
@@ -14,6 +12,8 @@ import SetThemeScreen from '@screens/SettingScreen/SetThemeScreen/SetThemeScreen
 import SettingMenuScreen from '@screens/SettingScreen/SettingMenuScreen/SettingMenuScreen';
 import SetUnitsScreen from '@screens/SettingScreen/SetUnitsScreen/SetUnitsScreen';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
+
+const SettingStack = createNativeStackNavigator();
 
 export function SettingNavigation() {
   const lang = useSettingStore(state => state.lang);

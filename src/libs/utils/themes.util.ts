@@ -225,15 +225,17 @@ export const colorTheme: ColorTheme = {
 };
 
 /**
- * 기타 디자인 토큰 리스트
- * @jinhok96 25.05.25
+ * `boxShadow`를 생성하는 함수
+ * @jinhok96 25.05.28
  */
-export const OtherThemeVarList = {
-  shadow: {
-    '--shadow-bottom-tab-bar': '0 -8px 24px 0 rgba(0, 0, 0, 0.04)',
-  },
-};
+function generateShadowStyle(x: number, y: number, blur: number, spread: number, rgba: string) {
+  return `${x}px ${y}px ${blur}px ${spread}px ${rgba};`;
+}
 
-export const OtherTheme = {
-  shadow: vars(OtherThemeVarList.shadow),
+/**
+ * 그림자 스타일 리스트
+ * @jinhok96 25.05.28
+ */
+export const shadowStyleList = {
+  bottomTabBar: generateShadowStyle(0, -8, 24, 0, 'rgba(0, 0, 0, 0.04)'),
 };
