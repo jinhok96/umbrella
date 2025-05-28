@@ -24,7 +24,7 @@ export default function HomeNavigation() {
       screenOptions={{
         headerShown: false,
         tabBarButton: props => <StyledBottomTabBarButton {...props} />,
-        animation: 'fade',
+        animation: 'shift',
         transitionSpec: {
           animation: 'timing',
           config: {

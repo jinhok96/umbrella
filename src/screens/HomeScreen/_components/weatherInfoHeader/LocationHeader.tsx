@@ -1,36 +1,31 @@
 import { Pressable, View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import PressableHitSlop from '@components/common/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
 import CaretIcon from '@components/icon/CaretIcon';
 import SettingIcon from '@components/icon/SettingIcon';
-import { navigationRef } from '@navigation/Navigation';
 import {
   LOCATION_HEADER_TEST_ID_LIST,
   LocationNamePlaceholder,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader.const';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
-import { useRouteStore } from '@store/routeStore/useRouteStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 export default function LocationHeader() {
-  const isReady = useRouteStore(state => state.isReady);
+  const { navigate } = useNavigation();
   const currentLocation = useLocationStore(state => state.currentLocation);
   const lang = useSettingStore(state => state.lang);
 
   const locationName = currentLocation?.name || LocationNamePlaceholder[lang];
 
-  const navigate = () => {
-    if (!isReady) return;
-    return navigationRef.navigate;
-  };
-
   const handleNavigateLocationScreenButtonPress = () => {
-    navigate()?.('Location');
+    navigate('Location');
   };
 
   const handleNavigateSettingScreenButtonPress = () => {
-    navigate()?.('Setting');
+    navigate('Setting');
   };
 
   return (

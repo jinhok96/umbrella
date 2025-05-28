@@ -11,8 +11,6 @@ import {
 } from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader.const';
 import { locationStore } from '@store/locationStore/useLocationStore';
 import { INIT_LOCATION_STORE_STATE } from '@store/locationStore/useLocationStore.const';
-import { routeStore } from '@store/routeStore/useRouteStore';
-import { INIT_ROUTE_STORE_STATE } from '@store/routeStore/useRouteStore.const';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { Location } from '@store/locationStore/useLocationStore.type';
@@ -28,11 +26,10 @@ function TestComponent() {
 describe('LocationHeader', () => {
   beforeEach(() => {
     locationStore.setState(INIT_LOCATION_STORE_STATE);
-    routeStore.setState({ isReady: true });
   });
 
   afterAll(() => {
-    routeStore.setState(INIT_ROUTE_STORE_STATE);
+    locationStore.setState(INIT_LOCATION_STORE_STATE);
   });
 
   test('currentLocation.name이 렌더링되는지 테스트', async () => {
