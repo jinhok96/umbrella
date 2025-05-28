@@ -1,15 +1,15 @@
-import type { PressableProps } from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
 
 import LeftArrowIcon from '@components/icon/LeftArrowIcon';
 import StyledHeaderButton from '@navigation/components/styledHeader/StyledHeaderButton';
 
+import type { PressableHitSlopProps } from '@components/common/PressableHitSlop.type';
+
 /**
  * 상단 헤더 뒤로가기 버튼
- * @jinhok96 25.05.26
+ * @jinhok96 25.05.28
  */
-export function StyledHeaderBackButton({ ...props }: PressableProps) {
+export function StyledHeaderBackButton({ ...props }: PressableHitSlopProps) {
   const { goBack } = useNavigation();
 
   const handleGoBackButtonPress = () => goBack();
