@@ -6,7 +6,7 @@ import PressableHitSlop from '@components/common/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
 import CaretIcon from '@components/icon/CaretIcon';
 import SettingIcon from '@components/icon/SettingIcon';
-import { LocationNamePlaceholder } from '@screens/HomeScreen/components/locationHeader/LocationHeader.const';
+import { LocationNamePlaceholder } from '@screens/HomeScreen/_components/locationHeader/LocationHeader.const';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 

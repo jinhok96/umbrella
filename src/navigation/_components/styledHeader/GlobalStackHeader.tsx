@@ -1,7 +1,7 @@
-import StyledHeader from '@navigation/components/styledHeader/StyledHeader';
-import { StyledHeaderBackButton } from '@navigation/components/styledHeader/StyledHeaderBackButton';
-import StyledHeaderButton from '@navigation/components/styledHeader/StyledHeaderButton';
-import StyledHeaderTitle from '@navigation/components/styledHeader/StyledHeaderTitle';
+import StyledHeader from '@navigation/_components/styledHeader/StyledHeader';
+import { StyledHeaderBackButton } from '@navigation/_components/styledHeader/StyledHeaderBackButton';
+import StyledHeaderButton from '@navigation/_components/styledHeader/StyledHeaderButton';
+import StyledHeaderTitle from '@navigation/_components/styledHeader/StyledHeaderTitle';
 
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 

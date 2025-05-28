@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import { StyledHeaderBackButton } from '@navigation/components/styledHeader/StyledHeaderBackButton';
+import { StyledHeaderBackButton } from '@navigation/_components/styledHeader/StyledHeaderBackButton';
 
 jest.mock('@react-navigation/native');
 

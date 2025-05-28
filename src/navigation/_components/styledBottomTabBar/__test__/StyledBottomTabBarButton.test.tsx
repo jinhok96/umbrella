@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 
 import { render, screen } from '@testing-library/react-native';
 
-import StyledBottomTabBarButton from '@navigation/components/styledBottomTabBar/StyledBottomTabBarButton';
+import StyledBottomTabBarButton from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarButton';
 
 describe('StyledBottomTabBarButton', () => {
   test('children이 정상적으로 렌더링되는지 테스트', async () => {

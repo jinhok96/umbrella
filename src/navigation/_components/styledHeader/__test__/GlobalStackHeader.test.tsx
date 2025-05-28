@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { render, screen } from '@testing-library/react-native';
 
 import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
-import GlobalStackHeader from '@navigation/components/styledHeader/GlobalStackHeader';
+import GlobalStackHeader from '@navigation/_components/styledHeader/GlobalStackHeader';
 
 const Stack = createNativeStackNavigator();
 

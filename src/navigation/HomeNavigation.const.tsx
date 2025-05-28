@@ -35,7 +35,7 @@ export const HOME_NAVIGATION_TEST_ID_LIST: Record<HomeNavigationRouteName, strin
 };
 
 /**
- * HomeNavigation
+ * navigation.d.ts용 HomeTab
  * @jinhok96 25.05.25
  */
 export const HomeTab = createBottomTabNavigator({

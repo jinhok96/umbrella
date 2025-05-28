@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 
 import LeftArrowIcon from '@components/icon/LeftArrowIcon';
-import StyledHeaderButton from '@navigation/components/styledHeader/StyledHeaderButton';
+import StyledHeaderButton from '@navigation/_components/styledHeader/StyledHeaderButton';
 
 import type { PressableHitSlopProps } from '@components/common/PressableHitSlop.type';
 

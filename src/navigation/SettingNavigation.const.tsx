@@ -74,7 +74,7 @@ export const SETTING_NAVIGATION_TEST_ID_LIST: Record<SettingNavigationRouteName,
 };
 
 /**
- * SettingNavigation
+ * navigation.d.ts용 SettingStack
  * @jinhok96 25.05.26
  */
 export const SettingStack = createNativeStackNavigator({
