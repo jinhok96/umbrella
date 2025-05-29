@@ -15,6 +15,14 @@ type EmptyContentProps = Omit<ViewProps, 'children' | 'className'> & {
   buttonProps?: Omit<ButtonProps, 'size' | 'variant'>;
 };
 
+/**
+ * 빈 콘텐츠 공간에서 표시하는 플레이스홀더 컴포넌트
+ * @param title 제목
+ * @param subTitle 부제목
+ * @param icon 맨 위에 표시할 아이콘
+ * @param buttonProps 버튼 컴포넌트 props
+ * @jinhok96 25.05.29
+ */
 export default function EmptyContent({ title, subTitle, icon, buttonProps, ...props }: EmptyContentProps) {
   return (
     <View
