@@ -15,14 +15,14 @@ const queryClient = new QueryClient();
 
 export default function App(): React.JSX.Element {
   return (
-    <ColorThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <StyledNavigationContainer>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <StyledNavigationContainer>
+          <ColorThemeProvider>
             <RootNavigation />
-          </StyledNavigationContainer>
-        </SafeAreaProvider>
-      </QueryClientProvider>
-    </ColorThemeProvider>
+          </ColorThemeProvider>
+        </StyledNavigationContainer>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }
