@@ -2,7 +2,7 @@ import type { Insets } from 'react-native';
 
 import { render, screen } from '@testing-library/react-native';
 
-import PressableHitSlop from '@components/common/PressableHitSlop';
+import PressableHitSlop from '@components/button/PressableHitSlop';
 
 const TEST_ID = 'testId';
 const TEST_HIT_SLOP = 15;

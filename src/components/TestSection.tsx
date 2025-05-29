@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from 'react';
+import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import Button from '@components/button/Button';
@@ -24,6 +25,7 @@ import RightArrowIcon from '@components/icon/RightArrowIcon';
 import SearchIcon from '@components/icon/SearchIcon';
 import UpArrowIcon from '@components/icon/UpArrowIcon';
 import WeatherIcon from '@components/icon/WeatherIcon';
+import ToggleInput from '@components/toggleInput/ToggleInput';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 function FlexSection({ children }: PropsWithChildren) {
@@ -36,53 +38,153 @@ function FontSection({ children }: PropsWithChildren) {
 
 function ButtonSection() {
   const setTheme = useSettingStore(state => state.setTheme);
+  const setLang = useSettingStore(state => state.setLang);
 
   return (
-    <View className="flex flex-row justify-between border-b">
-      <Pressable
-        className="w-1/3 border bg-morning"
-        onPress={() => setTheme('light')}
-      >
-        <PretendardText
-          className="text-center"
-          typo="button-1"
+    <>
+      <View className="flex flex-row justify-between border-b">
+        <Pressable
+          className="w-1/3 border bg-morning"
+          onPress={() => setTheme('light')}
         >
-          Theme Light
-        </PretendardText>
-      </Pressable>
-      <Pressable
-        className="w-1/3 border bg-error"
-        onPress={() => setTheme('dark')}
-      >
-        <PretendardText
-          className="text-center"
-          typo="button-1"
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Theme Light
+          </PretendardText>
+        </Pressable>
+        <Pressable
+          className="w-1/3 border bg-error"
+          onPress={() => setTheme('dark')}
         >
-          Theme Dark
-        </PretendardText>
-      </Pressable>
-      <Pressable
-        className="w-1/3 border bg-success"
-        onPress={() => setTheme('highContrast')}
-      >
-        <PretendardText
-          className="text-center"
-          typo="button-1"
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Theme Dark
+          </PretendardText>
+        </Pressable>
+        <Pressable
+          className="w-1/3 border bg-success"
+          onPress={() => setTheme('highContrast')}
         >
-          Theme HighContrast
-        </PretendardText>
-      </Pressable>
-    </View>
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Theme HighContrast
+          </PretendardText>
+        </Pressable>
+      </View>
+      <View className="flex flex-row justify-between border-b">
+        <Pressable
+          className="w-1/2 border bg-morning"
+          onPress={() => setLang('ko')}
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Korean
+          </PretendardText>
+        </Pressable>
+        <Pressable
+          className="w-1/2 border bg-error"
+          onPress={() => setLang('en')}
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            English
+          </PretendardText>
+        </Pressable>
+      </View>
+    </>
   );
 }
 
 export default function TestSection() {
   const theme = useSettingStore(state => state.theme);
+  const [value, onValueChange] = useState(false);
 
   return (
     <View>
       <Text className="border-b text-xl">Theme: {theme} (System Default)</Text>
       <ButtonSection />
+      <FlexSection>
+        <ToggleInput
+          type="radio"
+          size="sm"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+        />
+        <ToggleInput
+          type="checkbox"
+          size="sm"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+        />
+        <ToggleInput
+          type="toggle"
+          size="sm"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+        />
+      </FlexSection>
+      <FlexSection>
+        <ToggleInput
+          type="radio"
+          size="lg"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+        />
+        <ToggleInput
+          type="checkbox"
+          size="lg"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+        />
+        <ToggleInput
+          type="toggle"
+          size="lg"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+        />
+      </FlexSection>
+      <FlexSection>
+        <ToggleInput
+          type="radio"
+          size="lg"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+          disabled
+        />
+        <ToggleInput
+          type="checkbox"
+          size="lg"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+          disabled
+        />
+        <ToggleInput
+          type="toggle"
+          size="lg"
+          value={value}
+          onChange={onValueChange}
+          text="Content"
+          disabled
+        />
+      </FlexSection>
       <EmptyContent title="Title" />
       <EmptyContent subTitle="SubTitle" />
       <EmptyContent
@@ -206,25 +308,25 @@ export default function TestSection() {
       </FlexSection>
       <FlexSection>
         <Button
-          text="버튼"
+          text="Primary"
           size="lg"
           variant="primary"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
-          text="버튼"
+          text="Black"
           size="lg"
           variant="black"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
-          text="버튼"
+          text="GrayOutline"
           size="lg"
           variant="grayOutline"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
-          text="버튼"
+          text="Error"
           size="lg"
           variant="error"
           icon={color => <CalenderIcon color={color} />}

@@ -1,4 +1,4 @@
-import Show from '@components/common/Show';
+import Show from '@components/wrapper/Show';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { ChecklistProps } from '@components/icon/checklist/ChecklistIcon.type';

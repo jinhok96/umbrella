@@ -2,8 +2,9 @@ import { Pressable, View } from 'react-native';
 
 import classNames from 'classnames';
 
-import Show from '@components/common/Show';
+import MontserratText from '@components/fontText/MontserratText';
 import PretendardText from '@components/fontText/PretendardText';
+import Show from '@components/wrapper/Show';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { ButtonProps, ButtonSize, ButtonVariant } from '@components/button/Button.type';
@@ -108,6 +109,14 @@ export default function Button({ text, size, variant, icon, iconPosition = 'left
         >
           {text}
         </PretendardText>
+      </Show>
+      <Show when={lang === 'en'}>
+        <MontserratText
+          className={textClassName}
+          typo={buttonSizeClassName[size].typo}
+        >
+          {text}
+        </MontserratText>
       </Show>
       {/* 아이콘 */}
       <Show when={!!icon && iconPosition === 'right'}>{icon?.(buttonColorClassName[variant].icon)}</Show>

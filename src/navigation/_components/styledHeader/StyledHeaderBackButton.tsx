@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import LeftArrowIcon from '@components/icon/LeftArrowIcon';
 import StyledHeaderButton from '@navigation/_components/styledHeader/StyledHeaderButton';
 
-import type { PressableHitSlopProps } from '@components/common/PressableHitSlop.type';
+import type { PressableHitSlopProps } from '@components/button/PressableHitSlop.type';
 
 /**
  * 상단 헤더 뒤로가기 버튼

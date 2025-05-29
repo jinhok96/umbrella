@@ -3,9 +3,9 @@ import { View } from 'react-native';
 
 import classNames from 'classnames';
 
-import PressableHitSlop from '@components/common/PressableHitSlop';
+import PressableHitSlop from '@components/button/PressableHitSlop';
 
-import type { PressableHitSlopProps } from '@components/common/PressableHitSlop.type';
+import type { PressableHitSlopProps } from '@components/button/PressableHitSlop.type';
 
 /**
  * 상단 헤더 버튼 컴포넌트

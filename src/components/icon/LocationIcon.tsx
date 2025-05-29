@@ -1,6 +1,6 @@
 import LocationDefaultSvg from '@assets/svg/LocationDefault.svg';
 import LocationFilledSvg from '@assets/svg/LocationFilled.svg';
-import Show from '@components/common/Show';
+import Show from '@components/wrapper/Show';
 import { getColorHex } from '@libs/utils/getColorHex.util';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 

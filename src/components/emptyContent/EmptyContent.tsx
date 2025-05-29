@@ -3,8 +3,8 @@ import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
 import Button from '@components/button/Button';
-import Show from '@components/common/Show';
 import PretendardText from '@components/fontText/PretendardText';
+import Show from '@components/wrapper/Show';
 
 import type { ButtonProps } from '@components/button/Button.type';
 
