@@ -33,7 +33,7 @@ export default function LocationHeader() {
       {/* 현재 위치 버튼 */}
       <Pressable
         testID={LOCATION_HEADER_TEST_ID_LIST.navigateLocationScreenButton}
-        className="flex flex-row items-center gap-1"
+        className="flex flex-row items-center gap-2"
         onPress={handleNavigateLocationScreenButtonPress}
       >
         <PretendardText
