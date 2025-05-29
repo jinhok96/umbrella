@@ -4,6 +4,5 @@ import type { ColorVar } from '@libs/utils/themes.type';
 
 export type IconProps<T extends Record<string, unknown> = {}> = T &
   Omit<SvgProps, 'color'> & {
-    className?: string;
     color?: ColorVar;
   };
