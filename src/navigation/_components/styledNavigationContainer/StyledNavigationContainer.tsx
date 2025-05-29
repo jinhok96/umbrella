@@ -1,5 +1,8 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 
+import { useRouteStore } from '@store/routeStore/useRouteStore';
+
+import type { RouteName } from '@libs/types/navigation.type';
 import type { NavigationContainerProps } from '@react-navigation/native';
 
 type StyledNavigationContainerProps = Omit<NavigationContainerProps, 'theme'>;
@@ -9,6 +12,9 @@ type StyledNavigationContainerProps = Omit<NavigationContainerProps, 'theme'>;
  * @jinhok96 25.05.29
  */
 export default function StyledNavigationContainer({ children, ...props }: StyledNavigationContainerProps) {
+  const setIsReady = useRouteStore(state => state.setIsReady);
+  const setCurrentRouteName = useRouteStore(state => state.setCurrentRouteName);
+
   return (
     <>
       <NavigationContainer
@@ -18,6 +24,11 @@ export default function StyledNavigationContainer({ children, ...props }: Styled
           dark: false,
           colors: { ...DefaultTheme.colors, background: 'transparent' },
         }}
+        onReady={() => {
+          setIsReady(true);
+          setCurrentRouteName('Home');
+        }}
+        onStateChange={state => setCurrentRouteName(state?.routeNames[state.index] as RouteName)}
       >
         {children}
       </NavigationContainer>
