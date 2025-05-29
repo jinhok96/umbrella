@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-import type { PressableProps } from 'react-native';
 import { Pressable, View } from 'react-native';
 
 import classNames from 'classnames';
@@ -8,19 +6,9 @@ import Show from '@components/common/Show';
 import PretendardText from '@components/fontText/PretendardText';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
+import type { ButtonProps, ButtonSize, ButtonVariant } from '@components/button/Button.type';
 import type { Typography } from '@components/fontText/FontText.type';
 import type { ColorVar } from '@libs/utils/themes.type';
-
-type ButtonSize = 'sm' | 'md' | 'lg';
-type ButtonVariant = 'primary' | 'black' | 'grayOutline' | 'error';
-
-type ButtonProps = PressableProps & {
-  text?: string;
-  size: ButtonSize;
-  variant: ButtonVariant;
-  icon?: (color: ColorVar) => ReactNode;
-  iconPosition?: 'left' | 'right';
-};
 
 const smClassName = 'min-h-10';
 const mdClassName = 'min-h-12';
