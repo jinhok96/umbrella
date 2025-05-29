@@ -2,8 +2,8 @@ import { Pressable, View } from 'react-native';
 
 import classNames from 'classnames';
 
-import Show from '@components/common/Show';
 import PretendardText from '@components/fontText/PretendardText';
+import Show from '@components/wrapper/Show';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { ButtonProps, ButtonSize, ButtonVariant } from '@components/button/Button.type';

@@ -1,6 +1,6 @@
 import HelpCircleDefaultSvg from '@assets/svg/HelpCircleDefault.svg';
 import HelpCirclePressedSvg from '@assets/svg/HelpCirclePressed.svg';
-import Show from '@components/common/Show';
+import Show from '@components/wrapper/Show';
 
 import type { IconProps } from '@components/icon/Icon.type';
 

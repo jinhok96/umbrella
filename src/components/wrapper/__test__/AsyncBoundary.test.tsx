@@ -2,7 +2,7 @@ import { Text } from 'react-native';
 
 import { render, screen } from '@testing-library/react-native';
 
-import AsyncBoundary from '@components/common/AsyncBoundary';
+import AsyncBoundary from '@components/wrapper/AsyncBoundary';
 
 describe('AsyncBoundary', () => {
   beforeEach(() => {

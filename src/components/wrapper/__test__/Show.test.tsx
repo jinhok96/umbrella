@@ -2,7 +2,7 @@ import { Text } from 'react-native';
 
 import { render, screen, waitFor } from '@testing-library/react-native';
 
-import Show from '@components/common/Show';
+import Show from '@components/wrapper/Show';
 
 describe('Show', () => {
   test('children을 정상적으로 렌더링하는지 테스트', async () => {

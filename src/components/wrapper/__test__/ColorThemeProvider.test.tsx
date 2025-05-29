@@ -2,7 +2,7 @@ import { Text } from 'react-native';
 
 import { render, screen } from '@testing-library/react-native';
 
-import ColorThemeProvider from '@components/common/ColorThemeProvider';
+import ColorThemeProvider from '@components/wrapper/ColorThemeProvider';
 
 describe('ColorThemeProvider', () => {
   test('children이 정상적으로 렌더링되는지 테스트', async () => {

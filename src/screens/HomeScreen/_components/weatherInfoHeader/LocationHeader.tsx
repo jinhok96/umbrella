@@ -2,7 +2,7 @@ import { Pressable, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import PressableHitSlop from '@components/common/PressableHitSlop';
+import PressableHitSlop from '@components/button/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
 import CaretIcon from '@components/icon/CaretIcon';
 import SettingIcon from '@components/icon/SettingIcon';

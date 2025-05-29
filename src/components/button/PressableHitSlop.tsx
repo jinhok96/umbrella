@@ -1,7 +1,7 @@
 import type { Insets } from 'react-native';
 import { Pressable } from 'react-native';
 
-import type { PressableHitSlopProps } from '@components/common/PressableHitSlop.type';
+import type { PressableHitSlopProps } from '@components/button/PressableHitSlop.type';
 
 /**
  * hitSlop 옵션을 확장한 Pressable 컴포넌트

@@ -2,11 +2,11 @@ import { useRef } from 'react';
 import type { TextInput } from 'react-native';
 import { View } from 'react-native';
 
-import PressableHitSlop from '@components/common/PressableHitSlop';
-import Show from '@components/common/Show';
+import PressableHitSlop from '@components/button/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
 import SearchIcon from '@components/icon/SearchIcon';
 import TextField from '@components/textField/TextField';
+import Show from '@components/wrapper/Show';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { TextFieldProps } from '@components/textField/TextField.type';
