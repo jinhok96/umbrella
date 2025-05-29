@@ -1,8 +1,10 @@
 import type { PropsWithChildren } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import Button from '@components/button/Button';
 import MontserratText from '@components/fontText/MontserratText';
 import PretendardText from '@components/fontText/PretendardText';
+import CalenderIcon from '@components/icon/CalenderIcon';
 import CaretIcon from '@components/icon/CaretIcon';
 import CheckIcon from '@components/icon/CheckIcon';
 import ChecklistLongSleeveIcon from '@components/icon/checklist/ChecklistLongSleeveIcon';
@@ -24,7 +26,7 @@ import WeatherIcon from '@components/icon/WeatherIcon';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 function FlexSection({ children }: PropsWithChildren) {
-  return <View className="flex h-fit flex-row items-center gap-1 border-b p-1">{children}</View>;
+  return <View className="flex h-fit flex-row items-center gap-1 border-b py-1">{children}</View>;
 }
 
 function FontSection({ children }: PropsWithChildren) {
@@ -79,6 +81,7 @@ export default function TestSection() {
   return (
     <View>
       <Text className="border-b text-xl">Theme: {theme} (System Default)</Text>
+      <ButtonSection />
       <FlexSection>
         <View className="size-6">
           <CheckIcon />
@@ -107,6 +110,84 @@ export default function TestSection() {
         <View className="size-6">
           <DownArrowIcon />
         </View>
+      </FlexSection>
+      <FlexSection>
+        <Button
+          text="Primary"
+          size="sm"
+          variant="primary"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="Black"
+          size="sm"
+          variant="black"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="GrayOutline"
+          size="sm"
+          variant="grayOutline"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="Error"
+          size="sm"
+          variant="error"
+          icon={color => <CalenderIcon color={color} />}
+        />
+      </FlexSection>
+      <FlexSection>
+        <Button
+          text="Primary"
+          size="md"
+          variant="primary"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="Black"
+          size="md"
+          variant="black"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="GrayOutline"
+          size="md"
+          variant="grayOutline"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="Error"
+          size="md"
+          variant="error"
+          icon={color => <CalenderIcon color={color} />}
+        />
+      </FlexSection>
+      <FlexSection>
+        <Button
+          text="버튼"
+          size="lg"
+          variant="primary"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="버튼"
+          size="lg"
+          variant="black"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="버튼"
+          size="lg"
+          variant="grayOutline"
+          icon={color => <CalenderIcon color={color} />}
+        />
+        <Button
+          text="버튼"
+          size="lg"
+          variant="error"
+          icon={color => <CalenderIcon color={color} />}
+        />
       </FlexSection>
       <FlexSection>
         <View className="size-6">
