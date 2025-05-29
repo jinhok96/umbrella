@@ -10,6 +10,8 @@ type StyledBottomTabBarIconProps = {
   focused: boolean;
 };
 
+const COMMON_CLASS_NAME = 'absolute size-full self-center transition-opacity';
+
 /**
  * 스타일이 적용된 `BottomTabBar` 라벨 컴포넌트
  * @param icon 렌더링할 아이콘 (`@components/icon/*`)
@@ -17,15 +19,15 @@ type StyledBottomTabBarIconProps = {
  * @jinhok96 25.05.28
  */
 export default function StyledBottomTabBarIcon({ focused, icon: Icon }: StyledBottomTabBarIconProps) {
-  const focusedClassName = classNames(focused && 'opacity-100', !focused && 'opacity-0');
-  const unfocusedClassName = classNames(focused && 'opacity-0', !focused && 'opacity-100');
+  const focusedClassName = classNames(COMMON_CLASS_NAME, focused && 'opacity-100', !focused && 'opacity-0');
+  const unfocusedClassName = classNames(COMMON_CLASS_NAME, focused && 'opacity-0', !focused && 'opacity-100');
 
   return (
     <View className="relative size-full">
-      <View className={`transition-auto absolute size-full self-center ${focusedClassName}`}>
+      <View className={focusedClassName}>
         <Icon color="--color-morning" />
       </View>
-      <View className={`transition-auto absolute size-full self-center ${unfocusedClassName}`}>
+      <View className={unfocusedClassName}>
         <Icon color="--color-text-06" />
       </View>
     </View>
