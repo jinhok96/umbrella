@@ -69,7 +69,12 @@ export default function SearchInput({ value, onChangeText, ...props }: SearchInp
             hitSlopX={8}
             hitSlopY={12}
           >
-            <PretendardText typo="button-2">{SEARCH_INPUT_TEXT.cancel[lang]}</PretendardText>
+            <PretendardText
+              typo="button-2"
+              className="text-text-01"
+            >
+              {SEARCH_INPUT_TEXT.cancel[lang]}
+            </PretendardText>
           </PressableHitSlop>
         </View>
       </Show>
