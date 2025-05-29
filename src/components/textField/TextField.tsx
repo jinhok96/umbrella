@@ -4,6 +4,9 @@ import { TextInput, View } from 'react-native';
 
 import classNames from 'classnames';
 
+import { getColorHex } from '@libs/utils/getColorHex.util';
+import { useSettingStore } from '@store/settingStore/useSettingStore';
+
 import type { TextFieldProps } from '@components/textField/TextField.type';
 
 /**
@@ -16,6 +19,7 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
   { className, value = '', onChangeText, onFocus, onBlur, children, isError, testID, ...props }: TextFieldProps,
   ref,
 ) {
+  const theme = useSettingStore(state => state.theme);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus: TextInputProps['onFocus'] = e => {
@@ -43,7 +47,7 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
       <TextInput
         {...props}
         className="flex-1 px-0 py-3 text-text-01 text-pretendard-body-2"
-        placeholderClassName="text-text-06"
+        placeholderTextColor={getColorHex(theme, '--color-text-06')}
         value={value}
         onChangeText={onChangeText}
         onFocus={handleFocus}
