@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { PressableProps } from 'react-native';
 import { Pressable, View } from 'react-native';
 
 import classNames from 'classnames';
@@ -7,14 +8,13 @@ import Show from '@components/common/Show';
 import PretendardText from '@components/fontText/PretendardText';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { PressableHitSlopProps } from '@components/common/PressableHitSlop.type';
 import type { Typography } from '@components/fontText/FontText.type';
 import type { ColorVar } from '@libs/utils/themes.type';
 
 type ButtonSize = 'sm' | 'md' | 'lg';
 type ButtonVariant = 'primary' | 'black' | 'grayOutline' | 'error';
 
-type ButtonProps = PressableHitSlopProps & {
+type ButtonProps = PressableProps & {
   text?: string;
   size: ButtonSize;
   variant: ButtonVariant;
@@ -83,6 +83,15 @@ const buttonColorClassName: Record<ButtonVariant, { container: string; text: str
   },
 };
 
+/**
+ * 공통 버튼 컴포넌트
+ * @param text 표시할 텍스트
+ * @param size 버튼 크기; `sm` | `md` | `lg`
+ * @param variant 버튼 색상; `primary` | `black` | `grayOutline` | `error`
+ * @param icon 표시할 아이콘; (color: ColorVar) => ReactNode
+ * @param iconPosition 아이콘 위치; `left` | `right` (기본값 `left`)
+ * @jinhok96 25.05.29
+ */
 export default function Button({ text, size, variant, icon, iconPosition = 'left', ...props }: ButtonProps) {
   const lang = useSettingStore(state => state.lang);
 
