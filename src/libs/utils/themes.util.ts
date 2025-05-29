@@ -234,8 +234,9 @@ function generateShadowStyle(x: number, y: number, blur: number, spread: number,
 
 /**
  * 그림자 스타일 리스트
- * @jinhok96 25.05.28
+ * @jinhok96 25.05.29
  */
 export const shadowStyleList = {
   bottomTabBar: generateShadowStyle(0, -8, 24, 0, 'rgba(0, 0, 0, 0.04)'),
+  toggleInnerCircle: generateShadowStyle(0, 4, 8, 0, 'rgba(0, 0, 0, 0.12)'),
 };
