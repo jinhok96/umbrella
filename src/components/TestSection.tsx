@@ -2,6 +2,7 @@ import type { PropsWithChildren } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
 import Button from '@components/button/Button';
+import EmptyContent from '@components/emptyContent/EmptyContent';
 import MontserratText from '@components/fontText/MontserratText';
 import PretendardText from '@components/fontText/PretendardText';
 import CalenderIcon from '@components/icon/CalenderIcon';
@@ -82,6 +83,46 @@ export default function TestSection() {
     <View>
       <Text className="border-b text-xl">Theme: {theme} (System Default)</Text>
       <ButtonSection />
+      <EmptyContent title="Title" />
+      <EmptyContent subTitle="SubTitle" />
+      <EmptyContent
+        title="Title"
+        subTitle="Subtitle"
+      />
+      <EmptyContent icon={<EmptyIcon />} />
+      <EmptyContent
+        icon={<EmptyIcon />}
+        title="Title"
+      />
+      <EmptyContent
+        icon={<EmptyIcon />}
+        subTitle="SubTitle"
+      />
+      <EmptyContent
+        icon={<EmptyIcon />}
+        title="Title"
+        subTitle="Subtitle"
+      />
+      <EmptyContent
+        icon={<EmptyIcon />}
+        buttonProps={{ text: 'Button' }}
+      />
+      <EmptyContent
+        icon={<EmptyIcon />}
+        title="Title"
+        buttonProps={{ text: 'Button' }}
+      />
+      <EmptyContent
+        icon={<EmptyIcon />}
+        subTitle="SubTitle"
+        buttonProps={{ text: 'Button' }}
+      />
+      <EmptyContent
+        icon={<EmptyIcon />}
+        title="Title"
+        subTitle="Subtitle"
+        buttonProps={{ text: 'Button' }}
+      />
       <FlexSection>
         <View className="size-6">
           <CheckIcon />
@@ -253,38 +294,188 @@ export default function TestSection() {
         </View>
       </FlexSection>
       <FontSection>
-        <PretendardText typo="title-1">Pretendard Title1</PretendardText>
-        <PretendardText typo="title-2">Pretendard Title2</PretendardText>
-        <PretendardText typo="title-3">Pretendard Title3</PretendardText>
-        <PretendardText typo="title-4">Pretendard Title4</PretendardText>
-        <PretendardText typo="title-5">Pretendard Title5</PretendardText>
-        <PretendardText typo="body-1">Pretendard Body1</PretendardText>
-        <PretendardText typo="body-2">Pretendard Body2</PretendardText>
-        <PretendardText typo="body-3">Pretendard Body3</PretendardText>
-        <PretendardText typo="body-4">Pretendard Body4</PretendardText>
-        <PretendardText typo="caption-1">Pretendard Caption1</PretendardText>
-        <PretendardText typo="caption-2">Pretendard Caption2</PretendardText>
-        <PretendardText typo="caption-3">Pretendard Caption3</PretendardText>
-        <PretendardText typo="caption-4">Pretendard Caption4</PretendardText>
-        <PretendardText typo="button-1">Pretendard Button1</PretendardText>
-        <PretendardText typo="button-2">Pretendard Button2</PretendardText>
+        <PretendardText
+          typo="title-1"
+          className="text-text-01"
+        >
+          Pretendard Title1
+        </PretendardText>
+        <PretendardText
+          typo="title-2"
+          className="text-text-01"
+        >
+          Pretendard Title2
+        </PretendardText>
+        <PretendardText
+          typo="title-3"
+          className="text-text-01"
+        >
+          Pretendard Title3
+        </PretendardText>
+        <PretendardText
+          typo="title-4"
+          className="text-text-01"
+        >
+          Pretendard Title4
+        </PretendardText>
+        <PretendardText
+          typo="title-5"
+          className="text-text-01"
+        >
+          Pretendard Title5
+        </PretendardText>
+        <PretendardText
+          typo="body-1"
+          className="text-text-01"
+        >
+          Pretendard Body1
+        </PretendardText>
+        <PretendardText
+          typo="body-2"
+          className="text-text-01"
+        >
+          Pretendard Body2
+        </PretendardText>
+        <PretendardText
+          typo="body-3"
+          className="text-text-01"
+        >
+          Pretendard Body3
+        </PretendardText>
+        <PretendardText
+          typo="body-4"
+          className="text-text-01"
+        >
+          Pretendard Body4
+        </PretendardText>
+        <PretendardText
+          typo="caption-1"
+          className="text-text-01"
+        >
+          Pretendard Caption1
+        </PretendardText>
+        <PretendardText
+          typo="caption-2"
+          className="text-text-01"
+        >
+          Pretendard Caption2
+        </PretendardText>
+        <PretendardText
+          typo="caption-3"
+          className="text-text-01"
+        >
+          Pretendard Caption3
+        </PretendardText>
+        <PretendardText
+          typo="caption-4"
+          className="text-text-01"
+        >
+          Pretendard Caption4
+        </PretendardText>
+        <PretendardText
+          typo="button-1"
+          className="text-text-01"
+        >
+          Pretendard Button1
+        </PretendardText>
+        <PretendardText
+          typo="button-2"
+          className="text-text-01"
+        >
+          Pretendard Button2
+        </PretendardText>
       </FontSection>
       <FontSection>
-        <MontserratText typo="title-1">Montserrat Title1</MontserratText>
-        <MontserratText typo="title-2">Montserrat Title2</MontserratText>
-        <MontserratText typo="title-3">Montserrat Title3</MontserratText>
-        <MontserratText typo="title-4">Montserrat Title4</MontserratText>
-        <MontserratText typo="title-5">Montserrat Title5</MontserratText>
-        <MontserratText typo="body-1">Montserrat Body1</MontserratText>
-        <MontserratText typo="body-2">Montserrat Body2</MontserratText>
-        <MontserratText typo="body-3">Montserrat Body3</MontserratText>
-        <MontserratText typo="body-4">Montserrat Body4</MontserratText>
-        <MontserratText typo="caption-1">Montserrat Caption1</MontserratText>
-        <MontserratText typo="caption-2">Montserrat Caption2</MontserratText>
-        <MontserratText typo="caption-3">Montserrat Caption3</MontserratText>
-        <MontserratText typo="caption-4">Montserrat Caption4</MontserratText>
-        <MontserratText typo="button-1">Montserrat Button1</MontserratText>
-        <MontserratText typo="button-2">Montserrat Button2</MontserratText>
+        <MontserratText
+          typo="title-1"
+          className="text-text-01"
+        >
+          Montserrat Title1
+        </MontserratText>
+        <MontserratText
+          typo="title-2"
+          className="text-text-01"
+        >
+          Montserrat Title2
+        </MontserratText>
+        <MontserratText
+          typo="title-3"
+          className="text-text-01"
+        >
+          Montserrat Title3
+        </MontserratText>
+        <MontserratText
+          typo="title-4"
+          className="text-text-01"
+        >
+          Montserrat Title4
+        </MontserratText>
+        <MontserratText
+          typo="title-5"
+          className="text-text-01"
+        >
+          Montserrat Title5
+        </MontserratText>
+        <MontserratText
+          typo="body-1"
+          className="text-text-01"
+        >
+          Montserrat Body1
+        </MontserratText>
+        <MontserratText
+          typo="body-2"
+          className="text-text-01"
+        >
+          Montserrat Body2
+        </MontserratText>
+        <MontserratText
+          typo="body-3"
+          className="text-text-01"
+        >
+          Montserrat Body3
+        </MontserratText>
+        <MontserratText
+          typo="body-4"
+          className="text-text-01"
+        >
+          Montserrat Body4
+        </MontserratText>
+        <MontserratText
+          typo="caption-1"
+          className="text-text-01"
+        >
+          Montserrat Caption1
+        </MontserratText>
+        <MontserratText
+          typo="caption-2"
+          className="text-text-01"
+        >
+          Montserrat Caption2
+        </MontserratText>
+        <MontserratText
+          typo="caption-3"
+          className="text-text-01"
+        >
+          Montserrat Caption3
+        </MontserratText>
+        <MontserratText
+          typo="caption-4"
+          className="text-text-01"
+        >
+          Montserrat Caption4
+        </MontserratText>
+        <MontserratText
+          typo="button-1"
+          className="text-text-01"
+        >
+          Montserrat Button1
+        </MontserratText>
+        <MontserratText
+          typo="button-2"
+          className="text-text-01"
+        >
+          Montserrat Button2
+        </MontserratText>
       </FontSection>
       <ButtonSection />
     </View>

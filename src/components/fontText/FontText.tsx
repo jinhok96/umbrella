@@ -87,13 +87,13 @@ const FONT_CLASS_NAME_LIST: FontClassNameListType = {
 
 /**
  * `font-${font}-${weight}`를 적용하는 커스텀 Text 컴포넌트
- * @param className Text에 전달할 className
+ * @param className Text에 전달할 className; 글자색 필수 지정을 위해 required
  * @param font 폰트 종류 `pretendard | montserrat`
  * @param typo 타이포그래피
  * @returns `Text` 컴포넌트
- * @jinhok96 25.05.28
+ * @jinhok96 25.05.29
  */
-export default function FontText<T extends Typography>({ children, className = '', font, typo }: FontTextProps<T>) {
+export default function FontText<T extends Typography>({ children, className, font, typo }: FontTextProps<T>) {
   const textClassName = classNames(FONT_CLASS_NAME_LIST[font][typo], className);
 
   return <Text className={textClassName}>{children}</Text>;

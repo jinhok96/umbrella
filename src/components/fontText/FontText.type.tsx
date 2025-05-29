@@ -49,7 +49,7 @@ export type Typography = PretendardTypography | MontserratTypography;
 
 export type FontTextProps<T extends Typography> = PropsWithChildren<
   TextProps & {
-    className?: string;
+    className: string;
     font: Font;
     typo: T;
   }
