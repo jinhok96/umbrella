@@ -11,70 +11,23 @@ const ANIMATION_STYLE = {
 };
 
 // transition-colors에 대응하는 속성
-const COLOR_TRANSITION_PROPERTY_LIST: Record<string, string> = {
-  bg: 'background-color',
-  text: 'color',
-  border: 'border-color',
-  fill: 'fill',
-  stroke: 'stroke',
-  decoration: 'text-decoration-color',
-};
+const COLOR_TRANSITION_PROPERTY_LIST: string[] = ['bg', 'text', 'border', 'fill', 'stroke', 'decoration'];
 
 /**
  * 컬러 애니메이션 자동화 플러그인
- * @jinhok96 25.05.28
+ * @jinhok96 25.05.30
  */
 const autoColorTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => {
-  Object.entries(COLOR_TRANSITION_PROPERTY_LIST).forEach(([key, value]) => {
+  COLOR_TRANSITION_PROPERTY_LIST.forEach(value => {
     matchUtilities(
       {
-        [key]: () => ({
-          'transition-property': value,
+        [value]: () => ({
+          'transition-property': 'background-color, color, border-color, fill, stroke, text-decoration-color',
           ...ANIMATION_STYLE,
         }),
       },
       { values: theme('colors') },
     );
-  });
-};
-
-const COLOR_TRANSITION_PROPERTY_VALUE_STRING: string = Object.values(COLOR_TRANSITION_PROPERTY_LIST).join(', ');
-
-/**
- * 추가 transition 속성 목록
- * @jinhok96 25.05.28
- */
-const OTHER_TRANSITION_PROPERTY_VALUE_STRING: string = [
-  'opacity',
-  'width',
-  'height',
-  'min-width',
-  'min-height',
-  'max-width',
-  'max-height',
-  'margin',
-  'margin-left',
-  'margin-right',
-  'margin-top',
-  'margin-bottom',
-  'padding',
-  'padding-left',
-  'padding-right',
-  'padding-top',
-  'padding-bottom',
-  'gap',
-].join(', ');
-
-/**
- * `COLOR_TRANSITION_PROPERTY_LIST`를 포함하여 transition 속성을 추가하는 플러그인
- * @jinhok96 25.05.28
- */
-const autoTransitionPlugin: PluginCreator = ({ addComponents }) => {
-  addComponents({
-    '.transition-auto': {
-      transitionProperty: [COLOR_TRANSITION_PROPERTY_VALUE_STRING, OTHER_TRANSITION_PROPERTY_VALUE_STRING].join(', '),
-      ...ANIMATION_STYLE,
-    },
   });
 };
 
@@ -238,7 +191,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [autoColorTransitionPlugin, autoTransitionPlugin, typographyPlugin],
+  plugins: [autoColorTransitionPlugin, typographyPlugin],
 };
 
 export default config;
