@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { HOME_NAVIGATION_TEST_ID_LIST, HomeTab } from '@navigation/HomeNavigation.const';
-import { SettingStack } from '@navigation/SettingNavigation.const';
+import { HOME_NAVIGATION_TEST_ID_LIST, HomeTab } from '@navigation/home/HomeNavigation.const';
+import { SettingStack } from '@navigation/setting/SettingNavigation.const';
 import LocationScreen from '@screens/LocationScreen/LocationScreen';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';

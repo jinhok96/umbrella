@@ -2,7 +2,7 @@ import React from 'react';
 
 import { render, screen } from '@testing-library/react-native';
 
-import StyledBottomTabBarLabel from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarLabel';
+import StyledBottomTabBarLabel from '@navigation/home/_components/styledBottomTabBar/StyledBottomTabBarLabel';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedText } from '@libs/utils/localize/localize.type';

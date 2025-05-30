@@ -2,7 +2,7 @@ import { Pressable, Text } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { SETTING_NAVIGATION_TEST_ID_LIST } from '@navigation/SettingNavigation.const';
+import { SETTING_NAVIGATION_TEST_ID_LIST } from '@navigation/setting/SettingNavigation.const';
 import SettingScreenWrapper from '@screens/SettingScreen/_components/SettingScreenWrapper';
 
 export default function SettingMenuScreen() {

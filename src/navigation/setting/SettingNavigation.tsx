@@ -2,7 +2,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
 import GlobalStackHeader from '@navigation/_components/styledHeader/GlobalStackHeader';
-import { SETTING_NAVIGATION_LABEL_LIST, SETTING_NAVIGATION_ROUTE_NAME_LIST } from '@navigation/SettingNavigation.const';
+import {
+  SETTING_NAVIGATION_LABEL_LIST,
+  SETTING_NAVIGATION_ROUTE_NAME_LIST,
+} from '@navigation/setting/SettingNavigation.const';
 import InfoScreen from '@screens/SettingScreen/InfoScreen/InfoScreen';
 import InquiryScreen from '@screens/SettingScreen/InquiryScreen/InquiryScreen';
 import LicenseScreen from '@screens/SettingScreen/LicenseScreen/LicenseScreen';

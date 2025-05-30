@@ -3,7 +3,7 @@ import { Pressable, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import TestSection from '@components/TestSection';
-import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/HomeNavigation.const';
+import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
 import WeatherInfoHeader from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader';
 
