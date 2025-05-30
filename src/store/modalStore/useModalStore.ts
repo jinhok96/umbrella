@@ -9,6 +9,7 @@ import type { StateCreator } from 'zustand';
 /**
  * 앱 설정 스토어
  * @ openModal - 모달 열기
+ * @ closeModal - 모달 닫기
  * @example 
     openModal(
       {
@@ -26,7 +27,6 @@ import type { StateCreator } from 'zustand';
         onSubmit: () => handleSubmit(...),
       },
     )
- * @ closeModal - 모달 닫기
  * @jinhok96 25.05.30
  */
 const modalStoreCreator: StateCreator<ModalStore> = set => ({
@@ -42,7 +42,8 @@ const modalStoreCreator: StateCreator<ModalStore> = set => ({
     navigate();
   },
   closeModal: () => {
-    set({ onCancel: null, onSubmit: null });
+    // 모달 상태 초기화
+    set(INIT_MODAL_STORE_STATE);
 
     const goBack = () => {
       if (!navigationRef.isReady()) return;
