@@ -109,7 +109,7 @@ function ButtonSection() {
       </View>
       <View className="flex flex-row justify-between border-b">
         <Pressable
-          className="w-full border bg-success"
+          className="w-1/2 border bg-morning"
           onPress={() =>
             openModal(
               {
@@ -121,6 +121,7 @@ function ButtonSection() {
                 submitButtonProps: {
                   text: '확인',
                 },
+                type: 'default',
               },
               {
                 onSubmitAfterClose: () => navigate('Setting'),
@@ -132,7 +133,35 @@ function ButtonSection() {
             className="text-center"
             typo="button-1"
           >
-            Modal
+            Modal Default
+          </PretendardText>
+        </Pressable>
+        <Pressable
+          className="w-1/2 border bg-error"
+          onPress={() =>
+            openModal(
+              {
+                title: 'Title 타이틀',
+                subTitle: 'SubTitle 서브타이틀',
+                cancelButtonProps: {
+                  text: '취소',
+                },
+                submitButtonProps: {
+                  text: '확인',
+                },
+                type: 'error',
+              },
+              {
+                onSubmitAfterClose: () => navigate('Setting'),
+              },
+            )
+          }
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Modal Error
           </PretendardText>
         </Pressable>
       </View>
