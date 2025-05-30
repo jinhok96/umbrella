@@ -34,12 +34,29 @@ export default function Modal({
   submitButtonProps,
   ...props
 }: ModalProps) {
-  const { onCancel, onSubmit } = useModalStore();
+  const { onCancel, onSubmitBeforeClose, onSubmitAfterClose, closeModal } = useModalStore();
+
+  const handleCancel = () => {
+    closeModal();
+    onCancel?.();
+  };
+
+  const handleSubmit = () => {
+    onSubmitBeforeClose?.();
+    closeModal();
+    // closeModal 애니메이션 종료 후 호출
+    if (onSubmitAfterClose) {
+      setTimeout(() => {
+        onSubmitAfterClose?.();
+      }, 150);
+    }
+  };
 
   return (
     <View
       {...props}
       className="flex w-[21rem] items-center justify-center gap-7 rounded-[1.25rem] bg-background-02 px-5 pb-7 pt-10"
+      onTouchEnd={e => e.stopPropagation()}
       style={{ boxShadow: shadowStyleList.float }}
     >
       {/* 아이콘 */}
@@ -53,8 +70,8 @@ export default function Modal({
           </Show>
         </View>
       </Show>
-      {/* 타이틀 */}
       <View className="flex items-center justify-center gap-2">
+        {/* 타이틀 */}
         <PretendardText
           typo="title-3"
           className="text-text-01"
@@ -78,14 +95,14 @@ export default function Modal({
           className="flex-1"
           size="md"
           variant="grayOutline"
-          onPress={onCancel}
+          onPress={handleCancel}
         />
         <Button
           {...submitButtonProps}
           className="flex-1"
           size="md"
           variant={SUBMIT_BUTTON_VARIANT[type]}
-          onPress={onSubmit}
+          onPress={handleSubmit}
         />
       </View>
     </View>

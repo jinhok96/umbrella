@@ -32,8 +32,8 @@ import type { StateCreator } from 'zustand';
  */
 const modalStoreCreator: StateCreator<ModalStore> = set => ({
   ...INIT_MODAL_STORE_STATE,
-  openModal: (props, { onCancel, onSubmit }) => {
-    set({ onCancel, onSubmit });
+  openModal: (props, state) => {
+    set(state);
 
     const navigate = () => {
       if (!navigationRef.isReady()) return;
@@ -49,6 +49,7 @@ const modalStoreCreator: StateCreator<ModalStore> = set => ({
     // 이전 스크린으로 이동하고 모달 스크린 히스토리 삭제
     const pop = () => {
       if (!navigationRef.isReady()) return;
+      if (!navigationRef.canGoBack()) return;
       navigationRef.dispatch(StackActions.pop());
     };
 

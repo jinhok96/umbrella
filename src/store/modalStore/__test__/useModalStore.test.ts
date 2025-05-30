@@ -9,7 +9,7 @@ type StoreState = ModalStoreState;
 
 const INIT_STATE_MOCK: StoreState = {
   onCancel: null,
-  onSubmit: null,
+  onSubmitBeforeClose: null,
 };
 
 // const NEW_STATE_MOCK: StoreState = {
