@@ -2,6 +2,8 @@ import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import Button from '@components/button/Button';
 import EmptyContent from '@components/emptyContent/EmptyContent';
 import MontserratText from '@components/fontText/MontserratText';
@@ -37,6 +39,7 @@ function FontSection({ children }: PropsWithChildren) {
 }
 
 function ButtonSection() {
+  const { navigate } = useNavigation();
   const setTheme = useSettingStore(state => state.setTheme);
   const setLang = useSettingStore(state => state.setLang);
 
@@ -98,6 +101,19 @@ function ButtonSection() {
             typo="button-1"
           >
             English
+          </PretendardText>
+        </Pressable>
+      </View>
+      <View className="flex flex-row justify-between border-b">
+        <Pressable
+          className="w-full border bg-success"
+          onPress={() => navigate('Modal')}
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Modal
           </PretendardText>
         </Pressable>
       </View>

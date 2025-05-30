@@ -5,6 +5,7 @@ import HomeNavigation from '@navigation/home/HomeNavigation';
 import { ROOT_NAVIGATION_LABEL_LIST, ROOT_NAVIGATION_ROUTE_NAME_LIST } from '@navigation/root/RootNavigation.const';
 import { SettingNavigation } from '@navigation/setting/SettingNavigation';
 import LocationScreen from '@screens/LocationScreen/LocationScreen';
+import ModalScreen from '@screens/ModalScreen/ModalScreen/ModalScreen';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 const RootStack = createNativeStackNavigator();
@@ -16,13 +17,16 @@ export function RootNavigation() {
     <RootStack.Navigator
       screenOptions={{
         headerShown: false,
-        animation: 'default',
+        animation: 'fade_from_bottom',
       }}
     >
       <RootStack.Group>
         <RootStack.Screen
           name={ROOT_NAVIGATION_ROUTE_NAME_LIST.Home}
           component={HomeNavigation}
+          options={{
+            animation: 'default',
+          }}
         />
         <RootStack.Screen
           name={ROOT_NAVIGATION_ROUTE_NAME_LIST.Location}
@@ -31,14 +35,20 @@ export function RootNavigation() {
             headerShown: true,
             header: props => <GlobalStackHeader {...props} />,
             title: ROOT_NAVIGATION_LABEL_LIST.Location[lang],
-            animation: 'fade_from_bottom',
           }}
         />
         <RootStack.Screen
           name={ROOT_NAVIGATION_ROUTE_NAME_LIST.Setting}
           component={SettingNavigation}
+        />
+      </RootStack.Group>
+      <RootStack.Group screenOptions={{ presentation: 'formSheet' }}>
+        <RootStack.Screen
+          name={ROOT_NAVIGATION_ROUTE_NAME_LIST.Modal}
+          component={ModalScreen}
           options={{
-            animation: 'fade_from_bottom',
+            sheetAllowedDetents: [1, 1],
+            sheetElevation: 0,
           }}
         />
       </RootStack.Group>
