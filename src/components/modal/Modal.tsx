@@ -42,6 +42,7 @@ export default function Modal({
       className="flex w-[21rem] items-center justify-center gap-7 rounded-[1.25rem] bg-background-02 px-5 pb-7 pt-10"
       style={{ boxShadow: shadowStyleList.float }}
     >
+      {/* 아이콘 */}
       <Show when={!hideIcon}>
         <View className="size-[4.5rem]">
           <Show when={type === 'default'}>
@@ -52,20 +53,25 @@ export default function Modal({
           </Show>
         </View>
       </Show>
-      <PretendardText
-        typo="title-3"
-        className="text-text-01"
-      >
-        {title}
-      </PretendardText>
-      <Show when={!!subTitle}>
+      {/* 타이틀 */}
+      <View className="flex items-center justify-center gap-2">
         <PretendardText
-          typo="body-2"
-          className="text-text-03"
+          typo="title-3"
+          className="text-text-01"
         >
-          {subTitle}
+          {title}
         </PretendardText>
-      </Show>
+        {/* 서브타이틀 */}
+        <Show when={!!subTitle}>
+          <PretendardText
+            typo="body-2"
+            className="text-text-03"
+          >
+            {subTitle}
+          </PretendardText>
+        </Show>
+      </View>
+      {/* 버튼 */}
       <View className="flex w-full flex-row items-center gap-2">
         <Button
           {...cancelButtonProps}

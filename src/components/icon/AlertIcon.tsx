@@ -14,7 +14,7 @@ export default function AlertIcon({ type = 'default', ...props }: AlertIconProps
       <Show when={type === 'default'}>
         <AlertDefaultSvg {...props} />
       </Show>
-      <Show when={type === 'default'}>
+      <Show when={type === 'error'}>
         <AlertErrorSvg {...props} />
       </Show>
     </>
