@@ -1,3 +1,4 @@
+import { StackActions } from '@react-navigation/native';
 import { create } from 'zustand';
 
 import { navigationRef } from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer.const';
@@ -45,12 +46,13 @@ const modalStoreCreator: StateCreator<ModalStore> = set => ({
     // 모달 상태 초기화
     set(INIT_MODAL_STORE_STATE);
 
-    const goBack = () => {
+    // 이전 스크린으로 이동하고 모달 스크린 히스토리 삭제
+    const pop = () => {
       if (!navigationRef.isReady()) return;
-      navigationRef.goBack();
+      navigationRef.dispatch(StackActions.pop());
     };
 
-    goBack();
+    pop();
   },
 });
 

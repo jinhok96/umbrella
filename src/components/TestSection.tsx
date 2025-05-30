@@ -2,6 +2,8 @@ import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import Button from '@components/button/Button';
 import EmptyContent from '@components/emptyContent/EmptyContent';
 import MontserratText from '@components/fontText/MontserratText';
@@ -41,6 +43,8 @@ function ButtonSection() {
   const { openModal, closeModal } = useModalStore();
   const setTheme = useSettingStore(state => state.setTheme);
   const setLang = useSettingStore(state => state.setLang);
+
+  const { navigate } = useNavigation();
 
   return (
     <>
@@ -120,7 +124,7 @@ function ButtonSection() {
               },
               {
                 onCancel: closeModal,
-                onSubmit: closeModal,
+                onSubmit: () => navigate('Location'),
               },
             )
           }
