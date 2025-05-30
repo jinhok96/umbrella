@@ -25,7 +25,8 @@ import type { StateCreator } from 'zustand';
       },
       {
         onCancel: closeModal,
-        onSubmit: () => handleSubmit(...),
+        onSubmitBeforeClose: () => handleSubmit(...),
+        onSubmitAfterClose: () => navigate(...),
       },
     )
  * @jinhok96 25.05.30
