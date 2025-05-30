@@ -5,8 +5,7 @@ import DailyForecastScreen from '@screens/HomeScreen/DailyForecastScreen/DailyFo
 import HourlyForecastScreen from '@screens/HomeScreen/HourlyForecastScreen/HourlyForecastScreen';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
-
-type HomeNavigationRouteName = 'CurrentForecast' | 'HourlyForecast' | 'DailyForecast';
+import type { HomeNavigationRouteName, HomeTabParamList } from '@navigation/home/HomeNavigation.type';
 
 export const HOME_NAVIGATION_ROUTE_NAME_LIST: Record<HomeNavigationRouteName, HomeNavigationRouteName> = {
   CurrentForecast: 'CurrentForecast',
@@ -38,7 +37,7 @@ export const HOME_NAVIGATION_TEST_ID_LIST: Record<HomeNavigationRouteName, strin
  * navigation.d.ts용 HomeTab
  * @jinhok96 25.05.25
  */
-export const HomeTab = createBottomTabNavigator({
+export const HomeTab = createBottomTabNavigator<HomeTabParamList>({
   screens: {
     CurrentForecast: CurrentForecastScreen,
     HourlyForecast: HourlyForecastScreen,

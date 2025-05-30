@@ -6,8 +6,7 @@ import LocationScreen from '@screens/LocationScreen/LocationScreen';
 import ModalScreen from '@screens/ModalScreen/ModalScreen/ModalScreen';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
-
-type RootNavigationRouteName = 'Home' | 'Location' | 'Setting' | 'Modal';
+import type { RootNavigationRouteName, RootStackParamList } from '@navigation/root/RootNavigation.type';
 
 export const ROOT_NAVIGATION_ROUTE_NAME_LIST: Record<RootNavigationRouteName, RootNavigationRouteName> = {
   Home: 'Home',
@@ -39,7 +38,7 @@ export const ROOT_NAVIGATION_TEST_ID_LIST: Record<RootNavigationRouteName, strin
  * navigation.d.ts용 RootStack
  * @jinhok96 25.05.30
  */
-export const RootStack = createNativeStackNavigator({
+export const RootStack = createNativeStackNavigator<RootStackParamList>({
   screens: {
     Home: HomeTab,
     Location: LocationScreen,

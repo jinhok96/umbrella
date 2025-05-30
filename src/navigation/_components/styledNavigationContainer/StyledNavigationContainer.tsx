@@ -1,5 +1,6 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 
+import { navigationRef } from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer.const';
 import { useRouteStore } from '@store/routeStore/useRouteStore';
 
 import type { RouteName } from '@libs/types/navigation.type';
@@ -9,7 +10,7 @@ type StyledNavigationContainerProps = Omit<NavigationContainerProps, 'theme'>;
 
 /**
  * `NavigationContainer` 대체 컴포넌트
- * @jinhok96 25.05.29
+ * @jinhok96 25.05.30
  */
 export default function StyledNavigationContainer({ children, ...props }: StyledNavigationContainerProps) {
   const setIsReady = useRouteStore(state => state.setIsReady);
@@ -29,6 +30,7 @@ export default function StyledNavigationContainer({ children, ...props }: Styled
           setCurrentRouteName('Home');
         }}
         onStateChange={state => setCurrentRouteName(state?.routeNames[state.index] as RouteName)}
+        ref={navigationRef}
       >
         {children}
       </NavigationContainer>

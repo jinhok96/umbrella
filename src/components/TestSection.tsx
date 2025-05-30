@@ -2,8 +2,6 @@ import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
-import { useNavigation } from '@react-navigation/native';
-
 import Button from '@components/button/Button';
 import EmptyContent from '@components/emptyContent/EmptyContent';
 import MontserratText from '@components/fontText/MontserratText';
@@ -28,6 +26,7 @@ import SearchIcon from '@components/icon/SearchIcon';
 import UpArrowIcon from '@components/icon/UpArrowIcon';
 import WeatherIcon from '@components/icon/WeatherIcon';
 import ToggleInput from '@components/toggleInput/ToggleInput';
+import { useModalStore } from '@store/modalStore/useModalStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 function FlexSection({ children }: PropsWithChildren) {
@@ -39,7 +38,7 @@ function FontSection({ children }: PropsWithChildren) {
 }
 
 function ButtonSection() {
-  const { navigate } = useNavigation();
+  const { openModal, closeModal } = useModalStore();
   const setTheme = useSettingStore(state => state.setTheme);
   const setLang = useSettingStore(state => state.setLang);
 
@@ -107,7 +106,24 @@ function ButtonSection() {
       <View className="flex flex-row justify-between border-b">
         <Pressable
           className="w-full border bg-success"
-          onPress={() => navigate('Modal')}
+          onPress={() =>
+            openModal(
+              {
+                title: 'Title 타이틀',
+                subTitle: 'SubTitle 서브타이틀',
+                cancelButtonProps: {
+                  text: '취소',
+                },
+                submitButtonProps: {
+                  text: '확인',
+                },
+              },
+              {
+                onCancel: closeModal,
+                onSubmit: closeModal,
+              },
+            )
+          }
         >
           <PretendardText
             className="text-center"

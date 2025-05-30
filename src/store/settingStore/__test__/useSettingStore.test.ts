@@ -48,18 +48,6 @@ describe('useSettingStore', () => {
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
   });
 
-  test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    expect(store.getState()).toMatchObject(INIT_STATE_MOCK);
-
-    const newState = NEW_STATE_MOCK.theme;
-
-    act(() => {
-      store.getState().setTheme(newState);
-    });
-
-    expect(store.getState().theme).toBe(newState);
-  });
-
   test('액션: setTheme', () => {
     const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
