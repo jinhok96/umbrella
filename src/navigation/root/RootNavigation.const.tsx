@@ -1,17 +1,18 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { HOME_NAVIGATION_TEST_ID_LIST, HomeTab } from '@navigation/HomeNavigation.const';
-import { SettingStack } from '@navigation/SettingNavigation.const';
+import { HOME_NAVIGATION_TEST_ID_LIST, HomeTab } from '@navigation/home/HomeNavigation.const';
+import { SETTING_NAVIGATION_TEST_ID_LIST, SettingStack } from '@navigation/setting/SettingNavigation.const';
 import LocationScreen from '@screens/LocationScreen/LocationScreen';
+import ModalScreen from '@screens/ModalScreen/ModalScreen/ModalScreen';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
-
-type RootNavigationRouteName = 'Home' | 'Location' | 'Setting';
+import type { RootNavigationRouteName, RootStackParamList } from '@navigation/root/RootNavigation.type';
 
 export const ROOT_NAVIGATION_ROUTE_NAME_LIST: Record<RootNavigationRouteName, RootNavigationRouteName> = {
   Home: 'Home',
   Location: 'Location',
   Setting: 'Setting',
+  Modal: 'Modal',
 };
 
 /**
@@ -24,22 +25,24 @@ export const ROOT_NAVIGATION_LABEL_LIST: LocalizedTextMap<'Location'> = {
 
 /**
  * RootNavigation 테스트용 ID
- * @jinhok96 25.05.25
+ * @jinhok96 25.05.30
  */
 export const ROOT_NAVIGATION_TEST_ID_LIST: Record<RootNavigationRouteName, string> = {
   Home: HOME_NAVIGATION_TEST_ID_LIST.CurrentForecast,
   Location: 'LocationScreenTestId',
-  Setting: 'SettingScreenTestId',
+  Setting: SETTING_NAVIGATION_TEST_ID_LIST.SettingMenu,
+  Modal: 'ModalScreenTestId',
 };
 
 /**
  * navigation.d.ts용 RootStack
- * @jinhok96 25.05.26
+ * @jinhok96 25.05.30
  */
-export const RootStack = createNativeStackNavigator({
+export const RootStack = createNativeStackNavigator<RootStackParamList>({
   screens: {
     Home: HomeTab,
     Location: LocationScreen,
     Setting: SettingStack,
+    Modal: ModalScreen,
   },
 });

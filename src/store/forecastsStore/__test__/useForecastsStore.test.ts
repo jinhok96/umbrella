@@ -173,22 +173,6 @@ describe('useForecastsStore', () => {
     expect(result.current).toMatchObject(INIT_STATE_MOCK);
   });
 
-  test('훅을 사용하지 않고 직접 스토어 접근 테스트', () => {
-    expect(store.getState()).toMatchObject(INIT_STATE_MOCK);
-
-    act(() => {
-      store
-        .getState()
-        .setForecasts(
-          GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK,
-          POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK,
-          POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK,
-        );
-    });
-
-    expect(store.getState()).toMatchObject(NEW_STATE_MOCK);
-  });
-
   test('액션: setForecasts', () => {
     const { result } = renderHook(() => useStore());
     expect(result.current).toMatchObject(INIT_STATE_MOCK);

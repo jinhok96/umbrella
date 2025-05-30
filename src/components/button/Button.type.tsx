@@ -6,7 +6,7 @@ import type { ColorVar } from '@libs/utils/themes.type';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonVariant = 'primary' | 'black' | 'grayOutline' | 'error';
 
-export type ButtonProps = PressableProps & {
+export type ButtonProps = Omit<PressableProps, 'children'> & {
   text?: string;
   size: ButtonSize;
   variant: ButtonVariant;

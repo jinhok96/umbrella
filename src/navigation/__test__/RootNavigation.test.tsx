@@ -1,8 +1,8 @@
 import { act, render, screen } from '@testing-library/react-native';
 
 import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
-import { RootNavigation } from '@navigation/RootNavigation';
-import { ROOT_NAVIGATION_TEST_ID_LIST } from '@navigation/RootNavigation.const';
+import { RootNavigation } from '@navigation/root/RootNavigation';
+import { ROOT_NAVIGATION_TEST_ID_LIST } from '@navigation/root/RootNavigation.const';
 
 const NAVIGATION_TEST_ID_LIST = ROOT_NAVIGATION_TEST_ID_LIST;
 

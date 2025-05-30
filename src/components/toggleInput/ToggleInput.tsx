@@ -100,7 +100,7 @@ function Toggle({ value, disabled, ...props }: ToggleInputIconProps) {
     >
       <View
         className={`aspect-square size-5 overflow-hidden rounded-full transition-transform ${value ? 'translate-x-[1.125rem]' : 'translate-x-0'}`}
-        style={{ boxShadow: shadowStyleList.toggleInnerCircle }}
+        style={{ boxShadow: shadowStyleList.float }}
       >
         <View className={`size-full ${disabled ? 'bg-text-09' : 'bg-white'}`} />
       </View>

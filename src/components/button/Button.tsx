@@ -81,13 +81,14 @@ const buttonColorClassName: Record<ButtonVariant, { container: string; text: str
  * @param iconPosition 아이콘 위치; `left` | `right` (기본값 `left`)
  * @jinhok96 25.05.29
  */
-export default function Button({ text, size, variant, icon, iconPosition = 'left', ...props }: ButtonProps) {
+export default function Button({ text, size, variant, icon, iconPosition = 'left', className, ...props }: ButtonProps) {
   const lang = useSettingStore(state => state.lang);
 
   const buttonClassName = classNames(
     'flex flex-row justify-center items-center gap-2 px-4 rounded-lg',
     buttonSizeClassName[size].text,
     buttonColorClassName[variant].container,
+    className,
   );
 
   const textClassName = classNames('text-center', buttonColorClassName[variant].text);

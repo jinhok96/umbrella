@@ -17,7 +17,11 @@ export default function ColorThemeProvider({ children }: PropsWithChildren) {
 
   const isBgBackground01 = currentRouteName && BG_BACKGROUND_01_ROUTE_NAME_LIST.includes(currentRouteName);
 
-  const className = classNames('flex-1', isBgBackground01 ? 'bg-background-01' : 'bg-background-02');
+  const className = classNames(
+    'flex-1',
+    isBgBackground01 && 'bg-background-01',
+    !isBgBackground01 && 'bg-background-02',
+  );
 
   return (
     <View

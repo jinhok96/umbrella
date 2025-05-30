@@ -6,16 +6,18 @@ import CalenderIcon from '@components/icon/CalenderIcon';
 import ClockIcon from '@components/icon/ClockIcon';
 import HomeIcon from '@components/icon/HomeIcon';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
-import StyledBottomTabBar from '@navigation/_components/styledBottomTabBar/StyledBottomTabBar';
-import StyledBottomTabBarButton from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarButton';
-import StyledBottomTabBarIcon from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarIcon';
-import StyledBottomTabBarLabel from '@navigation/_components/styledBottomTabBar/StyledBottomTabBarLabel';
-import { HOME_BOTTOM_TAB_BAR_LABEL_LIST, HOME_NAVIGATION_ROUTE_NAME_LIST } from '@navigation/HomeNavigation.const';
+import StyledBottomTabBar from '@navigation/home/_components/styledBottomTabBar/StyledBottomTabBar';
+import StyledBottomTabBarButton from '@navigation/home/_components/styledBottomTabBar/StyledBottomTabBarButton';
+import StyledBottomTabBarIcon from '@navigation/home/_components/styledBottomTabBar/StyledBottomTabBarIcon';
+import StyledBottomTabBarLabel from '@navigation/home/_components/styledBottomTabBar/StyledBottomTabBarLabel';
+import { HOME_BOTTOM_TAB_BAR_LABEL_LIST } from '@navigation/home/HomeNavigation.const';
 import CurrentForecastScreen from '@screens/HomeScreen/CurrentForecastScreen/CurrentForecastScreen';
 import DailyForecastScreen from '@screens/HomeScreen/DailyForecastScreen/DailyForecastScreen';
 import HourlyForecastScreen from '@screens/HomeScreen/HourlyForecastScreen/HourlyForecastScreen';
 
-const HomeTab = createBottomTabNavigator();
+import type { HomeTabParamList } from '@navigation/home/HomeNavigation.type';
+
+const HomeTab = createBottomTabNavigator<HomeTabParamList>();
 
 export default function HomeNavigation() {
   return (
@@ -35,7 +37,7 @@ export default function HomeNavigation() {
       }}
     >
       <HomeTab.Screen
-        name={HOME_NAVIGATION_ROUTE_NAME_LIST.CurrentForecast}
+        name="CurrentForecast"
         component={CurrentForecastScreen}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -53,7 +55,7 @@ export default function HomeNavigation() {
         }}
       />
       <HomeTab.Screen
-        name={HOME_NAVIGATION_ROUTE_NAME_LIST.HourlyForecast}
+        name="HourlyForecast"
         component={HourlyForecastScreen}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -71,7 +73,7 @@ export default function HomeNavigation() {
         }}
       />
       <HomeTab.Screen
-        name={HOME_NAVIGATION_ROUTE_NAME_LIST.DailyForecast}
+        name="DailyForecast"
         component={DailyForecastScreen}
         options={{
           tabBarIcon: ({ focused }) => (

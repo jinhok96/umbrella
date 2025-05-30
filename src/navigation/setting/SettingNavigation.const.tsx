@@ -10,16 +10,7 @@ import SettingMenuScreen from '@screens/SettingScreen/SettingMenuScreen/SettingM
 import SetUnitsScreen from '@screens/SettingScreen/SetUnitsScreen/SetUnitsScreen';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
-
-type SettingNavigationRouteName =
-  | 'SettingMenu'
-  | 'SetTheme'
-  | 'SetLang'
-  | 'SetUnits'
-  | 'SetDefaultLocation'
-  | 'License'
-  | 'Info'
-  | 'Inquiry';
+import type { SettingNavigationRouteName, SettingStackParamList } from '@navigation/setting/SettingNavigation.type';
 
 export const SETTING_NAVIGATION_ROUTE_NAME_LIST: Record<SettingNavigationRouteName, SettingNavigationRouteName> = {
   SettingMenu: 'SettingMenu',
@@ -77,7 +68,7 @@ export const SETTING_NAVIGATION_TEST_ID_LIST: Record<SettingNavigationRouteName,
  * navigation.d.ts용 SettingStack
  * @jinhok96 25.05.26
  */
-export const SettingStack = createNativeStackNavigator({
+export const SettingStack = createNativeStackNavigator<SettingStackParamList>({
   screens: {
     SettingMenu: SettingMenuScreen,
     SetTheme: SetThemeScreen,

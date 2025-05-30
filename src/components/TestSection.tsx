@@ -2,6 +2,8 @@ import type { PropsWithChildren } from 'react';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 import Button from '@components/button/Button';
 import EmptyContent from '@components/emptyContent/EmptyContent';
 import MontserratText from '@components/fontText/MontserratText';
@@ -26,6 +28,7 @@ import SearchIcon from '@components/icon/SearchIcon';
 import UpArrowIcon from '@components/icon/UpArrowIcon';
 import WeatherIcon from '@components/icon/WeatherIcon';
 import ToggleInput from '@components/toggleInput/ToggleInput';
+import { useModalStore } from '@store/modalStore/useModalStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 function FlexSection({ children }: PropsWithChildren) {
@@ -37,8 +40,11 @@ function FontSection({ children }: PropsWithChildren) {
 }
 
 function ButtonSection() {
+  const { openModal } = useModalStore();
   const setTheme = useSettingStore(state => state.setTheme);
   const setLang = useSettingStore(state => state.setLang);
+
+  const { navigate } = useNavigation();
 
   return (
     <>
@@ -98,6 +104,64 @@ function ButtonSection() {
             typo="button-1"
           >
             English
+          </PretendardText>
+        </Pressable>
+      </View>
+      <View className="flex flex-row justify-between border-b">
+        <Pressable
+          className="w-1/2 border bg-morning"
+          onPress={() =>
+            openModal(
+              {
+                title: 'Title 타이틀',
+                subTitle: 'SubTitle 서브타이틀',
+                cancelButtonProps: {
+                  text: '취소',
+                },
+                submitButtonProps: {
+                  text: '확인',
+                },
+                type: 'default',
+              },
+              {
+                onSubmitAfterClose: () => navigate('Setting'),
+              },
+            )
+          }
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Modal Default
+          </PretendardText>
+        </Pressable>
+        <Pressable
+          className="w-1/2 border bg-error"
+          onPress={() =>
+            openModal(
+              {
+                title: 'Title 타이틀',
+                subTitle: 'SubTitle 서브타이틀',
+                cancelButtonProps: {
+                  text: '취소',
+                },
+                submitButtonProps: {
+                  text: '확인',
+                },
+                type: 'error',
+              },
+              {
+                onSubmitAfterClose: () => navigate('Setting'),
+              },
+            )
+          }
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Modal Error
           </PretendardText>
         </Pressable>
       </View>
