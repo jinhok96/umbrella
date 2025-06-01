@@ -5,6 +5,7 @@ import PretendardText from '@components/fontText/PretendardText';
 import AlertIcon from '@components/icon/AlertIcon';
 import Show from '@components/wrapper/Show';
 import { useModalStore } from '@store/modalStore/useModalStore';
+import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { ButtonVariant } from '@components/button/Button.type';
 import type { ModalProps, ModalType } from '@components/modal/Modal.type';
@@ -33,6 +34,7 @@ export default function Modal({
   submitButtonProps,
   ...props
 }: ModalProps) {
+  const lang = useSettingStore(state => state.lang);
   const { onCancelBeforeClose, onCancelAfterClose, onSubmitBeforeClose, onSubmitAfterClose, children } =
     useModalStore();
 
@@ -68,7 +70,7 @@ export default function Modal({
           typo="title-3"
           className="text-text-01"
         >
-          {title}
+          {title?.[lang]}
         </PretendardText>
         {/* 서브타이틀 */}
         <Show when={!!subTitle}>
@@ -76,7 +78,7 @@ export default function Modal({
             typo="body-2"
             className="text-text-03"
           >
-            {subTitle}
+            {subTitle?.[lang]}
           </PretendardText>
         </Show>
         {/* children */}

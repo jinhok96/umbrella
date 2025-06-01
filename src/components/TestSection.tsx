@@ -113,8 +113,14 @@ function ButtonSection() {
           onPress={() =>
             openModal(
               {
-                title: 'Title 타이틀',
-                subTitle: 'SubTitle 서브타이틀',
+                title: {
+                  ko: '타이틀',
+                  en: 'Title',
+                },
+                subTitle: {
+                  ko: '중앙 기본 모달',
+                  en: 'Center Default Modal',
+                },
                 cancelButtonProps: {
                   text: '취소',
                 },
@@ -150,8 +156,14 @@ function ButtonSection() {
           onPress={() =>
             openModal(
               {
-                title: 'Title 타이틀',
-                subTitle: 'SubTitle 서브타이틀',
+                title: {
+                  ko: '타이틀',
+                  en: 'Title',
+                },
+                subTitle: {
+                  ko: '중앙 에러 모달',
+                  en: 'Center Error Modal',
+                },
                 cancelButtonProps: {
                   text: '취소',
                 },
