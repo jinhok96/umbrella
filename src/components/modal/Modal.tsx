@@ -33,7 +33,8 @@ export default function Modal({
   submitButtonProps,
   ...props
 }: ModalProps) {
-  const { onCancelBeforeClose, onCancelAfterClose, onSubmitBeforeClose, onSubmitAfterClose } = useModalStore();
+  const { onCancelBeforeClose, onCancelAfterClose, onSubmitBeforeClose, onSubmitAfterClose, children } =
+    useModalStore();
 
   const handleCancel = () => {
     onCancelBeforeClose?.();
@@ -78,6 +79,8 @@ export default function Modal({
             {subTitle}
           </PretendardText>
         </Show>
+        {/* children */}
+        {children}
       </View>
       {/* 버튼 */}
       <View className="flex w-full flex-row items-center gap-2">

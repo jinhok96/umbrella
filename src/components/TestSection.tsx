@@ -123,6 +123,14 @@ function ButtonSection() {
                 },
                 type: 'default',
                 position: 'bottom',
+                children: (
+                  <PretendardText
+                    typo="body-3"
+                    className="text-text-01"
+                  >
+                    Modal Children
+                  </PretendardText>
+                ),
               },
               {
                 onSubmitAfterClose: () => navigate('Location'),
@@ -152,6 +160,14 @@ function ButtonSection() {
                 },
                 type: 'error',
                 position: 'center',
+                children: (
+                  <PretendardText
+                    typo="body-3"
+                    className="text-text-01"
+                  >
+                    Modal Children
+                  </PretendardText>
+                ),
               },
               {
                 onSubmitAfterClose: () => navigate('Setting'),

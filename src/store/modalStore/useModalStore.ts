@@ -41,6 +41,7 @@ const modalStoreCreator: StateCreator<ModalStore> = (set, get) => ({
     set({
       ...state,
       isOpened: true,
+      children: props.children,
       onCancelAfterClose: () => {
         get().closeModal();
 
@@ -61,7 +62,7 @@ const modalStoreCreator: StateCreator<ModalStore> = (set, get) => ({
       },
     });
 
-    navigationActions.navigate('Modal', props);
+    navigationActions.navigate('Modal', { ...props, children: null });
   },
   closeModal: () => {
     // 모달 상태 초기화, 이전 스크린으로 이동, 모달 스크린 히스토리 삭제

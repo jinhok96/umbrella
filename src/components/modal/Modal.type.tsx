@@ -7,7 +7,7 @@ export type ModalPosition = 'center' | 'bottom';
 
 type ModalButtonProps = Pick<ButtonProps, 'text' | 'icon' | 'iconPosition'>;
 
-export type ModalProps = Omit<ViewProps, 'children' | 'className'> & {
+export type ModalProps = Omit<ViewProps, 'className'> & {
   type?: ModalType;
   position?: ModalPosition;
   hideIcon?: boolean;
