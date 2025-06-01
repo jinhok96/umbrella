@@ -4,7 +4,8 @@ import { create } from 'zustand';
 import { navigationRef } from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer.const';
 import { INIT_MODAL_STORE_STATE } from '@store/modalStore/useModalStore.const';
 
-import type { ModalStore } from '@store/modalStore/useModalStore.type';
+import type { ModalProps } from '@components/modal/Modal.type';
+import type { ModalStore, ModalStoreState } from '@store/modalStore/useModalStore.type';
 import type { StateCreator } from 'zustand';
 
 /**
@@ -24,12 +25,13 @@ import type { StateCreator } from 'zustand';
         },
       },
       {
-        onCancel: closeModal,
+        onCancelBeforeClose: () => handleCancel(...),
+        onCancelAfterClose: () => navigate(...),
         onSubmitBeforeClose: () => handleSubmit(...),
         onSubmitAfterClose: () => navigate(...),
       },
     )
- * @jinhok96 25.05.30
+ * @jinhok96 25.06.01
  */
 const modalStoreCreator: StateCreator<ModalStore> = set => ({
   ...INIT_MODAL_STORE_STATE,
@@ -58,5 +60,37 @@ const modalStoreCreator: StateCreator<ModalStore> = set => ({
   },
 });
 
-export const useModalStore = create<ModalStore>()(modalStoreCreator);
-export const modalStore = useModalStore;
+const useModalStoreRaw = create<ModalStore>()(modalStoreCreator);
+export const modalStore = useModalStoreRaw;
+
+const SCREEN_TRANSITION_TIMEOUT = 300;
+
+export function useModalStore() {
+  const { openModal, closeModal, ...rest } = useModalStoreRaw();
+
+  const openModalWithTransitionTimeout = (props: ModalProps, state: Partial<ModalStoreState>) => {
+    openModal(props, {
+      ...state,
+      onCancelAfterClose: () => {
+        closeModal();
+
+        // closeModal 애니메이션 종료 후 호출
+        if (!state.onCancelAfterClose) return;
+        setTimeout(() => {
+          state.onCancelAfterClose?.();
+        }, SCREEN_TRANSITION_TIMEOUT);
+      },
+      onSubmitAfterClose: () => {
+        closeModal();
+
+        // closeModal 애니메이션 종료 후 호출
+        if (!state.onSubmitAfterClose) return;
+        setTimeout(() => {
+          state.onSubmitAfterClose?.();
+        }, SCREEN_TRANSITION_TIMEOUT);
+      },
+    });
+  };
+
+  return { ...rest, openModal: openModalWithTransitionTimeout, closeModal };
+}
