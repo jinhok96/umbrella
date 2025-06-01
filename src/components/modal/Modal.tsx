@@ -4,7 +4,6 @@ import Button from '@components/button/Button';
 import PretendardText from '@components/fontText/PretendardText';
 import AlertIcon from '@components/icon/AlertIcon';
 import Show from '@components/wrapper/Show';
-import { shadowStyleList } from '@libs/utils/themes.util';
 import { useModalStore } from '@store/modalStore/useModalStore';
 
 import type { ButtonVariant } from '@components/button/Button.type';
@@ -49,9 +48,7 @@ export default function Modal({
   return (
     <View
       {...props}
-      className="absolute w-[21rem] items-center justify-center gap-7 rounded-[1.25rem] border-4 bg-background-02 px-5 pb-7 pt-10"
-      onTouchEnd={e => e.stopPropagation()}
-      style={{ boxShadow: shadowStyleList.float }}
+      className="w-[21rem] items-center justify-center gap-7 bg-background-02 px-5 pb-7 pt-10"
     >
       {/* 아이콘 */}
       <Show when={!hideIcon}>

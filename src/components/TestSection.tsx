@@ -40,7 +40,7 @@ function FontSection({ children }: PropsWithChildren) {
 }
 
 function ButtonSection() {
-  const { openModal } = useModalStore();
+  const openModal = useModalStore(state => state.openModal);
   const setTheme = useSettingStore(state => state.setTheme);
   const setLang = useSettingStore(state => state.setLang);
 
@@ -124,7 +124,7 @@ function ButtonSection() {
                 type: 'default',
               },
               {
-                onSubmitAfterClose: () => navigate('Setting'),
+                onSubmitAfterClose: () => navigate('Location'),
               },
             )
           }

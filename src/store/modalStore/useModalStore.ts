@@ -6,7 +6,7 @@ import { INIT_MODAL_STORE_STATE } from '@store/modalStore/useModalStore.const';
 import type { ModalStore } from '@store/modalStore/useModalStore.type';
 import type { StateCreator } from 'zustand';
 
-const SCREEN_TRANSITION_TIMEOUT = 300;
+const SCREEN_TRANSITION_TIMEOUT = 150;
 
 /**
  * 앱 설정 스토어
@@ -35,15 +35,14 @@ const SCREEN_TRANSITION_TIMEOUT = 300;
     )
  * @jinhok96 25.06.01
  */
-const modalStoreCreator: StateCreator<ModalStore> = set => ({
+const modalStoreCreator: StateCreator<ModalStore> = (set, get) => ({
   ...INIT_MODAL_STORE_STATE,
   openModal: (props, state) => {
     set({
       ...state,
+      isOpened: true,
       onCancelAfterClose: () => {
-        // 모달 상태 초기화, 이전 스크린으로 이동, 모달 스크린 히스토리 삭제
-        set(INIT_MODAL_STORE_STATE);
-        navigationActions.pop();
+        get().closeModal();
 
         // closeModal 애니메이션 종료 후 호출
         if (!state.onCancelAfterClose) return;
@@ -52,9 +51,7 @@ const modalStoreCreator: StateCreator<ModalStore> = set => ({
         }, SCREEN_TRANSITION_TIMEOUT);
       },
       onSubmitAfterClose: () => {
-        // 모달 상태 초기화, 이전 스크린으로 이동, 모달 스크린 히스토리 삭제
-        set(INIT_MODAL_STORE_STATE);
-        navigationActions.pop();
+        get().closeModal();
 
         // closeModal 애니메이션 종료 후 호출
         if (!state.onSubmitAfterClose) return;

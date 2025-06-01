@@ -1,29 +1,42 @@
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { shadowStyleList } from '@libs/utils/themes.util';
 import ScreenWrapper from '@navigation/_components/screenWrapper/ScreenWrapper';
 import { useModalStore } from '@store/modalStore/useModalStore';
 
 import type { ScreenWrapperProps } from '@navigation/_components/screenWrapper/ScreenWrapper.type';
 
 export default function ModalScreenWrapper({ children, ...props }: ScreenWrapperProps) {
-  const { closeModal } = useModalStore();
+  const closeModal = useModalStore(state => state.closeModal);
+  const isOpened = useModalStore(state => state.isOpened);
   const { top } = useSafeAreaInsets();
+  const [animate, setAnimate] = useState(false);
 
-  console.log('top', top);
+  useEffect(() => {
+    setTimeout(() => {
+      setAnimate(isOpened);
+    }, 0);
+  }, [isOpened]);
 
   return (
     <ScreenWrapper
       {...props}
-      backgroundClassName="bg-transparent"
-      className="px-safe-offset-5 mb-safe-offset-2"
-      onStartShouldSetResponder={() => true}
-      onTouchEnd={closeModal}
+      backgroundClassName="bg-transparency-05"
+      className="flex-1 items-center justify-center border-4"
+      onTouchEnd={e => {
+        if (e.target !== e.currentTarget) return;
+        closeModal();
+      }}
       style={{ paddingBottom: top }}
     >
-      <View className="flex-1 items-center justify-center">
-        <View className="size-fit">{children}</View>
+      <View
+        className={`size-fit overflow-hidden rounded-[1.25rem] transition-[bottom,opacity] ${animate ? 'bottom-0 opacity-100' : '-bottom-1/4 opacity-0'}`}
+        style={{ boxShadow: shadowStyleList.float }}
+      >
+        {children}
       </View>
     </ScreenWrapper>
   );
