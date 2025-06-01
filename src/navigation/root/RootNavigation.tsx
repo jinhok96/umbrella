@@ -1,5 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { enableFreeze } from 'react-native-screens';
+
 import GlobalStackHeader from '@navigation/_components/styledHeader/GlobalStackHeader';
 import HomeNavigation from '@navigation/home/HomeNavigation';
 import { ROOT_NAVIGATION_LABEL_LIST } from '@navigation/root/RootNavigation.const';
@@ -9,6 +11,8 @@ import ModalScreen from '@screens/ModalScreen/ModalScreen/ModalScreen';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { RootStackParamList } from '@navigation/root/RootNavigation.type';
+
+enableFreeze(true);
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -44,13 +48,12 @@ export function RootNavigation() {
           component={SettingNavigation}
         />
       </RootStack.Group>
-      <RootStack.Group screenOptions={{ presentation: 'formSheet' }}>
+      <RootStack.Group screenOptions={{ presentation: 'transparentModal' }}>
         <RootStack.Screen
           name="Modal"
           component={ModalScreen}
           options={{
-            sheetAllowedDetents: [1, 1],
-            sheetElevation: 0,
+            animation: 'fade',
           }}
         />
       </RootStack.Group>

@@ -4,8 +4,8 @@ import Button from '@components/button/Button';
 import PretendardText from '@components/fontText/PretendardText';
 import AlertIcon from '@components/icon/AlertIcon';
 import Show from '@components/wrapper/Show';
-import { shadowStyleList } from '@libs/utils/themes.util';
 import { useModalStore } from '@store/modalStore/useModalStore';
+import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { ButtonVariant } from '@components/button/Button.type';
 import type { ModalProps, ModalType } from '@components/modal/Modal.type';
@@ -34,30 +34,24 @@ export default function Modal({
   submitButtonProps,
   ...props
 }: ModalProps) {
-  const { onCancel, onSubmitBeforeClose, onSubmitAfterClose, closeModal } = useModalStore();
+  const lang = useSettingStore(state => state.lang);
+  const { onCancelBeforeClose, onCancelAfterClose, onSubmitBeforeClose, onSubmitAfterClose, children } =
+    useModalStore();
 
   const handleCancel = () => {
-    closeModal();
-    onCancel?.();
+    onCancelBeforeClose?.();
+    onCancelAfterClose?.();
   };
 
   const handleSubmit = () => {
     onSubmitBeforeClose?.();
-    closeModal();
-    // closeModal 애니메이션 종료 후 호출
-    if (onSubmitAfterClose) {
-      setTimeout(() => {
-        onSubmitAfterClose?.();
-      }, 150);
-    }
+    onSubmitAfterClose?.();
   };
 
   return (
     <View
       {...props}
-      className="flex w-[21rem] items-center justify-center gap-7 rounded-[1.25rem] bg-background-02 px-5 pb-7 pt-10"
-      onTouchEnd={e => e.stopPropagation()}
-      style={{ boxShadow: shadowStyleList.float }}
+      className="w-full items-center justify-center gap-7 bg-background-02 px-5 pb-7 pt-10"
     >
       {/* 아이콘 */}
       <Show when={!hideIcon}>
@@ -76,7 +70,7 @@ export default function Modal({
           typo="title-3"
           className="text-text-01"
         >
-          {title}
+          {title?.[lang]}
         </PretendardText>
         {/* 서브타이틀 */}
         <Show when={!!subTitle}>
@@ -84,14 +78,17 @@ export default function Modal({
             typo="body-2"
             className="text-text-03"
           >
-            {subTitle}
+            {subTitle?.[lang]}
           </PretendardText>
         </Show>
+        {/* children */}
+        {children}
       </View>
       {/* 버튼 */}
       <View className="flex w-full flex-row items-center gap-2">
         <Button
           {...cancelButtonProps}
+          text={cancelButtonProps?.text || '취소'}
           className="flex-1"
           size="md"
           variant="grayOutline"
@@ -99,6 +96,7 @@ export default function Modal({
         />
         <Button
           {...submitButtonProps}
+          text={submitButtonProps?.text || '확인'}
           className="flex-1"
           size="md"
           variant={SUBMIT_BUTTON_VARIANT[type]}
