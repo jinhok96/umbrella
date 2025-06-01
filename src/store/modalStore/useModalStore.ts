@@ -1,18 +1,20 @@
-import { StackActions } from '@react-navigation/native';
 import { create } from 'zustand';
 
-import { navigationRef } from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer.const';
+import { navigationActions } from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer.const';
 import { INIT_MODAL_STORE_STATE } from '@store/modalStore/useModalStore.const';
 
-import type { ModalProps } from '@components/modal/Modal.type';
-import type { ModalStore, ModalStoreState } from '@store/modalStore/useModalStore.type';
+import type { ModalStore } from '@store/modalStore/useModalStore.type';
 import type { StateCreator } from 'zustand';
+
+const SCREEN_TRANSITION_TIMEOUT = 300;
 
 /**
  * 앱 설정 스토어
  * @ openModal - 모달 열기
  * @ closeModal - 모달 닫기
  * @example 
+    const openModal = useModalStore(state => state.openModal);
+
     openModal(
       {
         title: 'Title',
@@ -25,10 +27,10 @@ import type { StateCreator } from 'zustand';
         },
       },
       {
-        onCancelBeforeClose: () => handleCancel(...),
-        onCancelAfterClose: () => navigate(...),
-        onSubmitBeforeClose: () => handleSubmit(...),
-        onSubmitAfterClose: () => navigate(...),
+        onCancelBeforeClose: () => handleCancelBeforeClose(...),
+        onCancelAfterClose: () => handleCancelAfterClose(...),
+        onSubmitBeforeClose: () => handleSubmitBeforeClose(...),
+        onSubmitAfterClose: () => handleSubmitAfterClose(...),
       },
     )
  * @jinhok96 25.06.01
@@ -36,43 +38,12 @@ import type { StateCreator } from 'zustand';
 const modalStoreCreator: StateCreator<ModalStore> = set => ({
   ...INIT_MODAL_STORE_STATE,
   openModal: (props, state) => {
-    set(state);
-
-    const navigate = () => {
-      if (!navigationRef.isReady()) return;
-      navigationRef.navigate('Modal', props);
-    };
-
-    navigate();
-  },
-  closeModal: () => {
-    // 모달 상태 초기화
-    set(INIT_MODAL_STORE_STATE);
-
-    // 이전 스크린으로 이동하고 모달 스크린 히스토리 삭제
-    const pop = () => {
-      if (!navigationRef.isReady()) return;
-      if (!navigationRef.canGoBack()) return;
-      navigationRef.dispatch(StackActions.pop());
-    };
-
-    pop();
-  },
-});
-
-const useModalStoreRaw = create<ModalStore>()(modalStoreCreator);
-export const modalStore = useModalStoreRaw;
-
-const SCREEN_TRANSITION_TIMEOUT = 300;
-
-export function useModalStore() {
-  const { openModal, closeModal, ...rest } = useModalStoreRaw();
-
-  const openModalWithTransitionTimeout = (props: ModalProps, state: Partial<ModalStoreState>) => {
-    openModal(props, {
+    set({
       ...state,
       onCancelAfterClose: () => {
-        closeModal();
+        // 모달 상태 초기화, 이전 스크린으로 이동, 모달 스크린 히스토리 삭제
+        set(INIT_MODAL_STORE_STATE);
+        navigationActions.pop();
 
         // closeModal 애니메이션 종료 후 호출
         if (!state.onCancelAfterClose) return;
@@ -81,7 +52,9 @@ export function useModalStore() {
         }, SCREEN_TRANSITION_TIMEOUT);
       },
       onSubmitAfterClose: () => {
-        closeModal();
+        // 모달 상태 초기화, 이전 스크린으로 이동, 모달 스크린 히스토리 삭제
+        set(INIT_MODAL_STORE_STATE);
+        navigationActions.pop();
 
         // closeModal 애니메이션 종료 후 호출
         if (!state.onSubmitAfterClose) return;
@@ -90,7 +63,15 @@ export function useModalStore() {
         }, SCREEN_TRANSITION_TIMEOUT);
       },
     });
-  };
 
-  return { ...rest, openModal: openModalWithTransitionTimeout, closeModal };
-}
+    navigationActions.navigate('Modal', props);
+  },
+  closeModal: () => {
+    // 모달 상태 초기화, 이전 스크린으로 이동, 모달 스크린 히스토리 삭제
+    set(INIT_MODAL_STORE_STATE);
+    navigationActions.pop();
+  },
+});
+
+export const useModalStore = create<ModalStore>()(modalStoreCreator);
+export const modalStore = useModalStore;

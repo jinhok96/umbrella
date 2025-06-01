@@ -11,6 +11,6 @@ export type ModalProps = Omit<ViewProps, 'children' | 'className'> & {
   hideIcon?: boolean;
   title?: string;
   subTitle?: string;
-  cancelButtonProps: ModalButtonProps;
-  submitButtonProps: ModalButtonProps;
+  cancelButtonProps?: ModalButtonProps;
+  submitButtonProps?: ModalButtonProps;
 };
