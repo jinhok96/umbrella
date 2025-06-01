@@ -48,7 +48,7 @@ export default function Modal({
   return (
     <View
       {...props}
-      className="w-[21rem] items-center justify-center gap-7 bg-background-02 px-5 pb-7 pt-10"
+      className="w-full items-center justify-center gap-7 bg-background-02 px-5 pb-7 pt-10"
     >
       {/* 아이콘 */}
       <Show when={!hideIcon}>

@@ -122,6 +122,7 @@ function ButtonSection() {
                   text: '확인',
                 },
                 type: 'default',
+                position: 'bottom',
               },
               {
                 onSubmitAfterClose: () => navigate('Location'),
@@ -150,6 +151,7 @@ function ButtonSection() {
                   text: '확인',
                 },
                 type: 'error',
+                position: 'center',
               },
               {
                 onSubmitAfterClose: () => navigate('Setting'),

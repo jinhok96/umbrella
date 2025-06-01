@@ -8,9 +8,14 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 type ModalScreenParams = NativeStackScreenProps<RootStackParamList, 'Modal'>;
 
 export default function ModalScreen({ route }: ModalScreenParams) {
+  const { params } = route;
+
   return (
-    <ModalScreenWrapper testID={ROOT_NAVIGATION_TEST_ID_LIST.Modal}>
-      <Modal {...route.params} />
+    <ModalScreenWrapper
+      testID={ROOT_NAVIGATION_TEST_ID_LIST.Modal}
+      params={params}
+    >
+      <Modal {...params} />
     </ModalScreenWrapper>
   );
 }
