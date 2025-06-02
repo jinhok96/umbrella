@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 
+import { ANIMATION_DURATION } from '@libs/constants/duration.const';
 import { navigationActions } from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer.const';
 import { INIT_MODAL_STORE_STATE } from '@store/modalStore/useModalStore.const';
 
 import type { ModalStore } from '@store/modalStore/useModalStore.type';
 import type { StateCreator } from 'zustand';
 
-const SCREEN_TRANSITION_TIMEOUT = 150;
+const SCREEN_TRANSITION_TIMEOUT = ANIMATION_DURATION;
 
 /**
  * 앱 설정 스토어
