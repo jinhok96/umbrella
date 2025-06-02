@@ -18,6 +18,10 @@ type ToastProps = Omit<PressableProps, 'className' | 'children'> & {
 export default function Toast({ text, type = 'default', ...props }: ToastProps) {
   const [isOpened, setIsOpened] = useState(false);
 
+  const handleToastPress = () => {
+    setIsOpened(false);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setIsOpened(true);
@@ -37,6 +41,7 @@ export default function Toast({ text, type = 'default', ...props }: ToastProps) 
     <Pressable
       {...props}
       className={toastClassName}
+      onPress={handleToastPress}
       style={{ boxShadow: shadowStyleList.toast }}
     >
       <View className="size-6">
