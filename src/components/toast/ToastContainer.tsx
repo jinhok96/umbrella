@@ -1,16 +1,22 @@
 import { View } from 'react-native';
 
 import Toast from '@components/toast/Toast';
+import { useToastStore } from '@store/toastStore/useToastStore';
 
-import type { ToastProps } from '@components/toast/Toast.type';
+export default function ToastContainer() {
+  const toastList = useToastStore(state => state.list);
 
-type ToastContainerProps = ToastProps;
-
-export default function ToastContainer({ ...props }: ToastContainerProps) {
   return (
-    <View className="pb-safe-offset-9 absolute bottom-0 flex w-full items-center justify-center gap-3 px-5">
-      <Toast {...props} />
-      <Toast {...props} />
+    <View
+      className="pb-safe-offset-9 absolute bottom-0 flex w-full items-center justify-center gap-3 px-5 transition-all"
+      pointerEvents="box-none"
+    >
+      {toastList.map(toastProps => (
+        <Toast
+          key={toastProps.id}
+          {...toastProps}
+        />
+      ))}
     </View>
   );
 }

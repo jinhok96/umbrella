@@ -21,7 +21,7 @@ export default function App(): React.JSX.Element {
         <StyledNavigationContainer>
           <ColorThemeProvider>
             <RootNavigation />
-            <ToastContainer text="토스트" />
+            <ToastContainer />
           </ColorThemeProvider>
         </StyledNavigationContainer>
       </SafeAreaProvider>
