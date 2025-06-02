@@ -17,7 +17,14 @@ import type { ToastProps } from '@components/toast/Toast.type';
 const CLOSE_TOAST_DELAY = 3000;
 const CLOSE_TOAST_ANIMATION_DELAY = ANIMATION_DURATION;
 
-export default function Toast({ id, text, type = 'default', onPress, ...props }: ToastProps) {
+/**
+ * 토스트 컴포넌트
+ * @param id 토스트 id
+ * @param type 토스트 타입; `default` | `error`
+ * @param text 표시할 텍스트
+ * @jinhok96 25.06.02
+ */
+export default function Toast({ id, type = 'default', text, onPress, ...props }: ToastProps) {
   const [isOpened, setIsOpened] = useState(false);
   const closeToast = useToastStore(state => state.closeToast);
 

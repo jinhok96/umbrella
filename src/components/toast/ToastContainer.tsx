@@ -3,6 +3,10 @@ import { View } from 'react-native';
 import Toast from '@components/toast/Toast';
 import { useToastStore } from '@store/toastStore/useToastStore';
 
+/**
+ * 전체 토스트 컨테이너
+ * @jinhok96 25.06.02
+ */
 export default function ToastContainer() {
   const toastList = useToastStore(state => state.list);
 

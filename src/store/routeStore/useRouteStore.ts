@@ -6,7 +6,9 @@ import type { RouteStore } from '@store/routeStore/useRouteStore.type';
 import type { StateCreator } from 'zustand';
 
 /**
- * 앱 설정 스토어
+ * 라우터 스토어
+ * @ isReady - 라우트가 준비되었는지 여부
+ * @ currentRouteName - 현재 라우트 이름
  * @ setIsReady - 라우트 준비 상태 설정
  * @ setCurrentRouteName - 현재 라우트 이름 설정
  * @jinhok96 25.05.29

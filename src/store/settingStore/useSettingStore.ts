@@ -9,6 +9,12 @@ import type { StateCreator } from 'zustand';
 
 /**
  * 앱 설정 스토어
+ * @ theme - 테마; light | dark | highContrast
+ * @ units - 날씨 측정 단위; metric | imperial
+ * @ lang - 앱 언어; ko | en
+ * @ defaultLocationMode - 앱 시작 시 기본 위치 모드; current(현재 위치) | recent(마지막에 본 위치)
+ * @ locationPermission - 위치 권한; boolean
+ * @ fontSize - 접근성: 폰트 크기; normal | large
  * @ setTheme - 테마 설정
  * @ setUnits - 날씨 측정 단위 설정
  * @ setLang - 앱 언어 설정

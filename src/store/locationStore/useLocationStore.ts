@@ -15,6 +15,9 @@ import type { StateCreator } from 'zustand';
 
 /**
  * 위치 스토어
+ * @ currentLocation - 현재 위치; Location | null
+ * @ recentLocationList - 최근 본 위치 목록; Location[]
+ * @ favoriteLocationList - 즐겨찾기 위치 목록; Location[]
  * @ setCurrentLocation - 현재 위치 설정
  * @ addRecentLocation - 최근 위치 목록 맨 앞에 새로운 위치 추가
  * @ removeRecentLocation - 최근 위치 목록에서 특정 원소 제거
