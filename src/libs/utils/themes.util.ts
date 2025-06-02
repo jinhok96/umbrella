@@ -239,4 +239,5 @@ function generateShadowStyle(x: number, y: number, blur: number, spread: number,
 export const shadowStyleList = {
   bottomTabBar: generateShadowStyle(0, -8, 24, 0, 'rgba(0, 0, 0, 0.04)'),
   float: generateShadowStyle(0, 4, 8, 0, 'rgba(0, 0, 0, 0.12)'),
+  toast: generateShadowStyle(0, 4, 16, 0, 'rgba(0, 0, 0, 0.08)'),
 };
