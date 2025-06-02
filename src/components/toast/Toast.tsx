@@ -39,11 +39,13 @@ export default function Toast({ id, text, type = 'default', onPress, ...props }:
   };
 
   useEffect(() => {
+    // 마운트되면 켜기
     handleOpen();
   }, []);
 
   useEffect(() => {
     if (!isOpened) {
+      // CLOSE_TOAST_DELAY 지나면 자동 닫기
       setTimeout(() => {
         handleClose();
       }, CLOSE_TOAST_DELAY);
@@ -51,9 +53,9 @@ export default function Toast({ id, text, type = 'default', onPress, ...props }:
   }, [isOpened]);
 
   const toastClassName = classNames(
-    'flex w-full flex-row items-center gap-3 rounded-xl bg-text-01 p-4 transition-[opacity,bottom]',
-    isOpened && '!opacity-100 !-bottom-0',
-    !isOpened && 'opacity-0 -bottom-14',
+    'flex flex-row items-center gap-3 w-full rounded-xl bg-text-01 px-4 overflow-hidden transition-[opacity,bottom,max-height,padding-top,padding-bottom,margin-bottom]',
+    isOpened && '!opacity-100 !-bottom-0 max-h-14 py-4 mb-3',
+    !isOpened && 'opacity-0 -bottom-14 max-h-0 py-0 mb-0',
   );
 
   return (

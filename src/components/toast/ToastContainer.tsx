@@ -8,7 +8,7 @@ export default function ToastContainer() {
 
   return (
     <View
-      className="pb-safe-offset-9 absolute bottom-0 flex w-full items-center justify-center gap-3 px-5 transition-all"
+      className="pb-safe-offset-9 absolute bottom-0 flex w-full justify-end px-5"
       pointerEvents="box-none"
     >
       {toastList.map(toastProps => (
