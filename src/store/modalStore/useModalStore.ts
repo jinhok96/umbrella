@@ -1,15 +1,22 @@
 import { create } from 'zustand';
 
+import { ANIMATION_DURATION } from '@libs/constants/duration.const';
 import { navigationActions } from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer.const';
 import { INIT_MODAL_STORE_STATE } from '@store/modalStore/useModalStore.const';
 
 import type { ModalStore } from '@store/modalStore/useModalStore.type';
 import type { StateCreator } from 'zustand';
 
-const SCREEN_TRANSITION_TIMEOUT = 150;
+const SCREEN_TRANSITION_TIMEOUT = ANIMATION_DURATION;
 
 /**
  * 앱 설정 스토어
+ * @ isOpened - 모달이 열려있는지 여부
+ * @ children - 모달에 렌더링할 컴포넌트
+ * @ onCancelBeforeClose - 모달 취소 이벤트에서 모달 끄기 전 호출
+ * @ onCancelAfterClose - 모달 취소 이벤트에서 모달 끈 뒤 호출
+ * @ onSubmitBeforeClose - 모달 확인 이벤트에서 모달 끄기 전 호출
+ * @ onSubmitAfterClose - 모달 확인 이벤트에서 모달 끈 뒤 호출
  * @ openModal - 모달 열기
  * @ closeModal - 모달 닫기
  * @example 

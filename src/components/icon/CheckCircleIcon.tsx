@@ -1,12 +1,12 @@
-import ClockSvg from '@assets/svg/Clock.svg';
+import CheckCircleSvg from '@assets/svg/CheckCircle.svg';
 import { useGetColorHex } from '@hooks/useGetColorHex';
 
 import type { IconProps } from '@components/icon/Icon.type';
 
-export default function ClockIcon({ color = '--color-text-01', ...props }: IconProps) {
+export default function CheckCircleIcon({ color = '--color-text-01', ...props }: IconProps) {
   const colorHex = useGetColorHex(color);
   return (
-    <ClockSvg
+    <CheckCircleSvg
       {...props}
       color={colorHex}
     />

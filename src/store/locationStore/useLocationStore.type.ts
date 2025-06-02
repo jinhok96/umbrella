@@ -8,13 +8,6 @@ export type Location = {
   lon: number; // 경도
 };
 
-/**
- * 위치 스토어 상태
- * @ currentLocation - 현재 위치; Location | null
- * @ recentLocationList - 최근 본 위치 목록; Location[]
- * @ favoriteLocationList - 즐겨찾기 위치 목록; Location[]
- * @jinhok96 25.05.13
- */
 export type LocationStoreState = {
   currentLocation: Location | null;
   recentLocationList: Location[];

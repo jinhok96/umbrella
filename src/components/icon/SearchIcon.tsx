@@ -1,15 +1,14 @@
 import SearchSvg from '@assets/svg/Search.svg';
-import { getColorHex } from '@libs/utils/getColorHex.util';
-import { useSettingStore } from '@store/settingStore/useSettingStore';
+import { useGetColorHex } from '@hooks/useGetColorHex';
 
 import type { IconProps } from '@components/icon/Icon.type';
 
 export default function SearchIcon({ color = '--color-text-01', ...props }: IconProps) {
-  const theme = useSettingStore(state => state.theme);
+  const colorHex = useGetColorHex(color);
   return (
     <SearchSvg
       {...props}
-      color={getColorHex(theme, color)}
+      color={colorHex}
     />
   );
 }

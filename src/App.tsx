@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import ToastContainer from '@components/toast/ToastContainer';
 import ColorThemeProvider from '@components/wrapper/ColorThemeProvider';
 import StyledNavigationContainer from '@navigation/_components/styledNavigationContainer/StyledNavigationContainer';
 import { RootNavigation } from '@navigation/root/RootNavigation';
@@ -20,6 +21,7 @@ export default function App(): React.JSX.Element {
         <StyledNavigationContainer>
           <ColorThemeProvider>
             <RootNavigation />
+            <ToastContainer />
           </ColorThemeProvider>
         </StyledNavigationContainer>
       </SafeAreaProvider>

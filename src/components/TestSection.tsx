@@ -30,6 +30,7 @@ import WeatherIcon from '@components/icon/WeatherIcon';
 import ToggleInput from '@components/toggleInput/ToggleInput';
 import { useModalStore } from '@store/modalStore/useModalStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
+import { useToastStore } from '@store/toastStore/useToastStore';
 
 function FlexSection({ children }: PropsWithChildren) {
   return <View className="flex h-fit flex-row items-center gap-1 border-b py-1">{children}</View>;
@@ -40,11 +41,11 @@ function FontSection({ children }: PropsWithChildren) {
 }
 
 function ButtonSection() {
-  const openModal = useModalStore(state => state.openModal);
+  const { navigate } = useNavigation();
   const setTheme = useSettingStore(state => state.setTheme);
   const setLang = useSettingStore(state => state.setLang);
-
-  const { navigate } = useNavigation();
+  const openModal = useModalStore(state => state.openModal);
+  const openToast = useToastStore(state => state.openToast);
 
   return (
     <>
@@ -192,6 +193,30 @@ function ButtonSection() {
             typo="button-1"
           >
             Modal Error
+          </PretendardText>
+        </Pressable>
+      </View>
+      <View className="flex flex-row justify-between border-b">
+        <Pressable
+          className="w-1/2 border bg-morning"
+          onPress={() => openToast({ text: 'Toast Default', type: 'default' })}
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Toast Default
+          </PretendardText>
+        </Pressable>
+        <Pressable
+          className="w-1/2 border bg-error"
+          onPress={() => openToast({ text: 'Toast Error', type: 'error' })}
+        >
+          <PretendardText
+            className="text-center"
+            typo="button-1"
+          >
+            Toast Error
           </PretendardText>
         </Pressable>
       </View>

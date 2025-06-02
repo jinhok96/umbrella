@@ -8,6 +8,11 @@ import type { StateCreator } from 'zustand';
 
 /**
  * 날씨 정보 스토어
+ * @ current - 현재 날씨 (미세먼지 포함)
+ * @ minutely - 1시간 단위 분별 예보
+ * @ hourly - 48시간 단위 시간별 예보 (미세먼지 포함)
+ * @ daily - 8일 단위 일별 예보
+ * @ alerts - 정부 날씨 경보
  * @ setForecasts - 전체 날씨 정보 설정 - useGetCurrentAndForecastsWeatherData, useGetCurrentAirQuality, useGetAirQualityHourlyForecasts의 Response Data 가공
  * @jinhok96 25.05.18
  */
