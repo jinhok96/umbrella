@@ -52,5 +52,6 @@ export type FontTextProps<T extends Typography> = PropsWithChildren<
     className: string;
     font: Font;
     typo: T;
+    animate?: boolean;
   }
 >;

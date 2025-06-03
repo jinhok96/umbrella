@@ -34,4 +34,6 @@ export type ColorVar =
   | '--color-transparency-07'
   | '--color-transparency-08'
   | '--color-transparency-09'
-  | '--color-transparency-10';
+  | '--color-transparency-10'
+  // 직접 추가
+  | '--color-weather-summary';

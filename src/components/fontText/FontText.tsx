@@ -2,6 +2,10 @@ import { Text } from 'react-native';
 
 import classNames from 'classnames';
 
+import Animated from 'react-native-reanimated';
+
+import Show from '@components/wrapper/Show';
+
 import type {
   FontTextProps,
   MontserratTypography,
@@ -90,11 +94,38 @@ const FONT_CLASS_NAME_LIST: FontClassNameListType = {
  * @param className Text에 전달할 className; 글자색 필수 지정을 위해 required
  * @param font 폰트 종류 `pretendard | montserrat`
  * @param typo 타이포그래피
+ * @param animate Animated 여부
  * @returns `Text` 컴포넌트
- * @jinhok96 25.05.29
+ * @jinhok96 25.06.03
  */
-export default function FontText<T extends Typography>({ children, className, font, typo }: FontTextProps<T>) {
+export default function FontText<T extends Typography>({
+  children,
+  className,
+  font,
+  typo,
+  animate,
+  ...props
+}: FontTextProps<T>) {
   const textClassName = classNames(FONT_CLASS_NAME_LIST[font][typo], className);
 
-  return <Text className={textClassName}>{children}</Text>;
+  return (
+    <>
+      <Show when={!animate}>
+        <Text
+          {...props}
+          className={textClassName}
+        >
+          {children}
+        </Text>
+      </Show>
+      <Show when={!!animate}>
+        <Animated.Text
+          {...props}
+          className={textClassName}
+        >
+          {children}
+        </Animated.Text>
+      </Show>
+    </>
+  );
 }
