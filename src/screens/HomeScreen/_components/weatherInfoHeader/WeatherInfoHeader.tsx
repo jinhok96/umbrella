@@ -10,8 +10,10 @@ import PretendardText from '@components/fontText/PretendardText';
 import WeatherIcon from '@components/icon/WeatherIcon';
 import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
 import {
+  MAX_CURRENT_TEMP_SIZE,
   MAX_WEATHER_HEADER_HEIGHT,
   MAX_WEATHER_HEADER_ICON_SIZE,
+  MIN_CURRENT_TEMP_SIZE,
   MIN_WEATHER_HEADER_HEIGHT,
   MIN_WEATHER_HEADER_ICON_SIZE,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
@@ -36,59 +38,99 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
   const animatedTempContainerStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const paddingTop = Math.floor(interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_WEATHER_HEADER_ICON_SIZE, 0]));
+    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_WEATHER_HEADER_ICON_SIZE, 0]);
 
     return { paddingTop };
   });
 
-  // Weather Icon Style
-  const animatedWeatherIconStyle = useAnimatedStyle(() => {
+  // Weather Icon Scale Style
+  const animatedWeatherIconScaleStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const size = Math.floor(
-      interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_WEATHER_HEADER_ICON_SIZE, MIN_WEATHER_HEADER_ICON_SIZE]),
-    );
-    const translateX = Math.floor(
-      interpolate(
-        newValue,
-        [0, MAX_SCROLL_VALUE],
-        [(tempSectionContainerWidth - weatherIconWidth) / 2, tempSectionContainerWidth - weatherIconWidth],
-      ),
+    const scale = interpolate(
+      newValue,
+      [0, MAX_SCROLL_VALUE],
+      [MAX_WEATHER_HEADER_ICON_SIZE / MIN_WEATHER_HEADER_ICON_SIZE, 1],
     );
 
-    return { width: size, height: size, translateX };
+    return { transform: [{ scale }] };
   });
 
-  // Temp Section Style
-  const animatedTempSectionStyle = useAnimatedStyle(() => {
+  // Weather Icon Position Style
+  const animatedWeatherIconPositionStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const translateX = Math.floor(
-      interpolate(newValue, [0, MAX_SCROLL_VALUE], [(tempSectionContainerWidth - tempSectionWidth) / 2, 0]),
+    const offset = 5;
+
+    const translateX = interpolate(
+      newValue,
+      [0, MAX_SCROLL_VALUE],
+      [
+        -(
+          (tempSectionContainerWidth - weatherIconWidth - offset) / 2 -
+          (MAX_WEATHER_HEADER_ICON_SIZE - MIN_WEATHER_HEADER_ICON_SIZE)
+        ),
+        0,
+      ],
+    );
+
+    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [20, offset]);
+
+    return { translateX, paddingTop };
+  });
+
+  // Temp Scale Style
+  const animatedTempScaleStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_CURRENT_TEMP_SIZE / MIN_CURRENT_TEMP_SIZE, 1]);
+
+    return { transform: [{ scale }] };
+  });
+
+  // Temp Position Style
+  const animatedTempPositionStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const offset = 4;
+
+    const translateX = interpolate(
+      newValue,
+      [0, MAX_SCROLL_VALUE],
+      [(tempSectionContainerWidth - tempSectionWidth) / 2 - (MAX_CURRENT_TEMP_SIZE - MIN_CURRENT_TEMP_SIZE) * 2 - 4, 0],
+    );
+
+    const padding = interpolate(
+      newValue,
+      [0, MAX_SCROLL_VALUE],
+      [(MAX_CURRENT_TEMP_SIZE - MIN_CURRENT_TEMP_SIZE) / 2, 0],
+    );
+
+    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [0, offset]);
+
+    return { translateX, padding, marginBottom };
+  });
+
+  // Summary Scale Style
+  const animatedSummaryScaleStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [16 / 14, 1]);
+
+    return { transform: [{ scale }] };
+  });
+
+  // Summary Position Style
+  const animatedSummaryPositionStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const translateX = interpolate(
+      newValue,
+      [0, MAX_SCROLL_VALUE],
+      [(tempSectionContainerWidth - summaryWidth) / 2, 0],
     );
 
     return { translateX };
-  });
-
-  // Current Temp Style
-  const animatedCurrentTempStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const fontSize = Math.floor(interpolate(newValue, [0, MAX_SCROLL_VALUE], [52, 32]));
-
-    return { fontSize };
-  });
-
-  // Summary Style
-  const animatedSummaryStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const fontSize = Math.floor(interpolate(newValue, [0, MAX_SCROLL_VALUE], [16, 14]));
-    const translateX = Math.floor(
-      interpolate(newValue, [0, MAX_SCROLL_VALUE], [(tempSectionContainerWidth - summaryWidth) / 2, 0]),
-    );
-
-    return { fontSize, translateX };
   });
 
   return (
@@ -104,73 +146,81 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
           style={animatedTempContainerStyle}
         >
           {/* 날씨 아이콘 */}
-          <Animated.View
-            className="absolute top-0"
-            onLayout={e => setWeatherIconWidth(e.nativeEvent.layout.width)}
-            style={animatedWeatherIconStyle}
-          >
-            <WeatherIcon icon="02d" />
+          <Animated.View className="absolute right-0 top-0">
+            <Animated.View style={animatedWeatherIconScaleStyle}>
+              <Animated.View style={animatedWeatherIconPositionStyle}>
+                <View
+                  style={{ width: MIN_WEATHER_HEADER_ICON_SIZE, height: MIN_WEATHER_HEADER_ICON_SIZE }}
+                  onLayout={e => setWeatherIconWidth(e.nativeEvent.layout.width)}
+                >
+                  <WeatherIcon icon="02d" />
+                </View>
+              </Animated.View>
+            </Animated.View>
           </Animated.View>
           {/* 기온 */}
           <View className="flex flex-row">
-            <Animated.View
-              className="flex flex-row items-center gap-3 px-1"
-              onLayout={e => setTempSectionWidth(e.nativeEvent.layout.width)}
-              style={animatedTempSectionStyle}
-            >
-              <MontserratText
-                animate
-                typo="title-1"
-                className="text-white"
-                style={animatedCurrentTempStyle}
+            <Animated.View style={animatedTempScaleStyle}>
+              <Animated.View
+                className="flex flex-row items-center gap-3 px-1"
+                onLayout={e => setTempSectionWidth(e.nativeEvent.layout.width)}
+                style={animatedTempPositionStyle}
               >
-                18°
-              </MontserratText>
-              <View className="flex flex-row items-center gap-2">
-                <View className="flex flex-row items-center gap-1">
-                  <PretendardText
-                    typo="caption-3"
-                    className="pb-[0.1875rem] text-white"
-                  >
-                    최저
-                  </PretendardText>
-                  <MontserratText
-                    typo="caption-3"
-                    className="text-white"
-                  >
-                    8°
-                  </MontserratText>
+                <MontserratText
+                  typo="title-1"
+                  className="text-white"
+                >
+                  18°
+                </MontserratText>
+                <View className="flex flex-row items-center gap-2">
+                  <View className="flex flex-row items-center gap-1">
+                    <PretendardText
+                      typo="caption-3"
+                      className="pb-[0.1875rem] text-white"
+                    >
+                      최저
+                    </PretendardText>
+                    <MontserratText
+                      typo="caption-3"
+                      className="text-white"
+                    >
+                      8°
+                    </MontserratText>
+                  </View>
+                  <View className="h-3 border-r border-white opacity-40" />
+                  <View className="flex flex-row items-center gap-1">
+                    <PretendardText
+                      typo="caption-3"
+                      className="pb-[0.1875rem] text-white"
+                    >
+                      최고
+                    </PretendardText>
+                    <MontserratText
+                      typo="caption-3"
+                      className="text-white"
+                    >
+                      20°
+                    </MontserratText>
+                  </View>
                 </View>
-                <View className="h-3 border-r border-white opacity-40" />
-                <View className="flex flex-row items-center gap-1">
-                  <PretendardText
-                    typo="caption-3"
-                    className="pb-[0.1875rem] text-white"
-                  >
-                    최고
-                  </PretendardText>
-                  <MontserratText
-                    typo="caption-3"
-                    className="text-white"
-                  >
-                    20°
-                  </MontserratText>
-                </View>
-              </View>
+              </Animated.View>
             </Animated.View>
           </View>
           {/* 요약 */}
-          <View className="flex flex-row">
+          <Animated.View
+            className="flex flex-row"
+            style={animatedSummaryScaleStyle}
+          >
             <PretendardText
               animate
               typo="body-1"
               className="rounded-xl bg-weather-summary px-4 py-2 text-white"
-              style={animatedSummaryStyle}
+              style={animatedSummaryPositionStyle}
               onLayout={e => setSummaryWidth(e.nativeEvent.layout.width)}
             >
               오늘 오후 4시에 비가 올 예정이에요!
             </PretendardText>
-          </View>
+          </Animated.View>
         </Animated.View>
       </View>
     </View>

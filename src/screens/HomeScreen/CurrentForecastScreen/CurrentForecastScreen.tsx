@@ -28,33 +28,35 @@ export default function CurrentForecastScreen() {
       <WeatherInfoHeader scrollValue={scrollValue} />
       <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.CurrentForecast}>
         <Animated.ScrollView
-          className="flex-1 px-5 pb-5"
+          className="flex-1"
           onScroll={handleScroll}
           style={{ paddingTop: MAX_WEATHER_HEADER_HEIGHT }}
         >
-          <Text>CurrentForecastScreen</Text>
-          <TestSection />
-          <Pressable
-            onPress={() => {
-              navigate('Home');
-            }}
-          >
+          <View className="flex-1 p-5">
             <Text>CurrentForecastScreen</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              navigate('Location');
-            }}
-          >
-            <Text>LocationScreen</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              navigate('Setting');
-            }}
-          >
-            <Text>SettingScreen</Text>
-          </Pressable>
+            <TestSection />
+            <Pressable
+              onPress={() => {
+                navigate('Home');
+              }}
+            >
+              <Text>CurrentForecastScreen</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                navigate('Location');
+              }}
+            >
+              <Text>LocationScreen</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                navigate('Setting');
+              }}
+            >
+              <Text>SettingScreen</Text>
+            </Pressable>
+          </View>
         </Animated.ScrollView>
       </HomeScreenWrapper>
     </View>

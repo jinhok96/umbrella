@@ -3,3 +3,6 @@ export const MAX_WEATHER_HEADER_ICON_SIZE = 140;
 
 export const MIN_WEATHER_HEADER_HEIGHT = 218;
 export const MAX_WEATHER_HEADER_HEIGHT = 394;
+
+export const MAX_CURRENT_TEMP_SIZE = 52;
+export const MIN_CURRENT_TEMP_SIZE = 32;
