@@ -7,10 +7,12 @@ import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated
 
 import MontserratText from '@components/fontText/MontserratText';
 import PretendardText from '@components/fontText/PretendardText';
+import WeatherIcon from '@components/icon/WeatherIcon';
 import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
 import {
   MAX_WEATHER_HEADER_HEIGHT,
   MAX_WEATHER_HEADER_ICON_SIZE,
+  MIN_WEATHER_HEADER_HEIGHT,
   MIN_WEATHER_HEADER_ICON_SIZE,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
 
@@ -18,7 +20,7 @@ type WeatherInfoHeaderProps = Omit<ViewProps, 'className'> & {
   scrollValue: SharedValue<number>;
 };
 
-const MAX_SCROLL_VALUE = MAX_WEATHER_HEADER_HEIGHT - MIN_WEATHER_HEADER_ICON_SIZE;
+const MAX_SCROLL_VALUE = MAX_WEATHER_HEADER_HEIGHT - MIN_WEATHER_HEADER_HEIGHT;
 
 /**
  * 현재 위치 날씨 정보를 보여주는 컴포넌트
@@ -26,6 +28,7 @@ const MAX_SCROLL_VALUE = MAX_WEATHER_HEADER_HEIGHT - MIN_WEATHER_HEADER_ICON_SIZ
  */
 export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfoHeaderProps) {
   const [tempSectionContainerWidth, setTempSectionContainerWidth] = useState(0);
+  const [weatherIconWidth, setWeatherIconWidth] = useState(0);
   const [tempSectionWidth, setTempSectionWidth] = useState(0);
   const [summaryWidth, setSummaryWidth] = useState(0);
 
@@ -36,6 +39,24 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
     const paddingTop = Math.floor(interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_WEATHER_HEADER_ICON_SIZE, 0]));
 
     return { paddingTop };
+  });
+
+  // Weather Icon Style
+  const animatedWeatherIconStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const size = Math.floor(
+      interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_WEATHER_HEADER_ICON_SIZE, MIN_WEATHER_HEADER_ICON_SIZE]),
+    );
+    const translateX = Math.floor(
+      interpolate(
+        newValue,
+        [0, MAX_SCROLL_VALUE],
+        [(tempSectionContainerWidth - weatherIconWidth) / 2, tempSectionContainerWidth - weatherIconWidth],
+      ),
+    );
+
+    return { width: size, height: size, translateX };
   });
 
   // Temp Section Style
@@ -78,9 +99,18 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       <LocationHeader />
       <View className="px-5 pb-7 pt-5">
         <Animated.View
+          className="relative"
           onLayout={e => setTempSectionContainerWidth(e.nativeEvent.layout.width)}
           style={animatedTempContainerStyle}
         >
+          {/* 날씨 아이콘 */}
+          <Animated.View
+            className="absolute top-0"
+            onLayout={e => setWeatherIconWidth(e.nativeEvent.layout.width)}
+            style={animatedWeatherIconStyle}
+          >
+            <WeatherIcon icon="02d" />
+          </Animated.View>
           {/* 기온 */}
           <View className="flex flex-row">
             <Animated.View
