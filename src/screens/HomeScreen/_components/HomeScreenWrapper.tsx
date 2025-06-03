@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { ScrollViewObserver } from 'react-native-use-in-view';
 
 import ScreenWrapper from '@navigation/_components/screenWrapper/ScreenWrapper';
 
@@ -10,9 +10,7 @@ export default function HomeScreenWrapper({ children, ...props }: ScreenWrapperP
       {...props}
       backgroundClassName="bg-background-01"
     >
-      <ScrollView>
-        <View className="flex-1 p-5">{children}</View>
-      </ScrollView>
+      <ScrollViewObserver className="flex-1 p-5">{children}</ScrollViewObserver>
     </ScreenWrapper>
   );
 }

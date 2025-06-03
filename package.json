@@ -37,6 +37,7 @@
     "react-native-safe-area-context": "^5.4.1",
     "react-native-screens": "^4.10.0",
     "react-native-svg": "^15.12.0",
+    "react-native-use-in-view": "^0.4.2",
     "tailwindcss": "^3.4.17",
     "zustand": "^5.0.4"
   },
