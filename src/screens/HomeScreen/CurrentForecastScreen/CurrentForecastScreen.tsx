@@ -13,9 +13,7 @@ import { MAX_WEATHER_HEADER_HEIGHT } from '@screens/HomeScreen/_components/weath
 
 export default function CurrentForecastScreen() {
   const { navigate } = useNavigation();
-  const { top } = useSafeAreaInsets();
-
-  console.log('top', top);
+  const insets = useSafeAreaInsets();
 
   // 현재 스크롤의 위치
   const scrollValue = useSharedValue(0);
@@ -34,32 +32,34 @@ export default function CurrentForecastScreen() {
         <Animated.ScrollView
           className="flex-1"
           onScroll={handleScroll}
-          style={{ paddingTop: MAX_WEATHER_HEADER_HEIGHT + top }}
+          // style={{ paddingTop: MAX_WEATHER_HEADER_HEIGHT + top }}
         >
-          <View className="flex-1 p-5">
-            <Text>CurrentForecastScreen</Text>
-            <TestSection />
-            <Pressable
-              onPress={() => {
-                navigate('Home');
-              }}
-            >
+          <View style={{ paddingTop: MAX_WEATHER_HEADER_HEIGHT + insets.top }}>
+            <View className="flex-1 p-5">
               <Text>CurrentForecastScreen</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                navigate('Location');
-              }}
-            >
-              <Text>LocationScreen</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => {
-                navigate('Setting');
-              }}
-            >
-              <Text>SettingScreen</Text>
-            </Pressable>
+              <TestSection />
+              <Pressable
+                onPress={() => {
+                  navigate('Home');
+                }}
+              >
+                <Text>CurrentForecastScreen</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  navigate('Location');
+                }}
+              >
+                <Text>LocationScreen</Text>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  navigate('Setting');
+                }}
+              >
+                <Text>SettingScreen</Text>
+              </Pressable>
+            </View>
           </View>
         </Animated.ScrollView>
       </HomeScreenWrapper>
