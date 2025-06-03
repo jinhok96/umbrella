@@ -6,3 +6,6 @@ export const MAX_WEATHER_HEADER_HEIGHT = 394;
 
 export const MAX_CURRENT_TEMP_SIZE = 52;
 export const MIN_CURRENT_TEMP_SIZE = 32;
+
+export const MAX_SUMMARY_SIZE = 16;
+export const MIN_SUMMARY_SIZE = 14;

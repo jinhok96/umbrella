@@ -11,9 +11,11 @@ import WeatherIcon from '@components/icon/WeatherIcon';
 import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
 import {
   MAX_CURRENT_TEMP_SIZE,
+  MAX_SUMMARY_SIZE,
   MAX_WEATHER_HEADER_HEIGHT,
   MAX_WEATHER_HEADER_ICON_SIZE,
   MIN_CURRENT_TEMP_SIZE,
+  MIN_SUMMARY_SIZE,
   MIN_WEATHER_HEADER_HEIGHT,
   MIN_WEATHER_HEADER_ICON_SIZE,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
@@ -74,7 +76,7 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       ],
     );
 
-    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [20, offset]);
+    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [20, 0]);
 
     return { translateX, paddingTop };
   });
@@ -97,7 +99,12 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
     const translateX = interpolate(
       newValue,
       [0, MAX_SCROLL_VALUE],
-      [(tempSectionContainerWidth - tempSectionWidth) / 2 - (MAX_CURRENT_TEMP_SIZE - MIN_CURRENT_TEMP_SIZE) * 2 - 4, 0],
+      [
+        (tempSectionContainerWidth - tempSectionWidth) / 2 -
+          (MAX_CURRENT_TEMP_SIZE - MIN_CURRENT_TEMP_SIZE) * 2 -
+          offset,
+        0,
+      ],
     );
 
     const padding = interpolate(
@@ -106,16 +113,14 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       [(MAX_CURRENT_TEMP_SIZE - MIN_CURRENT_TEMP_SIZE) / 2, 0],
     );
 
-    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [0, offset]);
-
-    return { translateX, padding, marginBottom };
+    return { translateX, padding };
   });
 
   // Summary Scale Style
   const animatedSummaryScaleStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [16 / 14, 1]);
+    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_SUMMARY_SIZE / MIN_SUMMARY_SIZE, 1]);
 
     return { transform: [{ scale }] };
   });
@@ -130,7 +135,9 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       [(tempSectionContainerWidth - summaryWidth) / 2, 0],
     );
 
-    return { translateX };
+    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_SUMMARY_SIZE / MIN_SUMMARY_SIZE, 0]);
+
+    return { translateX, marginBottom };
   });
 
   return (
@@ -141,7 +148,7 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       <LocationHeader />
       <View className="px-5 pb-7 pt-5">
         <Animated.View
-          className="relative"
+          className="relative flex gap-2"
           onLayout={e => setTempSectionContainerWidth(e.nativeEvent.layout.width)}
           style={animatedTempContainerStyle}
         >
