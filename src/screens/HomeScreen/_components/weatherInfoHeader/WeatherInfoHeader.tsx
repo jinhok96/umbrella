@@ -10,6 +10,7 @@ import {
   WEATHER_HEADER_HEIGHT,
   WEATHER_HEADER_HEIGHT_SCALE,
   WEATHER_HEADER_ICON_SIZE_SCALE,
+  WEATHER_INFO_HEADER_ANIMATION_DURATION,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
 import WeatherInfoHeaderIcon from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderIcon';
 import WeatherInfoHeaderSummary from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderSummary';
@@ -21,7 +22,7 @@ import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStor
 const current: ForecastsStoreState['current'] = {
   dt: 1684929490,
   sunrise: 1684926645,
-  sunset: 1684977332,
+  sunset: 1684977364,
   temp: 292.55,
   feels_like: 292.87,
   pressure: 1014,
@@ -49,7 +50,7 @@ const current: ForecastsStoreState['current'] = {
 const daily: ForecastsStoreState['daily'] = new Array(8).fill({
   dt: 1684951200,
   sunrise: 1684926645,
-  sunset: 1684977332,
+  sunset: 1684977364,
   moonrise: 1684941060,
   moonset: 1684905480,
   moon_phase: 0.16,
@@ -76,7 +77,7 @@ const daily: ForecastsStoreState['daily'] = new Array(8).fill({
   wind_gust: 8.92,
   weather: [
     {
-      id: 500,
+      id: 640,
       main: 'Rain',
       description: 'light rain',
       icon: '10d',
@@ -112,7 +113,7 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
 
     return {
       paddingTop: withTiming(paddingTop, {
-        duration: 0,
+        duration: WEATHER_INFO_HEADER_ANIMATION_DURATION,
       }),
     };
   });

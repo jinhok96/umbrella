@@ -8,6 +8,7 @@ import {
   MAX_SCROLL_VALUE,
   WEATHER_HEADER_ICON_SIZE,
   WEATHER_HEADER_ICON_SIZE_SCALE,
+  WEATHER_INFO_HEADER_ANIMATION_DURATION,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
 
 import type { WeatherInfoHeaderProps } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.type';
@@ -17,7 +18,7 @@ import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStor
 const current: ForecastsStoreState['current'] = {
   dt: 1684929490,
   sunrise: 1684926645,
-  sunset: 1684977332,
+  sunset: 1684977364,
   temp: 292.55,
   feels_like: 292.87,
   pressure: 1014,
@@ -69,10 +70,10 @@ export default function WeatherInfoHeaderIcon({ scrollValue, containerWidth, ...
 
     return {
       translateX: withTiming(translateX, {
-        duration: 0,
+        duration: WEATHER_INFO_HEADER_ANIMATION_DURATION,
       }),
       paddingTop: withTiming(paddingTop, {
-        duration: 0,
+        duration: WEATHER_INFO_HEADER_ANIMATION_DURATION,
       }),
     };
   });
@@ -85,7 +86,7 @@ export default function WeatherInfoHeaderIcon({ scrollValue, containerWidth, ...
       transform: [
         {
           scale: withTiming(scale, {
-            duration: 0,
+            duration: WEATHER_INFO_HEADER_ANIMATION_DURATION,
           }),
         },
       ],

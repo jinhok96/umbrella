@@ -23,9 +23,8 @@ export default function CurrentForecastScreen() {
 
   // 스크롤 이벤트에 따라 scrollValue 값을 업데이트
   const handleScroll = useAnimatedScrollHandler({
-    onScroll: event => {
-      const newScrollValue = event.contentOffset.y;
-      scrollValue.value = clamp(newScrollValue, 0, MAX_SCROLL_VALUE);
+    onScroll: e => {
+      scrollValue.value = clamp(e.contentOffset.y, 0, MAX_SCROLL_VALUE);
     },
   });
 
@@ -36,7 +35,6 @@ export default function CurrentForecastScreen() {
         <Animated.ScrollView
           className="flex-1"
           onScroll={handleScroll}
-          scrollEventThrottle={20}
         >
           <View style={{ paddingTop: WEATHER_HEADER_HEIGHT_SCALE + insets.top }}>
             <View className="flex-1 p-5">

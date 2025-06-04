@@ -9,6 +9,7 @@ import {
   MAX_SCROLL_VALUE,
   SUMMARY_SIZE,
   SUMMARY_SIZE_SCALE,
+  WEATHER_INFO_HEADER_ANIMATION_DURATION,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
 
 import type { WeatherInfoHeaderProps } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.type';
@@ -48,10 +49,10 @@ export default function WeatherInfoHeaderSummary({
 
     return {
       translateX: withTiming(translateX, {
-        duration: 0,
+        duration: WEATHER_INFO_HEADER_ANIMATION_DURATION,
       }),
       marginBottom: withTiming(marginBottom, {
-        duration: 0,
+        duration: WEATHER_INFO_HEADER_ANIMATION_DURATION,
       }),
     };
   });
@@ -64,7 +65,7 @@ export default function WeatherInfoHeaderSummary({
       transform: [
         {
           scale: withTiming(scale, {
-            duration: 0,
+            duration: WEATHER_INFO_HEADER_ANIMATION_DURATION,
           }),
         },
       ],
