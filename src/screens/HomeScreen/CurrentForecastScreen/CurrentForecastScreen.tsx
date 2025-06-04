@@ -9,7 +9,7 @@ import TestSection from '@components/TestSection';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
 import WeatherInfoHeader from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader';
-import { SCALE_WEATHER_HEADER_HEIGHT } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
+import { WEATHER_HEADER_HEIGHT_SCALE } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
 
 export default function CurrentForecastScreen() {
   const { navigate } = useNavigation();
@@ -21,7 +21,8 @@ export default function CurrentForecastScreen() {
   // 스크롤 이벤트에 따라 scrollValue 값을 업데이트
   const handleScroll = useAnimatedScrollHandler({
     onScroll: event => {
-      scrollValue.value = event.contentOffset.y;
+      const newScrollValue = Math.round(event.contentOffset.y * 100) * 0.01;
+      if (newScrollValue >= 0) scrollValue.value = newScrollValue;
     },
   });
 
@@ -34,7 +35,7 @@ export default function CurrentForecastScreen() {
           onScroll={handleScroll}
           // style={{ paddingTop: MAX_WEATHER_HEADER_HEIGHT + top }}
         >
-          <View style={{ paddingTop: SCALE_WEATHER_HEADER_HEIGHT + insets.top }}>
+          <View style={{ paddingTop: WEATHER_HEADER_HEIGHT_SCALE + insets.top }}>
             <View className="flex-1 p-5">
               <Text>CurrentForecastScreen</Text>
               <TestSection />

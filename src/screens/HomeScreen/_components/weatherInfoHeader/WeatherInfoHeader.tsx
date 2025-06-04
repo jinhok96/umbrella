@@ -5,23 +5,16 @@ import { View } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
 import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 
-import MontserratText from '@components/fontText/MontserratText';
-import PretendardText from '@components/fontText/PretendardText';
-import WeatherIcon from '@components/icon/WeatherIcon';
 import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
 import {
-  CURRENT_TEMP_SIZE,
-  SCALE_CURRENT_TEMP_SIZE,
-  SCALE_SUMMARY_SIZE,
-  SCALE_WEATHER_HEADER_HEIGHT,
-  SCALE_WEATHER_HEADER_ICON_SIZE,
-  SUMMARY_SIZE,
   WEATHER_HEADER_HEIGHT,
-  WEATHER_HEADER_ICON_SIZE,
+  WEATHER_HEADER_HEIGHT_SCALE,
+  WEATHER_HEADER_ICON_SIZE_SCALE,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
-import { useSettingStore } from '@store/settingStore/useSettingStore';
+import WeatherInfoHeaderIcon from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderIcon';
+import WeatherInfoHeaderSummary from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderSummary';
+import WeatherInfoHeaderTempSection from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderTempSection';
 
-import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 // 목 데이터: useForecastsStore(state => state.current);
@@ -99,115 +92,22 @@ type WeatherInfoHeaderProps = Omit<ViewProps, 'className'> & {
   scrollValue: SharedValue<number>;
 };
 
-const MAX_SCROLL_VALUE = SCALE_WEATHER_HEADER_HEIGHT - WEATHER_HEADER_HEIGHT;
-
-const TEXT_LIST: LocalizedTextMap<'low' | 'high'> = {
-  low: {
-    en: 'Low',
-    ko: '최저',
-  },
-  high: {
-    en: 'High',
-    ko: '최고',
-  },
-};
+const MAX_SCROLL_VALUE = WEATHER_HEADER_HEIGHT_SCALE - WEATHER_HEADER_HEIGHT;
 
 /**
  * 현재 위치 날씨 정보를 보여주는 컴포넌트
- * @jinhok96 25.06.03
+ * @jinhok96 25.06.04
  */
 export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfoHeaderProps) {
-  const lang = useSettingStore(state => state.lang);
   const [containerWidth, setContainerWidth] = useState(1);
-  const [tempSectionWidth, setTempSectionWidth] = useState(1);
-  const [tempSectionHeight, setTempSectionHeight] = useState(1);
-  const [summaryWidth, setSummaryWidth] = useState(1);
-  const [summaryHeight, setSummaryHeight] = useState(1);
 
   // Temp Container Style
   const animatedTempContainerStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [SCALE_WEATHER_HEADER_ICON_SIZE, 0]);
+    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [WEATHER_HEADER_ICON_SIZE_SCALE, 0]);
 
     return { paddingTop };
-  });
-
-  const iconScale = Math.round((SCALE_WEATHER_HEADER_ICON_SIZE / WEATHER_HEADER_ICON_SIZE) * 100) * 0.01;
-
-  // Weather Icon Position Style
-  const animatedWeatherIconPositionStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scaleWidthOffset = -(WEATHER_HEADER_ICON_SIZE * (iconScale - 1)) / 2;
-    const scaleHeightOffset = (WEATHER_HEADER_ICON_SIZE * (iconScale - 1)) / 2;
-    const centerOffset = -(containerWidth - iconScale * WEATHER_HEADER_ICON_SIZE) / 2;
-
-    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
-    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
-
-    return { translateX, paddingTop };
-  });
-
-  // Weather Icon Scale Style
-  const animatedWeatherIconScaleStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [iconScale, 1]);
-
-    return { transform: [{ scale }] };
-  });
-
-  const tempScale =
-    Math.round(Math.min(SCALE_CURRENT_TEMP_SIZE / CURRENT_TEMP_SIZE, containerWidth / tempSectionWidth) * 100) * 0.01;
-
-  // Temp Position Style
-  const animatedTempPositionStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scaleWidthOffset = (tempSectionWidth * (tempScale - 1)) / 2;
-    const scaleHeightOffset = (tempSectionHeight * (tempScale - 1)) / 2;
-    const centerOffset = (containerWidth - tempScale * tempSectionWidth) / 2;
-
-    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
-    const paddingY = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
-
-    return { translateX, paddingTop: paddingY, paddingBottom: paddingY };
-  });
-
-  // Temp Scale Style
-  const animatedTempScaleStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [tempScale, 1]);
-
-    return { transform: [{ scale }] };
-  });
-
-  const summaryScale =
-    Math.round(Math.min(SCALE_SUMMARY_SIZE / SUMMARY_SIZE, containerWidth / summaryWidth) * 100) * 0.01;
-
-  // Summary Position Style
-  const animatedSummaryPositionStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scaleWidthOffset = (summaryWidth * (summaryScale - 1)) / 2;
-    const scaleHeightOffset = (summaryHeight * (summaryScale - 1)) / 2;
-    const centerOffset = (containerWidth - summaryScale * summaryWidth) / 2;
-
-    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
-    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
-
-    return { translateX, marginBottom };
-  });
-
-  // Summary Scale Style
-  const animatedSummaryScaleStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [summaryScale, 1]);
-
-    return { transform: [{ scale }] };
   });
 
   if (!current || !daily) return <></>;
@@ -223,95 +123,25 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
           className="relative flex gap-2"
           style={animatedTempContainerStyle}
           onLayout={e => {
-            const newWidth = Math.floor(e.nativeEvent.layout.width);
+            const newWidth = Math.floor(e.nativeEvent.layout.width * 100) * 0.01;
             if (newWidth) setContainerWidth(newWidth);
           }}
         >
           {/* 날씨 아이콘 */}
-          <View className="absolute right-0 top-0">
-            <Animated.View style={animatedWeatherIconPositionStyle}>
-              <Animated.View style={animatedWeatherIconScaleStyle}>
-                <View style={{ width: WEATHER_HEADER_ICON_SIZE, height: WEATHER_HEADER_ICON_SIZE }}>
-                  <WeatherIcon icon={current?.weather[0].icon} />
-                </View>
-              </Animated.View>
-            </Animated.View>
-          </View>
+          <WeatherInfoHeaderIcon
+            scrollValue={scrollValue}
+            containerWidth={containerWidth}
+          />
           {/* 기온 */}
-          <View className="flex flex-row">
-            <Animated.View style={animatedTempPositionStyle}>
-              <Animated.View
-                className="flex flex-row items-center gap-3 px-1"
-                style={animatedTempScaleStyle}
-                onLayout={e => {
-                  const newWidth = Math.floor(e.nativeEvent.layout.width);
-                  const newHeight = Math.floor(e.nativeEvent.layout.height);
-                  if (newWidth) setTempSectionWidth(newWidth);
-                  if (newHeight) setTempSectionHeight(newHeight);
-                }}
-              >
-                <MontserratText
-                  typo="title-1"
-                  className="text-white"
-                >
-                  {current.temp}°
-                </MontserratText>
-                <View className="flex flex-row items-center gap-2">
-                  <View className="flex flex-row items-center gap-1">
-                    <PretendardText
-                      typo="caption-3"
-                      className="text-white"
-                    >
-                      {TEXT_LIST.low[lang]}
-                    </PretendardText>
-                    <MontserratText
-                      typo="caption-3"
-                      className="text-white"
-                    >
-                      {daily[0].temp.min}°
-                    </MontserratText>
-                  </View>
-                  <View className="h-3 border-r border-white opacity-40" />
-                  <View className="flex flex-row items-center gap-1">
-                    <PretendardText
-                      typo="caption-3"
-                      className="text-white"
-                    >
-                      {TEXT_LIST.high[lang]}
-                    </PretendardText>
-                    <MontserratText
-                      typo="caption-3"
-                      className="text-white"
-                    >
-                      {daily[0].temp.max}°
-                    </MontserratText>
-                  </View>
-                </View>
-              </Animated.View>
-            </Animated.View>
-          </View>
+          <WeatherInfoHeaderTempSection
+            scrollValue={scrollValue}
+            containerWidth={containerWidth}
+          />
           {/* 요약 */}
-          <View className="flex flex-row">
-            <Animated.View style={animatedSummaryPositionStyle}>
-              <Animated.View
-                className="rounded-xl bg-weather-summary px-4 py-2"
-                style={animatedSummaryScaleStyle}
-                onLayout={e => {
-                  const newWidth = Math.floor(e.nativeEvent.layout.width);
-                  const newHeight = Math.floor(e.nativeEvent.layout.height);
-                  if (newWidth) setSummaryWidth(newWidth);
-                  if (newHeight) setSummaryHeight(newHeight);
-                }}
-              >
-                <PretendardText
-                  typo="body-1"
-                  className="text-white"
-                >
-                  오늘 오후 4시에 비가 올 예정이에요!
-                </PretendardText>
-              </Animated.View>
-            </Animated.View>
-          </View>
+          <WeatherInfoHeaderSummary
+            scrollValue={scrollValue}
+            containerWidth={containerWidth}
+          />
         </Animated.View>
       </View>
     </View>

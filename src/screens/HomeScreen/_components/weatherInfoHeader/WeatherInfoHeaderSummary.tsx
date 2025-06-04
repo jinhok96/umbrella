@@ -1,0 +1,81 @@
+import { useState } from 'react';
+import type { ViewProps } from 'react-native';
+import { View } from 'react-native';
+
+import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
+
+import PretendardText from '@components/fontText/PretendardText';
+import {
+  MAX_SCROLL_VALUE,
+  SUMMARY_SIZE,
+  SUMMARY_SIZE_SCALE,
+} from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
+
+import type { WeatherInfoHeaderProps } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.type';
+
+type WeatherInfoHeaderTempSectionProps = Omit<ViewProps, 'className'> &
+  Pick<WeatherInfoHeaderProps, 'scrollValue'> & {
+    containerWidth: number;
+  };
+
+/**
+ * `WeatherInfoHeader` 오늘 날씨 요약 컴포넌트
+ * @jinhok96 25.06.04
+ */
+export default function WeatherInfoHeaderSummary({
+  scrollValue,
+  containerWidth,
+  ...props
+}: WeatherInfoHeaderTempSectionProps) {
+  const [width, setWidth] = useState(1);
+  const [height, setHeight] = useState(1);
+
+  const maxScale = Math.round(Math.min(SUMMARY_SIZE_SCALE / SUMMARY_SIZE, containerWidth / width) * 100) * 0.01;
+
+  // Position Style
+  const animatedPositionStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const scaleWidthOffset = width * (maxScale - 1) * 0.5;
+    const scaleHeightOffset = height * (maxScale - 1) * 0.5;
+    const centerOffset = (containerWidth - maxScale * width) * 0.5;
+
+    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
+    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
+
+    return { translateX, marginBottom };
+  });
+
+  // Scale Style
+  const animatedScaleStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [maxScale, 1]);
+
+    return { transform: [{ scale }] };
+  });
+
+  return (
+    <View
+      {...props}
+      className="flex flex-row"
+    >
+      <Animated.View style={animatedPositionStyle}>
+        <PretendardText
+          animate
+          typo="body-1"
+          className="rounded-xl bg-weather-summary px-4 py-2 text-white"
+          style={animatedScaleStyle}
+          onLayout={e => {
+            const newWidth = Math.floor(e.nativeEvent.layout.width * 100) * 0.01;
+            const newHeight = Math.floor(e.nativeEvent.layout.height * 100) * 0.01;
+            if (newWidth) setWidth(newWidth);
+            if (newHeight) setHeight(newHeight);
+          }}
+        >
+          오늘 오후 4시에 비가 올 예정이에요!
+        </PretendardText>
+      </Animated.View>
+    </View>
+  );
+}

@@ -23,7 +23,7 @@ export default function StyledBottomTabBar({
   return (
     <View
       {...props}
-      className="bg-background-02"
+      className="pb-safe-offset-3 bg-background-02"
       style={{ boxShadow: shadowStyleList.bottomTabBar }}
     >
       <BottomTabBar
