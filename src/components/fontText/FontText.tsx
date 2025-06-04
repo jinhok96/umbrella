@@ -2,6 +2,8 @@ import { Text } from 'react-native';
 
 import classNames from 'classnames';
 
+import Animated from 'react-native-reanimated';
+
 import type {
   FontTextProps,
   MontserratTypography,
@@ -91,10 +93,50 @@ const FONT_CLASS_NAME_LIST: FontClassNameListType = {
  * @param font 폰트 종류 `pretendard | montserrat`
  * @param typo 타이포그래피
  * @returns `Text` 컴포넌트
- * @jinhok96 25.05.29
+ * @jinhok96 25.06.04
  */
-export default function FontText<T extends Typography>({ children, className, font, typo }: FontTextProps<T>) {
+export default function FontText<T extends Typography>({
+  children,
+  className,
+  font,
+  typo,
+  ...props
+}: FontTextProps<T>) {
   const textClassName = classNames(FONT_CLASS_NAME_LIST[font][typo], className);
 
-  return <Text className={textClassName}>{children}</Text>;
+  return (
+    <Text
+      {...props}
+      className={textClassName}
+    >
+      {children}
+    </Text>
+  );
+}
+
+/**
+ * `FontText`의 Animated 컴포넌트 (`transform` 등 일부 스타일 호환 이슈 주의)
+ * @param className Animated.Text에 전달할 className; 글자색 필수 지정을 위해 required
+ * @param font 폰트 종류 `pretendard | montserrat`
+ * @param typo 타이포그래피
+ * @returns `Text` 컴포넌트
+ * @jinhok96 25.06.04
+ */
+export function AnimatedFontText<T extends Typography>({
+  children,
+  className,
+  font,
+  typo,
+  ...props
+}: FontTextProps<T>) {
+  const textClassName = classNames(FONT_CLASS_NAME_LIST[font][typo], className);
+
+  return (
+    <Animated.Text
+      {...props}
+      className={textClassName}
+    >
+      {children}
+    </Animated.Text>
+  );
 }

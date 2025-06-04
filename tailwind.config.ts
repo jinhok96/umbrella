@@ -188,6 +188,8 @@ const config: Config = {
         'transparency-08': 'var(--color-transparency-08)',
         'transparency-09': 'var(--color-transparency-09)',
         'transparency-10': 'var(--color-transparency-10)',
+        // 직접 추가
+        'weather-summary': 'var(--color-weather-summary)',
       },
     },
   },

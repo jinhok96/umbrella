@@ -7,7 +7,7 @@ import { INIT_MODAL_STORE_STATE } from '@store/modalStore/useModalStore.const';
 import type { ModalStore } from '@store/modalStore/useModalStore.type';
 import type { StateCreator } from 'zustand';
 
-const SCREEN_TRANSITION_TIMEOUT = ANIMATION_DURATION;
+const SCREEN_TRANSITION_TIMEOUT = ANIMATION_DURATION + 50;
 
 /**
  * 앱 설정 스토어
