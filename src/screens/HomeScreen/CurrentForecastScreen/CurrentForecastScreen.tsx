@@ -2,14 +2,17 @@ import { Pressable, Text, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 
-import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
+import Animated, { clamp, useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import TestSection from '@components/TestSection';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
 import WeatherInfoHeader from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader';
-import { WEATHER_HEADER_HEIGHT_SCALE } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
+import {
+  MAX_SCROLL_VALUE,
+  WEATHER_HEADER_HEIGHT_SCALE,
+} from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
 
 export default function CurrentForecastScreen() {
   const { navigate } = useNavigation();
@@ -22,7 +25,7 @@ export default function CurrentForecastScreen() {
   const handleScroll = useAnimatedScrollHandler({
     onScroll: event => {
       const newScrollValue = Math.round(event.contentOffset.y * 100) * 0.01;
-      if (newScrollValue >= 0) scrollValue.value = newScrollValue;
+      scrollValue.value = clamp(newScrollValue, 0, MAX_SCROLL_VALUE);
     },
   });
 

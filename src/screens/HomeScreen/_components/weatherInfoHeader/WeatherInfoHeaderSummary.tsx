@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
@@ -27,30 +27,31 @@ export default function WeatherInfoHeaderSummary({
   containerWidth,
   ...props
 }: WeatherInfoHeaderTempSectionProps) {
-  const [width, setWidth] = useState(1);
-  const [height, setHeight] = useState(1);
+  const width = useRef(1);
+  const height = useRef(1);
 
-  const maxScale = Math.round(Math.min(SUMMARY_SIZE_SCALE / SUMMARY_SIZE, containerWidth / width) * 100) * 0.01;
+  const maxScale = Math.round(Math.min(SUMMARY_SIZE_SCALE / SUMMARY_SIZE, containerWidth / width.current) * 100) * 0.01;
 
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+    const scaleWidthOffset = width.current * (maxScale - 1) * 0.5;
+    const scaleHeightOffset = height.current * (maxScale - 1) * 0.5;
+    const centerOffset = (containerWidth - maxScale * width.current) * 0.5;
 
-    const scaleWidthOffset = width * (maxScale - 1) * 0.5;
-    const scaleHeightOffset = height * (maxScale - 1) * 0.5;
-    const centerOffset = (containerWidth - maxScale * width) * 0.5;
-
-    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
-    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
+    const translateX = interpolate(
+      scrollValue.value,
+      [0, MAX_SCROLL_VALUE],
+      [scaleWidthOffset + centerOffset, 0],
+      'clamp',
+    );
+    const marginBottom = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0], 'clamp');
 
     return { translateX, marginBottom };
   });
 
   // Scale Style
   const animatedScaleStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [maxScale, 1]);
+    const scale = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [maxScale, 1], 'clamp');
 
     return { transform: [{ scale }] };
   });
@@ -69,8 +70,8 @@ export default function WeatherInfoHeaderSummary({
           onLayout={e => {
             const newWidth = Math.floor(e.nativeEvent.layout.width * 100) * 0.01;
             const newHeight = Math.floor(e.nativeEvent.layout.height * 100) * 0.01;
-            if (newWidth) setWidth(newWidth);
-            if (newHeight) setHeight(newHeight);
+            if (newWidth) width.current = newWidth;
+            if (newHeight) height.current = newHeight;
           }}
         >
           오늘 오후 4시에 비가 올 예정이에요!

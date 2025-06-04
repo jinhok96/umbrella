@@ -55,23 +55,24 @@ export default function WeatherInfoHeaderIcon({ scrollValue, containerWidth, ...
 
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
     const scaleWidthOffset = -(WEATHER_HEADER_ICON_SIZE * (maxScale - 1)) * 0.5;
     const scaleHeightOffset = WEATHER_HEADER_ICON_SIZE * (maxScale - 1) * 0.5;
     const centerOffset = -(containerWidth - maxScale * WEATHER_HEADER_ICON_SIZE) * 0.5;
 
-    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
-    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
+    const translateX = interpolate(
+      scrollValue.value,
+      [0, MAX_SCROLL_VALUE],
+      [scaleWidthOffset + centerOffset, 0],
+      'clamp',
+    );
+    const paddingTop = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0], 'clamp');
 
     return { translateX, paddingTop };
   });
 
   // Scale Style
   const animatedScaleStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [maxScale, 1]);
+    const scale = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [maxScale, 1], 'clamp');
 
     return { transform: [{ scale }] };
   });

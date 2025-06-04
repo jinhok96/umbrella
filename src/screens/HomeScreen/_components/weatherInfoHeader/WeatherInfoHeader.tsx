@@ -103,9 +103,12 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
 
   // Temp Container Style
   const animatedTempContainerStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [WEATHER_HEADER_ICON_SIZE_SCALE, 0]);
+    const paddingTop = interpolate(
+      scrollValue.value,
+      [0, MAX_SCROLL_VALUE],
+      [WEATHER_HEADER_ICON_SIZE_SCALE, 0],
+      'clamp',
+    );
 
     return { paddingTop };
   });
