@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 import PretendardText from '@components/fontText/PretendardText';
 import {
@@ -30,7 +30,7 @@ export default function WeatherInfoHeaderSummary({
   const width = useRef(1);
   const height = useRef(1);
 
-  const maxScale = Math.round(Math.min(SUMMARY_SIZE_SCALE / SUMMARY_SIZE, containerWidth / width.current) * 100) * 0.01;
+  const maxScale = Math.min(SUMMARY_SIZE_SCALE / SUMMARY_SIZE, containerWidth / width.current);
 
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
@@ -46,14 +46,29 @@ export default function WeatherInfoHeaderSummary({
     );
     const marginBottom = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0], 'clamp');
 
-    return { translateX, marginBottom };
+    return {
+      translateX: withTiming(translateX, {
+        duration: 0,
+      }),
+      marginBottom: withTiming(marginBottom, {
+        duration: 0,
+      }),
+    };
   });
 
   // Scale Style
   const animatedScaleStyle = useAnimatedStyle(() => {
     const scale = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [maxScale, 1], 'clamp');
 
-    return { transform: [{ scale }] };
+    return {
+      transform: [
+        {
+          scale: withTiming(scale, {
+            duration: 0,
+          }),
+        },
+      ],
+    };
   });
 
   return (

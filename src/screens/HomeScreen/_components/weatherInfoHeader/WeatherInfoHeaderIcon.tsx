@@ -1,7 +1,7 @@
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 import WeatherIcon from '@components/icon/WeatherIcon';
 import {
@@ -46,13 +46,13 @@ type WeatherInfoHeaderIconProps = Omit<ViewProps, 'className'> &
     containerWidth: number;
   };
 
+const maxScale = WEATHER_HEADER_ICON_SIZE_SCALE / WEATHER_HEADER_ICON_SIZE;
+
 /**
  * `WeatherInfoHeader` 날씨 아이콘 컴포넌트
  * @jinhok96 25.06.04
  */
 export default function WeatherInfoHeaderIcon({ scrollValue, containerWidth, ...props }: WeatherInfoHeaderIconProps) {
-  const maxScale = Math.round((WEATHER_HEADER_ICON_SIZE_SCALE / WEATHER_HEADER_ICON_SIZE) * 100) * 0.01;
-
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
     const scaleWidthOffset = -(WEATHER_HEADER_ICON_SIZE * (maxScale - 1)) * 0.5;
@@ -67,14 +67,29 @@ export default function WeatherInfoHeaderIcon({ scrollValue, containerWidth, ...
     );
     const paddingTop = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0], 'clamp');
 
-    return { translateX, paddingTop };
+    return {
+      translateX: withTiming(translateX, {
+        duration: 0,
+      }),
+      paddingTop: withTiming(paddingTop, {
+        duration: 0,
+      }),
+    };
   });
 
   // Scale Style
   const animatedScaleStyle = useAnimatedStyle(() => {
     const scale = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [maxScale, 1], 'clamp');
 
-    return { transform: [{ scale }] };
+    return {
+      transform: [
+        {
+          scale: withTiming(scale, {
+            duration: 0,
+          }),
+        },
+      ],
+    };
   });
 
   if (!current) return <></>;

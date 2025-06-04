@@ -3,7 +3,7 @@ import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
 import type { SharedValue } from 'react-native-reanimated';
-import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
 import {
@@ -92,14 +92,14 @@ type WeatherInfoHeaderProps = Omit<ViewProps, 'className'> & {
   scrollValue: SharedValue<number>;
 };
 
-const MAX_SCROLL_VALUE = WEATHER_HEADER_HEIGHT_SCALE - WEATHER_HEADER_HEIGHT;
-
 /**
  * 현재 위치 날씨 정보를 보여주는 컴포넌트
  * @jinhok96 25.06.04
  */
 export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfoHeaderProps) {
   const [containerWidth, setContainerWidth] = useState(1);
+
+  const MAX_SCROLL_VALUE = WEATHER_HEADER_HEIGHT_SCALE - WEATHER_HEADER_HEIGHT;
 
   // Temp Container Style
   const animatedTempContainerStyle = useAnimatedStyle(() => {
@@ -110,7 +110,11 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       'clamp',
     );
 
-    return { paddingTop };
+    return {
+      paddingTop: withTiming(paddingTop, {
+        duration: 0,
+      }),
+    };
   });
 
   if (!current || !daily) return <></>;
@@ -126,7 +130,7 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
           className="relative flex gap-2"
           style={animatedTempContainerStyle}
           onLayout={e => {
-            const newWidth = Math.floor(e.nativeEvent.layout.width * 100) * 0.01;
+            const newWidth = e.nativeEvent.layout.width;
             if (newWidth) setContainerWidth(newWidth);
           }}
         >

@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { interpolate, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 import MontserratText from '@components/fontText/MontserratText';
 import PretendardText from '@components/fontText/PretendardText';
@@ -117,10 +117,10 @@ export default function WeatherInfoHeaderTempSection({
   const width = useRef(1);
   const height = useRef(1);
 
-  const maxScale =
-    Math.round(
-      Math.min(Math.max((CURRENT_TEMP_SIZE_SCALE / CURRENT_TEMP_SIZE) * 0.8, 1), containerWidth / width.current) * 100,
-    ) * 0.01;
+  const maxScale = Math.min(
+    Math.max((CURRENT_TEMP_SIZE_SCALE / CURRENT_TEMP_SIZE) * 0.8, 1),
+    containerWidth / width.current,
+  );
 
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
@@ -136,14 +136,32 @@ export default function WeatherInfoHeaderTempSection({
     );
     const paddingY = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0], 'clamp');
 
-    return { translateX, paddingTop: paddingY, paddingBottom: paddingY };
+    return {
+      translateX: withTiming(translateX, {
+        duration: 0,
+      }),
+      paddingTop: withTiming(paddingY, {
+        duration: 0,
+      }),
+      paddingBottom: withTiming(paddingY, {
+        duration: 0,
+      }),
+    };
   });
 
   // Scale Style
   const animatedScaleStyle = useAnimatedStyle(() => {
     const scale = interpolate(scrollValue.value, [0, MAX_SCROLL_VALUE], [maxScale, 1], 'clamp');
 
-    return { transform: [{ scale }] };
+    return {
+      transform: [
+        {
+          scale: withTiming(scale, {
+            duration: 0,
+          }),
+        },
+      ],
+    };
   });
 
   if (!current || !daily) return <></>;
