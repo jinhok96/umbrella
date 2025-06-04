@@ -16,7 +16,7 @@ import {
 
 export default function CurrentForecastScreen() {
   const { navigate } = useNavigation();
-  const insets = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
 
   // 현재 스크롤의 위치
   const scrollValue = useSharedValue(0);
@@ -36,7 +36,7 @@ export default function CurrentForecastScreen() {
           className="flex-1"
           onScroll={handleScroll}
         >
-          <View style={{ paddingTop: WEATHER_HEADER_HEIGHT_SCALE + insets.top }}>
+          <View style={{ paddingTop: WEATHER_HEADER_HEIGHT_SCALE + top }}>
             <View className="flex-1 p-5">
               <Text>CurrentForecastScreen</Text>
               <TestSection />

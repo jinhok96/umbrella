@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
@@ -28,16 +28,16 @@ export default function WeatherInfoHeaderSummary({
   containerWidth,
   ...props
 }: WeatherInfoHeaderTempSectionProps) {
-  const width = useRef(1);
-  const height = useRef(1);
+  const [width, setWidth] = useState(1);
+  const [height, setHeight] = useState(1);
 
-  const maxScale = Math.min(SUMMARY_SIZE_SCALE / SUMMARY_SIZE, containerWidth / width.current);
+  const maxScale = Math.min(SUMMARY_SIZE_SCALE / SUMMARY_SIZE, containerWidth / width);
 
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
-    const scaleWidthOffset = width.current * (maxScale - 1) * 0.5;
-    const scaleHeightOffset = height.current * (maxScale - 1) * 0.5;
-    const centerOffset = (containerWidth - maxScale * width.current) * 0.5;
+    const scaleWidthOffset = width * (maxScale - 1) * 0.5;
+    const scaleHeightOffset = height * (maxScale - 1) * 0.5;
+    const centerOffset = (containerWidth - maxScale * width) * 0.5;
 
     const translateX = interpolate(
       scrollValue.value,
@@ -78,20 +78,22 @@ export default function WeatherInfoHeaderSummary({
       className="flex flex-row"
     >
       <Animated.View style={animatedPositionStyle}>
-        <PretendardText
-          animate
-          typo="body-1"
-          className="rounded-xl bg-weather-summary px-4 py-2 text-white"
+        <Animated.View
           style={animatedScaleStyle}
           onLayout={e => {
             const newWidth = Math.floor(e.nativeEvent.layout.width * 100) * 0.01;
             const newHeight = Math.floor(e.nativeEvent.layout.height * 100) * 0.01;
-            if (newWidth) width.current = newWidth;
-            if (newHeight) height.current = newHeight;
+            if (newWidth && newWidth !== width) setWidth(newWidth);
+            if (newHeight && newHeight !== height) setHeight(newHeight);
           }}
         >
-          오늘 오후 4시에 비가 올 예정이에요!
-        </PretendardText>
+          <PretendardText
+            typo="body-1"
+            className="rounded-xl bg-weather-summary px-4 py-2 text-white"
+          >
+            오늘 오후 4시에 비가 올 예정이에요!
+          </PretendardText>
+        </Animated.View>
       </Animated.View>
     </View>
   );

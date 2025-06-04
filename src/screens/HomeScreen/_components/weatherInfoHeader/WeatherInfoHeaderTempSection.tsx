@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
@@ -46,19 +46,16 @@ export default function WeatherInfoHeaderTempSection({
   const current = useForecastsStore(state => state.current);
   const daily = useForecastsStore(state => state.daily);
   const lang = useSettingStore(state => state.lang);
-  const width = useRef(1);
-  const height = useRef(1);
+  const [width, setWidth] = useState(1);
+  const [height, setHeight] = useState(1);
 
-  const maxScale = Math.min(
-    Math.max((CURRENT_TEMP_SIZE_SCALE / CURRENT_TEMP_SIZE) * 0.8, 1),
-    containerWidth / width.current,
-  );
+  const maxScale = Math.min(Math.max((CURRENT_TEMP_SIZE_SCALE / CURRENT_TEMP_SIZE) * 0.8, 1), containerWidth / width);
 
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
-    const scaleWidthOffset = width.current * (maxScale - 1) * 0.5;
-    const scaleHeightOffset = height.current * (maxScale - 1) * 0.5;
-    const centerOffset = (containerWidth - maxScale * width.current) * 0.5;
+    const scaleWidthOffset = width * (maxScale - 1) * 0.5;
+    const scaleHeightOffset = height * (maxScale - 1) * 0.5;
+    const centerOffset = (containerWidth - maxScale * width) * 0.5;
 
     const translateX = interpolate(
       scrollValue.value,
@@ -110,8 +107,8 @@ export default function WeatherInfoHeaderTempSection({
           onLayout={e => {
             const newWidth = Math.floor(e.nativeEvent.layout.width * 100) * 0.01;
             const newHeight = Math.floor(e.nativeEvent.layout.height * 100) * 0.01;
-            if (newWidth) width.current = newWidth;
-            if (newHeight) height.current = newHeight;
+            if (newWidth) setWidth(newWidth);
+            if (newHeight) setHeight(newHeight);
           }}
         >
           <MontserratText
