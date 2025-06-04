@@ -16,79 +16,6 @@ import WeatherInfoHeaderIcon from '@screens/HomeScreen/_components/weatherInfoHe
 import WeatherInfoHeaderSummary from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderSummary';
 import WeatherInfoHeaderTempSection from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderTempSection';
 
-import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
-
-// 목 데이터: useForecastsStore(state => state.current);
-const current: ForecastsStoreState['current'] = {
-  dt: 1684929490,
-  sunrise: 1684926645,
-  sunset: 1684977364,
-  temp: 292.55,
-  feels_like: 292.87,
-  pressure: 1014,
-  humidity: 89,
-  dew_point: 290.69,
-  uvi: 0.16,
-  clouds: 53,
-  visibility: 10000,
-  wind_speed: 3.13,
-  wind_deg: 93,
-  wind_gust: 6.71,
-  weather: [
-    {
-      id: 803,
-      main: 'Clouds',
-      description: 'broken clouds',
-      icon: '04d',
-    },
-  ],
-  pm25: 15,
-  pm10: 20,
-};
-
-// 목 데이터: useForecastsStore(state => state.daily);
-const daily: ForecastsStoreState['daily'] = new Array(8).fill({
-  dt: 1684951200,
-  sunrise: 1684926645,
-  sunset: 1684977364,
-  moonrise: 1684941060,
-  moonset: 1684905480,
-  moon_phase: 0.16,
-  summary: 'Expect a day of partly cloudy with rain',
-  temp: {
-    day: 299.03,
-    min: 290.69,
-    max: 300.35,
-    night: 291.45,
-    eve: 297.51,
-    morn: 292.55,
-  },
-  feels_like: {
-    day: 299.21,
-    night: 291.37,
-    eve: 297.86,
-    morn: 292.87,
-  },
-  pressure: 1016,
-  humidity: 59,
-  dew_point: 290.48,
-  wind_speed: 3.98,
-  wind_deg: 76,
-  wind_gust: 8.92,
-  weather: [
-    {
-      id: 640,
-      main: 'Rain',
-      description: 'light rain',
-      icon: '10d',
-    },
-  ],
-  clouds: 92,
-  pop: 0.47,
-  rain: 0.15,
-  uvi: 9.23,
-});
-
 type WeatherInfoHeaderProps = Omit<ViewProps, 'className'> & {
   scrollValue: SharedValue<number>;
 };
@@ -117,8 +44,6 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       }),
     };
   });
-
-  if (!current || !daily) return <></>;
 
   return (
     <View

@@ -10,37 +10,9 @@ import {
   WEATHER_HEADER_ICON_SIZE_SCALE,
   WEATHER_INFO_HEADER_ANIMATION_DURATION,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
+import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 
 import type { WeatherInfoHeaderProps } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.type';
-import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
-
-// 목 데이터: useForecastsStore(state => state.current);
-const current: ForecastsStoreState['current'] = {
-  dt: 1684929490,
-  sunrise: 1684926645,
-  sunset: 1684977364,
-  temp: 292.55,
-  feels_like: 292.87,
-  pressure: 1014,
-  humidity: 89,
-  dew_point: 290.69,
-  uvi: 0.16,
-  clouds: 53,
-  visibility: 10000,
-  wind_speed: 3.13,
-  wind_deg: 93,
-  wind_gust: 6.71,
-  weather: [
-    {
-      id: 803,
-      main: 'Clouds',
-      description: 'broken clouds',
-      icon: '04d',
-    },
-  ],
-  pm25: 15,
-  pm10: 20,
-};
 
 type WeatherInfoHeaderIconProps = Omit<ViewProps, 'className'> &
   Pick<WeatherInfoHeaderProps, 'scrollValue'> & {
@@ -54,6 +26,8 @@ const maxScale = WEATHER_HEADER_ICON_SIZE_SCALE / WEATHER_HEADER_ICON_SIZE;
  * @jinhok96 25.06.04
  */
 export default function WeatherInfoHeaderIcon({ scrollValue, containerWidth, ...props }: WeatherInfoHeaderIconProps) {
+  const current = useForecastsStore(state => state.current);
+
   // Position Style
   const animatedPositionStyle = useAnimatedStyle(() => {
     const scaleWidthOffset = -(WEATHER_HEADER_ICON_SIZE * (maxScale - 1)) * 0.5;
