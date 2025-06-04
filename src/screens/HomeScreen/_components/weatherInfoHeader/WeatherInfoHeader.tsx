@@ -10,135 +10,207 @@ import PretendardText from '@components/fontText/PretendardText';
 import WeatherIcon from '@components/icon/WeatherIcon';
 import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
 import {
-  MAX_CURRENT_TEMP_SIZE,
-  MAX_SUMMARY_SIZE,
-  MAX_WEATHER_HEADER_HEIGHT,
-  MAX_WEATHER_HEADER_ICON_SIZE,
-  MIN_CURRENT_TEMP_SIZE,
-  MIN_SUMMARY_SIZE,
-  MIN_WEATHER_HEADER_HEIGHT,
-  MIN_WEATHER_HEADER_ICON_SIZE,
+  CURRENT_TEMP_SIZE,
+  SCALE_CURRENT_TEMP_SIZE,
+  SCALE_SUMMARY_SIZE,
+  SCALE_WEATHER_HEADER_HEIGHT,
+  SCALE_WEATHER_HEADER_ICON_SIZE,
+  SUMMARY_SIZE,
+  WEATHER_HEADER_HEIGHT,
+  WEATHER_HEADER_ICON_SIZE,
 } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
+import { useSettingStore } from '@store/settingStore/useSettingStore';
+
+import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
+import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
+
+// 목 데이터: useForecastsStore(state => state.current);
+const current: ForecastsStoreState['current'] = {
+  dt: 1684929490,
+  sunrise: 1684926645,
+  sunset: 1684977332,
+  temp: 292.55,
+  feels_like: 292.87,
+  pressure: 1014,
+  humidity: 89,
+  dew_point: 290.69,
+  uvi: 0.16,
+  clouds: 53,
+  visibility: 10000,
+  wind_speed: 3.13,
+  wind_deg: 93,
+  wind_gust: 6.71,
+  weather: [
+    {
+      id: 803,
+      main: 'Clouds',
+      description: 'broken clouds',
+      icon: '04d',
+    },
+  ],
+  pm25: 15,
+  pm10: 20,
+};
+
+// 목 데이터: useForecastsStore(state => state.daily);
+const daily: ForecastsStoreState['daily'] = new Array(8).fill({
+  dt: 1684951200,
+  sunrise: 1684926645,
+  sunset: 1684977332,
+  moonrise: 1684941060,
+  moonset: 1684905480,
+  moon_phase: 0.16,
+  summary: 'Expect a day of partly cloudy with rain',
+  temp: {
+    day: 299.03,
+    min: 290.69,
+    max: 300.35,
+    night: 291.45,
+    eve: 297.51,
+    morn: 292.55,
+  },
+  feels_like: {
+    day: 299.21,
+    night: 291.37,
+    eve: 297.86,
+    morn: 292.87,
+  },
+  pressure: 1016,
+  humidity: 59,
+  dew_point: 290.48,
+  wind_speed: 3.98,
+  wind_deg: 76,
+  wind_gust: 8.92,
+  weather: [
+    {
+      id: 500,
+      main: 'Rain',
+      description: 'light rain',
+      icon: '10d',
+    },
+  ],
+  clouds: 92,
+  pop: 0.47,
+  rain: 0.15,
+  uvi: 9.23,
+});
 
 type WeatherInfoHeaderProps = Omit<ViewProps, 'className'> & {
   scrollValue: SharedValue<number>;
 };
 
-const MAX_SCROLL_VALUE = MAX_WEATHER_HEADER_HEIGHT - MIN_WEATHER_HEADER_HEIGHT;
+const MAX_SCROLL_VALUE = SCALE_WEATHER_HEADER_HEIGHT - WEATHER_HEADER_HEIGHT;
+
+const TEXT_LIST: LocalizedTextMap<'low' | 'high'> = {
+  low: {
+    en: 'Low',
+    ko: '최저',
+  },
+  high: {
+    en: 'High',
+    ko: '최고',
+  },
+};
 
 /**
  * 현재 위치 날씨 정보를 보여주는 컴포넌트
  * @jinhok96 25.06.03
  */
 export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfoHeaderProps) {
-  const [tempSectionContainerWidth, setTempSectionContainerWidth] = useState(0);
-  const [weatherIconWidth, setWeatherIconWidth] = useState(0);
-  const [tempSectionWidth, setTempSectionWidth] = useState(0);
-  const [summaryWidth, setSummaryWidth] = useState(0);
+  const lang = useSettingStore(state => state.lang);
+  const [containerWidth, setContainerWidth] = useState(1);
+  const [tempSectionWidth, setTempSectionWidth] = useState(1);
+  const [tempSectionHeight, setTempSectionHeight] = useState(1);
+  const [summaryWidth, setSummaryWidth] = useState(1);
+  const [summaryHeight, setSummaryHeight] = useState(1);
 
   // Temp Container Style
   const animatedTempContainerStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_WEATHER_HEADER_ICON_SIZE, 0]);
+    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [SCALE_WEATHER_HEADER_ICON_SIZE, 0]);
 
     return { paddingTop };
+  });
+
+  const iconScale = Math.round((SCALE_WEATHER_HEADER_ICON_SIZE / WEATHER_HEADER_ICON_SIZE) * 100) * 0.01;
+
+  // Weather Icon Position Style
+  const animatedWeatherIconPositionStyle = useAnimatedStyle(() => {
+    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
+
+    const scaleWidthOffset = -(WEATHER_HEADER_ICON_SIZE * (iconScale - 1)) / 2;
+    const scaleHeightOffset = (WEATHER_HEADER_ICON_SIZE * (iconScale - 1)) / 2;
+    const centerOffset = -(containerWidth - iconScale * WEATHER_HEADER_ICON_SIZE) / 2;
+
+    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
+    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
+
+    return { translateX, paddingTop };
   });
 
   // Weather Icon Scale Style
   const animatedWeatherIconScaleStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const scale = interpolate(
-      newValue,
-      [0, MAX_SCROLL_VALUE],
-      [MAX_WEATHER_HEADER_ICON_SIZE / MIN_WEATHER_HEADER_ICON_SIZE, 1],
-    );
+    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [iconScale, 1]);
 
     return { transform: [{ scale }] };
   });
 
-  // Weather Icon Position Style
-  const animatedWeatherIconPositionStyle = useAnimatedStyle(() => {
+  const tempScale =
+    Math.round(Math.min(SCALE_CURRENT_TEMP_SIZE / CURRENT_TEMP_SIZE, containerWidth / tempSectionWidth) * 100) * 0.01;
+
+  // Temp Position Style
+  const animatedTempPositionStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const offset = 5;
+    const scaleWidthOffset = (tempSectionWidth * (tempScale - 1)) / 2;
+    const scaleHeightOffset = (tempSectionHeight * (tempScale - 1)) / 2;
+    const centerOffset = (containerWidth - tempScale * tempSectionWidth) / 2;
 
-    const translateX = interpolate(
-      newValue,
-      [0, MAX_SCROLL_VALUE],
-      [
-        -(
-          (tempSectionContainerWidth - weatherIconWidth - offset) / 2 -
-          (MAX_WEATHER_HEADER_ICON_SIZE - MIN_WEATHER_HEADER_ICON_SIZE)
-        ),
-        0,
-      ],
-    );
+    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
+    const paddingY = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
 
-    const paddingTop = interpolate(newValue, [0, MAX_SCROLL_VALUE], [20, 0]);
-
-    return { translateX, paddingTop };
+    return { translateX, paddingTop: paddingY, paddingBottom: paddingY };
   });
 
   // Temp Scale Style
   const animatedTempScaleStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_CURRENT_TEMP_SIZE / MIN_CURRENT_TEMP_SIZE, 1]);
+    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [tempScale, 1]);
 
     return { transform: [{ scale }] };
   });
 
-  // Temp Position Style
-  const animatedTempPositionStyle = useAnimatedStyle(() => {
+  const summaryScale =
+    Math.round(Math.min(SCALE_SUMMARY_SIZE / SUMMARY_SIZE, containerWidth / summaryWidth) * 100) * 0.01;
+
+  // Summary Position Style
+  const animatedSummaryPositionStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const offset = 4;
+    const scaleWidthOffset = (summaryWidth * (summaryScale - 1)) / 2;
+    const scaleHeightOffset = (summaryHeight * (summaryScale - 1)) / 2;
+    const centerOffset = (containerWidth - summaryScale * summaryWidth) / 2;
 
-    const translateX = interpolate(
-      newValue,
-      [0, MAX_SCROLL_VALUE],
-      [
-        (tempSectionContainerWidth - tempSectionWidth) / 2 -
-          (MAX_CURRENT_TEMP_SIZE - MIN_CURRENT_TEMP_SIZE) * 2 -
-          offset,
-        0,
-      ],
-    );
+    const translateX = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleWidthOffset + centerOffset, 0]);
+    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [scaleHeightOffset, 0]);
 
-    const padding = interpolate(
-      newValue,
-      [0, MAX_SCROLL_VALUE],
-      [(MAX_CURRENT_TEMP_SIZE - MIN_CURRENT_TEMP_SIZE) / 2, 0],
-    );
-
-    return { translateX, padding };
+    return { translateX, marginBottom };
   });
 
   // Summary Scale Style
   const animatedSummaryScaleStyle = useAnimatedStyle(() => {
     const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
 
-    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_SUMMARY_SIZE / MIN_SUMMARY_SIZE, 1]);
+    const scale = interpolate(newValue, [0, MAX_SCROLL_VALUE], [summaryScale, 1]);
 
     return { transform: [{ scale }] };
   });
 
-  // Summary Position Style
-  const animatedSummaryPositionStyle = useAnimatedStyle(() => {
-    const newValue = Math.min(scrollValue.value, MAX_SCROLL_VALUE);
-
-    const translateX = interpolate(
-      newValue,
-      [0, MAX_SCROLL_VALUE],
-      [(tempSectionContainerWidth - summaryWidth) / 2, 0],
-    );
-
-    const marginBottom = interpolate(newValue, [0, MAX_SCROLL_VALUE], [MAX_SUMMARY_SIZE / MIN_SUMMARY_SIZE, 0]);
-
-    return { translateX, marginBottom };
-  });
+  if (!current || !daily) return <></>;
 
   return (
     <View
@@ -149,64 +221,69 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
       <View className="px-5 pb-7 pt-5">
         <Animated.View
           className="relative flex gap-2"
-          onLayout={e => setTempSectionContainerWidth(e.nativeEvent.layout.width)}
           style={animatedTempContainerStyle}
+          onLayout={e => {
+            const newWidth = Math.floor(e.nativeEvent.layout.width);
+            if (newWidth) setContainerWidth(newWidth);
+          }}
         >
           {/* 날씨 아이콘 */}
-          <Animated.View className="absolute right-0 top-0">
-            <Animated.View style={animatedWeatherIconScaleStyle}>
-              <Animated.View style={animatedWeatherIconPositionStyle}>
-                <View
-                  style={{ width: MIN_WEATHER_HEADER_ICON_SIZE, height: MIN_WEATHER_HEADER_ICON_SIZE }}
-                  onLayout={e => setWeatherIconWidth(e.nativeEvent.layout.width)}
-                >
-                  <WeatherIcon icon="02d" />
+          <View className="absolute right-0 top-0">
+            <Animated.View style={animatedWeatherIconPositionStyle}>
+              <Animated.View style={animatedWeatherIconScaleStyle}>
+                <View style={{ width: WEATHER_HEADER_ICON_SIZE, height: WEATHER_HEADER_ICON_SIZE }}>
+                  <WeatherIcon icon={current?.weather[0].icon} />
                 </View>
               </Animated.View>
             </Animated.View>
-          </Animated.View>
+          </View>
           {/* 기온 */}
           <View className="flex flex-row">
-            <Animated.View style={animatedTempScaleStyle}>
+            <Animated.View style={animatedTempPositionStyle}>
               <Animated.View
                 className="flex flex-row items-center gap-3 px-1"
-                onLayout={e => setTempSectionWidth(e.nativeEvent.layout.width)}
-                style={animatedTempPositionStyle}
+                style={animatedTempScaleStyle}
+                onLayout={e => {
+                  const newWidth = Math.floor(e.nativeEvent.layout.width);
+                  const newHeight = Math.floor(e.nativeEvent.layout.height);
+                  if (newWidth) setTempSectionWidth(newWidth);
+                  if (newHeight) setTempSectionHeight(newHeight);
+                }}
               >
                 <MontserratText
                   typo="title-1"
                   className="text-white"
                 >
-                  18°
+                  {current.temp}°
                 </MontserratText>
                 <View className="flex flex-row items-center gap-2">
                   <View className="flex flex-row items-center gap-1">
                     <PretendardText
                       typo="caption-3"
-                      className="pb-[0.1875rem] text-white"
+                      className="text-white"
                     >
-                      최저
+                      {TEXT_LIST.low[lang]}
                     </PretendardText>
                     <MontserratText
                       typo="caption-3"
                       className="text-white"
                     >
-                      8°
+                      {daily[0].temp.min}°
                     </MontserratText>
                   </View>
                   <View className="h-3 border-r border-white opacity-40" />
                   <View className="flex flex-row items-center gap-1">
                     <PretendardText
                       typo="caption-3"
-                      className="pb-[0.1875rem] text-white"
+                      className="text-white"
                     >
-                      최고
+                      {TEXT_LIST.high[lang]}
                     </PretendardText>
                     <MontserratText
                       typo="caption-3"
                       className="text-white"
                     >
-                      20°
+                      {daily[0].temp.max}°
                     </MontserratText>
                   </View>
                 </View>
@@ -214,20 +291,27 @@ export default function WeatherInfoHeader({ scrollValue, ...props }: WeatherInfo
             </Animated.View>
           </View>
           {/* 요약 */}
-          <Animated.View
-            className="flex flex-row"
-            style={animatedSummaryScaleStyle}
-          >
-            <PretendardText
-              animate
-              typo="body-1"
-              className="rounded-xl bg-weather-summary px-4 py-2 text-white"
-              style={animatedSummaryPositionStyle}
-              onLayout={e => setSummaryWidth(e.nativeEvent.layout.width)}
-            >
-              오늘 오후 4시에 비가 올 예정이에요!
-            </PretendardText>
-          </Animated.View>
+          <View className="flex flex-row">
+            <Animated.View style={animatedSummaryPositionStyle}>
+              <Animated.View
+                className="rounded-xl bg-weather-summary px-4 py-2"
+                style={animatedSummaryScaleStyle}
+                onLayout={e => {
+                  const newWidth = Math.floor(e.nativeEvent.layout.width);
+                  const newHeight = Math.floor(e.nativeEvent.layout.height);
+                  if (newWidth) setSummaryWidth(newWidth);
+                  if (newHeight) setSummaryHeight(newHeight);
+                }}
+              >
+                <PretendardText
+                  typo="body-1"
+                  className="text-white"
+                >
+                  오늘 오후 4시에 비가 올 예정이에요!
+                </PretendardText>
+              </Animated.View>
+            </Animated.View>
+          </View>
         </Animated.View>
       </View>
     </View>

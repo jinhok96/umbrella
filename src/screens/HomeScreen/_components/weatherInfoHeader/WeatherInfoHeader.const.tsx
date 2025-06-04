@@ -1,11 +1,11 @@
-export const MIN_WEATHER_HEADER_ICON_SIZE = 84;
-export const MAX_WEATHER_HEADER_ICON_SIZE = 140;
+export const WEATHER_HEADER_ICON_SIZE = 84;
+export const SCALE_WEATHER_HEADER_ICON_SIZE = 140;
 
-export const MIN_WEATHER_HEADER_HEIGHT = 180;
-export const MAX_WEATHER_HEADER_HEIGHT = 342;
+export const WEATHER_HEADER_HEIGHT = 180;
+export const SCALE_WEATHER_HEADER_HEIGHT = 342;
 
-export const MAX_CURRENT_TEMP_SIZE = 52;
-export const MIN_CURRENT_TEMP_SIZE = 32;
+export const CURRENT_TEMP_SIZE = 32;
+export const SCALE_CURRENT_TEMP_SIZE = 52;
 
-export const MAX_SUMMARY_SIZE = 16;
-export const MIN_SUMMARY_SIZE = 14;
+export const SUMMARY_SIZE = 14;
+export const SCALE_SUMMARY_SIZE = 16;

@@ -9,7 +9,7 @@ import TestSection from '@components/TestSection';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
 import WeatherInfoHeader from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader';
-import { MAX_WEATHER_HEADER_HEIGHT } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
+import { SCALE_WEATHER_HEADER_HEIGHT } from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeader.const';
 
 export default function CurrentForecastScreen() {
   const { navigate } = useNavigation();
@@ -34,7 +34,7 @@ export default function CurrentForecastScreen() {
           onScroll={handleScroll}
           // style={{ paddingTop: MAX_WEATHER_HEADER_HEIGHT + top }}
         >
-          <View style={{ paddingTop: MAX_WEATHER_HEADER_HEIGHT + insets.top }}>
+          <View style={{ paddingTop: SCALE_WEATHER_HEADER_HEIGHT + insets.top }}>
             <View className="flex-1 p-5">
               <Text>CurrentForecastScreen</Text>
               <TestSection />
