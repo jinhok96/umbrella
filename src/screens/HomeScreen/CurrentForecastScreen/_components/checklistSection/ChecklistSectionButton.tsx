@@ -1,4 +1,4 @@
-import { Pressable } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import classNames from 'classnames';
 
@@ -11,12 +11,21 @@ export default function ChecklistSectionButton({ children, selected, ...props }:
     selected && 'border-morning bg-checklist',
   );
 
+  const dashClassName = classNames(
+    'absolute -bottom-5 left-1/2 h-5 border-r border-dashed border-morning',
+    !selected && 'opacity-0',
+    selected && 'opacity-100',
+  );
+
   return (
-    <Pressable
-      {...props}
-      className={iconClassName}
-    >
-      {children}
-    </Pressable>
+    <View className="relative">
+      <Pressable
+        {...props}
+        className={iconClassName}
+      >
+        {children}
+      </Pressable>
+      <View className={dashClassName} />
+    </View>
   );
 }

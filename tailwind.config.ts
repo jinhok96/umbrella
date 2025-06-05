@@ -15,14 +15,14 @@ const COLOR_TRANSITION_PROPERTY_LIST: string[] = ['bg', 'text', 'border', 'fill'
 
 /**
  * 컬러 애니메이션 자동화 플러그인
- * @jinhok96 25.05.30
+ * @jinhok96 25.06.05
  */
 const autoColorTransitionPlugin: PluginCreator = ({ matchUtilities, theme }) => {
   COLOR_TRANSITION_PROPERTY_LIST.forEach(value => {
     matchUtilities(
       {
         [value]: () => ({
-          'transition-property': 'background-color, color, border-color, fill, stroke, text-decoration-color',
+          'transition-property': 'background-color, color, border-color, fill, stroke, text-decoration-color, opacity',
           ...ANIMATION_STYLE,
         }),
       },
