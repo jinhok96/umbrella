@@ -16,7 +16,7 @@ export default function ChecklistSectionButton({
   );
 
   const dashClassName = classNames(
-    'absolute left-1/2 top-[64px] border-r border-dashed border-morning transition-[opacity,height]',
+    'absolute left-1/2 top-16 border-r border-dashed border-morning transition-[opacity,height]',
     !selected && 'opacity-0 h-0',
     selected && 'opacity-100 h-6',
   );
