@@ -33,7 +33,7 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
     >
       <CurrentForecastScreenSectionHeader text={SECTION_HEADER_TEXT} />
       <View className="w-full p-5 pt-0">
-        <View className="flex h-16 w-full flex-row items-center justify-center gap-3">
+        <View className="flex w-full flex-row items-center justify-between gap-3">
           <ChecklistSectionUmbrellaButton
             isSelected={selected === 'umbrella'}
             onPress={() => handleButtonPress('umbrella')}
