@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import { View } from 'react-native';
+
+import classNames from 'classnames';
 
 import PretendardText from '@components/fontText/PretendardText';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
@@ -7,8 +10,13 @@ import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton.type';
 import type { ChecklistSectionMessageBoxProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBox.type';
 
-export default function ChecklistSectionMessageBox({ selected, ...props }: ChecklistSectionMessageBoxProps) {
+export default function ChecklistSectionMessageBox({
+  selected,
+  onTextLayout,
+  ...props
+}: ChecklistSectionMessageBoxProps) {
   const lang = useSettingStore(state => state.lang);
+  const [messageLine, setMessageLine] = useState(0);
 
   const message: LocalizedTextMap<ChecklistType> = {
     umbrella: {
@@ -29,15 +37,32 @@ export default function ChecklistSectionMessageBox({ selected, ...props }: Check
     },
   };
 
+  const messagePaddingTopClassName = classNames('transition-[padding-top]', !selected && 'pt-0', selected && 'pt-5');
+
+  // transition-[height]을 적용하기 위해 messageLine에 따라 height 절댓값 지정 (fit, full은 transition 작동하지 않음)
+  const messageClassName = classNames(
+    'size-full rounded-xl bg-morning-light text-morning px-4 transition-[height,padding-bottom,padding-top,opacity]',
+    !selected && 'h-0 pb-0 pt-0 opacity-0',
+    selected && 'pb-4 pt-7 opacity-100',
+    selected && messageLine === 1 && 'h-[58px]', // pt(28) + pb(16) + body2(14) = 58px
+    selected && messageLine === 2 && 'h-[80.4px]', // pt(28) + pb(16) + body2(14)*leading(1.6) + body2(14) = 80.4px
+  );
+
   return (
-    <View className="pt-5">
-      <PretendardText
-        {...props}
-        typo="body-2"
-        className="size-full rounded-xl bg-morning-light p-4 pt-7 text-morning"
-      >
-        {selected && message[selected][lang]}
-      </PretendardText>
+    <View className="flex overflow-hidden">
+      <View className={messagePaddingTopClassName}>
+        <PretendardText
+          {...props}
+          typo="body-2"
+          className={messageClassName}
+          onTextLayout={e => {
+            setMessageLine(e.nativeEvent.lines.length);
+            onTextLayout?.(e);
+          }}
+        >
+          {selected && message[selected][lang]}
+        </PretendardText>
+      </View>
     </View>
   );
 }

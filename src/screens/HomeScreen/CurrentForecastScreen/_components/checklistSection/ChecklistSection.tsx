@@ -2,8 +2,6 @@ import { useState } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import classNames from 'classnames';
-
 import ChecklistSectionClothesButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionClothesButton';
 import ChecklistSectionMaskButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMaskButton';
 import ChecklistSectionMessageBox from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBox';
@@ -23,19 +21,10 @@ type ChecklistSection = Omit<ViewProps, 'className'>;
 
 export default function ChecklistSection({ ...props }: ChecklistSection) {
   const [selected, setSelected] = useState<ChecklistType | null>(null);
-  const [messageLine, setMessageLine] = useState(0);
 
   const handleButtonPress = (type: ChecklistType) => {
     setSelected(selected === type ? null : type);
   };
-
-  // transition-[height]을 적용하기 위해 messageLine에 따라 height 절댓값 지정 (fit, full은 transition 작동하지 않음)
-  const messageContainerClassName = classNames(
-    'flex transition-[height] overflow-hidden duration-1000',
-    !selected && 'h-0',
-    selected && messageLine === 1 && 'h-[5.4rem]',
-    selected && messageLine === 2 && 'h-[6.9rem]',
-  );
 
   return (
     <View
@@ -62,12 +51,7 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
             onPress={() => handleButtonPress('suncream')}
           />
         </View>
-        <View className={messageContainerClassName}>
-          <ChecklistSectionMessageBox
-            selected={selected}
-            onTextLayout={e => setMessageLine(e.nativeEvent.lines.length)}
-          />
-        </View>
+        <ChecklistSectionMessageBox selected={selected} />
       </View>
     </View>
   );
