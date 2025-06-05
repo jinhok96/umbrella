@@ -2,7 +2,9 @@ import { useState } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
+import ChecklistSectionClothesButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionClothesButton';
 import ChecklistSectionMaskButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMaskButton';
+import ChecklistSectionSuncreamButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionSuncreamButton';
 import ChecklistSectionUmbrellaButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionUmbrellaButton';
 import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader';
 
@@ -38,6 +40,14 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
           <ChecklistSectionMaskButton
             selected={selected === 'mask'}
             onPress={() => handleButtonPress('mask')}
+          />
+          <ChecklistSectionClothesButton
+            selected={selected === 'clothes'}
+            onPress={() => handleButtonPress('clothes')}
+          />
+          <ChecklistSectionSuncreamButton
+            selected={selected === 'suncream'}
+            onPress={() => handleButtonPress('suncream')}
           />
         </View>
       </View>

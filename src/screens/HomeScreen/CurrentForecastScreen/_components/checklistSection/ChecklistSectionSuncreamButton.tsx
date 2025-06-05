@@ -1,14 +1,14 @@
-import ChecklistMaskIcon from '@components/icon/checklist/ChecklistMaskIcon';
+import ChecklistSuncreamIcon from '@components/icon/checklist/ChecklistSuncreamIcon';
 import ChecklistSectionButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton';
 
 import type { ChecklistSectionButtonProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton.type';
 
-type ChecklistSectionMaskButtonProps = Omit<ChecklistSectionButtonProps, 'children'>;
+type ChecklistSectionSuncreamButtonProps = Omit<ChecklistSectionButtonProps, 'children'>;
 
-export default function ChecklistSectionMaskButton({ ...props }: ChecklistSectionMaskButtonProps) {
+export default function ChecklistSectionSuncreamButton({ ...props }: ChecklistSectionSuncreamButtonProps) {
   return (
     <ChecklistSectionButton {...props}>
-      <ChecklistMaskIcon />
+      <ChecklistSuncreamIcon />
     </ChecklistSectionButton>
   );
 }
