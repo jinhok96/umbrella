@@ -99,7 +99,7 @@ const colorTokenList = {
 /**
  * 동적 테마 컬러 토큰 리스트
  * highContrast 수정 예정
- * @jinhok96 25.06.03
+ * @jinhok96 25.06.05
  */
 export const colorThemeVarList: ColorTheme = {
   light: {
@@ -141,6 +141,7 @@ export const colorThemeVarList: ColorTheme = {
     '--color-transparency-10': colorTokenList.transparency.black[5],
     // 직접 추가
     '--color-weather-summary': colorTokenList.transparency.white[10],
+    '--color-checklist': '#d1e8ff', // --color-morning-medium
   },
   dark: {
     '--color-test': colorTokenList.red.default,
@@ -181,6 +182,7 @@ export const colorThemeVarList: ColorTheme = {
     '--color-transparency-10': colorTokenList.transparency.white[5],
     // 직접 추가
     '--color-weather-summary': colorTokenList.transparency.white[10],
+    '--color-checklist': '#223d5b', // --color-morning-medium
   },
   highContrast: {
     '--color-test': colorTokenList.green.default,
@@ -221,6 +223,7 @@ export const colorThemeVarList: ColorTheme = {
     '--color-transparency-10': colorTokenList.transparency.white[5],
     // 직접 추가
     '--color-weather-summary': colorTokenList.transparency.white[10],
+    '--color-checklist': '#223d5b', // --color-morning-medium
   },
 };
 

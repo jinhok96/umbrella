@@ -13,7 +13,7 @@ export default function GlobalStackHeader({ options }: NativeStackHeaderProps) {
   return (
     <StyledHeader>
       <StyledHeaderBackButton />
-      <StyledHeaderTitle>{options.title}</StyledHeaderTitle>
+      <StyledHeaderTitle>{options.title || ''}</StyledHeaderTitle>
       <StyledHeaderButton />
     </StyledHeader>
   );
