@@ -10,7 +10,7 @@ import ChecklistSectionUmbrellaButton from '@screens/HomeScreen/CurrentForecastS
 import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader';
 
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
-import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton.type';
+import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper.type';
 
 const SECTION_HEADER_TEXT: LocalizedText = {
   ko: '외출 전 체크! 챙기셨나요?',
@@ -19,6 +19,10 @@ const SECTION_HEADER_TEXT: LocalizedText = {
 
 type ChecklistSection = Omit<ViewProps, 'className'>;
 
+/**
+ * 체크리스트 섹션 컴포넌트
+ * @jinhok96 25.06.06
+ */
 export default function ChecklistSection({ ...props }: ChecklistSection) {
   const [selected, setSelected] = useState<ChecklistType | null>(null);
 

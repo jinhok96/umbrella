@@ -1,14 +1,14 @@
 import ChecklistMaskIcon from '@components/icon/checklist/ChecklistMaskIcon';
-import ChecklistSectionButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton';
+import ChecklistSectionButtonWrapper from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper';
 
-import type { ChecklistSectionButtonProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton.type';
+import type { ChecklistSectionButtonWrapperProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper.type';
 
-type ChecklistSectionMaskButtonProps = Omit<ChecklistSectionButtonProps, 'children'>;
+type ChecklistSectionMaskButtonProps = Omit<ChecklistSectionButtonWrapperProps, 'children'>;
 
 export default function ChecklistSectionMaskButton({ ...props }: ChecklistSectionMaskButtonProps) {
   return (
-    <ChecklistSectionButton {...props}>
+    <ChecklistSectionButtonWrapper {...props}>
       <ChecklistMaskIcon />
-    </ChecklistSectionButton>
+    </ChecklistSectionButtonWrapper>
   );
 }

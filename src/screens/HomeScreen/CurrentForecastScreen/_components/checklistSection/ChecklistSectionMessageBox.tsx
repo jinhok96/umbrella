@@ -8,9 +8,14 @@ import ChecklistSectionMessageBoxLabel from '@screens/HomeScreen/CurrentForecast
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
-import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton.type';
+import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper.type';
 import type { ChecklistSectionMessageBoxProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBox.type';
 
+/**
+ * `ChecklistSection`의 메세지 컴포넌트
+ * @param selected 선택된 체크리스트 타입
+ * @jinhok96 25.06.06
+ */
 export default function ChecklistSectionMessageBox({
   selected,
   onTextLayout,

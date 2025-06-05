@@ -9,14 +9,21 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { PretendardTextProps } from '@components/fontText/PretendardText.type';
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
-import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton.type';
+import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper.type';
+import type { ChecklistSectionMessageBoxProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBox.type';
 
-type ChecklistSectionMessageBoxLabelProps = Omit<PretendardTextProps, 'typo' | 'className'> & {
-  selected: ChecklistType | null;
-};
+type ChecklistSectionMessageBoxLabelProps = Omit<PretendardTextProps, 'typo' | 'className'> &
+  Pick<ChecklistSectionMessageBoxProps, 'selected'>;
 
+/**
+ * `ChecklistSectionMessageBox`의 라벨 컴포넌트
+ * @param selected 선택된 체크리스트 타입
+ * @jinhok96 25.06.06
+ */
 export default function ChecklistSectionMessageBoxLabel({ selected, ...props }: ChecklistSectionMessageBoxLabelProps) {
   const lang = useSettingStore(state => state.lang);
+
+  // !selected일 때 애니메이션 중 라벨이 없어지지 않도록 최근 상태 저장
   const [latestSelected, setLatestSelected] = useState(selected);
 
   // 나중에 수정 예정

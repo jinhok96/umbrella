@@ -1,14 +1,14 @@
 import ChecklistUmbrellaIcon from '@components/icon/checklist/ChecklistUmbrellaIcon';
-import ChecklistSectionButton from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton';
+import ChecklistSectionButtonWrapper from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper';
 
-import type { ChecklistSectionButtonProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButton.type';
+import type { ChecklistSectionButtonWrapperProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper.type';
 
-type ChecklistSectionUmbrellaButtonProps = Omit<ChecklistSectionButtonProps, 'children'>;
+type ChecklistSectionUmbrellaButtonProps = Omit<ChecklistSectionButtonWrapperProps, 'children'>;
 
 export default function ChecklistSectionUmbrellaButton({ ...props }: ChecklistSectionUmbrellaButtonProps) {
   return (
-    <ChecklistSectionButton {...props}>
+    <ChecklistSectionButtonWrapper {...props}>
       <ChecklistUmbrellaIcon />
-    </ChecklistSectionButton>
+    </ChecklistSectionButtonWrapper>
   );
 }
