@@ -190,6 +190,7 @@ const config: Config = {
         'transparency-10': 'var(--color-transparency-10)',
         // 직접 추가
         'weather-summary': 'var(--color-weather-summary)',
+        checklist: 'var(--color-checklist)',
       },
     },
   },
