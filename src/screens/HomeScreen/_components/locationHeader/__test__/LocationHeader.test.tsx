@@ -4,11 +4,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
-import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
+import LocationHeader from '@screens/HomeScreen/_components/locationHeader/LocationHeader';
 import {
   LOCATION_HEADER_TEST_ID_LIST,
   LocationNamePlaceholder,
-} from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader.const';
+} from '@screens/HomeScreen/_components/locationHeader/LocationHeader.const';
 import { locationStore } from '@store/locationStore/useLocationStore';
 import { INIT_LOCATION_STORE_STATE } from '@store/locationStore/useLocationStore.const';
 import { settingStore } from '@store/settingStore/useSettingStore';

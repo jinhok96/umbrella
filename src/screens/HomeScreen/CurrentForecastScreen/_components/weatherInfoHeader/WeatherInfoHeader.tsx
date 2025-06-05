@@ -1,10 +1,10 @@
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import LocationHeader from '@screens/HomeScreen/_components/weatherInfoHeader/LocationHeader';
-import WeatherInfoHeaderIcon from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderIcon';
-import WeatherInfoHeaderSummary from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderSummary';
-import WeatherInfoHeaderTempSection from '@screens/HomeScreen/_components/weatherInfoHeader/WeatherInfoHeaderTempSection';
+import LocationHeader from '@screens/HomeScreen/_components/locationHeader/LocationHeader';
+import WeatherInfoHeaderIcon from '@screens/HomeScreen/CurrentForecastScreen/_components/weatherInfoHeader/WeatherInfoHeaderIcon';
+import WeatherInfoHeaderSummary from '@screens/HomeScreen/CurrentForecastScreen/_components/weatherInfoHeader/WeatherInfoHeaderSummary';
+import WeatherInfoHeaderTempSection from '@screens/HomeScreen/CurrentForecastScreen/_components/weatherInfoHeader/WeatherInfoHeaderTempSection';
 
 type WeatherInfoHeaderProps = Omit<ViewProps, 'className'>;
 
