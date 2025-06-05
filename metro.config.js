@@ -43,4 +43,5 @@ const config = {
 
 module.exports = withNativeWind(wrapWithReanimatedMetroConfig(mergeConfig(defaultConfig, config)), {
   input: './src/global.css',
+  inlineRem: 16, // 1rem = 16px
 });

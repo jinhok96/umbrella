@@ -37,15 +37,15 @@ export default function ChecklistSectionMessageBox({
     },
   };
 
-  const messagePaddingTopClassName = classNames('transition-[padding-top]', !selected && 'pt-0', selected && 'pt-5');
+  const messagePaddingTopClassName = classNames('transition-[padding-top]', !selected && 'pt-0', selected && 'pt-6');
 
   // transition-[height]을 적용하기 위해 messageLine에 따라 height 절댓값 지정 (fit, full은 transition 작동하지 않음)
   const messageClassName = classNames(
     'size-full rounded-xl bg-morning-light text-morning px-4 transition-[height,padding-bottom,padding-top,opacity]',
     !selected && 'h-0 pb-0 pt-0 opacity-0',
     selected && 'pb-4 pt-7 opacity-100',
-    selected && messageLine === 1 && 'h-[58px]', // pt(28) + pb(16) + body2(14) = 58px
-    selected && messageLine === 2 && 'h-[80.4px]', // pt(28) + pb(16) + body2(14)*leading(1.6) + body2(14) = 80.4px
+    selected && messageLine === 1 && 'h-[4.15rem]', // pt(28) + pb(16) + body2(14*1.6) = 66.4px = 4.15rem
+    selected && messageLine === 2 && 'h-[5.55rem]', // pt(28) + pb(16) + body2(14*1.6) + body2(14*1.6) = 88.8px = 5.55rem
   );
 
   return (
