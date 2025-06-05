@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import classNames from 'classnames';
 
 import PretendardText from '@components/fontText/PretendardText';
+import ChecklistSectionMessageBoxLabel from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBoxLabel';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
@@ -24,7 +25,7 @@ export default function ChecklistSectionMessageBox({
       en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
     },
     mask: {
-      ko: `미세먼지 농도가 00로 매우 높아요.\n마스크를 착용해야 해요!`,
+      ko: `미세먼지 농도가 00로 매우 높아요.\n마스크를 착용하세요!`,
       en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
     },
     clothes: {
@@ -37,7 +38,11 @@ export default function ChecklistSectionMessageBox({
     },
   };
 
-  const messagePaddingTopClassName = classNames('transition-[padding-top]', !selected && 'pt-0', selected && 'pt-6');
+  const messagePaddingTopClassName = classNames(
+    'px-5 transition-[padding-top]',
+    !selected && 'pt-0',
+    selected && 'pt-6',
+  );
 
   // transition-[height]을 적용하기 위해 messageLine에 따라 height 절댓값 지정 (fit, full은 transition 작동하지 않음)
   const messageClassName = classNames(
@@ -45,11 +50,12 @@ export default function ChecklistSectionMessageBox({
     !selected && 'h-0 pb-0 pt-0 opacity-0',
     selected && 'pb-4 pt-7 opacity-100',
     selected && messageLine === 1 && 'h-[4.15rem]', // pt(28) + pb(16) + body2(14*1.6) = 66.4px = 4.15rem
-    selected && messageLine === 2 && 'h-[5.55rem]', // pt(28) + pb(16) + body2(14*1.6) + body2(14*1.6) = 88.8px = 5.55rem
+    selected && messageLine === 2 && 'h-[5.55rem]', // pt(28) + pb(16) + body2(14*1.6)*2 = 88.8px = 5.55rem
+    selected && messageLine === 3 && 'h-[6.95rem]', // pt(28) + pb(16) + body2(14*1.6)*3 = 111.2px = 6.95rem
   );
 
   return (
-    <View className="flex overflow-hidden">
+    <View className="relative flex overflow-hidden">
       <View className={messagePaddingTopClassName}>
         <PretendardText
           {...props}
@@ -62,6 +68,7 @@ export default function ChecklistSectionMessageBox({
         >
           {selected && message[selected][lang]}
         </PretendardText>
+        <ChecklistSectionMessageBoxLabel selected={selected} />
       </View>
     </View>
   );
