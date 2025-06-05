@@ -19,6 +19,7 @@ export default function ChecklistSectionMessageBox({
   const lang = useSettingStore(state => state.lang);
   const [messageLine, setMessageLine] = useState(0);
 
+  // 나중에 수정 예정
   const message: LocalizedTextMap<ChecklistType> = {
     umbrella: {
       ko: `오후 4시에 비가 내려요. 우산을 잊지말고 꼭 챙기세요!`,

@@ -19,6 +19,7 @@ export default function ChecklistSectionMessageBoxLabel({ selected, ...props }: 
   const lang = useSettingStore(state => state.lang);
   const [latestSelected, setLatestSelected] = useState(selected);
 
+  // 나중에 수정 예정
   const label: LocalizedTextMap<ChecklistType> = {
     umbrella: {
       ko: '우산을 챙겨요',
