@@ -19,8 +19,9 @@ export const ROOT_NAVIGATION_ROUTE_NAME_LIST: Record<RootNavigationRouteName, Ro
  * RootNavigation 라벨
  * @jinhok96 25.05.26
  */
-export const ROOT_NAVIGATION_LABEL_LIST: LocalizedTextMap<'Location'> = {
+export const ROOT_NAVIGATION_LABEL_LIST: LocalizedTextMap<'Location' | 'Setting'> = {
   Location: { en: 'Location', ko: '위치' },
+  Setting: { en: 'Setting', ko: '설정' },
 };
 
 /**

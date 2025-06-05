@@ -1,6 +1,7 @@
-import { Pressable, View } from 'react-native';
+import { Pressable, StatusBar, View } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import classNames from 'classnames';
 
 import PressableHitSlop from '@components/button/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
@@ -13,23 +14,46 @@ import {
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
+import type { RouteName } from '@libs/types/navigation.type';
+
 export default function LocationHeader() {
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const currentLocation = useLocationStore(state => state.currentLocation);
   const lang = useSettingStore(state => state.lang);
+  const theme = useSettingStore(state => state.theme);
 
   const locationName = currentLocation?.name || LocationNamePlaceholder[lang];
 
   const handleNavigateLocationScreenButtonPress = () => {
-    navigate('Location');
+    navigation.navigate('Location');
   };
 
   const handleNavigateSettingScreenButtonPress = () => {
-    navigate('Setting');
+    navigation.navigate('Setting');
   };
 
+  const currentRouteIndex = navigation.getState()?.routes[0].state?.index || 0;
+  const currentRouteName: RouteName =
+    (navigation.getState()?.routes[0].state?.routeNames?.[currentRouteIndex] as RouteName) || 'CurrentForecast';
+  const isCurrentForecast = currentRouteName === 'CurrentForecast';
+
+  const textColorClassName = classNames(isCurrentForecast && 'text-white', !isCurrentForecast && 'text-text-01');
+
+  const iconColorLightClassName = classNames(
+    'absolute transition-opacity',
+    isCurrentForecast && 'opacity-100',
+    !isCurrentForecast && 'opacity-0',
+  );
+
+  const iconColorDarkClassName = classNames(
+    'absolute transition-opacity',
+    isCurrentForecast && 'opacity-0',
+    !isCurrentForecast && 'opacity-100',
+  );
+
   return (
-    <View className="flex w-full flex-row items-center justify-between px-5 py-4">
+    <View className="pt-safe-offset-4 absolute top-0 flex w-full flex-row items-center justify-between bg-transparent px-5 pb-4">
+      <StatusBar barStyle={isCurrentForecast || theme !== 'light' ? 'light-content' : 'dark-content'} />
       {/* 현재 위치 버튼 */}
       <Pressable
         testID={LOCATION_HEADER_TEST_ID_LIST.navigateLocationScreenButton}
@@ -38,21 +62,31 @@ export default function LocationHeader() {
       >
         <PretendardText
           typo="title-3"
-          className="text-white"
+          className={textColorClassName}
         >
           {locationName}
         </PretendardText>
-        <View className="size-3">
-          <CaretIcon color="--color-white" />
+        <View className="relative size-3">
+          <View className={`size-3 ${iconColorLightClassName}`}>
+            <CaretIcon color="--color-white" />
+          </View>
+          <View className={`size-3 ${iconColorDarkClassName}`}>
+            <CaretIcon color="--color-text-01" />
+          </View>
         </View>
       </Pressable>
       {/* 설정 버튼 */}
       <PressableHitSlop
         testID={LOCATION_HEADER_TEST_ID_LIST.navigateSettingScreenButton}
-        className="size-6"
+        className="relative size-6"
         onPress={handleNavigateSettingScreenButtonPress}
       >
-        <SettingIcon color="--color-white" />
+        <View className={`size-6 ${iconColorLightClassName}`}>
+          <SettingIcon color="--color-white" />
+        </View>
+        <View className={`size-6 ${iconColorDarkClassName}`}>
+          <SettingIcon color="--color-text-06" />
+        </View>
       </PressableHitSlop>
     </View>
   );

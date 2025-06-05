@@ -6,6 +6,7 @@ import GlobalStackHeader from '@navigation/_components/styledHeader/GlobalStackH
 import HomeNavigation from '@navigation/home/HomeNavigation';
 import { ROOT_NAVIGATION_LABEL_LIST } from '@navigation/root/RootNavigation.const';
 import { SettingNavigation } from '@navigation/setting/SettingNavigation';
+import LocationHeader from '@screens/HomeScreen/_components/locationHeader/LocationHeader';
 import LocationScreen from '@screens/LocationScreen/LocationScreen';
 import ModalScreen from '@screens/ModalScreen/ModalScreen/ModalScreen';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
@@ -22,8 +23,8 @@ export function RootNavigation() {
   return (
     <RootStack.Navigator
       screenOptions={{
-        headerShown: false,
         animation: 'fade_from_bottom',
+        headerShown: false,
       }}
     >
       <RootStack.Group>
@@ -32,6 +33,8 @@ export function RootNavigation() {
           component={HomeNavigation}
           options={{
             animation: 'default',
+            headerShown: true,
+            header: () => <LocationHeader />,
           }}
         />
         <RootStack.Screen
