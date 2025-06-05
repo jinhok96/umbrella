@@ -36,59 +36,59 @@ const REM = 0.0625;
 // 타이포그래피 생성 함수
 const generateFontSize = (size: number) => `${size * REM}rem`;
 const generateLetterSpacing = (size: number, letterSpacing: number) => `${size * letterSpacing * REM}rem`;
-const generateTypography = (size: number, lineHeight: string, letterSpacing: number) => ({
+const generateTypography = (size: number, lineHeight: number, letterSpacing: number) => ({
   fontSize: generateFontSize(size),
-  lineHeight,
+  lineHeight: lineHeight.toString(),
   letterSpacing: generateLetterSpacing(size, letterSpacing),
 });
 
 /**
  * 타이포그래피 생성 플러그인
  * `.text-${font}-${name}`
- * @jinhok96 25.05.25
+ * @jinhok96 25.06.05
  */
 const typographyPlugin: PluginCreator = ({ addUtilities }) => {
   addUtilities({
     // Pretendard
     // Title
-    '.text-pretendard-title-1': generateTypography(28, '140%', -0.03),
-    '.text-pretendard-title-2': generateTypography(24, '140%', -0.03),
-    '.text-pretendard-title-3': generateTypography(20, '145%', -0.03),
-    '.text-pretendard-title-4': generateTypography(16, '145%', -0.03),
-    '.text-pretendard-title-5': generateTypography(14, '145%', -0.03),
+    '.text-pretendard-title-1': generateTypography(28, 1.4, -0.03),
+    '.text-pretendard-title-2': generateTypography(24, 1.4, -0.03),
+    '.text-pretendard-title-3': generateTypography(20, 1.45, -0.03),
+    '.text-pretendard-title-4': generateTypography(16, 1.45, -0.03),
+    '.text-pretendard-title-5': generateTypography(14, 1.45, -0.03),
     // Body
-    '.text-pretendard-body-1': generateTypography(16, '160%', -0.03),
-    '.text-pretendard-body-2': generateTypography(14, '160%', -0.03),
-    '.text-pretendard-body-3': generateTypography(13, '160%', -0.03),
-    '.text-pretendard-body-4': generateTypography(12, '160%', -0.03),
+    '.text-pretendard-body-1': generateTypography(16, 1.6, -0.03),
+    '.text-pretendard-body-2': generateTypography(14, 1.6, -0.03),
+    '.text-pretendard-body-3': generateTypography(13, 1.6, -0.03),
+    '.text-pretendard-body-4': generateTypography(12, 1.6, -0.03),
     // Caption
-    '.text-pretendard-caption-1': generateTypography(16, '150%', -0.03),
-    '.text-pretendard-caption-2': generateTypography(14, '150%', -0.03),
-    '.text-pretendard-caption-3': generateTypography(13, '150%', -0.03),
-    '.text-pretendard-caption-4': generateTypography(12, '150%', -0.03),
+    '.text-pretendard-caption-1': generateTypography(16, 1.5, -0.03),
+    '.text-pretendard-caption-2': generateTypography(14, 1.5, -0.03),
+    '.text-pretendard-caption-3': generateTypography(13, 1.5, -0.03),
+    '.text-pretendard-caption-4': generateTypography(12, 1.5, -0.03),
     // Button
-    '.text-pretendard-button-1': generateTypography(16, '130%', -0.02),
-    '.text-pretendard-button-2': generateTypography(14, '130%', -0.02),
+    '.text-pretendard-button-1': generateTypography(16, 1.3, -0.02),
+    '.text-pretendard-button-2': generateTypography(14, 1.3, -0.02),
     // Montserrat
     // Title
-    '.text-montserrat-title-1': generateTypography(32, '140%', -0.04),
-    '.text-montserrat-title-2': generateTypography(24, '140%', -0.04),
-    '.text-montserrat-title-3': generateTypography(20, '145%', -0.04),
-    '.text-montserrat-title-4': generateTypography(16, '145%', -0.04),
-    '.text-montserrat-title-5': generateTypography(14, '145%', -0.03),
+    '.text-montserrat-title-1': generateTypography(32, 1.4, -0.04),
+    '.text-montserrat-title-2': generateTypography(24, 1.4, -0.04),
+    '.text-montserrat-title-3': generateTypography(20, 1.45, -0.04),
+    '.text-montserrat-title-4': generateTypography(16, 1.45, -0.04),
+    '.text-montserrat-title-5': generateTypography(14, 1.45, -0.03),
     // Body
-    '.text-montserrat-body-1': generateTypography(16, '160%', -0.04),
-    '.text-montserrat-body-2': generateTypography(14, '160%', -0.03),
-    '.text-montserrat-body-3': generateTypography(13, '160%', -0.03),
-    '.text-montserrat-body-4': generateTypography(12, '160%', -0.03),
+    '.text-montserrat-body-1': generateTypography(16, 1.6, -0.04),
+    '.text-montserrat-body-2': generateTypography(14, 1.6, -0.03),
+    '.text-montserrat-body-3': generateTypography(13, 1.6, -0.03),
+    '.text-montserrat-body-4': generateTypography(12, 1.6, -0.03),
     // Caption
-    '.text-montserrat-caption-1': generateTypography(16, '150%', -0.04),
-    '.text-montserrat-caption-2': generateTypography(14, '150%', -0.03),
-    '.text-montserrat-caption-3': generateTypography(13, '150%', -0.03),
-    '.text-montserrat-caption-4': generateTypography(12, '150%', -0.03),
+    '.text-montserrat-caption-1': generateTypography(16, 1.5, -0.04),
+    '.text-montserrat-caption-2': generateTypography(14, 1.5, -0.03),
+    '.text-montserrat-caption-3': generateTypography(13, 1.5, -0.03),
+    '.text-montserrat-caption-4': generateTypography(12, 1.5, -0.03),
     // Button
-    '.text-montserrat-button-1': generateTypography(16, '130%', -0.04),
-    '.text-montserrat-button-2': generateTypography(14, '130%', -0.03),
+    '.text-montserrat-button-1': generateTypography(16, 1.3, -0.04),
+    '.text-montserrat-button-2': generateTypography(14, 1.3, -0.03),
   });
 };
 
