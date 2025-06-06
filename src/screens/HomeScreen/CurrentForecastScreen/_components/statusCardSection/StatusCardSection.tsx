@@ -35,6 +35,10 @@ function Section({ ...props }: ViewProps) {
   );
 }
 
+/**
+ * 현재 날씨 상태를 보여주는 카드 섹션
+ * @jinhok96 25.06.06
+ */
 export default function StatusCardSection({ ...props }: StatusCardSectionProps) {
   return (
     <View

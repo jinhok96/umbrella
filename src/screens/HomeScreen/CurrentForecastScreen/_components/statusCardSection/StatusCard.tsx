@@ -31,6 +31,10 @@ type StatusCardProps = Omit<ViewProps, 'className'> &
     statusTextList?: LocalizedTextMap<MoodIconProps['type']>;
   };
 
+/**
+ * 현재 날씨 상태를 보여주는 카드
+ * @jinhok96 25.06.06
+ */
 export default function StatusCard({
   type,
   label,
