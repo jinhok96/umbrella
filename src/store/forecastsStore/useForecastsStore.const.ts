@@ -34,6 +34,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     ],
     pm25: 15,
     pm10: 20,
+    o3: 63,
   },
   minutely: new Array(60).fill({
     dt: 1684929540,
@@ -63,6 +64,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pop: 0.15,
     pm25: 15,
     pm10: 20,
+    o3: 63,
   }),
   daily: new Array(8).fill({
     dt: 1684951200,

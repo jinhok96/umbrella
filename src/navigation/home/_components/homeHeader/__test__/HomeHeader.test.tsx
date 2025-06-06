@@ -4,11 +4,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import TestNavigationContainer from '@components/testComponent/TestNavigationContainer';
-import LocationHeader from '@screens/HomeScreen/_components/locationHeader/LocationHeader';
+import HomeHeader from '@navigation/home/_components/homeHeader/HomeHeader';
 import {
-  LOCATION_HEADER_TEST_ID_LIST,
+  HOME_HEADER_TEST_ID_LIST,
   LocationNamePlaceholder,
-} from '@screens/HomeScreen/_components/locationHeader/LocationHeader.const';
+} from '@navigation/home/_components/homeHeader/HomeHeader.const';
 import { locationStore } from '@store/locationStore/useLocationStore';
 import { INIT_LOCATION_STORE_STATE } from '@store/locationStore/useLocationStore.const';
 import { settingStore } from '@store/settingStore/useSettingStore';
@@ -23,7 +23,7 @@ function TestComponent() {
   return <Text>{TEST_CHIlDREN}</Text>;
 }
 
-describe('LocationHeader', () => {
+describe('HomeHeader', () => {
   beforeEach(() => {
     locationStore.setState(INIT_LOCATION_STORE_STATE);
   });
@@ -50,7 +50,7 @@ describe('LocationHeader', () => {
 
     render(
       <TestNavigationContainer>
-        <LocationHeader />
+        <HomeHeader />
       </TestNavigationContainer>,
     );
 
@@ -66,7 +66,7 @@ describe('LocationHeader', () => {
 
     render(
       <TestNavigationContainer>
-        <LocationHeader />
+        <HomeHeader />
       </TestNavigationContainer>,
     );
 
@@ -81,7 +81,7 @@ describe('LocationHeader', () => {
         <Stack.Navigator>
           <Stack.Screen
             name="Home"
-            component={LocationHeader}
+            component={HomeHeader}
           />
           <Stack.Screen
             name="Location"
@@ -91,7 +91,7 @@ describe('LocationHeader', () => {
       </TestNavigationContainer>,
     );
 
-    const button = await screen.findByTestId(LOCATION_HEADER_TEST_ID_LIST.navigateLocationScreenButton);
+    const button = await screen.findByTestId(HOME_HEADER_TEST_ID_LIST.navigateLocationScreenButton);
     fireEvent.press(button);
 
     const element = await screen.findByText(TEST_CHIlDREN);
@@ -104,7 +104,7 @@ describe('LocationHeader', () => {
         <Stack.Navigator>
           <Stack.Screen
             name="Home"
-            component={LocationHeader}
+            component={HomeHeader}
           />
           <Stack.Screen
             name="Setting"
@@ -114,7 +114,7 @@ describe('LocationHeader', () => {
       </TestNavigationContainer>,
     );
 
-    const button = await screen.findByTestId(LOCATION_HEADER_TEST_ID_LIST.navigateSettingScreenButton);
+    const button = await screen.findByTestId(HOME_HEADER_TEST_ID_LIST.navigateSettingScreenButton);
     fireEvent.press(button);
 
     const element = await screen.findByText(TEST_CHIlDREN);

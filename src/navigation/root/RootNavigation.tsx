@@ -3,10 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { enableFreeze } from 'react-native-screens';
 
 import GlobalStackHeader from '@navigation/_components/styledHeader/GlobalStackHeader';
+import HomeHeader from '@navigation/home/_components/homeHeader/HomeHeader';
 import HomeNavigation from '@navigation/home/HomeNavigation';
 import { ROOT_NAVIGATION_LABEL_LIST } from '@navigation/root/RootNavigation.const';
 import { SettingNavigation } from '@navigation/setting/SettingNavigation';
-import LocationHeader from '@screens/HomeScreen/_components/locationHeader/LocationHeader';
 import LocationScreen from '@screens/LocationScreen/LocationScreen';
 import ModalScreen from '@screens/ModalScreen/ModalScreen/ModalScreen';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
@@ -34,7 +34,7 @@ export function RootNavigation() {
           options={{
             animation: 'default',
             headerShown: true,
-            header: () => <LocationHeader />,
+            header: () => <HomeHeader />,
           }}
         />
         <RootStack.Screen
