@@ -102,7 +102,7 @@ export type GetCurrentAndForecastsWeatherDataParams = OpenWeatherOneCallAPICommo
  * @link https://openweathermap.org/weather-conditions#Icon-list
  * @jinhok96 25.05.22
  */
-export type WeatherIcon =
+export type WeatherIconId =
   | '01d'
   | '02d'
   | '03d'
@@ -145,7 +145,7 @@ type CommonWeatherData = {
     id: number; // Weather condition id
     main: string; // Group of weather parameters (Rain, Snow etc.)
     description: string; // Weather condition description
-    icon: WeatherIcon; // Weather icon id
+    icon: WeatherIconId; // Weather icon id
   }>;
 };
 

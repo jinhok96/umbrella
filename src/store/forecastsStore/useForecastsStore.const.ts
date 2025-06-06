@@ -42,11 +42,11 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
   }),
   hourly: new Array(48).fill({
     dt: 1684926000,
-    temp: 292.01,
-    feels_like: 292.33,
+    temp: 292.5,
+    feels_like: 292.3,
     pressure: 1014,
     humidity: 91,
-    dew_point: 290.51,
+    dew_point: 290.5,
     uvi: 0,
     clouds: 54,
     visibility: 10000,
@@ -75,7 +75,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     moon_phase: 0.16,
     summary: 'Expect a day of partly cloudy with rain',
     temp: {
-      day: 299.0,
+      day: 299.5,
       min: 290.6,
       max: 300.3,
       night: 291.4,
