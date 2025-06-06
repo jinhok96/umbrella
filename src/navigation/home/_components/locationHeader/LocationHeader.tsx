@@ -10,7 +10,7 @@ import SettingIcon from '@components/icon/SettingIcon';
 import {
   LOCATION_HEADER_TEST_ID_LIST,
   LocationNamePlaceholder,
-} from '@screens/HomeScreen/_components/locationHeader/LocationHeader.const';
+} from '@navigation/home/_components/locationHeader/LocationHeader.const';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
