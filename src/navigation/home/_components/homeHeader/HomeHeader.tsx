@@ -8,15 +8,15 @@ import PretendardText from '@components/fontText/PretendardText';
 import CaretIcon from '@components/icon/CaretIcon';
 import SettingIcon from '@components/icon/SettingIcon';
 import {
-  LOCATION_HEADER_TEST_ID_LIST,
+  HOME_HEADER_TEST_ID_LIST,
   LocationNamePlaceholder,
-} from '@navigation/home/_components/locationHeader/LocationHeader.const';
+} from '@navigation/home/_components/homeHeader/HomeHeader.const';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { RouteName } from '@libs/types/navigation.type';
 
-export default function LocationHeader() {
+export default function HomeHeader() {
   const navigation = useNavigation();
   const currentLocation = useLocationStore(state => state.currentLocation);
   const lang = useSettingStore(state => state.lang);
@@ -56,7 +56,7 @@ export default function LocationHeader() {
       <StatusBar barStyle={isCurrentForecast || theme !== 'light' ? 'light-content' : 'dark-content'} />
       {/* 현재 위치 버튼 */}
       <Pressable
-        testID={LOCATION_HEADER_TEST_ID_LIST.navigateLocationScreenButton}
+        testID={HOME_HEADER_TEST_ID_LIST.navigateLocationScreenButton}
         className="flex flex-row items-center gap-2"
         onPress={handleNavigateLocationScreenButtonPress}
       >
@@ -77,7 +77,7 @@ export default function LocationHeader() {
       </Pressable>
       {/* 설정 버튼 */}
       <PressableHitSlop
-        testID={LOCATION_HEADER_TEST_ID_LIST.navigateSettingScreenButton}
+        testID={HOME_HEADER_TEST_ID_LIST.navigateSettingScreenButton}
         className="relative size-6"
         onPress={handleNavigateSettingScreenButtonPress}
       >

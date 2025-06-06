@@ -5,7 +5,7 @@ export const LocationNamePlaceholder: LocalizedText = {
   en: 'Select location',
 };
 
-export const LOCATION_HEADER_TEST_ID_LIST = {
+export const HOME_HEADER_TEST_ID_LIST = {
   navigateLocationScreenButton: 'location-header-navigate-location-screen-button',
   navigateSettingScreenButton: 'location-header-navigate-setting-screen-button',
 };
