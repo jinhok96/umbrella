@@ -4,11 +4,7 @@ import MoodNormalSvg from '@assets/svg/MoodNormal.svg';
 import Show from '@components/wrapper/Show';
 import { useGetColorHex } from '@hooks/useGetColorHex';
 
-import type { IconProps } from '@components/icon/Icon.type';
-
-type MoodIconProps = Omit<IconProps, 'color'> & {
-  type: 'good' | 'normal' | 'bad';
-};
+import type { MoodIconProps } from '@components/icon/MoodIcon.type';
 
 export default function MoodIcon({ type, ...props }: MoodIconProps) {
   const goodColor = useGetColorHex('--color-morning');
