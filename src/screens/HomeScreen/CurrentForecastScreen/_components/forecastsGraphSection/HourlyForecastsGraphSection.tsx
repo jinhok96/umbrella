@@ -1,8 +1,7 @@
 import { ScrollView, View } from 'react-native';
 
-import ForecastsGraph, {
-  CustomGraphLabelComponent,
-} from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph';
+import ForecastsGraph from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph';
+import ForecastsGraphLabelComponent from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphLabelComponent';
 import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader';
 import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 
@@ -12,6 +11,11 @@ import type { GraphDataItem } from '@screens/HomeScreen/_components/forecastsGra
 const SECTION_HEADER_TEXT: LocalizedText = {
   ko: '시간별 날씨',
   en: 'Hourly Forecasts',
+};
+
+const GRAPH_LABEL_TEXT: LocalizedText = {
+  ko: '시',
+  en: 'H',
 };
 
 export default function HourlyForecastsGraphSection() {
@@ -29,7 +33,6 @@ export default function HourlyForecastsGraphSection() {
     <View className="rounded-[1.25rem] bg-background-02">
       <CurrentForecastScreenSectionHeader text={SECTION_HEADER_TEXT} />
       <ScrollView
-        className=""
         horizontal
         showsHorizontalScrollIndicator={false}
       >
@@ -37,9 +40,12 @@ export default function HourlyForecastsGraphSection() {
           <View className="flex flex-row items-start">
             {hourly.map(item => {
               return (
-                <CustomGraphLabelComponent
+                <ForecastsGraphLabelComponent
                   key={Math.random()}
-                  text="라벨"
+                  text={{
+                    ko: 17 + GRAPH_LABEL_TEXT.ko,
+                    en: 17 + GRAPH_LABEL_TEXT.en,
+                  }}
                   icon={item.weather[0].icon}
                   temp={item.temp}
                 />

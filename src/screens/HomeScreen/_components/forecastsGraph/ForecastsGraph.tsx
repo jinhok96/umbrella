@@ -5,9 +5,6 @@ import type { lineDataItem } from 'react-native-gifted-charts';
 import { LineChart } from 'react-native-gifted-charts';
 import { interpolate } from 'react-native-reanimated';
 
-import MontserratText from '@components/fontText/MontserratText';
-import PretendardText from '@components/fontText/PretendardText';
-import WeatherIcon from '@components/icon/WeatherIcon';
 import { useGetColorHex } from '@hooks/useGetColorHex';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
 import { getColorHex } from '@libs/utils/getColorHex.util';
@@ -18,8 +15,6 @@ import {
   FORECASTS_GRAPH_POINT_SIZE,
   FORECASTS_GRAPH_SPACING,
 } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.const';
-
-import type { WeatherIconId } from '@services/openWeatherOneCall/axios.type';
 
 /**
  * lineDataItem 타입
@@ -99,33 +94,6 @@ function findMinMax(list: GraphDataItem[]): { minValue?: number; maxValue?: numb
   });
 
   return { minValue, maxValue };
-}
-
-export function CustomGraphLabelComponent({ text, icon, temp }: { text: string; icon: WeatherIconId; temp: number }) {
-  return (
-    <View
-      className="flex items-center gap-2"
-      style={{ width: FORECASTS_GRAPH_SPACING }}
-    >
-      <PretendardText
-        typo="caption-4"
-        className="text-text-05"
-      >
-        {text}
-      </PretendardText>
-      <View className="flex items-center gap-1">
-        <View className="size-7">
-          <WeatherIcon icon={icon} />
-        </View>
-        <MontserratText
-          typo="title-5"
-          className="text-text-01"
-        >
-          {temp}°
-        </MontserratText>
-      </View>
-    </View>
-  );
 }
 
 function CustomGraphDataPointComponent() {
