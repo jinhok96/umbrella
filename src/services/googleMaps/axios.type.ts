@@ -143,6 +143,7 @@ export type AqiPmData = {
   dateTime: string;
   pm25?: number;
   pm10?: number;
+  o3?: number;
 };
 
 export type PostCurrentAirQualityRawResponse = {

@@ -101,8 +101,8 @@ export function useGetReverseGeocoding(params: UseGetReverseGeocodingParams) {
  * 현재 미세먼지 정보
  * @param lat number; 위도
  * @param lon number; 경도
- * @returns `{ dateTime, pm25, pm10 }`
- * @jinhok96 25.05.20
+ * @returns `{ dateTime, pm25, pm10, o3 }`
+ * @jinhok96 25.06.06
  */
 export function useGetCurrentAirQuality(params: UseGetCurrentAirQualityParams) {
   const lang = useSettingStore(state => state.lang);
@@ -131,8 +131,8 @@ export function useGetCurrentAirQuality(params: UseGetCurrentAirQualityParams) {
  * 미세먼지 48시간 예보
  * @param lat number; 위도
  * @param lon number; 경도
- * @returns `[{ dateTime, pm25, pm10 }]`
- * @jinhok96 25.05.20
+ * @returns `[{ dateTime, pm25, pm10, o3 }]`
+ * @jinhok96 25.06.06
  */
 export function useGetAirQualityHourlyForecasts(params: UseGetAirQualityHourlyForecastsParams) {
   const lang = useSettingStore(state => state.lang);

@@ -110,6 +110,7 @@ const AQI_PM_RESULT: AqiPmData = {
   dateTime: AQI_DATE_TIME,
   pm25: POLLUTANT_LIST.find(item => item.code === 'pm25')?.concentration.value,
   pm10: POLLUTANT_LIST.find(item => item.code === 'pm10')?.concentration.value,
+  o3: POLLUTANT_LIST.find(item => item.code === 'o3')?.concentration.value,
 };
 
 /**

@@ -206,6 +206,7 @@ export const googleMapsService = {
         dateTime: response.data?.dateTime,
         pm25: response.data?.pollutants.find(item => item.code === 'pm25')?.concentration.value,
         pm10: response.data?.pollutants.find(item => item.code === 'pm10')?.concentration.value,
+        o3: response.data?.pollutants.find(item => item.code === 'o3')?.concentration.value,
       };
 
       const updatedResponse: PickedAxiosResponse<PostCurrentAirQualityResponse | null> = {
@@ -247,6 +248,7 @@ export const googleMapsService = {
             dateTime: forecast.dateTime,
             pm25: forecast.pollutants.find(item => item.code === 'pm25')?.concentration.value,
             pm10: forecast.pollutants.find(item => item.code === 'pm10')?.concentration.value,
+            o3: forecast.pollutants.find(item => item.code === 'o3')?.concentration.value,
           }),
         );
 
