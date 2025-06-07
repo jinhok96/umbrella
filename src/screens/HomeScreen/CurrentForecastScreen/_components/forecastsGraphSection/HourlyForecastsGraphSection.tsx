@@ -29,6 +29,12 @@ export default function HourlyForecastsGraphSection() {
     return { value };
   });
 
+  /**
+   * 할 것
+   * 1. 선택한 요소에 배경색 넣기
+   * 2. 선택한 요소가 바뀌면 스크롤하기
+   */
+
   return (
     <View className="rounded-[1.25rem] bg-background-02">
       <CurrentForecastScreenSectionHeader text={SECTION_HEADER_TEXT} />
@@ -39,12 +45,13 @@ export default function HourlyForecastsGraphSection() {
         <View className="mx-3 flex gap-3">
           <View className="flex flex-row items-start">
             {hourly.map(item => {
+              const hour = new Date(item.dt).getHours();
               return (
                 <ForecastsGraphLabelComponent
-                  key={Math.random()}
+                  key={item.dt * Math.random()}
                   text={{
-                    ko: 17 + GRAPH_LABEL_TEXT.ko,
-                    en: 17 + GRAPH_LABEL_TEXT.en,
+                    ko: hour + GRAPH_LABEL_TEXT.ko,
+                    en: hour + GRAPH_LABEL_TEXT.en,
                   }}
                   icon={item.weather[0].icon}
                   temp={item.temp}

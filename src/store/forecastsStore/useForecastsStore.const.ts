@@ -43,7 +43,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
   hourly: new Array(48).fill({
     dt: 1684926000,
     temp: 292.5,
-    feels_like: 292.3,
+    feels_like: 292.5,
     pressure: 1014,
     humidity: 91,
     dew_point: 290.5,

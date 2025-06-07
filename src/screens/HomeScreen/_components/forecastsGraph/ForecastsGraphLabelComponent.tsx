@@ -24,6 +24,8 @@ export default function ForecastsGraphLabelComponent({
 }: ForecastsGraphLabelComponentProps) {
   const lang = useSettingStore(state => state.lang);
 
+  const roundedTemp = Math.round(temp * 10) * 0.1;
+
   return (
     <View
       {...props}
@@ -44,7 +46,7 @@ export default function ForecastsGraphLabelComponent({
           typo="title-5"
           className="text-text-01"
         >
-          {temp}°
+          {roundedTemp}°
         </MontserratText>
       </View>
     </View>

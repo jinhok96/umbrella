@@ -141,6 +141,7 @@ export default function ForecastsGraph({ data, ...props }: ForecastsGraphProps) 
         startOpacity={0.2}
         endOpacity={0}
         spacing={FORECASTS_GRAPH_SPACING}
+        initialSpacing={FORECASTS_GRAPH_SPACING * 0.5}
         endSpacing={FORECASTS_GRAPH_SPACING * -0.5}
         height={FORECASTS_GRAPH_HEIGHT}
         yAxisLabelWidth={0}
