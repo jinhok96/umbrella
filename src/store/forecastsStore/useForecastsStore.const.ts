@@ -36,12 +36,12 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pm10: 20,
     o3: 63,
   },
-  minutely: new Array(60).fill({
-    dt: 1684929540,
+  minutely: new Array(60).fill(0).map((_, index) => ({
+    dt: 1684929540 + index * 60,
     precipitation: 0,
-  }),
-  hourly: new Array(48).fill({
-    dt: 1684926000,
+  })),
+  hourly: new Array(48).fill(0).map((_, index) => ({
+    dt: 1684926000 + index * 60 * 60,
     temp: 292.5,
     feels_like: 292.5,
     pressure: 1014,
@@ -65,9 +65,9 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pm25: 15,
     pm10: 20,
     o3: 63,
-  }),
-  daily: new Array(8).fill({
-    dt: 1684951200,
+  })),
+  daily: new Array(8).fill(0).map((_, index) => ({
+    dt: 1684951200 + index * 60 * 60 * 24,
     sunrise: 1684926645,
     sunset: 1684977332,
     moonrise: 1684941060,
@@ -106,7 +106,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pop: 0.47,
     rain: 0.15,
     uvi: 9.23,
-  }),
+  })),
   alerts: [
     {
       sender_name: 'NWS Philadelphia - Mount Holly (New Jersey, Delaware, Southeastern Pennsylvania)',

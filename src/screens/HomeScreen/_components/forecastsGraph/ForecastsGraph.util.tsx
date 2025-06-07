@@ -32,5 +32,5 @@ export function findForecastsGraphMinMaxValue(list: GraphDataItem[]): { minValue
  * @jinhok96 25.06.07
  */
 export function generateDataPointKey(baseKey: string, theme: Theme, isSelected: boolean) {
-  return `${baseKey}-${theme}${isSelected && '-selected'}`;
+  return `${baseKey}-${theme}${isSelected ? '-selected' : ''}`;
 }
