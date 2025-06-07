@@ -34,7 +34,7 @@ export default function ForecastsGraph({ data, ...props }: ForecastsGraphProps) 
     return data.map(item => {
       // paddingBottom 계산
       const bottomPaddingValue =
-        (FORECASTS_GRAPH_BOTTOM_OFFSET + FORECASTS_GRAPH_BOTTOM_PADDING) / (FORECASTS_GRAPH_HEIGHT * 0.01);
+        (FORECASTS_GRAPH_BOTTOM_OFFSET + FORECASTS_GRAPH_BOTTOM_PADDING) / (FORECASTS_GRAPH_HEIGHT / 100);
 
       return {
         ...item,
@@ -57,8 +57,8 @@ export default function ForecastsGraph({ data, ...props }: ForecastsGraphProps) 
         startOpacity={0.2}
         endOpacity={0}
         spacing={FORECASTS_GRAPH_SPACING}
-        initialSpacing={FORECASTS_GRAPH_SPACING * 0.5}
-        endSpacing={FORECASTS_GRAPH_SPACING * -0.5}
+        initialSpacing={FORECASTS_GRAPH_SPACING / 2}
+        endSpacing={(FORECASTS_GRAPH_SPACING / 2) * -1}
         height={FORECASTS_GRAPH_HEIGHT}
         yAxisLabelWidth={0}
         isAnimated

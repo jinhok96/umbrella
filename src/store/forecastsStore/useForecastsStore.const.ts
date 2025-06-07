@@ -42,7 +42,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
   })),
   hourly: new Array(48).fill(0).map((_, index) => ({
     dt: 1684926000 + index * 60 * 60,
-    temp: 292.5,
+    temp: 292.5 * Math.random(),
     feels_like: 292.5,
     pressure: 1014,
     humidity: 91,
@@ -75,12 +75,12 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     moon_phase: 0.16,
     summary: 'Expect a day of partly cloudy with rain',
     temp: {
-      day: 299.5,
-      min: 290.6,
-      max: 300.3,
-      night: 291.4,
-      eve: 297.5,
-      morn: 292.5,
+      day: 299.5 * Math.random(),
+      min: 290.6 * Math.random(),
+      max: 300.3 * Math.random(),
+      night: 291.4 * Math.random(),
+      eve: 297.5 * Math.random(),
+      morn: 292.5 * Math.random(),
     },
     feels_like: {
       day: 299.2,

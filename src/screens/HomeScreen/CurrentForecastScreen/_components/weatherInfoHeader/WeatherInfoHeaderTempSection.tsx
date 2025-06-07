@@ -23,7 +23,7 @@ type WeatherInfoHeaderTempSectionProps = Omit<ViewProps, 'className'>;
 
 /**
  * `WeatherInfoHeader` 오늘 기온 정보 컴포넌트
- * @jinhok96 25.06.05
+ * @jinhok96 25.06.07
  */
 export default function WeatherInfoHeaderTempSection({ ...props }: WeatherInfoHeaderTempSectionProps) {
   const current = useForecastsStore(state => state.current);
@@ -41,7 +41,7 @@ export default function WeatherInfoHeaderTempSection({ ...props }: WeatherInfoHe
         typo="title-1"
         className="text-white"
       >
-        {current.temp}°
+        {Math.round(current.temp)}°
       </MontserratText>
       <View className="flex flex-row items-center gap-2">
         <View className="flex flex-row items-center gap-1">
@@ -55,7 +55,7 @@ export default function WeatherInfoHeaderTempSection({ ...props }: WeatherInfoHe
             typo="caption-3"
             className="text-white"
           >
-            {daily[0].temp.min}°
+            {Math.round(daily[0].temp.min)}°
           </MontserratText>
         </View>
         <View className="h-3 border-r border-white opacity-40" />
@@ -70,7 +70,7 @@ export default function WeatherInfoHeaderTempSection({ ...props }: WeatherInfoHe
             typo="caption-3"
             className="text-white"
           >
-            {daily[0].temp.max}°
+            {Math.round(daily[0].temp.max)}°
           </MontserratText>
         </View>
       </View>

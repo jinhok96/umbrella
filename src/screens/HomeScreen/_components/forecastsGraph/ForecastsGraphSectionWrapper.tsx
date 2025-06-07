@@ -55,7 +55,7 @@ export default function ForecastsGraphSectionWrapper({
   const handleScrollToSelectedIndex = (index: number) => {
     if (selectedIndex === null) return;
     if (!containerWidth) return;
-    const x = CONTAINER_MARGIN + FORECASTS_GRAPH_SPACING * (index + 0.5) - containerWidth * 0.5;
+    const x = CONTAINER_MARGIN + FORECASTS_GRAPH_SPACING * (index + 1 / 2) - containerWidth / 2;
     scrollRef.current?.scrollTo({
       x,
       animated: true,

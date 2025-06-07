@@ -45,8 +45,6 @@ export default function ForecastsGraphLabelComponent({
 }: ForecastsGraphLabelComponentProps) {
   const lang = useSettingStore(state => state.lang);
 
-  const roundedTemp = Math.round(temp * 10) * 0.1;
-
   const overlayClassName = classNames(
     'absolute left-0 top-0 rounded-xl bg-morning-light',
     !isSelected && 'opacity-0',
@@ -84,7 +82,7 @@ export default function ForecastsGraphLabelComponent({
           typo="title-5"
           className="text-text-01"
         >
-          {roundedTemp}°
+          {Math.round(temp)}°
         </MontserratText>
       </View>
     </Pressable>
