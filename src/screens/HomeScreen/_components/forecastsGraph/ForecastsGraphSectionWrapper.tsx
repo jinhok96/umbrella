@@ -8,7 +8,7 @@ import { useGetColorHex } from '@hooks/useGetColorHex';
 import { FORECASTS_GRAPH_SPACING } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.const';
 import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader';
 
-import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/ForecastsGraphSectionWrapper.type';
+import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
 
 const CONTAINER_MARGIN = 20;
 

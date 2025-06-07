@@ -7,13 +7,13 @@ import ForecastsGraph from '@screens/HomeScreen/_components/forecastsGraph/Forec
 import { generateDataPointKey } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.util';
 import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphDataPointComponent';
 import ForecastsGraphLabelComponent from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphLabelComponent';
-import ForecastsGraphSectionWrapper from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/ForecastsGraphSectionWrapper';
+import ForecastsGraphSectionWrapper from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper';
 import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { GraphDataItem } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.type';
-import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/ForecastsGraphSectionWrapper.type';
+import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
 
 const SECTION_HEADER_TEXT: LocalizedText = {
   ko: '요일별 날씨',

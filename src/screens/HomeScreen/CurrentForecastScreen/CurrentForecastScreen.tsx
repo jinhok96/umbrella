@@ -10,7 +10,7 @@ import HourlyForecastsGraphSection from '@screens/HomeScreen/CurrentForecastScre
 import StatusCardSection from '@screens/HomeScreen/CurrentForecastScreen/_components/statusCardSection/StatusCardSection';
 import WeatherInfoHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/weatherInfoHeader/WeatherInfoHeader';
 
-import type { ForecastsGraphSelectedIndex } from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/ForecastsGraphSectionWrapper.type';
+import type { ForecastsGraphSelectedIndex } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
 
 export default function CurrentForecastScreen() {
   const [hourlySelectedIndex, setHourlySelectedIndex] = useState<ForecastsGraphSelectedIndex>(0);
