@@ -1,12 +1,7 @@
 import PretendardText from '@components/fontText/PretendardText';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { PretendardTextProps } from '@components/fontText/PretendardText.type';
-import type { LocalizedText } from '@libs/utils/localize/localize.type';
-
-type CurrentForecastScreenSectionHeaderProps = Omit<PretendardTextProps, 'typo' | 'className' | 'children'> & {
-  text: LocalizedText;
-};
+import type { CurrentForecastScreenSectionHeaderProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader.type';
 
 export default function CurrentForecastScreenSectionHeader({
   text,

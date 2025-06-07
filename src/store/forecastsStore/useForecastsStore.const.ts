@@ -36,17 +36,17 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pm10: 20,
     o3: 63,
   },
-  minutely: new Array(60).fill({
-    dt: 1684929540,
+  minutely: new Array(60).fill(0).map((_, index) => ({
+    dt: 1684929540 + index * 60,
     precipitation: 0,
-  }),
-  hourly: new Array(48).fill({
-    dt: 1684926000,
-    temp: 292.01,
-    feels_like: 292.33,
+  })),
+  hourly: new Array(48).fill(0).map((_, index) => ({
+    dt: 1684926000 + index * 60 * 60,
+    temp: 292.5 * Math.random(),
+    feels_like: 292.5,
     pressure: 1014,
     humidity: 91,
-    dew_point: 290.51,
+    dew_point: 290.5,
     uvi: 0,
     clouds: 54,
     visibility: 10000,
@@ -65,9 +65,9 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pm25: 15,
     pm10: 20,
     o3: 63,
-  }),
-  daily: new Array(8).fill({
-    dt: 1684951200,
+  })),
+  daily: new Array(8).fill(0).map((_, index) => ({
+    dt: 1684951200 + index * 60 * 60 * 24,
     sunrise: 1684926645,
     sunset: 1684977332,
     moonrise: 1684941060,
@@ -75,12 +75,12 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     moon_phase: 0.16,
     summary: 'Expect a day of partly cloudy with rain',
     temp: {
-      day: 299.0,
-      min: 290.6,
-      max: 300.3,
-      night: 291.4,
-      eve: 297.5,
-      morn: 292.5,
+      day: 299.5 * Math.random(),
+      min: 290.6 * Math.random(),
+      max: 300.3 * Math.random(),
+      night: 291.4 * Math.random(),
+      eve: 297.5 * Math.random(),
+      morn: 292.5 * Math.random(),
     },
     feels_like: {
       day: 299.2,
@@ -106,7 +106,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pop: 0.47,
     rain: 0.15,
     uvi: 9.23,
-  }),
+  })),
   alerts: [
     {
       sender_name: 'NWS Philadelphia - Mount Holly (New Jersey, Delaware, Southeastern Pennsylvania)',

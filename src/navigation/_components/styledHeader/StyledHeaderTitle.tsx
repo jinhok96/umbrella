@@ -2,7 +2,7 @@ import PretendardText from '@components/fontText/PretendardText';
 
 import type { PretendardTextProps } from '@components/fontText/PretendardText.type';
 
-type StyledHeaderTitleProps = Omit<PretendardTextProps, 'typo'>;
+type StyledHeaderTitleProps = Omit<Partial<PretendardTextProps>, 'typo'>;
 
 /**
  * 상단 헤더 타이틀 컴포넌트

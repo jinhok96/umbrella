@@ -7,7 +7,7 @@ const nativewindPreset = require('nativewind/preset');
 
 const ANIMATION_STYLE = {
   'transition-timing-function': 'cubic-bezier(0.4, 0, 0.2, 1)', // ease-in-out
-  'transition-duration': '150ms',
+  'transition-duration': '200ms',
 };
 
 // transition-colors에 대응하는 속성

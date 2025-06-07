@@ -10,11 +10,11 @@ import ThunderstormSvg from '@assets/svg/weather/WeatherThunderstorm.svg';
 import Show from '@components/wrapper/Show';
 
 import type { IconProps } from '@components/icon/Icon.type';
-import type { WeatherIcon } from '@services/openWeatherOneCall/axios.type';
+import type { WeatherIconId } from '@services/openWeatherOneCall/axios.type';
 
 type WeatherIconProps = Omit<
   IconProps<{
-    icon: WeatherIcon;
+    icon: WeatherIconId;
   }>,
   'color'
 >;
