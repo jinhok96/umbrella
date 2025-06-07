@@ -46,7 +46,7 @@ export default function HourlyForecastsGraphSection({
     if (!hourly) return [];
 
     const newData = hourly?.map((item, index) => {
-      const value = item.temp + index;
+      const value = item.temp;
       const isSelected = index === selectedIndex;
 
       const baseKey = item.dt.toString();

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
+import { getDailyAvgTemp } from '@libs/utils/getDailyAvgTemp.util';
 import ForecastsGraph from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph';
 import { generateDataPointKey } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.util';
 import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphDataPointComponent';
@@ -51,7 +52,8 @@ export default function DailyForecastsGraphSection({
     if (!daily) return [];
 
     const newData = daily?.map((item, index) => {
-      const value = item.temp.day + index;
+      const { morn, day, eve, night } = item.temp;
+      const value = getDailyAvgTemp(morn, day, eve, night);
       const isSelected = index === selectedIndex;
 
       const baseKey = item.dt.toString();
@@ -91,6 +93,9 @@ export default function DailyForecastsGraphSection({
             const date = new Date(item.dt * 1000);
             const isSelected = index === selectedIndex;
 
+            const { morn, day, eve, night } = item.temp;
+            const value = getDailyAvgTemp(morn, day, eve, night);
+
             return (
               <ForecastsGraphLabelComponent
                 key={item.dt}
@@ -99,7 +104,7 @@ export default function DailyForecastsGraphSection({
                   en: getEnglishShortDay(date),
                 }}
                 icon={item.weather[0].icon}
-                temp={item.temp.day}
+                temp={value}
                 isSelected={isSelected}
                 onPress={() => handleForecastsGraphLabelComponentPress(index)}
               />
