@@ -11,7 +11,7 @@ type StyledBottomTabBarProps = Omit<ViewProps, 'className' | 'children'> & Botto
 /**
  * 스타일이 적용된 `BottomTabBar` 컴포넌트
  * @param props `BottomTabBarProps`
- * @jinhok96 25.05.26
+ * @jinhok96 25.06.09
  */
 export default function StyledBottomTabBar({
   state,
@@ -23,7 +23,7 @@ export default function StyledBottomTabBar({
   return (
     <View
       {...props}
-      className="pb-safe-offset-3 bg-background-02 px-3"
+      className="pb-safe-offset-5 bg-background-02 px-3"
       style={{ boxShadow: shadowStyleList.bottomTabBar }}
     >
       <BottomTabBar
