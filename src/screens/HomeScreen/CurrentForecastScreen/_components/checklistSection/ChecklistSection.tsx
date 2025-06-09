@@ -52,7 +52,7 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
           onLayout={e => {
             const { width } = e.nativeEvent.layout;
             if (!width) return;
-            const newMaxHeight = Math.round((width - 20 * 2 - 12 * 3) / 4);
+            const newMaxHeight = Math.round((width - BUTTON_CONTAINER_PADDING * 2 - BUTTON_GAP * 3) / 4);
             if (buttonMaxHeight !== newMaxHeight) setButtonMaxHeight(newMaxHeight);
           }}
         >
