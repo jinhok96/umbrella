@@ -19,12 +19,16 @@ const SECTION_HEADER_TEXT: LocalizedText = {
 
 type ChecklistSection = Omit<ViewProps, 'className'>;
 
+const BUTTON_GAP = 12;
+const BUTTON_CONTAINER_PADDING = 20;
+
 /**
  * 체크리스트 섹션 컴포넌트
- * @jinhok96 25.06.06
+ * @jinhok96 25.06.09
  */
 export default function ChecklistSection({ ...props }: ChecklistSection) {
   const [selected, setSelected] = useState<ChecklistType | null>(null);
+  const [buttonMaxHeight, setButtonMaxHeight] = useState<number>();
 
   const handleButtonPress = (type: ChecklistType) => {
     setSelected(selected === type ? null : type);
@@ -37,7 +41,21 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
     >
       <CurrentForecastScreenSectionHeader text={SECTION_HEADER_TEXT} />
       <View className="w-full pb-5 pt-0">
-        <View className="flex w-full flex-row items-center justify-between gap-3 px-5">
+        <View
+          className="flex w-full flex-row flex-wrap items-center justify-between"
+          style={{
+            maxHeight: buttonMaxHeight,
+            gap: BUTTON_GAP,
+            paddingLeft: BUTTON_CONTAINER_PADDING,
+            paddingRight: BUTTON_CONTAINER_PADDING,
+          }}
+          onLayout={e => {
+            const { width } = e.nativeEvent.layout;
+            if (!width) return;
+            const newMaxHeight = Math.round((width - 20 * 2 - 12 * 3) / 4);
+            if (buttonMaxHeight !== newMaxHeight) setButtonMaxHeight(newMaxHeight);
+          }}
+        >
           <ChecklistSectionUmbrellaButton
             isSelected={selected === 'umbrella'}
             onPress={() => handleButtonPress('umbrella')}

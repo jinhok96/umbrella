@@ -51,12 +51,14 @@ export default function Toast({ id, type = 'default', text, onPress, ...props }:
   }, []);
 
   useEffect(() => {
-    if (!isOpened) {
-      // CLOSE_TOAST_DELAY 지나면 자동 닫기
-      setTimeout(() => {
-        handleClose();
-      }, CLOSE_TOAST_DELAY);
-    }
+    if (!isOpened) return;
+
+    // CLOSE_TOAST_DELAY 지나면 자동 닫기
+    const timeoutId = setTimeout(() => {
+      handleClose();
+    }, CLOSE_TOAST_DELAY);
+
+    return () => clearTimeout(timeoutId);
   }, [isOpened]);
 
   const toastClassName = classNames(
