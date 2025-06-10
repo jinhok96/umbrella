@@ -40,7 +40,7 @@ function GradientOverlay({ className, reverse }: { className: string; reverse?: 
  * @param headerText 헤더 텍스트
  * @param selectedIndex 선택한 요소 인덱스
  * @param children 그래프 요소
- * @jinhok96 25.06.07
+ * @jinhok96 25.06.10
  */
 export default function ForecastsGraphSectionWrapper({
   headerText,
@@ -51,9 +51,11 @@ export default function ForecastsGraphSectionWrapper({
   const [containerWidth, setContainerWidth] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
 
+  const isSelectedIndexEmpty = !selectedIndex && selectedIndex !== 0;
+
   // selectedIndex 요소를 중앙으로 스크롤하는 함수
   const handleScrollToSelectedIndex = (index: number) => {
-    if (selectedIndex === null) return;
+    if (isSelectedIndexEmpty) return;
     if (!containerWidth) return;
     const x = CONTAINER_MARGIN + FORECASTS_GRAPH_SPACING * (index + 1 / 2) - containerWidth / 2;
     scrollRef.current?.scrollTo({
@@ -63,7 +65,7 @@ export default function ForecastsGraphSectionWrapper({
   };
 
   useEffect(() => {
-    if (selectedIndex === null) return;
+    if (isSelectedIndexEmpty) return;
     handleScrollToSelectedIndex(selectedIndex);
   }, [selectedIndex]);
 

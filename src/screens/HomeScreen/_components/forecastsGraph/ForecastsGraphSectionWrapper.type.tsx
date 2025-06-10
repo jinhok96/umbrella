@@ -6,6 +6,6 @@ export type ForecastsGraphSelectedIndex = number | null;
 
 export type ForecastsGraphSectionWrapperProps = ViewProps & {
   headerText?: CurrentForecastScreenSectionHeaderProps['text'];
-  selectedIndex: ForecastsGraphSelectedIndex;
+  selectedIndex?: ForecastsGraphSelectedIndex;
   onSelectedIndexChange?: (index: ForecastsGraphSelectedIndex) => void;
 };
