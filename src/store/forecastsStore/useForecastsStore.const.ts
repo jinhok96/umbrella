@@ -117,4 +117,42 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
       tags: [],
     },
   ],
+  checklist: {
+    umbrella: {
+      hours: [21, 22],
+      message: {
+        ko: `오후 4시에 비가 내려요. 우산을 잊지말고 꼭 챙기세요!`,
+        en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
+      },
+    },
+    mask: {
+      pm10: 15,
+      pm25: 20,
+      message: {
+        ko: `미세먼지 농도가 00로 매우 높아요.\n마스크를 착용하세요!`,
+        en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
+      },
+    },
+    clothes: {
+      temp: {
+        day: 26.35,
+        min: 17.45,
+        max: 27.15,
+        night: 18.25,
+        eve: 24.35,
+        morn: 19.35,
+      },
+      message: {
+        ko: `일교차가 크고 쌀쌀해요. 긴팔을 입는 게 좋아요!`,
+        en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
+      },
+    },
+    suncream: {
+      uvi: 9.23,
+      message: {
+        ko: `자외선지수가 00으로 매우 높아요!\n썬크림으로 피부를 보호하세요!`,
+        en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
+      },
+    },
+  },
 };

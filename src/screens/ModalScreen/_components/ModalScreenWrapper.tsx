@@ -23,9 +23,11 @@ export default function ModalScreenWrapper({ children, params, ...props }: Modal
   const { position } = params;
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setAnimate(isOpened);
     }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [isOpened]);
 
   const modalScreenWrapperClassName = classNames(

@@ -19,7 +19,7 @@ export default function ChecklistSectionButtonWrapper({
   const [height, setHeight] = useState(0);
 
   const iconClassName = classNames(
-    'aspect-square rounded-xl border',
+    'rounded-xl border',
     !isSelected && 'border-background-03 bg-background-03',
     isSelected && 'border-morning bg-checklist',
   );
