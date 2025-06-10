@@ -171,7 +171,7 @@ const NEW_STATE_MOCK: StoreState = {
 
 /**
  * useForecastsStore 테스트
- * @jinhok96 25.05.20
+ * @jinhok96 25.06.10
  */
 describe('useForecastsStore', () => {
   const store = forecastsStore;

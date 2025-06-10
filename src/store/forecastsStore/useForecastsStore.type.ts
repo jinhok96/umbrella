@@ -1,3 +1,4 @@
+import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type {
   AqiPmData,
   PostAirQualityHourlyForecastsResponse,
@@ -16,10 +17,12 @@ type Alerts = GetCurrentAndForecastsWeatherDataResponse['alerts'];
 type Checklist = {
   umbrella: {
     hours: number[];
+    message?: LocalizedText;
   };
   mask: {
     pm10: number;
     pm25: number;
+    message?: LocalizedText;
   };
   clothes: {
     temp: {
@@ -30,9 +33,11 @@ type Checklist = {
       min: number;
       max: number;
     } | null;
+    message?: LocalizedText;
   };
   suncream: {
     uvi: number;
+    message?: LocalizedText;
   };
 };
 

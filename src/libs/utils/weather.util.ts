@@ -11,3 +11,13 @@ export function isRainy(rain: number): 0 | 1 | 2 | 3 | 4 {
   if (rain < 8 / 10) return 3;
   return 4;
 }
+
+/**
+ * 화씨를 섭씨로 변환하는 함수
+ * @param temp 화씨
+ * @returns 섭씨
+ * @jinhok96 25.06.10
+ */
+export function convertTempImperialToMetric(temp: number): number {
+  return (temp * 9) / 8 + 32;
+}

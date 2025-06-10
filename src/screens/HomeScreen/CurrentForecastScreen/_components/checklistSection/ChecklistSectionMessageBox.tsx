@@ -1,48 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import classNames from 'classnames';
 
 import PretendardText from '@components/fontText/PretendardText';
 import ChecklistSectionMessageBoxLabel from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBoxLabel';
+import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
-import type { ChecklistType } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonWrapper.type';
 import type { ChecklistSectionMessageBoxProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBox.type';
 
 /**
  * `ChecklistSection`의 메세지 컴포넌트
  * @param selected 선택된 체크리스트 타입
- * @jinhok96 25.06.06
+ * @jinhok96 25.06.10
  */
 export default function ChecklistSectionMessageBox({
   selected,
   onTextLayout,
   ...props
 }: ChecklistSectionMessageBoxProps) {
+  const checklist = useForecastsStore(state => state.checklist);
   const lang = useSettingStore(state => state.lang);
+  const [latestSelected, setLatestSelected] = useState(selected);
   const [messageLine, setMessageLine] = useState(0);
 
-  // 나중에 수정 예정
-  const message: LocalizedTextMap<ChecklistType> = {
-    umbrella: {
-      ko: `오후 4시에 비가 내려요. 우산을 잊지말고 꼭 챙기세요!`,
-      en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
-    },
-    mask: {
-      ko: `미세먼지 농도가 00로 매우 높아요.\n마스크를 착용하세요!`,
-      en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
-    },
-    clothes: {
-      ko: `일교차가 크고 쌀쌀해요. 긴팔을 입는 게 좋아요!`,
-      en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
-    },
-    suncream: {
-      ko: `자외선 지수가 매우 높아요!\n썬크림으로 피부를 보호하세요!`,
-      en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
-    },
-  };
+  const message = latestSelected && checklist?.[latestSelected].message;
 
   const messagePaddingTopClassName = classNames(
     'px-5 transition-[padding-top]',
@@ -60,6 +43,12 @@ export default function ChecklistSectionMessageBox({
     selected && messageLine === 3 && 'h-[6.95rem]', // pt(28) + pb(16) + body2(14*1.6)*3 = 111.2px = 6.95rem
   );
 
+  useEffect(() => {
+    if (!selected) return;
+    setLatestSelected(selected);
+  }, [selected]);
+
+  // h-0이 적용되어야 애니메이션이 작동하므로 항상 렌더링
   return (
     <View className="relative flex overflow-hidden">
       <View className={messagePaddingTopClassName}>
@@ -72,7 +61,7 @@ export default function ChecklistSectionMessageBox({
             onTextLayout?.(e);
           }}
         >
-          {selected && message[selected][lang]}
+          {message?.[lang]}
         </PretendardText>
         <ChecklistSectionMessageBoxLabel selected={selected} />
       </View>
