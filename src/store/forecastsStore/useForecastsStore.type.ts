@@ -13,12 +13,36 @@ type Hourly = Array<GetCurrentAndForecastsWeatherDataResponse['hourly'][number] 
 type Daily = GetCurrentAndForecastsWeatherDataResponse['daily'];
 type Alerts = GetCurrentAndForecastsWeatherDataResponse['alerts'];
 
+type Checklist = {
+  umbrella: {
+    hours: number[];
+  };
+  mask: {
+    pm10: number;
+    pm25: number;
+  };
+  clothes: {
+    temp: {
+      morn: number;
+      day: number;
+      eve: number;
+      night: number;
+      min: number;
+      max: number;
+    } | null;
+  };
+  suncream: {
+    uvi: number;
+  };
+};
+
 export type ForecastsStoreState = {
   current: Current | null;
   minutely: Minutely | null;
   hourly: Hourly | null;
   daily: Daily | null;
   alerts: Alerts | null;
+  checklist: Checklist | null;
 };
 
 export type ForecastsStoreActions = {

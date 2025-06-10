@@ -117,4 +117,26 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
       tags: [],
     },
   ],
+  checklist: {
+    umbrella: {
+      hours: [],
+    },
+    mask: {
+      pm10: 0,
+      pm25: 0,
+    },
+    clothes: {
+      temp: {
+        morn: 0,
+        day: 0,
+        eve: 0,
+        night: 0,
+        min: 0,
+        max: 0,
+      },
+    },
+    suncream: {
+      uvi: 0,
+    },
+  },
 };

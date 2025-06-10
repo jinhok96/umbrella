@@ -49,7 +49,7 @@ const GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK: GetCurrentAndForecastsWea
     pressure: 1014,
     humidity: 91,
     dew_point: 290.51,
-    uvi: 0,
+    uvi: 0.16,
     clouds: 54,
     visibility: 10000,
     wind_speed: 2.58,
@@ -122,6 +122,7 @@ const POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK: PostCurrentAirQualityResponse = {
   dateTime: 'testDateTime',
   pm25: 15,
   pm10: 20,
+  o3: 63,
 };
 
 const POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK = new Array(48).fill(POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK);
@@ -132,6 +133,7 @@ const INIT_STATE_MOCK: StoreState = {
   hourly: null,
   daily: null,
   alerts: null,
+  checklist: null,
 };
 
 const NEW_STATE_MOCK: StoreState = {
@@ -139,15 +141,32 @@ const NEW_STATE_MOCK: StoreState = {
     ...GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.current,
     pm10: POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK.pm10,
     pm25: POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK.pm25,
+    o3: POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK.o3,
   },
   minutely: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.minutely,
   hourly: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.hourly.map((hourlyData, index) => ({
     ...hourlyData,
     pm10: POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK[index].pm10,
     pm25: POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK[index].pm25,
+    o3: POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK[index].o3,
   })),
   daily: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.daily,
   alerts: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.alerts,
+  checklist: {
+    umbrella: {
+      hours: [],
+    },
+    mask: {
+      pm10: POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK[0].pm10,
+      pm25: POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK[0].pm25,
+    },
+    clothes: {
+      temp: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.daily[0].temp,
+    },
+    suncream: {
+      uvi: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.hourly[0].uvi,
+    },
+  },
 };
 
 /**
