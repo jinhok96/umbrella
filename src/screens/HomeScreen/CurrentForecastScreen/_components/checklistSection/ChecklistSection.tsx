@@ -20,7 +20,7 @@ type ChecklistSection = Omit<ViewProps, 'className'>;
 
 const BUTTON_GAP = 12;
 const BUTTON_CONTAINER_PADDING = 20;
-const BUTTON_MAX_ROW_ITEM_NUM = 3;
+const BUTTON_MAX_ROW_ITEM_NUM = 4;
 
 /**
  * 체크리스트 섹션 컴포넌트
@@ -34,11 +34,13 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
   const [selected, setSelected] = useState<{ type: ChecklistType; row: number } | null>(null);
   const [buttonMaxHeight, setButtonMaxHeight] = useState<number>();
 
+  // checklist를 4개씩 2차 배열로 분리
   useEffect(() => {
     if (!checklist) return setChecklistArray([]);
 
     const newChecklist: Array<Partial<ForecastsStoreState['checklist'] & { type: ChecklistType }>> = [];
 
+    // umbrella, mask, clothes, suncream 순서대로 추가
     if (checklist) {
       if (checklist.umbrella.hours.length) {
         newChecklist.push({ ...checklist.umbrella, type: 'umbrella' });
