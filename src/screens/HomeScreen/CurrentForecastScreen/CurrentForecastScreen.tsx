@@ -1,10 +1,10 @@
 import { ScrollView, View } from 'react-native';
 
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
+import DailyForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/DailyForecastsGraphSection';
+import HourlyForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/HourlyForecastsGraphSection';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
 import ChecklistSection from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSection';
-import DailyForecastsGraphSection from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/DailyForecastsGraphSection';
-import HourlyForecastsGraphSection from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/HourlyForecastsGraphSection';
 import StatusCardSection from '@screens/HomeScreen/CurrentForecastScreen/_components/statusCardSection/StatusCardSection';
 import WeatherInfoHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/weatherInfoHeader/WeatherInfoHeader';
 

@@ -9,7 +9,7 @@ import Show from '@components/wrapper/Show';
 import { useGetColorHex } from '@hooks/useGetColorHex';
 import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader';
 
-import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
+import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSectionWrapper.type';
 
 type GradientOverlayProps = Pick<ForecastsGraphSectionWrapperProps, 'forecastsGraphContainerMargin'> & {
   className: string;
@@ -57,7 +57,7 @@ export default function ForecastsGraphSectionWrapper({
   children,
   className,
   forecastsGraphSpacing,
-  forecastsGraphContainerMargin: containerMargin,
+  forecastsGraphContainerMargin,
   ...props
 }: ForecastsGraphSectionWrapperProps) {
   const [containerWidth, setContainerWidth] = useState(0);
@@ -72,7 +72,7 @@ export default function ForecastsGraphSectionWrapper({
     const handleScrollToSelectedIndex = (index: number) => {
       if (isSelectedIndexEmpty) return;
       if (!containerWidth) return;
-      const x = containerMargin + forecastsGraphSpacing * (index + 1 / 2) - containerWidth / 2;
+      const x = forecastsGraphContainerMargin + forecastsGraphSpacing * (index + 1 / 2) - containerWidth / 2;
       scrollRef.current?.scrollTo({
         x,
         animated: true,
@@ -95,19 +95,21 @@ export default function ForecastsGraphSectionWrapper({
       </Show>
       <GradientOverlay
         className="absolute left-0 top-0 z-10 h-full"
-        forecastsGraphContainerMargin={containerMargin}
+        forecastsGraphContainerMargin={forecastsGraphContainerMargin}
       />
       <GradientOverlay
         className="absolute right-0 top-0 z-10 h-full"
         reverse
-        forecastsGraphContainerMargin={containerMargin}
+        forecastsGraphContainerMargin={forecastsGraphContainerMargin}
       />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         ref={scrollRef}
       >
-        <View style={{ marginLeft: containerMargin, marginRight: containerMargin }}>{children}</View>
+        <View style={{ marginLeft: forecastsGraphContainerMargin, marginRight: forecastsGraphContainerMargin }}>
+          {children}
+        </View>
       </ScrollView>
     </View>
   );

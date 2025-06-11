@@ -9,7 +9,7 @@ import WeatherIcon from '@components/icon/WeatherIcon';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
-import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.type';
+import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.type';
 import type { WeatherIconId } from '@services/openWeatherOneCall/axios.type';
 
 type ForecastsGraphLabelComponentProps = Omit<PressableProps, 'children' | 'className'> &

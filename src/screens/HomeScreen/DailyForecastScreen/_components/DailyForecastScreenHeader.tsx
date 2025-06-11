@@ -1,11 +1,11 @@
+import DailyForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/DailyForecastsGraphSection';
 import HomeScreenHeaderWrapper from '@screens/HomeScreen/_components/homeScreenHeaderWrapper/HomeScreenHeaderWrapper';
-import DailyForecastsGraphSection from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/DailyForecastsGraphSection';
 
-import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
+import type { DailyForecastsGraphSectionProps } from '@screens/HomeScreen/_components/forecastsGraphSection/DailyForecastsGraphSection.type';
 import type { HomeScreenHeaderWrapperProps } from '@screens/HomeScreen/_components/homeScreenHeaderWrapper/HomeScreenHeaderWrapper.type';
 
 type DailyForecastScreenHeaderProps = Omit<HomeScreenHeaderWrapperProps, 'className'> &
-  Pick<ForecastsGraphSectionWrapperProps, 'selectedIndex' | 'onSelectedIndexChange'>;
+  Pick<DailyForecastsGraphSectionProps, 'selectedIndex' | 'onSelectedIndexChange'>;
 
 /**
  * DailyForecastScreen의 그래프 헤더

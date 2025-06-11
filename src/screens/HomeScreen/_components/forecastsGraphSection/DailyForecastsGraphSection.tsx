@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
-import type { ViewProps } from 'react-native';
-import { View } from 'react-native';
+import type { LayoutChangeEvent } from 'react-native';
 
 import { getDailyAvgTemp } from '@libs/utils/getDailyAvgTemp.util';
-import ForecastsGraph from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph';
+import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphDataPointComponent';
+import ForecastsGraphLabelComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphLabelComponent';
 import {
   FORECASTS_GRAPH_BOTTOM_OFFSET,
   FORECASTS_GRAPH_BOTTOM_PADDING,
@@ -12,20 +12,15 @@ import {
   FORECASTS_GRAPH_MAX_VALUE,
   FORECASTS_GRAPH_POINT_SIZE,
   FORECASTS_GRAPH_SPACING,
-} from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.const';
-import { generateDataPointKey } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.util';
-import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphDataPointComponent';
-import ForecastsGraphLabelComponent from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphLabelComponent';
-import ForecastsGraphSectionWrapper from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper';
+} from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.const';
+import { generateDataPointKey } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.util';
+import ForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSection';
 import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
-import type {
-  ForecastsGraphStyle,
-  GraphDataItem,
-} from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.type';
-import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
+import type { DailyForecastsGraphSectionProps } from '@screens/HomeScreen/_components/forecastsGraphSection/DailyForecastsGraphSection.type';
+import type { GraphDataItem } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.type';
 
 const SECTION_HEADER_TEXT: LocalizedText = {
   ko: '요일별 날씨',
@@ -41,11 +36,6 @@ function getEnglishShortDay(date: Date) {
   const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   return days[date.getDay()];
 }
-
-type DailyForecastsGraphSectionProps = ViewProps &
-  Pick<ForecastsGraphSectionWrapperProps, 'selectedIndex' | 'onSelectedIndexChange' | 'hideHeader'> &
-  Partial<Pick<ForecastsGraphSectionWrapperProps, 'forecastsGraphContainerMargin'>> &
-  ForecastsGraphStyle;
 
 /**
  * 요일별 날씨 그래프 섹션
@@ -106,8 +96,16 @@ export default function DailyForecastsGraphSection({
   }, [daily, selectedIndex, theme]);
 
   // 그래프 간격 업데이트
-  const handleForecastsGraphSpacingUpdate = (spacing: number) => {
-    setCurrentForecastsGraphSpacing(spacing > forecastsGraphSpacing ? spacing : forecastsGraphSpacing);
+  const handleLayout = (e: LayoutChangeEvent) => {
+    onLayout?.(e);
+
+    // 그래프 간격 업데이트
+    const newCurrentForecastsGraphSpacing =
+      (e.nativeEvent.layout.width - forecastsGraphContainerMargin * 2) / data.length;
+
+    setCurrentForecastsGraphSpacing(
+      newCurrentForecastsGraphSpacing > forecastsGraphSpacing ? newCurrentForecastsGraphSpacing : forecastsGraphSpacing,
+    );
   };
 
   // 라벨 클릭 시 selectedIndex 업데이트
@@ -118,62 +116,46 @@ export default function DailyForecastsGraphSection({
   };
 
   return (
-    <View
+    <ForecastsGraphSection
       {...props}
-      onLayout={e => {
-        const newCurrentForecastsGraphSpacing =
-          (e.nativeEvent.layout.width - forecastsGraphContainerMargin * 2) / data.length;
-        handleForecastsGraphSpacingUpdate(newCurrentForecastsGraphSpacing);
-        onLayout?.(e);
-      }}
+      data={data}
+      selectedIndex={selectedIndex}
+      headerText={SECTION_HEADER_TEXT}
+      hideHeader={hideHeader}
+      forecastsGraphHeight={forecastsGraphHeight}
+      forecastsGraphBottomOffset={forecastsGraphBottomOffset}
+      forecastsGraphBottomPadding={forecastsGraphBottomPadding}
+      forecastsGraphMaxValue={forecastsGraphMaxValue}
+      forecastsGraphSpacing={currentForecastsGraphSpacing}
+      forecastsGraphPointSize={forecastsGraphPointSize}
+      forecastsGraphContainerMargin={forecastsGraphContainerMargin}
+      onLayout={handleLayout}
     >
-      <ForecastsGraphSectionWrapper
-        className="bg-background-02"
-        headerText={!hideHeader ? SECTION_HEADER_TEXT : undefined}
-        selectedIndex={selectedIndex}
-        hideHeader={hideHeader}
-        forecastsGraphSpacing={currentForecastsGraphSpacing}
-        forecastsGraphContainerMargin={forecastsGraphContainerMargin}
-      >
-        {/* 라벨 */}
-        <View className="flex flex-row items-start">
-          {daily?.map((item, index) => {
-            const date = new Date(item.dt * 1000);
-            const isSelected = index === selectedIndex;
+      {daily?.map((item, index) => {
+        const date = new Date(item.dt * 1000);
+        const isSelected = index === selectedIndex;
 
-            const { morn, day, eve, night } = item.temp;
-            const value = getDailyAvgTemp(morn, day, eve, night);
+        const { morn, day, eve, night } = item.temp;
+        const value = getDailyAvgTemp(morn, day, eve, night);
 
-            return (
-              <ForecastsGraphLabelComponent
-                key={item.dt}
-                text={{
-                  ko: getKoreanDay(date),
-                  en: getEnglishShortDay(date),
-                }}
-                icon={item.weather[0].icon}
-                temp={value}
-                isSelected={isSelected}
-                onPress={() => handleForecastsGraphLabelComponentPress(index)}
-                forecastsGraphHeight={forecastsGraphHeight}
-                forecastsGraphBottomOffset={forecastsGraphBottomOffset}
-                forecastsGraphBottomPadding={forecastsGraphBottomPadding}
-                forecastsGraphSpacing={currentForecastsGraphSpacing}
-              />
-            );
-          })}
-        </View>
-        {/* 그래프 */}
-        <ForecastsGraph
-          data={data}
-          forecastsGraphHeight={forecastsGraphHeight}
-          forecastsGraphPointSize={forecastsGraphPointSize}
-          forecastsGraphSpacing={currentForecastsGraphSpacing}
-          forecastsGraphBottomOffset={forecastsGraphBottomOffset}
-          forecastsGraphBottomPadding={forecastsGraphBottomPadding}
-          forecastsGraphMaxValue={forecastsGraphMaxValue}
-        />
-      </ForecastsGraphSectionWrapper>
-    </View>
+        return (
+          <ForecastsGraphLabelComponent
+            key={item.dt}
+            text={{
+              ko: getKoreanDay(date),
+              en: getEnglishShortDay(date),
+            }}
+            icon={item.weather[0].icon}
+            temp={value}
+            isSelected={isSelected}
+            onPress={() => handleForecastsGraphLabelComponentPress(index)}
+            forecastsGraphHeight={forecastsGraphHeight}
+            forecastsGraphBottomOffset={forecastsGraphBottomOffset}
+            forecastsGraphBottomPadding={forecastsGraphBottomPadding}
+            forecastsGraphSpacing={currentForecastsGraphSpacing}
+          />
+        );
+      })}
+    </ForecastsGraphSection>
   );
 }

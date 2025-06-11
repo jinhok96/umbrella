@@ -6,9 +6,9 @@ import { interpolate } from 'react-native-reanimated';
 
 import { useGetColorHex } from '@hooks/useGetColorHex';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
-import { findForecastsGraphMinMaxValue } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.util';
+import { findForecastsGraphMinMaxValue } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.util';
 
-import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.type';
+import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.type';
 
 /**
  * 날씨 그래프

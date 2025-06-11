@@ -5,7 +5,7 @@ import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.co
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
 import DailyForecastScreenHeader from '@screens/HomeScreen/DailyForecastScreen/_components/DailyForecastScreenHeader';
 
-import type { ForecastsGraphSelectedIndex } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
+import type { ForecastsGraphSelectedIndex } from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSectionWrapper.type';
 
 export default function DailyForecastScreen() {
   const [selectedIndex, setSelectedIndex] = useState<ForecastsGraphSelectedIndex>();
