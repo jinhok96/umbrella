@@ -10,7 +10,7 @@ import WeatherInfoHeader from '@screens/HomeScreen/CurrentForecastScreen/_compon
 
 export default function CurrentForecastScreen() {
   return (
-    <View className="relative flex-1">
+    <View className="flex-1">
       <WeatherInfoHeader />
       <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.CurrentForecast}>
         <ScrollView className="flex-1 p-5">

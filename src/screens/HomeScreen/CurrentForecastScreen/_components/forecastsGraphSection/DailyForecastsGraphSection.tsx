@@ -31,17 +31,19 @@ function getEnglishShortDay(date: Date) {
 }
 
 type DailyForecastsGraphSectionProps = ViewProps &
-  Pick<ForecastsGraphSectionWrapperProps, 'selectedIndex' | 'onSelectedIndexChange'>;
+  Pick<ForecastsGraphSectionWrapperProps, 'selectedIndex' | 'onSelectedIndexChange' | 'hideHeader'>;
 
 /**
  * 요일별 날씨 그래프 섹션
  * @param selectedIndex 선택한 요소 인덱스
  * @param onSelectedIndexChange selectedIndex 변경 시 호출할 함수
- * @jinhok96 25.06.07
+ * @param hideHeader 섹션 헤더를 렌더링하지 않을지 여부
+ * @jinhok96 25.06.11
  */
 export default function DailyForecastsGraphSection({
   selectedIndex,
   onSelectedIndexChange,
+  hideHeader,
   ...props
 }: DailyForecastsGraphSectionProps) {
   const daily = useForecastsStore(state => state.daily);
@@ -84,7 +86,7 @@ export default function DailyForecastsGraphSection({
     <View {...props}>
       <ForecastsGraphSectionWrapper
         className="rounded-[1.25rem] bg-background-02"
-        headerText={SECTION_HEADER_TEXT}
+        headerText={!hideHeader ? SECTION_HEADER_TEXT : undefined}
         selectedIndex={selectedIndex}
       >
         {/* 라벨 */}

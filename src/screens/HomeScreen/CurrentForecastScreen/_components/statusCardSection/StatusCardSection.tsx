@@ -15,11 +15,11 @@ const LABEL_LIST: LocalizedTextMap<'pm10' | 'pm25' | 'uv' | 'o3'> = {
     ko: '초미세먼지',
   },
   uv: {
-    en: 'UV Index',
+    en: 'UV',
     ko: '자외선지수',
   },
   o3: {
-    en: 'Ozone AQI',
+    en: 'Ozone',
     ko: '오존 농도',
   },
 };

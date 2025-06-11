@@ -8,4 +8,5 @@ export type ForecastsGraphSectionWrapperProps = ViewProps & {
   headerText?: CurrentForecastScreenSectionHeaderProps['text'];
   selectedIndex?: ForecastsGraphSelectedIndex;
   onSelectedIndexChange?: (index: ForecastsGraphSelectedIndex) => void;
+  hideHeader?: boolean;
 };

@@ -39,12 +39,14 @@ function GradientOverlay({ className, reverse }: { className: string; reverse?: 
  * 날씨 그래프 섹션 래퍼
  * @param headerText 헤더 텍스트
  * @param selectedIndex 선택한 요소 인덱스
+ * @param hideHeader 섹션 헤더를 렌더링하지 않을지 여부
  * @param children 그래프 요소
- * @jinhok96 25.06.10
+ * @jinhok96 25.06.11
  */
 export default function ForecastsGraphSectionWrapper({
   headerText,
   selectedIndex,
+  hideHeader,
   children,
   ...props
 }: ForecastsGraphSectionWrapperProps) {
@@ -53,19 +55,20 @@ export default function ForecastsGraphSectionWrapper({
 
   const isSelectedIndexEmpty = !selectedIndex && selectedIndex !== 0;
 
-  // selectedIndex 요소를 중앙으로 스크롤하는 함수
-  const handleScrollToSelectedIndex = (index: number) => {
-    if (isSelectedIndexEmpty) return;
-    if (!containerWidth) return;
-    const x = CONTAINER_MARGIN + FORECASTS_GRAPH_SPACING * (index + 1 / 2) - containerWidth / 2;
-    scrollRef.current?.scrollTo({
-      x,
-      animated: true,
-    });
-  };
-
   useEffect(() => {
     if (isSelectedIndexEmpty) return;
+
+    // selectedIndex 요소를 중앙으로 스크롤하는 함수
+    const handleScrollToSelectedIndex = (index: number) => {
+      if (isSelectedIndexEmpty) return;
+      if (!containerWidth) return;
+      const x = CONTAINER_MARGIN + FORECASTS_GRAPH_SPACING * (index + 1 / 2) - containerWidth / 2;
+      scrollRef.current?.scrollTo({
+        x,
+        animated: true,
+      });
+    };
+
     handleScrollToSelectedIndex(selectedIndex);
   }, [selectedIndex]);
 
@@ -75,7 +78,7 @@ export default function ForecastsGraphSectionWrapper({
       className={`relative overflow-hidden ${props.className}`}
       onLayout={e => setContainerWidth(e.nativeEvent.layout.width)}
     >
-      <Show when={!!headerText}>
+      <Show when={!hideHeader && !!headerText}>
         <CurrentForecastScreenSectionHeader text={headerText!} />
       </Show>
       <GradientOverlay className="absolute left-0 top-0 z-10 h-full" />
