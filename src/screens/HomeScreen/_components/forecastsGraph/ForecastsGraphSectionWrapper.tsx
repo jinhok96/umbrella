@@ -11,7 +11,7 @@ import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForec
 
 import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
 
-type GradientOverlayProps = Pick<ForecastsGraphSectionWrapperProps, 'containerMargin'> & {
+type GradientOverlayProps = Pick<ForecastsGraphSectionWrapperProps, 'forecastsGraphContainerMargin'> & {
   className: string;
   reverse?: boolean;
 };
@@ -22,7 +22,7 @@ type GradientOverlayProps = Pick<ForecastsGraphSectionWrapperProps, 'containerMa
  * @param containerMargin 좌우 마진
  * @jinhok96 25.06.11
  */
-function GradientOverlay({ className, reverse, forecastsGraphContainerMargin: containerMargin }: GradientOverlayProps) {
+function GradientOverlay({ className, reverse, forecastsGraphContainerMargin }: GradientOverlayProps) {
   const backgroundColor = useGetColorHex('--color-background-02');
 
   // 양 옆 투명도 그라디언트; 90% ~ 0%
@@ -34,7 +34,7 @@ function GradientOverlay({ className, reverse, forecastsGraphContainerMargin: co
       colors={gradientColors}
       start={{ x: !reverse ? 0 : 1, y: 0 }}
       end={{ x: !reverse ? 1 : 0, y: 0 }}
-      style={{ width: containerMargin }}
+      style={{ width: forecastsGraphContainerMargin }}
       pointerEvents="none"
     />
   );
