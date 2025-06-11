@@ -78,9 +78,10 @@ export default function HourlyForecastsGraphSection({
   return (
     <View {...props}>
       <ForecastsGraphSectionWrapper
-        className="rounded-[1.25rem] bg-background-02"
+        className="bg-background-02"
         headerText={!hideHeader ? SECTION_HEADER_TEXT : undefined}
         selectedIndex={selectedIndex}
+        hideHeader={hideHeader}
       >
         {/* 라벨 */}
         <View className="flex flex-row items-start">

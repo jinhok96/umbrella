@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 
+import classNames from 'classnames';
+
 import LinearGradient from 'react-native-linear-gradient';
 
 import Show from '@components/wrapper/Show';
@@ -48,6 +50,7 @@ export default function ForecastsGraphSectionWrapper({
   selectedIndex,
   hideHeader,
   children,
+  className,
   ...props
 }: ForecastsGraphSectionWrapperProps) {
   const [containerWidth, setContainerWidth] = useState(0);
@@ -72,10 +75,12 @@ export default function ForecastsGraphSectionWrapper({
     handleScrollToSelectedIndex(selectedIndex);
   }, [selectedIndex]);
 
+  const containerClassName = classNames('relative overflow-hidden', !hideHeader && 'rounded-[1.25rem]', className);
+
   return (
     <View
       {...props}
-      className={`relative overflow-hidden ${props.className}`}
+      className={containerClassName}
       onLayout={e => setContainerWidth(e.nativeEvent.layout.width)}
     >
       <Show when={!hideHeader && !!headerText}>
