@@ -51,35 +51,38 @@ export default function ForecastsGraph({
   }, [data, forecastsGraphBottomOffset, forecastsGraphBottomPadding, forecastsGraphHeight, forecastsGraphMaxValue]);
 
   return (
-    <View {...props}>
+    <View
+      {...props}
+      style={{ height: forecastsGraphHeight }}
+    >
       <LineChart
         // 스타일이 변경되면 새로 랜더링하기 위해 key 지정
         key={`${forecastsGraphHeight}-${forecastsGraphBottomOffset}-${forecastsGraphBottomPadding}-${forecastsGraphMaxValue}-${forecastsGraphSpacing}-${forecastsGraphPointSize}`}
         data={newData}
         maxValue={forecastsGraphMaxValue}
+        height={forecastsGraphHeight}
         thickness={1}
         areaChart
         curved
         color={morningColor}
         startFillColor={morningColor}
-        endFillColor="transparent"
+        endFillColor={morningColor}
         startOpacity={0.2}
-        endOpacity={0}
+        endOpacity={0.01}
         spacing={forecastsGraphSpacing}
         initialSpacing={forecastsGraphSpacing / 2}
         endSpacing={(forecastsGraphSpacing / 2) * -1}
-        height={forecastsGraphHeight}
-        yAxisLabelWidth={0}
         isAnimated
         animateOnDataChange
         animationDuration={ANIMATION_DURATION}
         scrollAnimation
-        hideOrigin
         dataPointsColor={morningColor}
         dataPointsWidth={forecastsGraphPointSize}
         dataPointsHeight={forecastsGraphPointSize}
-        hideAxesAndRules
         xAxisLabelsHeight={0}
+        yAxisLabelWidth={0}
+        hideOrigin
+        hideAxesAndRules
         disableScroll
       />
     </View>
