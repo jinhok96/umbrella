@@ -14,7 +14,7 @@ export default function CurrentForecastScreen() {
       <WeatherInfoHeader />
       <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.CurrentForecast}>
         <ScrollView className="flex-1 p-5">
-          <View className="mb-safe-offset-8 flex-1 gap-3">
+          <View className="mb-safe-offset-14 flex-1 gap-3">
             <ChecklistSection />
             <HourlyForecastsGraphSection />
             <StatusCardSection />
