@@ -1,5 +1,3 @@
-import { View } from 'react-native';
-
 import HomeScreenHeaderWrapper from '@screens/HomeScreen/_components/homeScreenHeaderWrapper/HomeScreenHeaderWrapper';
 import DailyForecastsGraphSection from '@screens/HomeScreen/CurrentForecastScreen/_components/forecastsGraphSection/DailyForecastsGraphSection';
 
@@ -23,13 +21,12 @@ export default function DailyForecastScreenHeader({
       {...props}
       className="bg-background-02"
     >
-      <View className="pt-5">
-        <DailyForecastsGraphSection
-          selectedIndex={selectedIndex}
-          onSelectedIndexChange={onSelectedIndexChange}
-          hideHeader
-        />
-      </View>
+      <DailyForecastsGraphSection
+        className="pt-5"
+        selectedIndex={selectedIndex}
+        onSelectedIndexChange={onSelectedIndexChange}
+        hideHeader
+      />
     </HomeScreenHeaderWrapper>
   );
 }

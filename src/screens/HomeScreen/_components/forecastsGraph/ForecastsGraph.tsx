@@ -6,14 +6,6 @@ import { interpolate } from 'react-native-reanimated';
 
 import { useGetColorHex } from '@hooks/useGetColorHex';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
-import {
-  FORECASTS_GRAPH_BOTTOM_OFFSET,
-  FORECASTS_GRAPH_BOTTOM_PADDING,
-  FORECASTS_GRAPH_HEIGHT,
-  FORECASTS_GRAPH_MAX_VALUE,
-  FORECASTS_GRAPH_POINT_SIZE,
-  FORECASTS_GRAPH_SPACING,
-} from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.const';
 import { findForecastsGraphMinMaxValue } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.util';
 
 import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.type';
@@ -21,10 +13,25 @@ import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/foreca
 /**
  * 날씨 그래프
  * @param data 그래프 데이터 리스트
+ * @param forecastsGraphHeight 그래프 높이
+ * @param forecastsGraphBottomOffset 그래프 바텀 오프셋
+ * @param forecastsGraphBottomPadding 그래프 바텀 패딩
+ * @param forecastsGraphMaxValue 그래프 최대값
+ * @param forecastsGraphSpacing 그래프 간격
+ * @param forecastsGraphPointSize 그래프 포인트 크기
  * @returns 라인 그래프
- * @jinhok96 25.06.07
+ * @jinhok96 25.06.11
  */
-export default function ForecastsGraph({ data, ...props }: ForecastsGraphProps) {
+export default function ForecastsGraph({
+  data,
+  forecastsGraphHeight,
+  forecastsGraphBottomOffset,
+  forecastsGraphBottomPadding,
+  forecastsGraphMaxValue,
+  forecastsGraphSpacing,
+  forecastsGraphPointSize,
+  ...props
+}: ForecastsGraphProps) {
   const morningColor = useGetColorHex('--color-morning');
 
   // 일관된 크기로 포맷팅된 그래프 데이터; 리렌더링을 최소화하기 위해 메모이제이션
@@ -34,20 +41,22 @@ export default function ForecastsGraph({ data, ...props }: ForecastsGraphProps) 
     return data.map(item => {
       // paddingBottom 계산
       const bottomPaddingValue =
-        (FORECASTS_GRAPH_BOTTOM_OFFSET + FORECASTS_GRAPH_BOTTOM_PADDING) / (FORECASTS_GRAPH_HEIGHT / 100);
+        (forecastsGraphBottomOffset + forecastsGraphBottomPadding) / (forecastsGraphHeight / 100);
 
       return {
         ...item,
-        value: interpolate(item.value, [minValue, maxValue], [bottomPaddingValue, FORECASTS_GRAPH_MAX_VALUE]),
+        value: interpolate(item.value, [minValue, maxValue], [bottomPaddingValue, forecastsGraphMaxValue]),
       };
     });
-  }, [data]);
+  }, [data, forecastsGraphBottomOffset, forecastsGraphBottomPadding, forecastsGraphHeight, forecastsGraphMaxValue]);
 
   return (
     <View {...props}>
       <LineChart
+        // 스타일이 변경되면 새로 랜더링하기 위해 key 지정
+        key={`${forecastsGraphHeight}-${forecastsGraphBottomOffset}-${forecastsGraphBottomPadding}-${forecastsGraphMaxValue}-${forecastsGraphSpacing}-${forecastsGraphPointSize}`}
         data={newData}
-        maxValue={FORECASTS_GRAPH_MAX_VALUE}
+        maxValue={forecastsGraphMaxValue}
         thickness={1}
         areaChart
         curved
@@ -56,10 +65,10 @@ export default function ForecastsGraph({ data, ...props }: ForecastsGraphProps) 
         endFillColor="transparent"
         startOpacity={0.2}
         endOpacity={0}
-        spacing={FORECASTS_GRAPH_SPACING}
-        initialSpacing={FORECASTS_GRAPH_SPACING / 2}
-        endSpacing={(FORECASTS_GRAPH_SPACING / 2) * -1}
-        height={FORECASTS_GRAPH_HEIGHT}
+        spacing={forecastsGraphSpacing}
+        initialSpacing={forecastsGraphSpacing / 2}
+        endSpacing={(forecastsGraphSpacing / 2) * -1}
+        height={forecastsGraphHeight}
         yAxisLabelWidth={0}
         isAnimated
         animateOnDataChange
@@ -67,8 +76,8 @@ export default function ForecastsGraph({ data, ...props }: ForecastsGraphProps) 
         scrollAnimation
         hideOrigin
         dataPointsColor={morningColor}
-        dataPointsWidth={FORECASTS_GRAPH_POINT_SIZE}
-        dataPointsHeight={FORECASTS_GRAPH_POINT_SIZE}
+        dataPointsWidth={forecastsGraphPointSize}
+        dataPointsHeight={forecastsGraphPointSize}
         hideAxesAndRules
         xAxisLabelsHeight={0}
         disableScroll

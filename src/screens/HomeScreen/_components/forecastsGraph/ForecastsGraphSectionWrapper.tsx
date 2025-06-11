@@ -7,19 +7,22 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import Show from '@components/wrapper/Show';
 import { useGetColorHex } from '@hooks/useGetColorHex';
-import { FORECASTS_GRAPH_SPACING } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.const';
 import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader';
 
 import type { ForecastsGraphSectionWrapperProps } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraphSectionWrapper.type';
 
-const CONTAINER_MARGIN = 20;
+type GradientOverlayProps = Pick<ForecastsGraphSectionWrapperProps, 'containerMargin'> & {
+  className: string;
+  reverse?: boolean;
+};
 
 /**
  * 양 옆 그라디언트 컴포넌트
  * @param reverse 좌우 반전하는지 여부
- * @jinhok96 25.06.07
+ * @param containerMargin 좌우 마진
+ * @jinhok96 25.06.11
  */
-function GradientOverlay({ className, reverse }: { className: string; reverse?: boolean }) {
+function GradientOverlay({ className, reverse, forecastsGraphContainerMargin: containerMargin }: GradientOverlayProps) {
   const backgroundColor = useGetColorHex('--color-background-02');
 
   // 양 옆 투명도 그라디언트; 90% ~ 0%
@@ -31,7 +34,7 @@ function GradientOverlay({ className, reverse }: { className: string; reverse?: 
       colors={gradientColors}
       start={{ x: !reverse ? 0 : 1, y: 0 }}
       end={{ x: !reverse ? 1 : 0, y: 0 }}
-      style={{ width: CONTAINER_MARGIN }}
+      style={{ width: containerMargin }}
       pointerEvents="none"
     />
   );
@@ -43,6 +46,8 @@ function GradientOverlay({ className, reverse }: { className: string; reverse?: 
  * @param selectedIndex 선택한 요소 인덱스
  * @param hideHeader 섹션 헤더를 렌더링하지 않을지 여부
  * @param children 그래프 요소
+ * @param forecastsGraphSpacing 그래프 간격
+ * @param containerMargin 좌우 마진
  * @jinhok96 25.06.11
  */
 export default function ForecastsGraphSectionWrapper({
@@ -51,6 +56,8 @@ export default function ForecastsGraphSectionWrapper({
   hideHeader,
   children,
   className,
+  forecastsGraphSpacing,
+  forecastsGraphContainerMargin: containerMargin,
   ...props
 }: ForecastsGraphSectionWrapperProps) {
   const [containerWidth, setContainerWidth] = useState(0);
@@ -65,7 +72,7 @@ export default function ForecastsGraphSectionWrapper({
     const handleScrollToSelectedIndex = (index: number) => {
       if (isSelectedIndexEmpty) return;
       if (!containerWidth) return;
-      const x = CONTAINER_MARGIN + FORECASTS_GRAPH_SPACING * (index + 1 / 2) - containerWidth / 2;
+      const x = containerMargin + forecastsGraphSpacing * (index + 1 / 2) - containerWidth / 2;
       scrollRef.current?.scrollTo({
         x,
         animated: true,
@@ -86,17 +93,21 @@ export default function ForecastsGraphSectionWrapper({
       <Show when={!hideHeader && !!headerText}>
         <CurrentForecastScreenSectionHeader text={headerText!} />
       </Show>
-      <GradientOverlay className="absolute left-0 top-0 z-10 h-full" />
+      <GradientOverlay
+        className="absolute left-0 top-0 z-10 h-full"
+        forecastsGraphContainerMargin={containerMargin}
+      />
       <GradientOverlay
         className="absolute right-0 top-0 z-10 h-full"
         reverse
+        forecastsGraphContainerMargin={containerMargin}
       />
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         ref={scrollRef}
       >
-        <View style={{ marginLeft: CONTAINER_MARGIN, marginRight: CONTAINER_MARGIN }}>{children}</View>
+        <View style={{ marginLeft: containerMargin, marginRight: containerMargin }}>{children}</View>
       </ScrollView>
     </View>
   );
