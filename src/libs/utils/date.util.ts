@@ -35,13 +35,13 @@ export function getLocalISOString({
  */
 export function getLocalizedDay(date: Date): LocalizedText {
   const days: LocalizedText[] = [
-    { ko: '일요일', en: 'SUN' },
-    { ko: '월요일', en: 'MON' },
-    { ko: '화요일', en: 'TUE' },
-    { ko: '수요일', en: 'WED' },
-    { ko: '목요일', en: 'THU' },
-    { ko: '금요일', en: 'FRI' },
-    { ko: '토요일', en: 'SAT' },
+    { ko: '일', en: 'SUN' },
+    { ko: '월', en: 'MON' },
+    { ko: '화', en: 'TUE' },
+    { ko: '수', en: 'WED' },
+    { ko: '목', en: 'THU' },
+    { ko: '금', en: 'FRI' },
+    { ko: '토', en: 'SAT' },
   ];
 
   return days[date.getDay()];
