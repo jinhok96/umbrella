@@ -1,7 +1,7 @@
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import { formatDateToHHMM } from '@libs/utils/date.util';
+import { formatDateToHHMM, formatDateToMMDD } from '@libs/utils/date.util';
 import { convertUVIndexToText, convertWindDegToText } from '@libs/utils/weather.util';
 import WeatherDetailCard from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCard';
 import WeatherDetailCardItem from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardItem';
@@ -37,8 +37,12 @@ export default function HourlyForecastScreenWeatherDetailCardSection({
       className="flex w-full gap-3"
     >
       {hourly.map((item, index) => {
-        // mainDataProps
         const date = new Date(item.dt * 1000);
+
+        const label: string | LocalizedText | undefined =
+          index === 0 ? { ko: '오늘', en: 'Today' } : date.getHours() === 0 ? formatDateToMMDD(date) : undefined;
+
+        // mainDataProps
         const badgeLabel = formatDateToHHMM(date);
         const mainValue = `${Math.round(item.temp)}°`;
         const firstSubLabel: LocalizedText = {
@@ -69,6 +73,7 @@ export default function HourlyForecastScreenWeatherDetailCardSection({
             type="hourly"
             isSelected={selectedIndex === index}
             onPress={() => handleSelectedIndexUpdate(index)}
+            label={label}
             mainDataProps={{
               badgeLabel,
               mainValue,

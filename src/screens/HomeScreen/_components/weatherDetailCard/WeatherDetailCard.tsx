@@ -4,24 +4,32 @@ import { Pressable, View } from 'react-native';
 
 import classNames from 'classnames';
 
+import PretendardText from '@components/fontText/PretendardText';
+import Show from '@components/wrapper/Show';
 import WeatherDetailCardMainData from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainData';
+import { useSettingStore } from '@store/settingStore/useSettingStore';
 
+import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { WeatherDetailCardMainDataProps } from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainData.type';
 
 type WeatherDetailCardProps = Omit<PressableProps, 'children' | 'className'> &
   PropsWithChildren<{
     type: 'hourly' | 'daily';
     isSelected: boolean;
+    label?: string | LocalizedText;
     mainDataProps: WeatherDetailCardMainDataProps;
   }>;
 
 export default function WeatherDetailCard({
   type,
   isSelected,
+  label,
   mainDataProps,
   children,
   ...props
 }: WeatherDetailCardProps) {
+  const lang = useSettingStore(state => state.lang);
+
   const containerClassName = classNames('rounded-xl bg-background-02', isSelected && '', !isSelected && '');
 
   const cardItemContainerClassName = classNames(
@@ -33,15 +41,25 @@ export default function WeatherDetailCard({
   );
 
   return (
-    <Pressable
-      {...props}
-      className={containerClassName}
-    >
-      <WeatherDetailCardMainData
-        {...mainDataProps}
-        isSelected={isSelected}
-      />
-      <View className={cardItemContainerClassName}>{children}</View>
-    </Pressable>
+    <View>
+      <Show when={!!label}>
+        <PretendardText
+          typo="caption-3"
+          className="pb-2 text-text-05"
+        >
+          {typeof label === 'string' ? label : label?.[lang]}
+        </PretendardText>
+      </Show>
+      <Pressable
+        {...props}
+        className={containerClassName}
+      >
+        <WeatherDetailCardMainData
+          {...mainDataProps}
+          isSelected={isSelected}
+        />
+        <View className={cardItemContainerClassName}>{children}</View>
+      </Pressable>
+    </View>
   );
 }

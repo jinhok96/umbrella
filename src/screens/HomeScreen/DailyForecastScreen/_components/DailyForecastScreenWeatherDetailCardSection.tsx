@@ -38,8 +38,9 @@ export default function DailyForecastScreenWeatherDetailCardSection({
       className="flex w-full gap-3"
     >
       {daily.map((item, index) => {
-        // mainDataProps
         const date = new Date(item.dt * 1000);
+
+        // mainDataProps
         const badgeLabel = formatDateToMMDD(date);
         const mainLabel: LocalizedText = getLocalizedDay(date);
         const mainValue = `${Math.round(getDailyAvgTemp(item.temp.morn, item.temp.day, item.temp.eve, item.temp.night))}°`;

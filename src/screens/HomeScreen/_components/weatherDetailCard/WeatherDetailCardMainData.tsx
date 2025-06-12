@@ -88,13 +88,13 @@ export default function WeatherDetailCardMainData({
         {/* 첫번째 서브 */}
         <PretendardText
           typo="title-5"
-          className="text-text-05"
+          className="text-text-04"
         >
           {firstSubLabel[lang]}
         </PretendardText>
         <MontserratText
           typo="title-5"
-          className="text-text-05"
+          className="text-text-04"
         >
           {firstSubValue}
         </MontserratText>
@@ -103,13 +103,13 @@ export default function WeatherDetailCardMainData({
         {/* 두번째 서브 */}
         <PretendardText
           typo="title-5"
-          className="text-text-05"
+          className="text-text-04"
         >
           {secondSubLabel[lang]}
         </PretendardText>
         <MontserratText
           typo="title-5"
-          className="text-text-05"
+          className="text-text-04"
         >
           {secondSubValue}
         </MontserratText>
