@@ -45,19 +45,18 @@ export default function DailyForecastScreenWeatherDetailCardSection({
         const mainLabel: LocalizedText = getLocalizedDay(date);
         const mainValue = `${Math.round(getDailyAvgTemp(item.temp.morn, item.temp.day, item.temp.eve, item.temp.night))}°`;
         const firstSubLabel: LocalizedText = {
-          ko: '최저',
-          en: 'Low',
+          ko: '기온',
+          en: 'Temp',
         };
-        const firstSubValue = `${Math.round(item.temp.min)}°`;
+        const firstSubValue = `${Math.round(item.temp.min)}° ~ ${Math.round(item.temp.max)}°`;
         const secondSubLabel: LocalizedText = {
-          ko: '최고',
-          en: 'High',
+          ko: '강수',
+          en: 'PoP',
         };
-        const secondSubValue = `${Math.round(item.temp.max)}°`;
+        const secondSubValue = `${Math.round(item.pop * 100)}%`;
         const weatherIconId = item.weather[0].icon;
 
         // itemProps - value
-        const pop = Math.round(item.pop * 100);
         const feelsLike = Math.round(
           getDailyAvgTemp(item.feels_like.morn, item.feels_like.day, item.feels_like.eve, item.feels_like.night),
         );
@@ -84,10 +83,6 @@ export default function DailyForecastScreenWeatherDetailCardSection({
               weatherIconId,
             }}
           >
-            <WeatherDetailCardItem
-              label={{ ko: '강수확률', en: 'PoP' }}
-              value={`${pop}%`}
-            />
             <WeatherDetailCardItem
               label={{ ko: '체감온도', en: 'Feels Like' }}
               value={`${feelsLike}°`}

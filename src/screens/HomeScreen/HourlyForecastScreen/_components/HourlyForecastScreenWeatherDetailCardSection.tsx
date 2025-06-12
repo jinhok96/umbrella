@@ -1,7 +1,7 @@
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
-import { formatDateToHHMM, formatDateToMMDD } from '@libs/utils/date.util';
+import { formatDateToHHMM, formatDateToMMDD, getLocalizedDay } from '@libs/utils/date.util';
 import { convertUVIndexToText, convertWindDegToText } from '@libs/utils/weather.util';
 import WeatherDetailCard from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCard';
 import WeatherDetailCardItem from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardItem';
@@ -39,15 +39,22 @@ export default function HourlyForecastScreenWeatherDetailCardSection({
       {hourly.map((item, index) => {
         const date = new Date(item.dt * 1000);
 
+        // label
+        const labelMMDD = formatDateToMMDD(date);
+        const labelDay = getLocalizedDay(date);
+        const labelDate: LocalizedText = {
+          ko: `${labelMMDD} • ${labelDay.ko}`,
+          en: `${labelMMDD} • ${labelDay.en}`,
+        };
         const label: string | LocalizedText | undefined =
-          index === 0 ? { ko: '오늘', en: 'Today' } : date.getHours() === 0 ? formatDateToMMDD(date) : undefined;
+          index === 0 ? { ko: '오늘', en: 'Today' } : date.getHours() === 0 ? labelDate : undefined;
 
         // mainDataProps
         const badgeLabel = formatDateToHHMM(date);
         const mainValue = `${Math.round(item.temp)}°`;
         const firstSubLabel: LocalizedText = {
           ko: '체감',
-          en: 'Feels',
+          en: 'Feel',
         };
         const firstSubValue = `${Math.round(item.feels_like)}°`;
         const secondSubLabel: LocalizedText = {

@@ -9,7 +9,9 @@ export type WeatherDetailCardMainDataProps = Omit<ViewProps, 'children' | 'class
   mainValue: string;
   firstSubLabel: LocalizedText;
   firstSubValue: string;
-  secondSubLabel: LocalizedText;
-  secondSubValue: string;
+  secondSubLabel?: LocalizedText;
+  secondSubValue?: string;
+  thirdSubLabel?: LocalizedText;
+  thirdSubValue?: string;
   weatherIconId: WeatherIconId;
 };

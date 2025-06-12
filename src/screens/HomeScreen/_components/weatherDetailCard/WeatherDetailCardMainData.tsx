@@ -1,3 +1,4 @@
+import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
 import classNames from 'classnames';
@@ -6,9 +7,50 @@ import MontserratText from '@components/fontText/MontserratText';
 import PretendardText from '@components/fontText/PretendardText';
 import WeatherIcon from '@components/icon/WeatherIcon';
 import Show from '@components/wrapper/Show';
+import WeatherDetailCardMainDataSubItem from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainDataSubItem';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
+import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { WeatherDetailCardMainDataProps } from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainData.type';
+
+type WeatherDetailCardMainDataMainItemProps = Omit<ViewProps, 'children' | 'className'> & {
+  label?: string | LocalizedText;
+  value?: string;
+};
+
+function WeatherDetailCardMainDataMainItem({ label, value, ...props }: WeatherDetailCardMainDataMainItemProps) {
+  const lang = useSettingStore(state => state.lang);
+
+  return (
+    <Show when={value !== undefined}>
+      <View
+        {...props}
+        className="flex flex-row items-center gap-1"
+      >
+        <Show when={!!label}>
+          <PretendardText
+            typo="title-5"
+            className="text-text-01"
+          >
+            {typeof label === 'string' ? label : label?.[lang]}
+          </PretendardText>
+          <PretendardText
+            typo="title-5"
+            className="text-text-01"
+          >
+            •
+          </PretendardText>
+        </Show>
+        <MontserratText
+          typo="title-5"
+          className="text-text-01"
+        >
+          {value}
+        </MontserratText>
+      </View>
+    </Show>
+  );
+}
 
 /**
  * `WeatherDetailCard`의 메인 데이터를 표시하는 컴포넌트
@@ -20,6 +62,8 @@ import type { WeatherDetailCardMainDataProps } from '@screens/HomeScreen/_compon
  * @param firstSubValue 첫번째 서브 수치
  * @param secondSubLabel 두번째 서브 라벨
  * @param secondSubValue 두번째 서브 수치
+ * @param thirdSubLabel 세번째 서브 라벨
+ * @param thirdSubValue 세번째 서브 수치
  * @param weatherIconId 날씨 아이콘 id
  * @jinhok96 25.06.12
  */
@@ -32,11 +76,11 @@ export default function WeatherDetailCardMainData({
   firstSubValue,
   secondSubLabel,
   secondSubValue,
+  thirdSubLabel,
+  thirdSubValue,
   weatherIconId,
   ...props
 }: WeatherDetailCardMainDataProps & { isSelected: boolean }) {
-  const lang = useSettingStore(state => state.lang);
-
   const badgeClassName = classNames(
     'w-12 py-1 flex items-center justify-center rounded-lg',
     isSelected && 'bg-morning',
@@ -61,58 +105,35 @@ export default function WeatherDetailCardMainData({
           </PretendardText>
         </View>
         {/* 메인 */}
-        <View className="flex flex-row items-center gap-1">
-          <Show when={!!mainLabel}>
-            <PretendardText
-              typo="title-5"
-              className="text-text-01"
-            >
-              {mainLabel?.[lang]}
-            </PretendardText>
-            <PretendardText
-              typo="title-5"
-              className="text-text-01"
-            >
-              •
-            </PretendardText>
-          </Show>
-          <MontserratText
-            typo="title-5"
-            className="text-text-01"
-          >
-            {mainValue}
-          </MontserratText>
-        </View>
+        <WeatherDetailCardMainDataMainItem
+          label={mainLabel}
+          value={mainValue}
+        />
       </View>
       <View className="flex flex-row items-center gap-2">
         {/* 첫번째 서브 */}
-        <PretendardText
-          typo="title-5"
-          className="text-text-04"
-        >
-          {firstSubLabel[lang]}
-        </PretendardText>
-        <MontserratText
-          typo="title-5"
-          className="text-text-04"
-        >
-          {firstSubValue}
-        </MontserratText>
+        <WeatherDetailCardMainDataSubItem
+          label={firstSubLabel}
+          value={firstSubValue}
+        />
         {/* 파티션 */}
-        <View className="h-3 w-[0.0625rem] bg-transparency-09" />
+        <Show when={!!secondSubLabel || secondSubValue !== undefined}>
+          <View className="h-3 w-[0.0625rem] bg-transparency-09" />
+        </Show>
         {/* 두번째 서브 */}
-        <PretendardText
-          typo="title-5"
-          className="text-text-04"
-        >
-          {secondSubLabel[lang]}
-        </PretendardText>
-        <MontserratText
-          typo="title-5"
-          className="text-text-04"
-        >
-          {secondSubValue}
-        </MontserratText>
+        <WeatherDetailCardMainDataSubItem
+          label={secondSubLabel}
+          value={secondSubValue}
+        />
+        {/* 파티션 */}
+        <Show when={!!thirdSubLabel || thirdSubValue !== undefined}>
+          <View className="h-3 w-[0.0625rem] bg-transparency-09" />
+        </Show>
+        {/* 세번째 서브 */}
+        <WeatherDetailCardMainDataSubItem
+          label={thirdSubLabel}
+          value={thirdSubValue}
+        />
         {/* 날씨 아이콘; 여기에서 padding 적용 */}
         <View className="py-3 pr-1">
           <View className="size-6 shrink-0">

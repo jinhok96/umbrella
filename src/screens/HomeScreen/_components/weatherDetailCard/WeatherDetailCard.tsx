@@ -36,8 +36,8 @@ export default function WeatherDetailCard({
     'flex gap-2 rounded-xl px-4 mx-4 bg-background-03 overflow-hidden transition-[background-color,height,opacity,padding-top,padding-bottom,margin-top,margin-bottom]',
     !isSelected && 'py-0 mb-0 mt-0 opacity-0 h-0',
     isSelected && 'py-4 mb-4 mt-1 opacity-100',
-    isSelected && type === 'hourly' && 'h-[14.8rem]', // py(16*2) + body2(14*1.6)*7 + gap(8)*(7-1) = 236.8px = 14.8rem
-    isSelected && type === 'daily' && 'h-[12.9rem]', // py(16*2) + body2(14*1.6)*6 + gap(8)*(6-1) = 206.4px = 12.9rem
+    isSelected && type === 'hourly' && 'h-[14.8rem]', // 7개; py(16*2) + body2(14*1.6)*7 + gap(8)*(7-1) = 236.8px = 14.8rem
+    isSelected && type === 'daily' && 'h-[11rem]', // 5개; py(16*2) + body2(14*1.6)*5 + gap(8)*(5-1) = 176px = 11rem
   );
 
   return (
@@ -45,7 +45,7 @@ export default function WeatherDetailCard({
       <Show when={!!label}>
         <PretendardText
           typo="caption-3"
-          className="pb-2 text-text-05"
+          className="pb-2 text-text-04"
         >
           {typeof label === 'string' ? label : label?.[lang]}
         </PretendardText>
