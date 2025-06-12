@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 
+import { getLocalizedDay } from '@libs/utils/date.util';
 import { getDailyAvgTemp } from '@libs/utils/getDailyAvgTemp.util';
 import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphDataPointComponent';
 import ForecastsGraphLabelComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphLabelComponent';
@@ -27,16 +28,6 @@ const SECTION_HEADER_TEXT: LocalizedText = {
   en: 'Daily Forecasts',
 };
 
-function getKoreanDay(date: Date) {
-  const days = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-  return days[date.getDay()];
-}
-
-function getEnglishShortDay(date: Date) {
-  const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-  return days[date.getDay()];
-}
-
 /**
  * 요일별 날씨 그래프 섹션
  * @param selectedIndex 선택한 요소 인덱스
@@ -49,7 +40,7 @@ function getEnglishShortDay(date: Date) {
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @param forecastsGraphContainerMargin 그래프 섹션 좌우 마진
- * @jinhok96 25.06.11
+ * @jinhok96 25.06.12
  */
 export default function DailyForecastsGraphSection({
   selectedIndex,
@@ -141,10 +132,7 @@ export default function DailyForecastsGraphSection({
         return (
           <ForecastsGraphLabelComponent
             key={item.dt}
-            text={{
-              ko: getKoreanDay(date),
-              en: getEnglishShortDay(date),
-            }}
+            text={getLocalizedDay(date)}
             icon={item.weather[0].icon}
             temp={value}
             isSelected={isSelected}

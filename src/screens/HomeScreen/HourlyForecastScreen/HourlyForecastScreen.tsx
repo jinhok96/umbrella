@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { View } from 'react-native';
 
 import TestSection from '@components/TestSection';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
@@ -11,12 +12,14 @@ export default function HourlyForecastScreen() {
   const [selectedIndex, setSelectedIndex] = useState<ForecastsGraphSelectedIndex>();
 
   return (
-    <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.HourlyForecast}>
+    <View className="flex-1">
       <HourlyForecastScreenHeader
         selectedIndex={selectedIndex}
         onSelectedIndexChange={setSelectedIndex}
       />
-      <TestSection />
-    </HomeScreenWrapper>
+      <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.HourlyForecast}>
+        <TestSection />
+      </HomeScreenWrapper>
+    </View>
   );
 }

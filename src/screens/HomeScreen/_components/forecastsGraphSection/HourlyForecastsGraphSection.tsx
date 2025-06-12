@@ -132,8 +132,8 @@ export default function HourlyForecastsGraphSection({
           <ForecastsGraphLabelComponent
             key={item.dt}
             text={{
-              ko: hour + GRAPH_LABEL_TEXT.ko,
-              en: hour + GRAPH_LABEL_TEXT.en,
+              ko: hour.toString() + GRAPH_LABEL_TEXT.ko,
+              en: hour.toString() + GRAPH_LABEL_TEXT.en,
             }}
             icon={item.weather[0].icon}
             temp={item.temp}

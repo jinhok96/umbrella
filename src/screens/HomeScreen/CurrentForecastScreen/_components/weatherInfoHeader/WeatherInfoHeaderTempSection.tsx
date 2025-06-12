@@ -58,7 +58,7 @@ export default function WeatherInfoHeaderTempSection({ ...props }: WeatherInfoHe
             {Math.round(daily[0].temp.min)}°
           </MontserratText>
         </View>
-        <View className="h-3 border-r border-white opacity-40" />
+        <View className="h-3 w-[0.0625rem] bg-white opacity-40" />
         <View className="flex flex-row items-center gap-1">
           <PretendardText
             typo="caption-3"
