@@ -10,8 +10,8 @@ export default function HomeScreenWrapper({ children, ...props }: ScreenWrapperP
       {...props}
       backgroundClassName="bg-background-01"
     >
-      <ScrollView className="flex-1 p-5">
-        <View className="mb-safe-offset-14 flex-1 gap-3">{children}</View>
+      <ScrollView className="flex-1 px-5">
+        <View className="mb-safe-offset-14 mt-5 flex-1 gap-3">{children}</View>
       </ScrollView>
     </ScreenWrapper>
   );
