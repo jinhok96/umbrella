@@ -59,3 +59,16 @@ export function formatDateToMMDD(date: Date): string {
 
   return `${month}.${day}`;
 }
+
+/**
+ * HH:MM 형식의 날짜 문자열을 반환하는 함수
+ * @param date `Date`
+ * @returns `HH:MM` 형식의 날짜 문자열
+ * @jinhok96 25.06.12
+ */
+export function formatDateToHHMM(date: Date): string {
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${hours}:${minutes}`;
+}

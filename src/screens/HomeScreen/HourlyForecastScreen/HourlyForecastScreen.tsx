@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import TestSection from '@components/TestSection';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
 import HourlyForecastScreenHeader from '@screens/HomeScreen/HourlyForecastScreen/_components/HourlyForecastScreenHeader';
+import HourlyForecastScreenWeatherDetailCardSection from '@screens/HomeScreen/HourlyForecastScreen/_components/HourlyForecastScreenWeatherDetailCardSection';
 
 import type { ForecastsGraphSelectedIndex } from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSectionWrapper.type';
 
 export default function HourlyForecastScreen() {
-  const [selectedIndex, setSelectedIndex] = useState<ForecastsGraphSelectedIndex>();
+  const [selectedIndex, setSelectedIndex] = useState<ForecastsGraphSelectedIndex>(null);
 
   return (
     <View className="flex-1">
@@ -18,7 +18,10 @@ export default function HourlyForecastScreen() {
         onSelectedIndexChange={setSelectedIndex}
       />
       <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.HourlyForecast}>
-        <TestSection />
+        <HourlyForecastScreenWeatherDetailCardSection
+          selectedIndex={selectedIndex}
+          onSelectedIndexChange={setSelectedIndex}
+        />
       </HomeScreenWrapper>
     </View>
   );

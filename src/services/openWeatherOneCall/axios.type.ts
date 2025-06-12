@@ -161,7 +161,7 @@ type CommonWeatherData = {
  * @ daily: 8일 단위 일별 예보
  * @ alerts: 정부 날씨 경보
  * @link https://openweathermap.org/api/one-call-3#current
- * @jinhok96 25.05.18
+ * @jinhok96 25.06.12
  */
 export type GetCurrentAndForecastsWeatherDataResponse = {
   lat: number; // Latitude of the location, decimal (−90; 90)
@@ -182,7 +182,7 @@ export type GetCurrentAndForecastsWeatherDataResponse = {
 
   hourly: Array<
     CommonWeatherData & {
-      pop?: number; // Probability of precipitation (0-1) (optional) }>;
+      pop: number; // Probability of precipitation (0-1);
     }
   >;
 

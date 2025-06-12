@@ -5,7 +5,7 @@ import type { WeatherIconId } from '@services/openWeatherOneCall/axios.type';
 
 export type WeatherDetailCardMainDataProps = Omit<ViewProps, 'children' | 'className'> & {
   badgeLabel: string;
-  mainLabel: LocalizedText;
+  mainLabel?: LocalizedText;
   mainValue: string;
   firstSubLabel: LocalizedText;
   firstSubValue: string;

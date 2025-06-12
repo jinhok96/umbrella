@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import MontserratText from '@components/fontText/MontserratText';
 import PretendardText from '@components/fontText/PretendardText';
 import WeatherIcon from '@components/icon/WeatherIcon';
+import Show from '@components/wrapper/Show';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { WeatherDetailCardMainDataProps } from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainData.type';
@@ -61,18 +62,20 @@ export default function WeatherDetailCardMainData({
         </View>
         {/* 메인 */}
         <View className="flex flex-row items-center gap-1">
-          <PretendardText
-            typo="title-5"
-            className="text-text-01"
-          >
-            {mainLabel[lang]}
-          </PretendardText>
-          <PretendardText
-            typo="title-5"
-            className="text-text-01"
-          >
-            •
-          </PretendardText>
+          <Show when={!!mainLabel}>
+            <PretendardText
+              typo="title-5"
+              className="text-text-01"
+            >
+              {mainLabel?.[lang]}
+            </PretendardText>
+            <PretendardText
+              typo="title-5"
+              className="text-text-01"
+            >
+              •
+            </PretendardText>
+          </Show>
           <MontserratText
             typo="title-5"
             className="text-text-01"

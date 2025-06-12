@@ -27,7 +27,7 @@ export default function WeatherDetailCardItem({ label, value, ...props }: Weathe
     <Show when={value !== undefined}>
       <View
         {...props}
-        className="flex w-full flex-row items-center"
+        className="flex w-full flex-row items-center justify-between"
       >
         {/* 라벨 */}
         <PretendardText
