@@ -12,7 +12,7 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { WeatherDetailCardMainDataProps } from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainData.type';
 
-type WeatherDetailCardProps = Omit<PressableProps, 'children' | 'className'> &
+type WeatherDetailCardProps = Omit<PressableProps, 'children'> &
   PropsWithChildren<{
     type: 'hourly' | 'daily';
     isSelected: boolean;
@@ -26,6 +26,7 @@ export default function WeatherDetailCard({
   label,
   mainDataProps,
   children,
+  className,
   ...props
 }: WeatherDetailCardProps) {
   const lang = useSettingStore(state => state.lang);
@@ -41,7 +42,7 @@ export default function WeatherDetailCard({
   );
 
   return (
-    <View>
+    <View className={className}>
       <Show when={!!label}>
         <PretendardText
           typo="caption-3"
