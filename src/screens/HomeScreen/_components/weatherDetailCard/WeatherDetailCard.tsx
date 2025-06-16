@@ -21,6 +21,15 @@ type WeatherDetailCardProps = Omit<PressableProps, 'children'> &
     mainDataProps: WeatherDetailCardMainDataProps;
   }>;
 
+/**
+ * 날씨 데이터 상세 카드
+ * @param type 날씨 데이터 타입; `hourly` | `daily`
+ * @param isSelected 선택된 날씨 데이터 카드인지 여부
+ * @param label 카드 헤더 라벨
+ * @param mainDataProps 메인 데이터 컴포넌트 props
+ * @param children `WeatherDetailCardItem` 컴포넌트를 배치할 부분
+ * @jinhok96 25.06.16
+ */
 export default memo(
   function WeatherDetailCard({
     type,
