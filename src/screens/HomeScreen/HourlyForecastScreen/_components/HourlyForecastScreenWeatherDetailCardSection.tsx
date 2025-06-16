@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 import type { ViewProps } from 'react-native';
 import { FlatList, View } from 'react-native';
 
+import CheckCircleIcon from '@components/icon/CheckCircleIcon';
+import LocationIcon from '@components/icon/LocationIcon';
 import { formatDateToHHMM, formatDateToMMDD, getLocalizedDay } from '@libs/utils/date.util';
 import { convertUVIndexToText, convertWindDegToText } from '@libs/utils/weather.util';
 import WeatherDetailCard from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCard';
@@ -56,15 +58,17 @@ export default forwardRef<
           // mainDataProps
           const badgeLabel = formatDateToHHMM(date);
           const mainValue = `${Math.round(item.temp)}°`;
-          const firstSubLabel: LocalizedText = {
-            ko: '체감',
-            en: 'Feel',
-          };
+          const firstSubLabel = (
+            <View className="size-5 opacity-40">
+              <CheckCircleIcon />
+            </View>
+          );
           const firstSubValue = `${Math.round(item.feels_like)}°`;
-          const secondSubLabel: LocalizedText = {
-            ko: '강수',
-            en: 'PoP',
-          };
+          const secondSubLabel = (
+            <View className="size-5 opacity-40">
+              <LocationIcon filled />
+            </View>
+          );
           const secondSubValue = `${Math.round(item.pop * 100)}%`;
           const weatherIconId = item.weather[0].icon;
 

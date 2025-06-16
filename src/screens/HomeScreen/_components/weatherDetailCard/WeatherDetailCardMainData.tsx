@@ -8,19 +8,18 @@ import PretendardText from '@components/fontText/PretendardText';
 import WeatherIcon from '@components/icon/WeatherIcon';
 import Show from '@components/wrapper/Show';
 import WeatherDetailCardMainDataSubItem from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainDataSubItem';
-import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { WeatherDetailCardMainDataProps } from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainData.type';
 
-type WeatherDetailCardMainDataMainItemProps = Omit<ViewProps, 'children' | 'className'> & {
-  label?: string | LocalizedText;
+type WeatherDetailCardMainDataMainItemProps = Omit<ViewProps, 'className'> & {
   value?: string;
 };
 
-function WeatherDetailCardMainDataMainItem({ label, value, ...props }: WeatherDetailCardMainDataMainItemProps) {
-  const lang = useSettingStore(state => state.lang);
-
+function WeatherDetailCardMainDataMainItem({
+  children: label,
+  value,
+  ...props
+}: WeatherDetailCardMainDataMainItemProps) {
   return (
     <Show when={value !== undefined}>
       <View
@@ -32,7 +31,7 @@ function WeatherDetailCardMainDataMainItem({ label, value, ...props }: WeatherDe
             typo="title-5"
             className="text-text-01"
           >
-            {typeof label === 'string' ? label : label?.[lang]}
+            {label}
           </PretendardText>
           <PretendardText
             typo="title-5"
@@ -105,35 +104,23 @@ export default function WeatherDetailCardMainData({
           </PretendardText>
         </View>
         {/* 메인 */}
-        <WeatherDetailCardMainDataMainItem
-          label={mainLabel}
-          value={mainValue}
-        />
+        <WeatherDetailCardMainDataMainItem value={mainValue}>{mainLabel}</WeatherDetailCardMainDataMainItem>
       </View>
       <View className="flex flex-row items-center gap-2">
         {/* 첫번째 서브 */}
-        <WeatherDetailCardMainDataSubItem
-          label={firstSubLabel}
-          value={firstSubValue}
-        />
+        <WeatherDetailCardMainDataSubItem value={firstSubValue}>{firstSubLabel}</WeatherDetailCardMainDataSubItem>
         {/* 파티션 */}
         <Show when={!!secondSubLabel || secondSubValue !== undefined}>
           <View className="h-3 w-[0.0625rem] bg-transparency-09" />
         </Show>
         {/* 두번째 서브 */}
-        <WeatherDetailCardMainDataSubItem
-          label={secondSubLabel}
-          value={secondSubValue}
-        />
+        <WeatherDetailCardMainDataSubItem value={secondSubValue}>{secondSubLabel}</WeatherDetailCardMainDataSubItem>
         {/* 파티션 */}
         <Show when={!!thirdSubLabel || thirdSubValue !== undefined}>
           <View className="h-3 w-[0.0625rem] bg-transparency-09" />
         </Show>
         {/* 세번째 서브 */}
-        <WeatherDetailCardMainDataSubItem
-          label={thirdSubLabel}
-          value={thirdSubValue}
-        />
+        <WeatherDetailCardMainDataSubItem value={thirdSubValue}>{thirdSubLabel}</WeatherDetailCardMainDataSubItem>
         {/* 날씨 아이콘; 여기에서 padding 적용 */}
         <View className="py-3 pr-1">
           <View className="size-6 shrink-0">

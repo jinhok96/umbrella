@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 import type { ViewProps } from 'react-native';
 import { FlatList, View } from 'react-native';
 
+import CheckCircleIcon from '@components/icon/CheckCircleIcon';
+import LocationIcon from '@components/icon/LocationIcon';
 import { formatDateToMMDD, getLocalizedDay } from '@libs/utils/date.util';
 import { getDailyAvgTemp } from '@libs/utils/getDailyAvgTemp.util';
 import { convertUVIndexToText, convertWindDegToText } from '@libs/utils/weather.util';
@@ -10,7 +12,6 @@ import WeatherDetailCardItem from '@screens/HomeScreen/_components/weatherDetail
 import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
-import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { ForecastsGraphSectionProps } from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSection.type';
 import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
@@ -45,17 +46,19 @@ export default forwardRef<
 
           // mainDataProps
           const badgeLabel = formatDateToMMDD(date);
-          const mainLabel: LocalizedText = getLocalizedDay(date);
+          const mainLabel = getLocalizedDay(date)[lang];
           const mainValue = `${Math.round(getDailyAvgTemp(item.temp.morn, item.temp.day, item.temp.eve, item.temp.night))}°`;
-          const firstSubLabel: LocalizedText = {
-            ko: '기온',
-            en: 'Temp',
-          };
+          const firstSubLabel = (
+            <View className="size-5 opacity-40">
+              <CheckCircleIcon />
+            </View>
+          );
           const firstSubValue = `${Math.round(item.temp.min)}° ~ ${Math.round(item.temp.max)}°`;
-          const secondSubLabel: LocalizedText = {
-            ko: '강수',
-            en: 'PoP',
-          };
+          const secondSubLabel = (
+            <View className="size-5 opacity-40">
+              <LocationIcon filled />
+            </View>
+          );
           const secondSubValue = `${Math.round(item.pop * 100)}%`;
           const weatherIconId = item.weather[0].icon;
 
