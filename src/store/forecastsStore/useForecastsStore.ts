@@ -46,6 +46,9 @@ const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
       suncream: {
         uvi: 0,
       },
+      ozone: {
+        o3: 0,
+      },
     };
 
     const newHourly = hourly.map((hourlyData, index) => {
@@ -72,9 +75,9 @@ const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
           newChecklist.mask.pm25 = hourlyPm25;
         }
 
-        // suncream.uvi
-        if (hourlyData.uvi > newChecklist.suncream.uvi) {
-          newChecklist.suncream.uvi = hourlyData.uvi;
+        // ozone.o3
+        if (!!hourlyO3 && hourlyO3 > newChecklist.ozone.o3) {
+          newChecklist.ozone.o3 = hourlyO3;
         }
       }
 
@@ -82,6 +85,16 @@ const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
     });
 
     const newDaily = daily;
+
+    // 체크리스트 - suncream.uvi
+    /**
+      낮음	~2	안전. 따로 대비하지않아도 무방
+      보통	3~5	모자, 선글라스 사용 권장
+      높음	6~7	1-2시간에 피부화상. 긴소매옷과 양산, 자외선 차단제 권장
+      매우 높음	8~10	1시간 내로 피부화상. 한낮에는 외출자제 권장
+      위험	11+	수십 분 정도로 피부화상. 가능한 한 실내활동.
+     */
+    newChecklist.suncream.uvi = newDaily[0].uvi;
 
     // 체크리스트 - clothes.temp
     newChecklist.clothes.temp = newDaily?.[0].temp;
@@ -91,7 +104,7 @@ const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
     if (newChecklist.umbrella.hours.length) {
       newChecklist.umbrella.message = {
         ko: `오후 00시에 비가 내려요. 우산을 잊지말고 꼭 챙기세요!`,
-        en: `It’s going to rain this afternoon at ${newChecklist.umbrella.hours[0]}. Make sure to bring an umbrella if you’re heading out!`,
+        en: `It’s going to rain this afternoon at 00. Make sure to bring an umbrella if you’re heading out!`,
       };
     }
 
@@ -99,7 +112,7 @@ const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
     if (newChecklist.mask.pm10 || newChecklist.mask.pm25) {
       newChecklist.mask.message = {
         ko: `미세먼지 농도가 00로 매우 높아요.\n마스크를 착용해요!`,
-        en: `It’s going to rain this afternoon at ${newChecklist.umbrella.hours[0]}. Make sure to bring an umbrella if you’re heading out!`,
+        en: `It’s going to rain this afternoon at 00. Make sure to bring an umbrella if you’re heading out!`,
       };
     }
 
@@ -107,7 +120,7 @@ const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
     if (newChecklist.clothes.temp) {
       newChecklist.clothes.message = {
         ko: `일교차가 크고 쌀쌀해요. 긴팔을 입는 게 좋아요!`,
-        en: `It’s going to rain this afternoon at ${newChecklist.umbrella.hours[0]}. Make sure to bring an umbrella if you’re heading out!`,
+        en: `It’s going to rain this afternoon at 00. Make sure to bring an umbrella if you’re heading out!`,
       };
     }
 

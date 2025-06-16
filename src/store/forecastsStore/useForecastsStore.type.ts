@@ -39,6 +39,9 @@ type Checklist = {
     uvi: number;
     message?: LocalizedText;
   };
+  ozone: {
+    o3: number;
+  };
 };
 
 export type ForecastsStoreState = {

@@ -62,6 +62,16 @@ import type { lineDataItem } from 'react-native-gifted-charts';
  */
 export type GraphDataItem = Omit<lineDataItem, 'value'> & { value: number };
 
-export type ForecastsGraphProps = ViewProps & {
-  data: GraphDataItem[];
+export type ForecastsGraphStyle = {
+  forecastsGraphHeight?: number;
+  forecastsGraphBottomOffset?: number;
+  forecastsGraphBottomPadding?: number;
+  forecastsGraphMaxValue?: number;
+  forecastsGraphSpacing?: number;
+  forecastsGraphPointSize?: number;
 };
+
+export type ForecastsGraphProps = ViewProps &
+  Required<ForecastsGraphStyle> & {
+    data: GraphDataItem[];
+  };

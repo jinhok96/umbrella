@@ -49,7 +49,7 @@ const GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK: GetCurrentAndForecastsWea
     pressure: 1014,
     humidity: 91,
     dew_point: 290.51,
-    uvi: 0.16,
+    uvi: 0.26,
     clouds: 54,
     visibility: 10000,
     wind_speed: 2.58,
@@ -104,7 +104,7 @@ const GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK: GetCurrentAndForecastsWea
     clouds: 92,
     pop: 0.47,
     rain: 0.15,
-    uvi: 9.23,
+    uvi: 0.36,
   }),
   alerts: [
     {
@@ -122,7 +122,7 @@ const POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK: PostCurrentAirQualityResponse = {
   dateTime: 'testDateTime',
   pm25: 15,
   pm10: 20,
-  o3: 63,
+  o3: 0.63,
 };
 
 const POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK = new Array(48).fill(POST_CURRENT_AIR_QUALITY_RESPONSE_MOCK);
@@ -164,7 +164,10 @@ const NEW_STATE_MOCK: StoreState = {
       temp: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.daily[0].temp,
     },
     suncream: {
-      uvi: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.hourly[0].uvi,
+      uvi: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.daily[0].uvi,
+    },
+    ozone: {
+      o3: POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK[0].o3,
     },
   },
 };

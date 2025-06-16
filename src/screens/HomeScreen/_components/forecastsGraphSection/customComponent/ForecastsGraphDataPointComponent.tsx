@@ -3,7 +3,7 @@ import { View } from 'react-native';
 
 import classNames from 'classnames';
 
-import { FORECASTS_GRAPH_POINT_SIZE } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.const';
+import { FORECASTS_GRAPH_POINT_SIZE } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.const';
 
 type CustomGraphDataPointComponentProps = Omit<ViewProps, 'className' | 'style'> & {
   isSelected?: boolean;

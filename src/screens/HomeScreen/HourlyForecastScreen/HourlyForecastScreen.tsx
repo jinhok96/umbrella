@@ -1,14 +1,30 @@
-import { Text } from 'react-native';
+import { View } from 'react-native';
 
-import TestSection from '@components/TestSection';
+import { useForecastScreen } from '@hooks/useForecastScreen';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
+import HourlyForecastScreenHeader from '@screens/HomeScreen/HourlyForecastScreen/_components/HourlyForecastScreenHeader';
+import HourlyForecastScreenWeatherDetailCardSection from '@screens/HomeScreen/HourlyForecastScreen/_components/HourlyForecastScreenWeatherDetailCardSection';
+
+import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 export default function HourlyForecastScreen() {
+  const { selectedIndex, detailCardSectionRef, handleSelectedIndexChange, handleScrollToSelectedIndex } =
+    useForecastScreen<NonNullable<ForecastsStoreState['hourly']>[number]>('hourly');
+
   return (
-    <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.HourlyForecast}>
-      <Text>HourlyForecastScreen</Text>
-      <TestSection />
-    </HomeScreenWrapper>
+    <View className="flex-1">
+      <HourlyForecastScreenHeader
+        selectedIndex={selectedIndex}
+        onSelectedIndexChange={handleScrollToSelectedIndex}
+      />
+      <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.HourlyForecast}>
+        <HourlyForecastScreenWeatherDetailCardSection
+          selectedIndex={selectedIndex}
+          onSelectedIndexChange={handleSelectedIndexChange}
+          ref={detailCardSectionRef}
+        />
+      </HomeScreenWrapper>
+    </View>
   );
 }

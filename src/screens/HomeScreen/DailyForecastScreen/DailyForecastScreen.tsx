@@ -1,14 +1,30 @@
-import { Text } from 'react-native';
+import { View } from 'react-native';
 
-import TestSection from '@components/TestSection';
+import { useForecastScreen } from '@hooks/useForecastScreen';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import HomeScreenWrapper from '@screens/HomeScreen/_components/HomeScreenWrapper';
+import DailyForecastScreenHeader from '@screens/HomeScreen/DailyForecastScreen/_components/DailyForecastScreenHeader';
+import DailyForecastScreenWeatherDetailCardSection from '@screens/HomeScreen/DailyForecastScreen/_components/DailyForecastScreenWeatherDetailCardSection';
+
+import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 export default function DailyForecastScreen() {
+  const { selectedIndex, detailCardSectionRef, handleSelectedIndexChange, handleScrollToSelectedIndex } =
+    useForecastScreen<NonNullable<ForecastsStoreState['daily']>[number]>('daily');
+
   return (
-    <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.DailyForecast}>
-      <Text>DailyForecastScreen</Text>
-      <TestSection />
-    </HomeScreenWrapper>
+    <View className="flex-1">
+      <DailyForecastScreenHeader
+        selectedIndex={selectedIndex}
+        onSelectedIndexChange={handleScrollToSelectedIndex}
+      />
+      <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.DailyForecast}>
+        <DailyForecastScreenWeatherDetailCardSection
+          selectedIndex={selectedIndex}
+          onSelectedIndexChange={handleSelectedIndexChange}
+          ref={detailCardSectionRef}
+        />
+      </HomeScreenWrapper>
+    </View>
   );
 }

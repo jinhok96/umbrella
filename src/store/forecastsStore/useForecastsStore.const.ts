@@ -47,7 +47,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pressure: 1014,
     humidity: 91,
     dew_point: 290.5,
-    uvi: 0,
+    uvi: 3,
     clouds: 54,
     visibility: 10000,
     wind_speed: 2.58,
@@ -64,7 +64,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pop: 0.15,
     pm25: 15,
     pm10: 20,
-    o3: 63,
+    o3: 0.03,
   })),
   daily: new Array(8).fill(0).map((_, index) => ({
     dt: 1684951200 + index * 60 * 60 * 24,
@@ -91,7 +91,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     pressure: 1016,
     humidity: 59,
     dew_point: 290.4,
-    wind_speed: 3.98,
+    wind_speed: 3.48,
     wind_deg: 76,
     wind_gust: 8.92,
     weather: [
@@ -105,7 +105,7 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
     clouds: 92,
     pop: 0.47,
     rain: 0.15,
-    uvi: 9.23,
+    uvi: 9,
   })),
   alerts: [
     {
@@ -148,11 +148,14 @@ export const INIT_FORECASTS_STORE_STATE: ForecastsStoreState = {
       },
     },
     suncream: {
-      uvi: 9.23,
+      uvi: 8,
       message: {
         ko: `자외선지수가 00으로 매우 높아요!\n썬크림으로 피부를 보호하세요!`,
         en: `It’s going to rain this afternoon at 4. Make sure to bring an umbrella if you’re heading out!`,
       },
+    },
+    ozone: {
+      o3: 15.2,
     },
   },
 };

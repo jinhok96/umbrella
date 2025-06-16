@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type { ViewProps } from 'react-native';
 import { View } from 'react-native';
 
+import Show from '@components/wrapper/Show';
 import { ChecklistSectionButtonListRow } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionButtonList';
 import ChecklistSectionMessageBox from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBox';
 import CurrentForecastScreenSectionHeader from '@screens/HomeScreen/CurrentForecastScreen/_components/currentForecastScreenSectionHeader/CurrentForecastScreenSectionHeader';
@@ -24,7 +25,7 @@ const BUTTON_MAX_ROW_ITEM_NUM = 4;
 
 /**
  * 체크리스트 섹션 컴포넌트
- * @jinhok96 25.06.10
+ * @jinhok96 25.06.12
  */
 export default function ChecklistSection({ ...props }: ChecklistSection) {
   const checklist = useForecastsStore(state => state.checklist);
@@ -32,7 +33,7 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
     Array<Partial<ForecastsStoreState['checklist'] & { type: ChecklistType }>>[]
   >([]);
   const [selected, setSelected] = useState<{ type: ChecklistType; row: number } | null>(null);
-  const [buttonMaxHeight, setButtonMaxHeight] = useState<number>();
+  const [buttonMaxHeight, setButtonMaxHeight] = useState<number>(0);
 
   // checklist를 4개씩 2차 배열로 분리
   useEffect(() => {
@@ -95,15 +96,17 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
               if (buttonMaxHeight !== newMaxHeight) setButtonMaxHeight(newMaxHeight);
             }}
           >
-            {item.map(checklistItem => (
-              <ChecklistSectionButtonListRow
-                key={checklistItem.type}
-                type={checklistItem.type}
-                row={row}
-                selectedType={selected?.type}
-                onSelectedChange={setSelected}
-              />
-            ))}
+            <Show when={!!buttonMaxHeight}>
+              {item.map(checklistItem => (
+                <ChecklistSectionButtonListRow
+                  key={checklistItem.type}
+                  type={checklistItem.type}
+                  row={row}
+                  selectedType={selected?.type}
+                  onSelectedChange={setSelected}
+                />
+              ))}
+            </Show>
           </View>
           <ChecklistSectionMessageBox selected={selected && row === selected?.row ? selected.type : null} />
         </View>

@@ -1,4 +1,4 @@
-import type { GraphDataItem } from '@screens/HomeScreen/_components/forecastsGraph/ForecastsGraph.type';
+import type { GraphDataItem } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.type';
 import type { Theme } from '@store/settingStore/useSettingStore.type';
 
 /**

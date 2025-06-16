@@ -7,20 +7,20 @@ import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
 
 const LABEL_LIST: LocalizedTextMap<'pm10' | 'pm25' | 'uv' | 'o3'> = {
   pm10: {
-    en: 'PM10',
+    en: 'PM 10',
     ko: '미세먼지',
   },
   pm25: {
-    en: 'PM2.5',
+    en: 'PM 2.5',
     ko: '초미세먼지',
   },
   uv: {
-    en: 'UV Index',
+    en: 'UV',
     ko: '자외선지수',
   },
   o3: {
-    en: 'Ozone AQI',
-    ko: '오존 농도',
+    en: 'Ozone',
+    ko: '오존',
   },
 };
 
@@ -37,7 +37,7 @@ function Section({ ...props }: ViewProps) {
 
 /**
  * 현재 날씨 상태를 보여주는 카드 섹션
- * @jinhok96 25.06.06
+ * @jinhok96 25.06.12
  */
 export default function StatusCardSection({ ...props }: StatusCardSectionProps) {
   return (
