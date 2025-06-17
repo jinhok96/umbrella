@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 
 import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphDataPointComponent';
@@ -43,7 +43,7 @@ const GRAPH_LABEL_TEXT: LocalizedText = {
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @param forecastsGraphContainerMargin 그래프 섹션 좌우 마진
- * @jinhok96 25.06.11
+ * @jinhok96 25.06.17
  */
 export default function HourlyForecastsGraphSection({
   selectedIndex,
@@ -63,11 +63,9 @@ export default function HourlyForecastsGraphSection({
   const theme = useSettingStore(state => state.theme);
   const [currentForecastsGraphSpacing, setCurrentForecastsGraphSpacing] = useState(forecastsGraphSpacing);
 
-  // 그래프 데이터; 리렌더링을 최소화하기 위해 메모이제이션
-  const data: GraphDataItem[] = useMemo(() => {
-    if (!hourly) return [];
-
-    const newData = hourly?.map((item, index) => {
+  // 그래프 데이터
+  const data: GraphDataItem[] =
+    hourly?.map((item, index) => {
       const value = item.temp;
       const isSelected = index === selectedIndex;
 
@@ -83,10 +81,7 @@ export default function HourlyForecastsGraphSection({
           />
         ),
       };
-    });
-
-    return newData;
-  }, [hourly, selectedIndex, theme]);
+    }) || [];
 
   // 그래프 간격 업데이트
   const handleLayout = (e: LayoutChangeEvent) => {

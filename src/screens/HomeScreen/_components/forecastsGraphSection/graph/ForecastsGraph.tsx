@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { View } from 'react-native';
 
 import { LineChart } from 'react-native-gifted-charts';
@@ -20,7 +19,7 @@ import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/foreca
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @returns 라인 그래프
- * @jinhok96 25.06.11
+ * @jinhok96 25.06.17
  */
 export default function ForecastsGraph({
   data,
@@ -34,21 +33,19 @@ export default function ForecastsGraph({
 }: ForecastsGraphProps) {
   const morningColor = useGetColorHex('--color-morning');
 
-  // 일관된 크기로 포맷팅된 그래프 데이터; 리렌더링을 최소화하기 위해 메모이제이션
-  const newData = useMemo(() => {
-    const { minValue = 0, maxValue = 0 } = findForecastsGraphMinMaxValue(data);
+  const { minValue = 0, maxValue = 0 } = findForecastsGraphMinMaxValue(data);
 
-    return data.map(item => {
-      // paddingBottom 계산
-      const bottomPaddingValue =
-        (forecastsGraphBottomOffset + forecastsGraphBottomPadding) / (forecastsGraphHeight / 100);
+  // 일관된 크기로 포맷팅된 그래프 데이터
+  const newData = data.map(item => {
+    // paddingBottom 계산
+    const bottomPaddingValue =
+      (forecastsGraphBottomOffset + forecastsGraphBottomPadding) / (forecastsGraphHeight / 100);
 
-      return {
-        ...item,
-        value: interpolate(item.value, [minValue, maxValue], [bottomPaddingValue, forecastsGraphMaxValue]),
-      };
-    });
-  }, [data, forecastsGraphBottomOffset, forecastsGraphBottomPadding, forecastsGraphHeight, forecastsGraphMaxValue]);
+    return {
+      ...item,
+      value: interpolate(item.value, [minValue, maxValue], [bottomPaddingValue, forecastsGraphMaxValue]),
+    };
+  });
 
   return (
     <View

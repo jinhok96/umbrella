@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 
 import { getLocalizedDay } from '@libs/utils/date.util';
@@ -40,7 +40,7 @@ const SECTION_HEADER_TEXT: LocalizedText = {
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @param forecastsGraphContainerMargin 그래프 섹션 좌우 마진
- * @jinhok96 25.06.12
+ * @jinhok96 25.06.17
  */
 export default function DailyForecastsGraphSection({
   selectedIndex,
@@ -60,11 +60,9 @@ export default function DailyForecastsGraphSection({
   const theme = useSettingStore(state => state.theme);
   const [currentForecastsGraphSpacing, setCurrentForecastsGraphSpacing] = useState(forecastsGraphSpacing);
 
-  // 그래프 데이터; 리렌더링을 최소화하기 위해 메모이제이션
-  const data: GraphDataItem[] = useMemo(() => {
-    if (!daily) return [];
-
-    const newData = daily?.map((item, index) => {
+  // 그래프 데이터
+  const data: GraphDataItem[] =
+    daily?.map((item, index) => {
       const { morn, day, eve, night } = item.temp;
       const value = getDailyAvgTemp(morn, day, eve, night);
       const isSelected = index === selectedIndex;
@@ -81,10 +79,7 @@ export default function DailyForecastsGraphSection({
           />
         ),
       };
-    });
-
-    return newData;
-  }, [daily, selectedIndex, theme]);
+    }) || [];
 
   // 그래프 간격 업데이트
   const handleLayout = (e: LayoutChangeEvent) => {
