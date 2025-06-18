@@ -28,7 +28,7 @@ type WeatherDetailCardProps = Omit<PressableProps, 'children'> &
  * @param label 카드 헤더 라벨
  * @param mainDataProps 메인 데이터 컴포넌트 props
  * @param children `WeatherDetailCardItem` 컴포넌트를 배치할 부분
- * @jinhok96 25.06.16
+ * @jinhok96 25.06.18
  */
 export default memo(
   function WeatherDetailCard({
@@ -42,7 +42,7 @@ export default memo(
   }: WeatherDetailCardProps) {
     const lang = useSettingStore(state => state.lang);
 
-    const containerClassName = classNames('rounded-xl bg-background-02', isSelected && '', !isSelected && '');
+    const containerClassName = classNames('rounded-xl bg-background-02');
 
     const cardItemContainerClassName = classNames(
       'flex gap-2 rounded-xl px-4 mx-4 bg-background-03 overflow-hidden transition-[background-color,height,opacity,padding-top,padding-bottom,margin-top,margin-bottom]',
