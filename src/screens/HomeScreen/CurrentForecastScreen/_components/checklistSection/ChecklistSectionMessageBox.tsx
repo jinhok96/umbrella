@@ -10,10 +10,12 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { ChecklistSectionMessageBoxProps } from '@screens/HomeScreen/CurrentForecastScreen/_components/checklistSection/ChecklistSectionMessageBox.type';
 
+const DEFAULT_MESSAGE_LINE = 1;
+
 /**
  * `ChecklistSection`의 메세지 컴포넌트
  * @param selected 선택된 체크리스트 타입
- * @jinhok96 25.06.10
+ * @jinhok96 25.06.18
  */
 export default function ChecklistSectionMessageBox({
   selected,
@@ -23,7 +25,7 @@ export default function ChecklistSectionMessageBox({
   const checklist = useForecastsStore(state => state.checklist);
   const lang = useSettingStore(state => state.lang);
   const [latestSelected, setLatestSelected] = useState(selected);
-  const [messageLine, setMessageLine] = useState(0);
+  const [messageLine, setMessageLine] = useState(DEFAULT_MESSAGE_LINE);
 
   const message = latestSelected && checklist?.[latestSelected].message;
 
@@ -44,7 +46,7 @@ export default function ChecklistSectionMessageBox({
   );
 
   useEffect(() => {
-    if (!selected) return;
+    if (!selected) return setMessageLine(DEFAULT_MESSAGE_LINE);
     setLatestSelected(selected);
   }, [selected]);
 
