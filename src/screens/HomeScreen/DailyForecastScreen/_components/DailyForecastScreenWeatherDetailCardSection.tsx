@@ -4,7 +4,7 @@ import { FlatList, View } from 'react-native';
 
 import CheckCircleIcon from '@components/icon/CheckCircleIcon';
 import LocationIcon from '@components/icon/LocationIcon';
-import { formatDateToMMDD, getLocalizedDay } from '@libs/utils/date.util';
+import { formatDateToMMDD } from '@libs/utils/date.util';
 import { getDailyAvgTemp } from '@libs/utils/getDailyAvgTemp.util';
 import { convertUVIndexToText, convertWindDegToText } from '@libs/utils/weather.util';
 import WeatherDetailCard from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCard';
@@ -46,7 +46,6 @@ export default forwardRef<
 
           // mainDataProps
           const badgeLabel = formatDateToMMDD(date);
-          const mainLabel = getLocalizedDay(date)[lang];
           const mainValue = `${Math.round(getDailyAvgTemp(item.temp.morn, item.temp.day, item.temp.eve, item.temp.night))}°`;
           const firstSubLabel = (
             <View className="size-5 opacity-40">
@@ -79,7 +78,6 @@ export default forwardRef<
               onPress={() => onSelectedIndexChange(index)}
               mainDataProps={{
                 badgeLabel,
-                mainLabel,
                 mainValue,
                 firstSubLabel,
                 firstSubValue,
