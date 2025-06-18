@@ -38,7 +38,7 @@ const HEIGHT = 100; // 라벨 높이
  * @param forecastsGraphBottomPadding 그래프 바텀 패딩
  * @param forecastsGraphSpacing 그래프 간격
  * @returns 라벨 컴포넌트
- * @jinhok96 25.06.11
+ * @jinhok96 25.06.18
  */
 export default function ForecastsGraphLabelComponent({
   text,
@@ -55,12 +55,16 @@ export default function ForecastsGraphLabelComponent({
   const lang = useSettingStore(state => state.lang);
 
   const overlayClassName = classNames(
-    'absolute left-0 top-0 rounded-xl bg-morning-light',
+    'absolute left-0 top-0 rounded-xl bg-morning-light transition-none',
     !isSelected && 'opacity-0',
     isSelected && 'opacity-100',
   );
 
-  const labelColorClassName = classNames(!isSelected && 'text-text-05', isSelected && 'text-morning');
+  const labelColorClassName = classNames(
+    'transition-none',
+    !isSelected && 'text-text-05',
+    isSelected && 'text-morning',
+  );
 
   return (
     <Pressable
