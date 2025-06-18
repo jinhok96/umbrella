@@ -88,6 +88,7 @@ export default forwardRef<
               isSelected={selectedIndex === index}
               onPress={() => onSelectedIndexChange(index)}
               label={label}
+              className={label && index !== 0 ? 'pt-1' : undefined}
               mainDataProps={{
                 badgeLabel,
                 mainValue,
