@@ -103,7 +103,7 @@ export default function WeatherDetailCardMainData({
             {badgeLabel}
           </PretendardText>
         </View>
-        {/* 날씨 아이콘; 여기에서 padding 적용 */}
+        {/* 날씨 아이콘 */}
         <View className="size-6 shrink-0">
           <WeatherIcon icon={weatherIconId} />
         </View>
