@@ -1,11 +1,9 @@
 import { View } from 'react-native';
 
 import { LineChart } from 'react-native-gifted-charts';
-import { interpolate } from 'react-native-reanimated';
 
 import { useGetColorHex } from '@hooks/useGetColorHex';
 import { ANIMATION_DURATION } from '@libs/constants/duration.const';
-import { findForecastsGraphMinMaxValue } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.util';
 
 import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.type';
 
@@ -19,7 +17,7 @@ import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/foreca
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @returns 라인 그래프
- * @jinhok96 25.06.17
+ * @jinhok96 25.06.18
  */
 export default function ForecastsGraph({
   data,
@@ -33,20 +31,6 @@ export default function ForecastsGraph({
 }: ForecastsGraphProps) {
   const morningColor = useGetColorHex('--color-morning');
 
-  const { minValue = 0, maxValue = 0 } = findForecastsGraphMinMaxValue(data);
-
-  // 일관된 크기로 포맷팅된 그래프 데이터
-  const newData = data.map(item => {
-    // paddingBottom 계산
-    const bottomPaddingValue =
-      (forecastsGraphBottomOffset + forecastsGraphBottomPadding) / (forecastsGraphHeight / 100);
-
-    return {
-      ...item,
-      value: interpolate(item.value, [minValue, maxValue], [bottomPaddingValue, forecastsGraphMaxValue]),
-    };
-  });
-
   return (
     <View
       {...props}
@@ -55,7 +39,7 @@ export default function ForecastsGraph({
       <LineChart
         // 스타일이 변경되면 새로 랜더링하기 위해 key 지정
         key={`${forecastsGraphHeight}-${forecastsGraphBottomOffset}-${forecastsGraphBottomPadding}-${forecastsGraphMaxValue}-${forecastsGraphSpacing}-${forecastsGraphPointSize}`}
-        data={newData}
+        data={data}
         maxValue={forecastsGraphMaxValue}
         height={forecastsGraphHeight}
         thickness={1}

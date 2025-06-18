@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
+
+import { interpolate } from 'react-native-reanimated';
 
 import { getLocalizedDay } from '@libs/utils/date.util';
 import { getDailyAvgTemp } from '@libs/utils/getDailyAvgTemp.util';
@@ -14,7 +16,10 @@ import {
   FORECASTS_GRAPH_POINT_SIZE,
   FORECASTS_GRAPH_SPACING,
 } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.const';
-import { generateDataPointKey } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.util';
+import {
+  generateDataPointKey,
+  getForecastsGraphBottomPaddingValue,
+} from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.util';
 import ForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSection';
 import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
@@ -22,11 +27,56 @@ import { useSettingStore } from '@store/settingStore/useSettingStore';
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { DailyForecastsGraphSectionProps } from '@screens/HomeScreen/_components/forecastsGraphSection/DailyForecastsGraphSection.type';
 import type { GraphDataItem } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.type';
+import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 const SECTION_HEADER_TEXT: LocalizedText = {
   ko: '요일별 날씨',
   en: 'Daily Forecasts',
 };
+
+/**
+ * 그래프 값 리스트를 반환하는 함수
+ * @param data `daily`
+ * @param graphProps 그래프 속성
+ * @returns `number[]`
+ */
+function getForecastsGraphInterpolatedValueList(
+  data: ForecastsStoreState['daily'],
+  graphProps: {
+    forecastsGraphHeight: number;
+    forecastsGraphBottomOffset: number;
+    forecastsGraphBottomPadding: number;
+    forecastsGraphMaxValue: number;
+  },
+): number[] {
+  if (!data) return [];
+
+  const { forecastsGraphHeight, forecastsGraphBottomOffset, forecastsGraphBottomPadding, forecastsGraphMaxValue } =
+    graphProps;
+
+  const range: { min: number; max: number } = { min: 0, max: 0 };
+
+  data.forEach(item => {
+    const { morn, day, eve, night } = item.temp;
+    const value = getDailyAvgTemp(morn, day, eve, night);
+    if (value < range.min) range.min = value;
+    if (value > range.max) range.max = value;
+  });
+
+  const bottomPaddingValue = getForecastsGraphBottomPaddingValue(
+    forecastsGraphBottomOffset,
+    forecastsGraphBottomPadding,
+    forecastsGraphHeight,
+  );
+
+  const valueList = data.map(item => {
+    const { morn, day, eve, night } = item.temp;
+    const value = getDailyAvgTemp(morn, day, eve, night);
+    return interpolate(value, [range.min, range.max], [bottomPaddingValue, forecastsGraphMaxValue]);
+  });
+
+  return valueList;
+}
 
 /**
  * 요일별 날씨 그래프 섹션
@@ -40,7 +90,7 @@ const SECTION_HEADER_TEXT: LocalizedText = {
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @param forecastsGraphContainerMargin 그래프 섹션 좌우 마진
- * @jinhok96 25.06.17
+ * @jinhok96 25.06.18
  */
 export default function DailyForecastsGraphSection({
   selectedIndex,
@@ -60,18 +110,28 @@ export default function DailyForecastsGraphSection({
   const theme = useSettingStore(state => state.theme);
   const [currentForecastsGraphSpacing, setCurrentForecastsGraphSpacing] = useState(forecastsGraphSpacing);
 
+  // 그래프 값 리스트
+  const valueList: number[] = useMemo(
+    () =>
+      getForecastsGraphInterpolatedValueList(daily, {
+        forecastsGraphHeight,
+        forecastsGraphBottomOffset,
+        forecastsGraphBottomPadding,
+        forecastsGraphMaxValue,
+      }),
+    [daily, forecastsGraphHeight, forecastsGraphBottomOffset, forecastsGraphBottomPadding, forecastsGraphMaxValue],
+  );
+
   // 그래프 데이터
   const data: GraphDataItem[] =
     daily?.map((item, index) => {
-      const { morn, day, eve, night } = item.temp;
-      const value = getDailyAvgTemp(morn, day, eve, night);
       const isSelected = index === selectedIndex;
 
       const baseKey = item.dt.toString();
       const key = generateDataPointKey(baseKey, theme, isSelected);
 
       return {
-        value,
+        value: valueList[index],
         customDataPoint: () => (
           <CustomGraphDataPointComponent
             key={key} // theme, isSelected가 변경될 때 컴포넌트를 리렌더링하기 위해 지정

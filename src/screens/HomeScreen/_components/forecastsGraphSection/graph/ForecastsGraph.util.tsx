@@ -34,3 +34,19 @@ export function findForecastsGraphMinMaxValue(list: GraphDataItem[]): { minValue
 export function generateDataPointKey(baseKey: string, theme: Theme, isSelected: boolean) {
   return `${baseKey}-${theme}${isSelected ? '-selected' : ''}`;
 }
+
+/**
+ * `ForecastsGraph`의 bottomPadding을 담당할 값을 계산하는 함수
+ * @param forecastsGraphBottomOffset `number`
+ * @param forecastsGraphBottomPadding `number`
+ * @param forecastsGraphHeight `number`
+ * @returns `bottomPaddingValue`
+ * @jinhok96 25.06.18
+ */
+export function getForecastsGraphBottomPaddingValue(
+  forecastsGraphBottomOffset: number,
+  forecastsGraphBottomPadding: number,
+  forecastsGraphHeight: number,
+) {
+  return (forecastsGraphBottomOffset + forecastsGraphBottomPadding) / (forecastsGraphHeight / 100);
+}
