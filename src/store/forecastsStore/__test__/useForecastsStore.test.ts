@@ -9,6 +9,9 @@ import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStor
 
 type StoreState = ForecastsStoreState;
 
+// 비오는 시간 인덱스
+const RAINY_HOURS_INDEX = [0, 1, 3];
+
 const GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK: GetCurrentAndForecastsWeatherDataResponse = {
   lat: 33.44,
   lon: -94.04,
@@ -42,7 +45,7 @@ const GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK: GetCurrentAndForecastsWea
     dt: 1684929540,
     precipitation: 0,
   }),
-  hourly: new Array(48).fill({
+  hourly: new Array(48).fill(0).map((_, index) => ({
     dt: 1684926000,
     temp: 292.01,
     feels_like: 292.33,
@@ -63,8 +66,8 @@ const GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK: GetCurrentAndForecastsWea
         icon: '04n',
       },
     ],
-    pop: 0.15,
-  }),
+    pop: RAINY_HOURS_INDEX.includes(index) ? 1 : 0.15,
+  })),
   daily: new Array(8).fill({
     dt: 1684951200,
     sunrise: 1684926645,
@@ -154,7 +157,9 @@ const NEW_STATE_MOCK: StoreState = {
   alerts: GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.alerts,
   checklist: {
     umbrella: {
-      hours: [],
+      hours: RAINY_HOURS_INDEX.map(index =>
+        new Date(GET_CURRENT_AND_FORECASTS_WEATHER_RESPONSE_MOCK.hourly[index].dt * 1000).getHours(),
+      ),
     },
     mask: {
       pm10: POST_AIR_QUALITY_HOURLY_FORECASTS_RESPONSE_MOCK[0].pm10,

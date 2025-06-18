@@ -27,7 +27,7 @@ export default function ChecklistSectionMessageBox({
   const [latestSelected, setLatestSelected] = useState(selected);
   const [messageLine, setMessageLine] = useState(DEFAULT_MESSAGE_LINE);
 
-  const message = latestSelected && checklist?.[latestSelected].message;
+  const message = latestSelected && checklist?.[latestSelected]?.message;
 
   const messagePaddingTopClassName = classNames(
     'px-5 transition-[padding-top]',

@@ -43,7 +43,7 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
 
     // umbrella, mask, clothes, suncream 순서대로 추가
     if (checklist) {
-      if (checklist.umbrella.hours.length) {
+      if (checklist.umbrella) {
         newChecklist.push({ ...checklist.umbrella, type: 'umbrella' });
       }
       if (checklist.mask) {
@@ -57,17 +57,17 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
       }
     }
 
-    const newChecklistArray: Array<Partial<ForecastsStoreState['checklist'] & { type: ChecklistType }>>[] = [];
+    const newChecklistMatrix: Array<Partial<ForecastsStoreState['checklist'] & { type: ChecklistType }>>[] = [];
 
     // 4개씩 나눠서 저장
     newChecklist.forEach((item, index) => {
       if (index % BUTTON_MAX_ROW_ITEM_NUM === 0) {
-        newChecklistArray.push([]);
+        newChecklistMatrix.push([]);
       }
-      newChecklistArray[newChecklistArray.length - 1].push(item);
+      newChecklistMatrix[newChecklistMatrix.length - 1].push(item);
     });
 
-    setChecklistArray(newChecklistArray);
+    setChecklistArray(newChecklistMatrix);
   }, [checklist]);
 
   return (
