@@ -5,6 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "android:clear": "rm -rf node_modules/.cache && rm -rf $TMPDIR/metro-*",
+    "android:release": "cd android && gradlew.bat assembleRelease",
     "ios": "react-native run-ios",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx}",

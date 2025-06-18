@@ -12,6 +12,12 @@ const OPENED_CARD_OFFSET: Record<ForecastType, number> = {
   daily: 196,
 };
 
+/**
+ * HourlyForecastScreen, DailyForecastScreen에서 그래프 및 목록 제어를 위해 사용하는 훅
+ * @param type 예보 타입; `hourly` | `daily`
+ * @returns `{ selectedIndex, detailCardSectionRef, handleSelectedIndexChange, handleScrollToSelectedIndex }`
+ * @jinhok96 25.06.17
+ */
 export function useForecastScreen<T>(type: ForecastType) {
   const [selectedIndex, setSelectedIndex] = useState<ForecastsGraphSelectedIndex>(null);
   const detailCardSectionRef = useRef<FlatList<T>>(null);
