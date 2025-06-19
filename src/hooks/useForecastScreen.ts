@@ -16,7 +16,7 @@ const OPENED_CARD_OFFSET: Record<ForecastType, number> = {
  * HourlyForecastScreen, DailyForecastScreen에서 그래프 및 목록 제어를 위해 사용하는 훅
  * @param type 예보 타입; `hourly` | `daily`
  * @returns `{ selectedIndex, detailCardSectionRef, handleSelectedIndexChange, handleScrollToSelectedIndex }`
- * @jinhok96 25.06.17
+ * @jinhok96 25.06.19
  */
 export function useForecastScreen<T>(type: ForecastType) {
   const [selectedIndex, setSelectedIndex] = useState<ForecastsGraphSelectedIndex>(null);
@@ -36,22 +36,21 @@ export function useForecastScreen<T>(type: ForecastType) {
 
   // 그래프에서 날짜 선택 시 카드 섹션 스크롤
   const handleScrollToSelectedIndex = (index: ForecastsGraphSelectedIndex) => {
-    const lastSelectedIndex = selectedIndex;
+    const prevSelectedIndex = selectedIndex;
     const currentIndex = handleSelectedIndexChange(index);
 
     if (typeof currentIndex !== 'number') return;
 
-    const currentIndexNumber = currentIndex === 0 ? 0 : currentIndex - 1;
+    const nextScrollIndex = currentIndex === 0 ? 0 : currentIndex - 1;
 
-    const gapOffset = 12; // gap-3
-    const openedCardOffset = OPENED_CARD_OFFSET[type];
+    const gapOffset = 12;
+    const openedCardOffset = prevSelectedIndex && prevSelectedIndex < nextScrollIndex ? OPENED_CARD_OFFSET[type] : 0;
 
     // 위에 위치한 카드의 높이가 줄어들면서 스크롤이 올라가는 현상을 openedCardOffset으로 보정
-    const viewOffset =
-      lastSelectedIndex === null || lastSelectedIndex >= currentIndexNumber ? gapOffset : gapOffset + openedCardOffset;
+    const viewOffset = gapOffset + openedCardOffset;
 
     detailCardSectionRef.current?.scrollToIndex({
-      index: currentIndexNumber,
+      index: nextScrollIndex,
       viewOffset,
       animated: true,
     });
