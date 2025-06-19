@@ -38,7 +38,7 @@ const HEIGHT = 100; // 라벨 높이
  * @param forecastsGraphBottomPadding 그래프 바텀 패딩
  * @param forecastsGraphSpacing 그래프 간격
  * @returns 라벨 컴포넌트
- * @jinhok96 25.06.18
+ * @jinhok96 25.06.19
  */
 export default function ForecastsGraphLabelComponent({
   text,
@@ -61,9 +61,8 @@ export default function ForecastsGraphLabelComponent({
   );
 
   const labelColorClassName = classNames(
-    'transition-none',
-    !isSelected && 'text-text-05',
-    isSelected && 'text-morning',
+    !isSelected && 'text-text-05 transition-none',
+    isSelected && 'text-morning transition-none',
   );
 
   return (

@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import type { PressableProps } from 'react-native';
 import { Pressable, View } from 'react-native';
 
@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 import PretendardText from '@components/fontText/PretendardText';
 import Show from '@components/wrapper/Show';
+import { ANIMATION_DURATION } from '@libs/constants/duration.const';
 import WeatherDetailCardMainData from '@screens/HomeScreen/_components/weatherDetailCard/WeatherDetailCardMainData';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
@@ -28,7 +29,7 @@ type WeatherDetailCardProps = Omit<PressableProps, 'children'> &
  * @param label 카드 헤더 라벨
  * @param mainDataProps 메인 데이터 컴포넌트 props
  * @param children `WeatherDetailCardItem` 컴포넌트를 배치할 부분
- * @jinhok96 25.06.18
+ * @jinhok96 25.06.19
  */
 export default memo(
   function WeatherDetailCard({
@@ -41,16 +42,30 @@ export default memo(
     ...props
   }: WeatherDetailCardProps) {
     const lang = useSettingStore(state => state.lang);
+    const [isExpanded, setIsExpanded] = useState(false);
 
     const containerClassName = classNames('rounded-xl bg-background-02');
 
     const cardItemContainerClassName = classNames(
       'flex gap-2 rounded-xl px-4 mx-4 bg-background-03 overflow-hidden transition-[background-color,height,opacity,padding-top,padding-bottom,margin-top,margin-bottom]',
-      !isSelected && 'py-0 mb-0 mt-0 opacity-0 h-0',
-      isSelected && 'py-4 mb-4 mt-1 opacity-100',
-      isSelected && type === 'hourly' && 'h-[14.8rem]', // 7개; py(16*2) + body2(14*1.6)*7 + gap(8)*(7-1) = 236.8px = 14.8rem
-      isSelected && type === 'daily' && 'h-[11rem]', // 5개; py(16*2) + body2(14*1.6)*5 + gap(8)*(5-1) = 176px = 11rem
+      !isExpanded && 'py-0 mb-0 mt-0 opacity-0 h-0',
+      isExpanded && 'py-4 mb-4 mt-1 opacity-100',
+      isExpanded && type === 'hourly' && 'h-[14.8rem]', // 7개; py(16*2) + body2(14*1.6)*7 + gap(8)*(7-1) = 236.8px = 14.8rem
+      isExpanded && type === 'daily' && 'h-[11rem]', // 5개; py(16*2) + body2(14*1.6)*5 + gap(8)*(5-1) = 176px = 11rem
     );
+
+    useEffect(() => {
+      // 스크롤 애니메이션 종료 후 isExpanded 업데이트
+      const timeoutId = setTimeout(() => {
+        setIsExpanded(isSelected);
+      }, ANIMATION_DURATION);
+
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }, [isSelected]);
+
+    console.log('isExpanded', isExpanded);
 
     return (
       <View className={className}>

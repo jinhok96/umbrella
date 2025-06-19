@@ -82,11 +82,14 @@ export default function WeatherDetailCardMainData({
 }: WeatherDetailCardMainDataProps & { isSelected: boolean }) {
   const badgeClassName = classNames(
     'w-12 py-1 flex items-center justify-center rounded-lg',
-    isSelected && 'bg-morning',
-    !isSelected && 'bg-text-08',
+    isSelected && 'bg-morning transition-none',
+    !isSelected && 'bg-text-08 transition-none',
   );
 
-  const badgeTextColorClassName = classNames(isSelected && 'text-white', !isSelected && 'text-text-03');
+  const badgeTextColorClassName = classNames(
+    isSelected && 'text-white transition-none',
+    !isSelected && 'text-text-03 transition-none',
+  );
 
   return (
     <View

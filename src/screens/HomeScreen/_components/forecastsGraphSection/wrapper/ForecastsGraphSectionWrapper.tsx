@@ -48,7 +48,7 @@ function GradientOverlay({ className, reverse, forecastsGraphContainerMargin }: 
  * @param children 그래프 요소
  * @param forecastsGraphSpacing 그래프 간격
  * @param containerMargin 좌우 마진
- * @jinhok96 25.06.11
+ * @jinhok96 25.06.19
  */
 export default function ForecastsGraphSectionWrapper({
   headerText,
@@ -63,15 +63,12 @@ export default function ForecastsGraphSectionWrapper({
   const [containerWidth, setContainerWidth] = useState(0);
   const scrollRef = useRef<ScrollView>(null);
 
-  const isSelectedIndexEmpty = !selectedIndex && selectedIndex !== 0;
-
   useEffect(() => {
-    if (isSelectedIndexEmpty) return;
+    if (selectedIndex === null || selectedIndex === undefined) return;
+    if (!containerWidth) return;
 
     // selectedIndex 요소를 중앙으로 스크롤하는 함수
     const handleScrollToSelectedIndex = (index: number) => {
-      if (isSelectedIndexEmpty) return;
-      if (!containerWidth) return;
       const x = forecastsGraphContainerMargin + forecastsGraphSpacing * (index + 1 / 2) - containerWidth / 2;
       scrollRef.current?.scrollTo({
         x,

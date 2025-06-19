@@ -113,7 +113,6 @@ export default forwardRef<
         contentContainerClassName="p-5 gap-3 h-[42rem]" // 요소 확장 시 스크롤 위치가 변하지 않도록 높이 직접 지정
         data={daily}
         keyExtractor={item => item.dt.toString()}
-        initialNumToRender={8}
         renderItem={renderItem}
       />
     </View>

@@ -134,9 +134,6 @@ export default forwardRef<
         data={hourly}
         keyExtractor={item => item.dt.toString()}
         initialNumToRender={12}
-        maxToRenderPerBatch={12}
-        windowSize={12}
-        removeClippedSubviews
         renderItem={renderItem}
       />
     </View>

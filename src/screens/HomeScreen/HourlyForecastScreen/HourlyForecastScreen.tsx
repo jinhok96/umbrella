@@ -9,14 +9,21 @@ import HourlyForecastScreenWeatherDetailCardSection from '@screens/HomeScreen/Ho
 import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 export default function HourlyForecastScreen() {
-  const { selectedIndex, detailCardSectionRef, handleSelectedIndexChange, handleScrollToSelectedIndex } =
-    useForecastScreen<NonNullable<ForecastsStoreState['hourly']>[number]>('hourly');
+  const {
+    selectedIndex,
+    detailCardSectionRef,
+    handleSelectedIndexChange,
+    handleScrollDetailCardSectionToSelectedIndex,
+  } = useForecastScreen<NonNullable<ForecastsStoreState['hourly']>[number]>('hourly');
 
   return (
     <View className="flex-1">
       <HourlyForecastScreenHeader
         selectedIndex={selectedIndex}
-        onSelectedIndexChange={handleScrollToSelectedIndex}
+        onSelectedIndexChange={index => {
+          handleSelectedIndexChange(index);
+          handleScrollDetailCardSectionToSelectedIndex(index);
+        }}
       />
       <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.HourlyForecast}>
         <HourlyForecastScreenWeatherDetailCardSection
