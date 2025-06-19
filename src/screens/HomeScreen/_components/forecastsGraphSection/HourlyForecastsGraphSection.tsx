@@ -1,8 +1,11 @@
 import { useMemo, useState } from 'react';
 import type { LayoutChangeEvent } from 'react-native';
 
+import { isSameDay } from 'date-fns/fp';
+
 import { interpolate } from 'react-native-reanimated';
 
+import { getLocalizedDay } from '@libs/utils/date.util';
 import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphDataPointComponent';
 import ForecastsGraphLabelComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphLabelComponent';
 import {
@@ -179,15 +182,18 @@ export default function HourlyForecastsGraphSection({
       onLayout={handleLayout}
     >
       {hourly?.map((item, index) => {
-        const hour = new Date(item.dt * 1000).getHours();
+        const date = new Date(item.dt * 1000);
+        const hour = date.getHours().toString();
+        const isToday = isSameDay(date, new Date(hourly[0].dt * 1000));
+        const day = !isToday && hour === '0' && getLocalizedDay(date);
         const isSelected = index === selectedIndex;
 
         return (
           <ForecastsGraphLabelComponent
             key={item.dt}
             text={{
-              ko: hour.toString() + GRAPH_LABEL_TEXT.ko,
-              en: hour.toString() + GRAPH_LABEL_TEXT.en,
+              ko: day ? `${day.ko}요일` : hour + GRAPH_LABEL_TEXT.ko,
+              en: day ? day.en : hour + GRAPH_LABEL_TEXT.en,
             }}
             icon={item.weather[0].icon}
             temp={item.temp}
