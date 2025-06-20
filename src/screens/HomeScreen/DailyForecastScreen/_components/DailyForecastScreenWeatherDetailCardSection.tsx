@@ -18,6 +18,12 @@ import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStor
 type DailyForecastScreenWeatherDetailCardSectionProps = Omit<ViewProps, 'children' | 'className'> &
   Required<Pick<ForecastsGraphSectionProps, 'selectedIndex' | 'onSelectedIndexChange'>> & {};
 
+/**
+ * 요일별 날씨 상세 카드 리스트 섹션
+ * @param selectedIndex 선택된 날씨 데이터 카드의 인덱스
+ * @param onSelectedIndexChange 선택된 날씨 데이터 카드 변경 함수
+ * @jinhok96 25.06.20
+ */
 export default forwardRef<
   FlatList<NonNullable<ForecastsStoreState['daily']>[number]>,
   DailyForecastScreenWeatherDetailCardSectionProps
