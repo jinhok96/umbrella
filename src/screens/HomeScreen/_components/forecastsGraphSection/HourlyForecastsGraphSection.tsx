@@ -6,7 +6,7 @@ import { isSameDay } from 'date-fns/fp';
 import { interpolate } from 'react-native-reanimated';
 
 import { getLocalizedDay } from '@libs/utils/date.util';
-import CustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphDataPointComponent';
+import ForecastsCustomGraphDataPointComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphDataPointComponent';
 import ForecastsGraphLabelComponent from '@screens/HomeScreen/_components/forecastsGraphSection/customComponent/ForecastsGraphLabelComponent';
 import {
   FORECASTS_GRAPH_BOTTOM_OFFSET,
@@ -152,7 +152,7 @@ export default function HourlyForecastsGraphSection({
       return {
         value: valueList[index],
         customDataPoint: () => (
-          <CustomGraphDataPointComponent
+          <ForecastsCustomGraphDataPointComponent
             key={key} // theme, isSelected가 변경될 때 컴포넌트를 리렌더링하기 위해 지정
             isSelected={isSelected}
           />

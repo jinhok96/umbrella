@@ -65,8 +65,6 @@ export default memo(
       };
     }, [isSelected]);
 
-    console.log('isExpanded', isExpanded);
-
     return (
       <View className={className}>
         <Show when={!!label}>
