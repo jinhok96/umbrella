@@ -17,7 +17,7 @@ import type { ForecastsGraphProps } from '@screens/HomeScreen/_components/foreca
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @returns 라인 그래프
- * @jinhok96 25.06.18
+ * @jinhok96 25.06.20
  */
 export default function ForecastsGraph({
   data,

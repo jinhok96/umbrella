@@ -15,10 +15,12 @@ import {
   FORECASTS_GRAPH_MAX_VALUE,
   FORECASTS_GRAPH_POINT_SIZE,
   FORECASTS_GRAPH_SPACING,
+  FORECASTS_GRAPH_TOP_PADDING,
 } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.const';
 import {
   generateDataPointKey,
   getForecastsGraphBottomPaddingValue,
+  getForecastsGraphTopPaddingValue,
 } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.util';
 import ForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSection';
 import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
@@ -39,20 +41,30 @@ const SECTION_HEADER_TEXT: LocalizedText = {
  * @param data `daily`
  * @param graphProps 그래프 속성
  * @returns `number[]`
+ * @jinhok96 25.06.20
  */
 function getForecastsGraphInterpolatedValueList(
   data: ForecastsStoreState['daily'],
-  graphProps: {
-    forecastsGraphHeight: number;
-    forecastsGraphBottomOffset: number;
-    forecastsGraphBottomPadding: number;
-    forecastsGraphMaxValue: number;
-  },
+  graphProps: Required<
+    Pick<
+      DailyForecastsGraphSectionProps,
+      | 'forecastsGraphHeight'
+      | 'forecastsGraphBottomOffset'
+      | 'forecastsGraphBottomPadding'
+      | 'forecastsGraphTopPadding'
+      | 'forecastsGraphMaxValue'
+    >
+  >,
 ): number[] {
   if (!data) return [];
 
-  const { forecastsGraphHeight, forecastsGraphBottomOffset, forecastsGraphBottomPadding, forecastsGraphMaxValue } =
-    graphProps;
+  const {
+    forecastsGraphHeight,
+    forecastsGraphBottomOffset,
+    forecastsGraphBottomPadding,
+    forecastsGraphTopPadding,
+    forecastsGraphMaxValue,
+  } = graphProps;
 
   const range: { min: number; max: number } = { min: 0, max: 0 };
 
@@ -63,6 +75,7 @@ function getForecastsGraphInterpolatedValueList(
     if (value > range.max) range.max = value;
   });
 
+  const topPaddingValue = getForecastsGraphTopPaddingValue(forecastsGraphMaxValue, forecastsGraphTopPadding);
   const bottomPaddingValue = getForecastsGraphBottomPaddingValue(
     forecastsGraphBottomOffset,
     forecastsGraphBottomPadding,
@@ -72,7 +85,7 @@ function getForecastsGraphInterpolatedValueList(
   const valueList = data.map(item => {
     const { morn, day, eve, night } = item.temp;
     const value = getDailyAvgTemp(morn, day, eve, night);
-    return interpolate(value, [range.min, range.max], [bottomPaddingValue, forecastsGraphMaxValue]);
+    return interpolate(value, [range.min, range.max], [bottomPaddingValue, topPaddingValue]);
   });
 
   return valueList;
@@ -86,11 +99,12 @@ function getForecastsGraphInterpolatedValueList(
  * @param forecastsGraphHeight 그래프 높이
  * @param forecastsGraphBottomOffset 그래프 바텀 오프셋
  * @param forecastsGraphBottomPadding 그래프 바텀 패딩
+ * @param forecastsGraphTopPadding 그래프 상단 패딩
  * @param forecastsGraphMaxValue 그래프 최대값
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @param forecastsGraphContainerMargin 그래프 섹션 좌우 마진
- * @jinhok96 25.06.18
+ * @jinhok96 25.06.20
  */
 export default function DailyForecastsGraphSection({
   selectedIndex,
@@ -99,6 +113,7 @@ export default function DailyForecastsGraphSection({
   forecastsGraphHeight = FORECASTS_GRAPH_HEIGHT,
   forecastsGraphBottomOffset = FORECASTS_GRAPH_BOTTOM_OFFSET,
   forecastsGraphBottomPadding = FORECASTS_GRAPH_BOTTOM_PADDING,
+  forecastsGraphTopPadding = FORECASTS_GRAPH_TOP_PADDING,
   forecastsGraphMaxValue = FORECASTS_GRAPH_MAX_VALUE,
   forecastsGraphSpacing = FORECASTS_GRAPH_SPACING,
   forecastsGraphPointSize = FORECASTS_GRAPH_POINT_SIZE,
@@ -117,9 +132,17 @@ export default function DailyForecastsGraphSection({
         forecastsGraphHeight,
         forecastsGraphBottomOffset,
         forecastsGraphBottomPadding,
+        forecastsGraphTopPadding,
         forecastsGraphMaxValue,
       }),
-    [daily, forecastsGraphHeight, forecastsGraphBottomOffset, forecastsGraphBottomPadding, forecastsGraphMaxValue],
+    [
+      daily,
+      forecastsGraphHeight,
+      forecastsGraphBottomOffset,
+      forecastsGraphBottomPadding,
+      forecastsGraphTopPadding,
+      forecastsGraphMaxValue,
+    ],
   );
 
   // 그래프 데이터
@@ -171,6 +194,7 @@ export default function DailyForecastsGraphSection({
       forecastsGraphHeight={forecastsGraphHeight}
       forecastsGraphBottomOffset={forecastsGraphBottomOffset}
       forecastsGraphBottomPadding={forecastsGraphBottomPadding}
+      forecastsGraphTopPadding={forecastsGraphTopPadding}
       forecastsGraphMaxValue={forecastsGraphMaxValue}
       forecastsGraphSpacing={currentForecastsGraphSpacing}
       forecastsGraphPointSize={forecastsGraphPointSize}
@@ -195,6 +219,7 @@ export default function DailyForecastsGraphSection({
             forecastsGraphHeight={forecastsGraphHeight}
             forecastsGraphBottomOffset={forecastsGraphBottomOffset}
             forecastsGraphBottomPadding={forecastsGraphBottomPadding}
+            forecastsGraphTopPadding={forecastsGraphTopPadding}
             forecastsGraphSpacing={currentForecastsGraphSpacing}
           />
         );

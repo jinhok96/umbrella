@@ -66,6 +66,7 @@ export type ForecastsGraphStyle = {
   forecastsGraphHeight?: number;
   forecastsGraphBottomOffset?: number;
   forecastsGraphBottomPadding?: number;
+  forecastsGraphTopPadding?: number;
   forecastsGraphMaxValue?: number;
   forecastsGraphSpacing?: number;
   forecastsGraphPointSize?: number;

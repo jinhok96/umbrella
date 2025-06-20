@@ -16,7 +16,11 @@ type ForecastsGraphLabelComponentProps = Omit<PressableProps, 'children' | 'clas
   Required<
     Pick<
       ForecastsGraphProps,
-      'forecastsGraphHeight' | 'forecastsGraphBottomOffset' | 'forecastsGraphBottomPadding' | 'forecastsGraphSpacing'
+      | 'forecastsGraphHeight'
+      | 'forecastsGraphBottomOffset'
+      | 'forecastsGraphBottomPadding'
+      | 'forecastsGraphTopPadding'
+      | 'forecastsGraphSpacing'
     >
   > & {
     text: LocalizedText;
@@ -38,7 +42,7 @@ const HEIGHT = 100; // 라벨 높이
  * @param forecastsGraphBottomPadding 그래프 바텀 패딩
  * @param forecastsGraphSpacing 그래프 간격
  * @returns 라벨 컴포넌트
- * @jinhok96 25.06.19
+ * @jinhok96 25.06.20
  */
 export default function ForecastsGraphLabelComponent({
   text,
@@ -48,6 +52,7 @@ export default function ForecastsGraphLabelComponent({
   forecastsGraphHeight,
   forecastsGraphBottomOffset,
   forecastsGraphBottomPadding,
+  forecastsGraphTopPadding,
   forecastsGraphSpacing,
   onPress,
   ...props
@@ -68,14 +73,19 @@ export default function ForecastsGraphLabelComponent({
   return (
     <Pressable
       {...props}
-      className="relative z-10 flex items-center gap-2 pb-3 pt-2"
-      style={{ width: forecastsGraphSpacing, height: HEIGHT }}
+      className="relative z-10 flex items-center gap-2 pt-2"
+      style={{ width: forecastsGraphSpacing, height: HEIGHT - forecastsGraphTopPadding }}
       onPress={onPress}
     >
       <Pressable
         className={overlayClassName}
         style={{
-          height: HEIGHT + forecastsGraphHeight + forecastsGraphBottomPadding - forecastsGraphBottomOffset,
+          height:
+            HEIGHT +
+            forecastsGraphHeight +
+            forecastsGraphBottomPadding -
+            forecastsGraphBottomOffset -
+            forecastsGraphTopPadding,
           width: forecastsGraphSpacing,
         }}
         onPress={onPress}

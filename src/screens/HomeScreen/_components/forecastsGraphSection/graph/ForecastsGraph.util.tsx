@@ -50,3 +50,14 @@ export function getForecastsGraphBottomPaddingValue(
 ) {
   return (forecastsGraphBottomOffset + forecastsGraphBottomPadding) / (forecastsGraphHeight / 100);
 }
+
+/**
+ * `ForecastsGraph`의 topPadding을 담당할 값을 계산하는 함수
+ * @param forecastsGraphMaxValue `number`
+ * @param forecastsGraphTopPadding `number`
+ * @returns `topPaddingValue`
+ * @jinhok96 25.06.20
+ */
+export function getForecastsGraphTopPaddingValue(forecastsGraphMaxValue: number, forecastsGraphTopPadding: number) {
+  return forecastsGraphMaxValue - forecastsGraphTopPadding;
+}
