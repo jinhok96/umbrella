@@ -18,12 +18,12 @@ type Checklist = {
   umbrella: {
     hours: number[];
     message?: LocalizedText;
-  };
+  } | null;
   mask: {
     pm10: number;
     pm25: number;
     message?: LocalizedText;
-  };
+  } | null;
   clothes: {
     temp: {
       morn: number;
@@ -34,14 +34,14 @@ type Checklist = {
       max: number;
     } | null;
     message?: LocalizedText;
-  };
+  } | null;
   suncream: {
     uvi: number;
     message?: LocalizedText;
-  };
+  } | null;
   ozone: {
     o3: number;
-  };
+  } | null;
 };
 
 export type ForecastsStoreState = {

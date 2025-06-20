@@ -64,7 +64,7 @@ function WeatherDetailCardMainDataMainItem({
  * @param thirdSubLabel 세번째 서브 라벨
  * @param thirdSubValue 세번째 서브 수치
  * @param weatherIconId 날씨 아이콘 id
- * @jinhok96 25.06.12
+ * @jinhok96 25.06.18
  */
 export default function WeatherDetailCardMainData({
   isSelected,
@@ -82,18 +82,21 @@ export default function WeatherDetailCardMainData({
 }: WeatherDetailCardMainDataProps & { isSelected: boolean }) {
   const badgeClassName = classNames(
     'w-12 py-1 flex items-center justify-center rounded-lg',
-    isSelected && 'bg-morning',
-    !isSelected && 'bg-text-08',
+    isSelected && 'bg-morning transition-none',
+    !isSelected && 'bg-text-08 transition-none',
   );
 
-  const badgeTextColorClassName = classNames(isSelected && 'text-white', !isSelected && 'text-text-03');
+  const badgeTextColorClassName = classNames(
+    isSelected && 'text-white transition-none',
+    !isSelected && 'text-text-03 transition-none',
+  );
 
   return (
     <View
       {...props}
       className="-left-2 flex w-full flex-row items-center justify-between"
     >
-      <View className="flex flex-row items-center gap-2">
+      <View className="flex flex-row items-center gap-2 py-2">
         {/* 뱃지 */}
         <View className={badgeClassName}>
           <PretendardText
@@ -103,10 +106,14 @@ export default function WeatherDetailCardMainData({
             {badgeLabel}
           </PretendardText>
         </View>
+        {/* 날씨 아이콘 */}
+        <View className="size-6 shrink-0">
+          <WeatherIcon icon={weatherIconId} />
+        </View>
         {/* 메인 */}
         <WeatherDetailCardMainDataMainItem value={mainValue}>{mainLabel}</WeatherDetailCardMainDataMainItem>
       </View>
-      <View className="flex flex-row items-center gap-2">
+      <View className="flex flex-row items-center gap-2 pr-1">
         {/* 첫번째 서브 */}
         <WeatherDetailCardMainDataSubItem value={firstSubValue}>{firstSubLabel}</WeatherDetailCardMainDataSubItem>
         {/* 파티션 */}
@@ -121,12 +128,6 @@ export default function WeatherDetailCardMainData({
         </Show>
         {/* 세번째 서브 */}
         <WeatherDetailCardMainDataSubItem value={thirdSubValue}>{thirdSubLabel}</WeatherDetailCardMainDataSubItem>
-        {/* 날씨 아이콘; 여기에서 padding 적용 */}
-        <View className="py-3 pr-1">
-          <View className="size-6 shrink-0">
-            <WeatherIcon icon={weatherIconId} />
-          </View>
-        </View>
       </View>
     </View>
   );

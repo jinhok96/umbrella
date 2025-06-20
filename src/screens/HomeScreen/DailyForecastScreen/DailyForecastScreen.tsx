@@ -9,15 +9,12 @@ import DailyForecastScreenWeatherDetailCardSection from '@screens/HomeScreen/Dai
 import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 export default function DailyForecastScreen() {
-  const { selectedIndex, detailCardSectionRef, handleSelectedIndexChange, handleScrollToSelectedIndex } =
+  const { selectedIndex, detailCardSectionRef, handleSelectedIndexChange } =
     useForecastScreen<NonNullable<ForecastsStoreState['daily']>[number]>('daily');
 
   return (
     <View className="flex-1">
-      <DailyForecastScreenHeader
-        selectedIndex={selectedIndex}
-        onSelectedIndexChange={handleScrollToSelectedIndex}
-      />
+      <DailyForecastScreenHeader selectedIndex={selectedIndex} />
       <HomeScreenWrapper testID={HOME_NAVIGATION_TEST_ID_LIST.DailyForecast}>
         <DailyForecastScreenWeatherDetailCardSection
           selectedIndex={selectedIndex}

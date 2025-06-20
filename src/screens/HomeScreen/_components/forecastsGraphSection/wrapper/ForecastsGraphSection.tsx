@@ -10,6 +10,7 @@ import {
   FORECASTS_GRAPH_MAX_VALUE,
   FORECASTS_GRAPH_POINT_SIZE,
   FORECASTS_GRAPH_SPACING,
+  FORECASTS_GRAPH_TOP_PADDING,
 } from '@screens/HomeScreen/_components/forecastsGraphSection/graph/ForecastsGraph.const';
 import ForecastsGraphSectionWrapper from '@screens/HomeScreen/_components/forecastsGraphSection/wrapper/ForecastsGraphSectionWrapper';
 
@@ -23,11 +24,12 @@ import type { ForecastsGraphSectionProps } from '@screens/HomeScreen/_components
  * @param forecastsGraphHeight 그래프 높이
  * @param forecastsGraphBottomOffset 그래프 바텀 오프셋
  * @param forecastsGraphBottomPadding 그래프 바텀 패딩
+ * @param forecastsGraphTopPadding 그래프 상단 패딩
  * @param forecastsGraphMaxValue 그래프 최대값
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @param forecastsGraphContainerMargin 그래프 섹션 좌우 마진
- * @jinhok96 25.06.11
+ * @jinhok96 25.06.20
  */
 export default function ForecastsGraphSection({
   data,
@@ -38,6 +40,7 @@ export default function ForecastsGraphSection({
   forecastsGraphHeight = FORECASTS_GRAPH_HEIGHT,
   forecastsGraphBottomOffset = FORECASTS_GRAPH_BOTTOM_OFFSET,
   forecastsGraphBottomPadding = FORECASTS_GRAPH_BOTTOM_PADDING,
+  forecastsGraphTopPadding = FORECASTS_GRAPH_TOP_PADDING,
   forecastsGraphMaxValue = FORECASTS_GRAPH_MAX_VALUE,
   forecastsGraphSpacing = FORECASTS_GRAPH_SPACING,
   forecastsGraphPointSize = FORECASTS_GRAPH_POINT_SIZE,
@@ -66,6 +69,7 @@ export default function ForecastsGraphSection({
           forecastsGraphSpacing={forecastsGraphSpacing}
           forecastsGraphBottomOffset={forecastsGraphBottomOffset}
           forecastsGraphBottomPadding={forecastsGraphBottomPadding}
+          forecastsGraphTopPadding={forecastsGraphTopPadding}
           forecastsGraphMaxValue={forecastsGraphMaxValue}
         />
       </ForecastsGraphSectionWrapper>

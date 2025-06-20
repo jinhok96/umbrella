@@ -21,7 +21,7 @@ type EmptyContentProps = Omit<ViewProps, 'children' | 'className'> & {
  * @param subTitle 부제목
  * @param icon 맨 위에 표시할 아이콘
  * @param buttonProps 버튼 컴포넌트 props
- * @jinhok96 25.05.29
+ * @jinhok96 25.06.18
  */
 export default function EmptyContent({ title, subTitle, icon, buttonProps, ...props }: EmptyContentProps) {
   return (
@@ -44,7 +44,7 @@ export default function EmptyContent({ title, subTitle, icon, buttonProps, ...pr
         <Show when={!!subTitle}>
           <PretendardText
             typo="body-3"
-            className="text-text-01"
+            className="text-text-05"
           >
             {subTitle}
           </PretendardText>

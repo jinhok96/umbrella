@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import type { PressableProps } from 'react-native';
 import { Pressable, View } from 'react-native';
 
@@ -16,7 +17,11 @@ type ForecastsGraphLabelComponentProps = Omit<PressableProps, 'children' | 'clas
   Required<
     Pick<
       ForecastsGraphProps,
-      'forecastsGraphHeight' | 'forecastsGraphBottomOffset' | 'forecastsGraphBottomPadding' | 'forecastsGraphSpacing'
+      | 'forecastsGraphHeight'
+      | 'forecastsGraphBottomOffset'
+      | 'forecastsGraphBottomPadding'
+      | 'forecastsGraphTopPadding'
+      | 'forecastsGraphSpacing'
     >
   > & {
     text: LocalizedText;
@@ -38,62 +43,74 @@ const HEIGHT = 100; // 라벨 높이
  * @param forecastsGraphBottomPadding 그래프 바텀 패딩
  * @param forecastsGraphSpacing 그래프 간격
  * @returns 라벨 컴포넌트
- * @jinhok96 25.06.11
+ * @jinhok96 25.06.20
  */
-export default function ForecastsGraphLabelComponent({
-  text,
-  icon,
-  temp,
-  isSelected,
-  forecastsGraphHeight,
-  forecastsGraphBottomOffset,
-  forecastsGraphBottomPadding,
-  forecastsGraphSpacing,
-  onPress,
-  ...props
-}: ForecastsGraphLabelComponentProps) {
-  const lang = useSettingStore(state => state.lang);
+export default memo(
+  function ForecastsGraphLabelComponent({
+    text,
+    icon,
+    temp,
+    isSelected,
+    forecastsGraphHeight,
+    forecastsGraphBottomOffset,
+    forecastsGraphBottomPadding,
+    forecastsGraphTopPadding,
+    forecastsGraphSpacing,
+    onPress,
+    ...props
+  }: ForecastsGraphLabelComponentProps) {
+    const lang = useSettingStore(state => state.lang);
 
-  const overlayClassName = classNames(
-    'absolute left-0 top-0 rounded-xl bg-morning-light',
-    !isSelected && 'opacity-0',
-    isSelected && 'opacity-100',
-  );
+    const overlayClassName = classNames(
+      'absolute left-0 top-0 rounded-xl bg-morning-light transition-none',
+      !isSelected && 'opacity-0',
+      isSelected && 'opacity-100',
+    );
 
-  const labelColorClassName = classNames(!isSelected && 'text-text-05', isSelected && 'text-morning');
+    const labelColorClassName = classNames(
+      !isSelected && 'text-text-05 transition-none',
+      isSelected && 'text-morning transition-none',
+    );
 
-  return (
-    <Pressable
-      {...props}
-      className="relative z-10 flex items-center gap-2 pb-3 pt-2"
-      style={{ width: forecastsGraphSpacing, height: HEIGHT }}
-      onPress={onPress}
-    >
+    return (
       <Pressable
-        className={overlayClassName}
-        style={{
-          height: HEIGHT + forecastsGraphHeight + forecastsGraphBottomPadding - forecastsGraphBottomOffset,
-          width: forecastsGraphSpacing,
-        }}
+        {...props}
+        className="relative z-10 flex items-center gap-2 pt-2"
+        style={{ width: forecastsGraphSpacing, height: HEIGHT - forecastsGraphTopPadding }}
         onPress={onPress}
-      />
-      <PretendardText
-        typo="caption-4"
-        className={labelColorClassName}
       >
-        {text[lang]}
-      </PretendardText>
-      <View className="flex items-center gap-1">
-        <View className="size-7">
-          <WeatherIcon icon={icon} />
-        </View>
-        <MontserratText
-          typo="title-5"
-          className="text-text-01"
+        <Pressable
+          className={overlayClassName}
+          style={{
+            height:
+              HEIGHT +
+              forecastsGraphHeight +
+              forecastsGraphBottomPadding -
+              forecastsGraphBottomOffset -
+              forecastsGraphTopPadding,
+            width: forecastsGraphSpacing,
+          }}
+          onPress={onPress}
+        />
+        <PretendardText
+          typo="caption-4"
+          className={labelColorClassName}
         >
-          {Math.round(temp)}°
-        </MontserratText>
-      </View>
-    </Pressable>
-  );
-}
+          {text[lang]}
+        </PretendardText>
+        <View className="flex items-center gap-1">
+          <View className="size-7">
+            <WeatherIcon icon={icon} />
+          </View>
+          <MontserratText
+            typo="title-5"
+            className="text-text-01"
+          >
+            {Math.round(temp)}°
+          </MontserratText>
+        </View>
+      </Pressable>
+    );
+  },
+  (prev, next) => prev.isSelected === next.isSelected,
+);
