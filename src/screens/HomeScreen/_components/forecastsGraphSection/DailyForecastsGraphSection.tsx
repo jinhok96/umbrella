@@ -104,7 +104,7 @@ function getForecastsGraphInterpolatedValueList(
  * @param forecastsGraphSpacing 그래프 간격
  * @param forecastsGraphPointSize 그래프 포인트 크기
  * @param forecastsGraphContainerMargin 그래프 섹션 좌우 마진
- * @jinhok96 25.06.20
+ * @jinhok96 25.06.23
  */
 export default function DailyForecastsGraphSection({
   selectedIndex,
@@ -179,9 +179,7 @@ export default function DailyForecastsGraphSection({
 
   // 라벨 클릭 시 selectedIndex 업데이트
   const handleForecastsGraphLabelComponentPress = (index: number) => {
-    const isSelectedIndexEmpty = !selectedIndex && selectedIndex !== 0;
-    if (isSelectedIndexEmpty || selectedIndex !== index) return onSelectedIndexChange?.(index);
-    onSelectedIndexChange?.(null);
+    onSelectedIndexChange?.(index);
   };
 
   return (
