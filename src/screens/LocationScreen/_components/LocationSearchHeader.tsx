@@ -20,7 +20,7 @@ const SEARCH_INPUT_BUTTON_LABEL: LocalizedText = {
 };
 
 type LocationSearchHeaderProps = Omit<ViewProps, 'children' | 'className'> &
-  Pick<SearchInputProps, 'value' | 'onChangeText' | 'onFocus' | 'onBlur'> & {};
+  Pick<SearchInputProps, 'value' | 'onChangeText' | 'onFocus' | 'onBlur'>;
 
 /**
  * 위치 검색 헤더

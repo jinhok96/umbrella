@@ -6,6 +6,8 @@ import Section from '@components/section/Section';
 import SectionPartition from '@components/section/SectionPartition';
 import Show from '@components/wrapper/Show';
 import { ROOT_NAVIGATION_TEST_ID_LIST } from '@navigation/root/RootNavigation.const';
+import CurrentLocationSection from '@screens/LocationScreen/_components/locationItem/CurrentLocationSection';
+import FavoriteLocationSection from '@screens/LocationScreen/_components/locationItem/FavoriteLocationSection';
 import LocationScreenWrapper from '@screens/LocationScreen/_components/LocationScreenWrapper';
 import LocationSearchHeader from '@screens/LocationScreen/_components/LocationSearchHeader';
 
@@ -19,6 +21,7 @@ export default function LocationScreen() {
         value={inputValue}
         onChangeText={onChangeText}
         onFocus={() => setIsInputFocused(true)}
+        onBlur={() => setIsInputFocused(false)}
       />
       <SectionPartition />
       <KeyboardAwareScrollView className="flex-1">
@@ -26,16 +29,16 @@ export default function LocationScreen() {
           <Section label={{ ko: '검색 결과', en: 'Search Result' }} />
           <SectionPartition />
         </Show>
-        <Show when={!inputValue && isInputFocused}>
-          <Section label={{ ko: '최근 검색한 위치', en: 'Recent Search' }} />
-          <SectionPartition />
-        </Show>
         <Show when={!inputValue}>
-          <Show when={!isInputFocused}>
-            <Section label={{ ko: '현재 위치', en: 'Current Location' }} />
+          <Show when={isInputFocused}>
+            <Section label={{ ko: '최근 검색한 위치', en: 'Recent Search' }} />
             <SectionPartition />
           </Show>
-          <Section label={{ ko: '저장한 위치', en: 'Bookmark' }} />
+          <Show when={!isInputFocused}>
+            <CurrentLocationSection />
+            <SectionPartition />
+            <FavoriteLocationSection />
+          </Show>
         </Show>
       </KeyboardAwareScrollView>
     </LocationScreenWrapper>

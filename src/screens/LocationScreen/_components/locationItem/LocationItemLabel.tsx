@@ -1,0 +1,33 @@
+import { View } from 'react-native';
+
+import PretendardText from '@components/fontText/PretendardText';
+
+import type { LocationItemLabelProps } from '@screens/LocationScreen/_components/locationItem/LocationItemLabel.type';
+
+/**
+ * `LocationItem` 컴포넌트의 라벨 컴포넌트
+ * @param label 라벨
+ * @param subLabel 서브 라벨
+ * @jinhok96 25.06.24
+ */
+export default function LocationItemLabel({ label, subLabel, ...props }: LocationItemLabelProps) {
+  return (
+    <View
+      {...props}
+      className="flex gap-1"
+    >
+      <PretendardText
+        typo="button-1"
+        className="text-text-01"
+      >
+        {label}
+      </PretendardText>
+      <PretendardText
+        typo="caption-4"
+        className="text-text-05"
+      >
+        {subLabel}
+      </PretendardText>
+    </View>
+  );
+}
