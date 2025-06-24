@@ -90,7 +90,7 @@ export default function Modal({
           {...cancelButtonProps}
           text={cancelButtonProps?.text || '취소'}
           className="flex-1"
-          size="md"
+          size="48"
           variant="grayOutline"
           onPress={handleCancel}
         />
@@ -98,7 +98,7 @@ export default function Modal({
           {...submitButtonProps}
           text={submitButtonProps?.text || '확인'}
           className="flex-1"
-          size="md"
+          size="48"
           variant={SUBMIT_BUTTON_VARIANT[type]}
           onPress={handleSubmit}
         />
