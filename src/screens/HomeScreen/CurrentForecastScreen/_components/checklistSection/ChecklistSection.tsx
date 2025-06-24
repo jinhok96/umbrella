@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { ViewProps } from 'react-native';
+import type { LayoutChangeEvent, ViewProps } from 'react-native';
 import { View } from 'react-native';
 
 import EmptyContent from '@components/emptyContent/EmptyContent';
@@ -29,10 +29,11 @@ type ChecklistSection = Omit<ViewProps, 'className'>;
 const BUTTON_GAP = 12;
 const BUTTON_CONTAINER_PADDING = 20;
 const BUTTON_MAX_ROW_ITEM_NUM = 4;
+const INIT_BUTTON_MAX_HEIGHT = 64;
 
 /**
  * 체크리스트 섹션 컴포넌트
- * @jinhok96 25.06.18
+ * @jinhok96 25.06.24
  */
 export default function ChecklistSection({ ...props }: ChecklistSection) {
   const lang = useSettingStore(state => state.lang);
@@ -41,7 +42,14 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
     Array<Partial<ForecastsStoreState['checklist'] & { type: ChecklistType }>>[]
   >([]);
   const [selected, setSelected] = useState<{ type: ChecklistType; row: number } | null>(null);
-  const [buttonMaxHeight, setButtonMaxHeight] = useState<number>(0);
+  const [buttonMaxHeight, setButtonMaxHeight] = useState<number>(INIT_BUTTON_MAX_HEIGHT);
+
+  const handleButtonMaxHeightUpdate = (e: LayoutChangeEvent) => {
+    const { width } = e.nativeEvent.layout;
+    if (!width) return;
+    const newMaxHeight = Math.round((width - BUTTON_CONTAINER_PADDING * 2 - BUTTON_GAP * 3) / 4);
+    if (buttonMaxHeight !== newMaxHeight) setButtonMaxHeight(newMaxHeight);
+  };
 
   // checklist를 4개씩 2차 배열로 분리
   useEffect(() => {
@@ -108,12 +116,7 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
                 paddingLeft: BUTTON_CONTAINER_PADDING,
                 paddingRight: BUTTON_CONTAINER_PADDING,
               }}
-              onLayout={e => {
-                const { width } = e.nativeEvent.layout;
-                if (!width) return;
-                const newMaxHeight = Math.round((width - BUTTON_CONTAINER_PADDING * 2 - BUTTON_GAP * 3) / 4);
-                if (buttonMaxHeight !== newMaxHeight) setButtonMaxHeight(newMaxHeight);
-              }}
+              onLayout={handleButtonMaxHeightUpdate}
             >
               <Show when={!!buttonMaxHeight}>
                 {item.map(checklistItem => (

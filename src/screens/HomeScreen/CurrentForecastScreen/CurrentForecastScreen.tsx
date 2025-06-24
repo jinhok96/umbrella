@@ -1,6 +1,5 @@
 import { ScrollView, View } from 'react-native';
 
-import TestSection from '@components/TestSection';
 import { HOME_NAVIGATION_TEST_ID_LIST } from '@navigation/home/HomeNavigation.const';
 import DailyForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/DailyForecastsGraphSection';
 import HourlyForecastsGraphSection from '@screens/HomeScreen/_components/forecastsGraphSection/HourlyForecastsGraphSection';
@@ -20,7 +19,6 @@ export default function CurrentForecastScreen() {
             <HourlyForecastsGraphSection />
             <StatusCardSection />
             <DailyForecastsGraphSection />
-            <TestSection />
           </View>
         </ScrollView>
       </HomeScreenWrapper>
