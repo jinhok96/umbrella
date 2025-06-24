@@ -5,7 +5,6 @@ import classNames from 'classnames';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import PlatformKeyboardAvoidingView from '@components/wrapper/PlatformKeyboardAvoidingView';
 import { shadowStyleList } from '@libs/utils/themes.util';
 import ScreenWrapper from '@navigation/_components/screenWrapper/ScreenWrapper';
 import { useModalStore } from '@store/modalStore/useModalStore';
@@ -56,7 +55,7 @@ export default function ModalScreenWrapper({ children, params, ...props }: Modal
       }}
       style={{ paddingBottom: top }}
     >
-      <PlatformKeyboardAvoidingView className={modalScreenWrapperClassName}>
+      <View className={modalScreenWrapperClassName}>
         <View className={modalContainerClassName}>
           <View
             className="overflow-hidden rounded-[1.25rem]"
@@ -65,7 +64,7 @@ export default function ModalScreenWrapper({ children, params, ...props }: Modal
             {children}
           </View>
         </View>
-      </PlatformKeyboardAvoidingView>
+      </View>
     </ScreenWrapper>
   );
 }

@@ -8,10 +8,10 @@ import type { PressableHitSlopProps } from '@components/button/PressableHitSlop.
  * @param hitSlop `Pressable`의 `hitSlop` (기본값: 20)
  * @param hitSlopX `hitSlop` 가로 (기본값: 0)
  * @param hitSlopY `hitSlop` 세로 (기본값: 0)
- * @jinhok96 25.06.23
+ * @jinhok96 25.06.24
  */
 export default function PressableHitSlop({
-  hitSlop = 20,
+  hitSlop = 10,
   hitSlopX = 0,
   hitSlopY = 0,
   ...props
