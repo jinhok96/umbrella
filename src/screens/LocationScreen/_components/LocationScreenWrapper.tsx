@@ -7,7 +7,6 @@ export default function LocationScreenWrapper({ children, ...props }: ScreenWrap
     <ScreenWrapper
       {...props}
       backgroundClassName="bg-background-02"
-      className="p-5"
     >
       {children}
     </ScreenWrapper>

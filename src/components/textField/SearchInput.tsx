@@ -4,38 +4,34 @@ import { View } from 'react-native';
 
 import PressableHitSlop from '@components/button/PressableHitSlop';
 import PretendardText from '@components/fontText/PretendardText';
+import { BlockKeyboardDismissGesture } from '@components/gesture/BlockKeyboardDismissGesture';
 import SearchIcon from '@components/icon/SearchIcon';
 import TextField from '@components/textField/TextField';
 import Show from '@components/wrapper/Show';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
 import type { TextFieldProps } from '@components/textField/TextField.type';
-import type { LocalizedTextMap } from '@libs/utils/localize/localize.type';
+import type { LocalizedText } from '@libs/utils/localize/localize.type';
 
-const SEARCH_INPUT_TEXT: LocalizedTextMap<'cancel' | 'placeholder'> = {
-  cancel: {
-    ko: '취소',
-    en: 'Cancel',
-  },
-  placeholder: {
-    ko: '주소를 입력해주세요.',
-    en: 'Please enter an address.',
-  },
+const SEARCH_INPUT_CANCEL_LABEL: LocalizedText = {
+  ko: '취소',
+  en: 'Cancel',
 };
 
-type SearchInputProps = Omit<TextFieldProps, 'className'>;
+type SearchInputProps = Omit<TextFieldProps, 'className' | 'placeholder'> & {
+  placeholder?: LocalizedText;
+};
 
 /**
  * 검색 인풋 컴포넌트
- * @jinhok96 25.05.29
+ * @jinhok96 25.06.23
  */
-export default function SearchInput({ value, onChangeText, ...props }: SearchInputProps) {
+export default function SearchInput({ value, onChangeText, placeholder, ...props }: SearchInputProps) {
   const lang = useSettingStore(state => state.lang);
   const textFieldRef = useRef<TextInput>(null);
 
   const handleSearchButtonPress = () => {
     onChangeText(value);
-    textFieldRef.current?.blur();
   };
 
   const handleCancelButtonPress = () => {
@@ -44,13 +40,13 @@ export default function SearchInput({ value, onChangeText, ...props }: SearchInp
   };
 
   return (
-    <View className="flex flex-row items-center gap-0 overflow-hidden">
+    <View className="flex h-12 flex-row items-center overflow-hidden">
       {/* 인풋 */}
       <TextField
         {...props}
         value={value}
         onChangeText={onChangeText}
-        placeholder={SEARCH_INPUT_TEXT.placeholder[lang]}
+        placeholder={placeholder?.[lang]}
         ref={textFieldRef}
       >
         <PressableHitSlop
@@ -62,21 +58,22 @@ export default function SearchInput({ value, onChangeText, ...props }: SearchInp
       </TextField>
       {/* 취소 버튼 */}
       <Show when={!!value}>
-        <View className="pl-2">
-          <PressableHitSlop
-            className="flex justify-center px-2"
-            onPress={handleCancelButtonPress}
-            hitSlopX={8}
-            hitSlopY={12}
-          >
-            <PretendardText
-              typo="button-2"
-              className="text-text-01"
+        <BlockKeyboardDismissGesture>
+          <View className="pl-2">
+            <PressableHitSlop
+              className="flex h-full justify-center px-2"
+              onPress={handleCancelButtonPress}
+              hitSlopX={8}
             >
-              {SEARCH_INPUT_TEXT.cancel[lang]}
-            </PretendardText>
-          </PressableHitSlop>
-        </View>
+              <PretendardText
+                typo="button-2"
+                className="text-text-01"
+              >
+                {SEARCH_INPUT_CANCEL_LABEL[lang]}
+              </PretendardText>
+            </PressableHitSlop>
+          </View>
+        </BlockKeyboardDismissGesture>
       </Show>
     </View>
   );
