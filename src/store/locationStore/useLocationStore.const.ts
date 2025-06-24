@@ -93,18 +93,18 @@ export const LOCATION_STORE_ERROR_MESSAGE: LocationStoreErrorStatus = {
   // favoriteLocationList
   favoriteLocationListFull: {
     en: 'Favorite location list is full.',
-    ko: '즐겨찾기 위치 목록이 꽉 찼습니다.',
+    ko: '저장한 위치 목록이 꽉 찼습니다.',
   },
   favoriteLocationNameEmpty: {
     en: 'Favorite location name is empty.',
-    ko: '즐겨찾기 위치 이름이 비어있습니다.',
+    ko: '저장한 위치 이름이 비어있습니다.',
   },
   favoriteLocationNameDuplication: {
     en: 'The name already exists in favorite location list.',
-    ko: '즐겨찾기 위치 목록에 이미 있는 이름입니다.',
+    ko: '저장한 위치 목록에 이미 있는 이름입니다.',
   },
   favoriteLocationIdDuplication: {
     en: 'The location already exists in favorite location list.',
-    ko: '즐겨찾기 위치 목록에 이미 있는 위치입니다.',
+    ko: '저장한 위치 목록에 이미 있습니다.',
   },
 };
