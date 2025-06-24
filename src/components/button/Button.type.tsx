@@ -3,8 +3,8 @@ import type { PressableProps } from 'react-native';
 
 import type { ColorVar } from '@libs/utils/themes.type';
 
-export type ButtonSize = 'sm' | 'md' | 'lg';
-export type ButtonVariant = 'primary' | 'black' | 'grayOutline' | 'error';
+export type ButtonSize = '40' | '48' | '52';
+export type ButtonVariant = 'primary' | 'black' | 'grayOutline' | 'error' | 'disabled';
 
 export type ButtonProps = Omit<PressableProps, 'children'> & {
   text?: string;

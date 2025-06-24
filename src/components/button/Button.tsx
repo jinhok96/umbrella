@@ -11,28 +11,28 @@ import type { ButtonProps, ButtonSize, ButtonVariant } from '@components/button/
 import type { Typography } from '@components/fontText/FontText.type';
 import type { ColorVar } from '@libs/utils/themes.type';
 
-const smClassName = 'min-h-10';
-const mdClassName = 'min-h-12';
-const lgClassName = 'min-h-[3.25rem]';
+const size40ClassName = 'min-h-10';
+const size48ClassName = 'min-h-12';
+const size52ClassName = 'min-h-[3.25rem]';
 
-const smIconClassName = 'size-4';
-const mdIconClassName = 'size-[1.125rem]';
-const lgIconClassName = 'size-[1.125rem]';
+const size40IconClassName = 'size-4';
+const size48IconClassName = 'size-[1.125rem]';
+const size52IconClassName = 'size-[1.125rem]';
 
 const buttonSizeClassName: Record<ButtonSize, { text: string; icon: string; typo: Typography }> = {
-  sm: {
-    text: smClassName,
-    icon: smIconClassName,
+  40: {
+    text: size40ClassName,
+    icon: size40IconClassName,
     typo: 'button-2',
   },
-  md: {
-    text: mdClassName,
-    icon: mdIconClassName,
+  48: {
+    text: size48ClassName,
+    icon: size48IconClassName,
     typo: 'button-1',
   },
-  lg: {
-    text: lgClassName,
-    icon: lgIconClassName,
+  52: {
+    text: size52ClassName,
+    icon: size52IconClassName,
     typo: 'button-1',
   },
 };
@@ -48,6 +48,9 @@ const grayOutlineTextClassName = 'text-text-01';
 
 const errorContainerClassName = 'bg-error';
 const errorTextClassName = 'text-white';
+
+const disabledContainerClassName = 'bg-text-07';
+const disabledTextClassName = 'text-white';
 
 const buttonColorClassName: Record<ButtonVariant, { container: string; text: string; icon: ColorVar }> = {
   primary: {
@@ -70,16 +73,21 @@ const buttonColorClassName: Record<ButtonVariant, { container: string; text: str
     text: errorTextClassName,
     icon: '--color-white',
   },
+  disabled: {
+    container: disabledContainerClassName,
+    text: disabledTextClassName,
+    icon: '--color-white',
+  },
 };
 
 /**
  * 공통 버튼 컴포넌트
  * @param text 표시할 텍스트
- * @param size 버튼 크기; `sm` | `md` | `lg`
- * @param variant 버튼 색상; `primary` | `black` | `grayOutline` | `error`
+ * @param size 버튼 크기; `40` | `48` | `52`
+ * @param variant 버튼 색상; `primary` | `black` | `grayOutline` | `error` | `disabled`
  * @param icon 표시할 아이콘; (color: ColorVar) => ReactNode
  * @param iconPosition 아이콘 위치; `left` | `right` (기본값 `left`)
- * @jinhok96 25.05.29
+ * @jinhok96 25.06.23
  */
 export default function Button({ text, size, variant, icon, iconPosition = 'left', className, ...props }: ButtonProps) {
   const lang = useSettingStore(state => state.lang);

@@ -53,7 +53,7 @@ export default function EmptyContent({ title, subTitle, icon, buttonProps, ...pr
       <Show when={!!buttonProps}>
         <Button
           {...buttonProps}
-          size="sm"
+          size="40"
           variant="black"
         />
       </Show>

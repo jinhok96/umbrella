@@ -235,21 +235,20 @@ export default function TestSection() {
       <FlexSection>
         <ToggleInput
           type="radio"
-          size="sm"
+          size="18"
           value={value}
           onChange={onValueChange}
           text="Content"
         />
         <ToggleInput
           type="checkbox"
-          size="sm"
+          size="18"
           value={value}
           onChange={onValueChange}
           text="Content"
         />
         <ToggleInput
           type="toggle"
-          size="sm"
           value={value}
           onChange={onValueChange}
           text="Content"
@@ -258,21 +257,20 @@ export default function TestSection() {
       <FlexSection>
         <ToggleInput
           type="radio"
-          size="lg"
+          size="24"
           value={value}
           onChange={onValueChange}
           text="Content"
         />
         <ToggleInput
           type="checkbox"
-          size="lg"
+          size="24"
           value={value}
           onChange={onValueChange}
           text="Content"
         />
         <ToggleInput
           type="toggle"
-          size="lg"
           value={value}
           onChange={onValueChange}
           text="Content"
@@ -281,7 +279,7 @@ export default function TestSection() {
       <FlexSection>
         <ToggleInput
           type="radio"
-          size="lg"
+          size="24"
           value={value}
           onChange={onValueChange}
           text="Content"
@@ -289,7 +287,7 @@ export default function TestSection() {
         />
         <ToggleInput
           type="checkbox"
-          size="lg"
+          size="24"
           value={value}
           onChange={onValueChange}
           text="Content"
@@ -297,7 +295,6 @@ export default function TestSection() {
         />
         <ToggleInput
           type="toggle"
-          size="lg"
           value={value}
           onChange={onValueChange}
           text="Content"
@@ -376,25 +373,25 @@ export default function TestSection() {
       <FlexSection>
         <Button
           text="Primary"
-          size="sm"
+          size="40"
           variant="primary"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="Black"
-          size="sm"
+          size="40"
           variant="black"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="GrayOutline"
-          size="sm"
+          size="40"
           variant="grayOutline"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="Error"
-          size="sm"
+          size="40"
           variant="error"
           icon={color => <CalenderIcon color={color} />}
         />
@@ -402,25 +399,25 @@ export default function TestSection() {
       <FlexSection>
         <Button
           text="Primary"
-          size="md"
+          size="48"
           variant="primary"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="Black"
-          size="md"
+          size="48"
           variant="black"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="GrayOutline"
-          size="md"
+          size="48"
           variant="grayOutline"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="Error"
-          size="md"
+          size="48"
           variant="error"
           icon={color => <CalenderIcon color={color} />}
         />
@@ -428,25 +425,25 @@ export default function TestSection() {
       <FlexSection>
         <Button
           text="Primary"
-          size="lg"
+          size="52"
           variant="primary"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="Black"
-          size="lg"
+          size="52"
           variant="black"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="GrayOutline"
-          size="lg"
+          size="52"
           variant="grayOutline"
           icon={color => <CalenderIcon color={color} />}
         />
         <Button
           text="Error"
-          size="lg"
+          size="52"
           variant="error"
           icon={color => <CalenderIcon color={color} />}
         />

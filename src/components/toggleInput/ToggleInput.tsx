@@ -12,21 +12,23 @@ import { shadowStyleList } from '@libs/utils/themes.util';
 
 import type { PressableHitSlopProps } from '@components/button/PressableHitSlop.type';
 
+type ToggleInputSize = '18' | '24';
+
 type ToggleInputIconProps = Omit<ViewProps, 'children' | 'className'> & {
-  size?: 'sm' | 'lg';
+  size?: ToggleInputSize;
   value: boolean;
   disabled?: boolean;
 };
 
 /**
  * 라디오 인디케이터
- * @jinhok96 25.05.30
+ * @jinhok96 25.06.23
  */
 function Radio({ value, size, disabled, ...props }: ToggleInputIconProps) {
   const containerClassName = classNames(
     'flex items-center justify-center rounded-full border',
-    size === 'sm' && 'size-[1.125rem] p-1',
-    size === 'lg' && 'size-6 p-[0.3125rem]',
+    size === '18' && 'size-[1.125rem] p-1',
+    size === '24' && 'size-6 p-[0.3125rem]',
     disabled && 'border-text-08 bg-text-10',
     !disabled && value && 'border-morning bg-text-11',
     !disabled && !value && 'border-text-08 bg-text-11',
@@ -48,13 +50,13 @@ function Radio({ value, size, disabled, ...props }: ToggleInputIconProps) {
 
 /**
  * 체크박스 인디케이터
- * @jinhok96 25.05.30
+ * @jinhok96 25.06.23
  */
 function Checkbox({ value, size, disabled, ...props }: ToggleInputIconProps) {
   const containerClassName = classNames(
     'border',
-    size === 'sm' && 'size-[1.125rem] rounded',
-    size === 'lg' && 'size-6 rounded-md',
+    size === '18' && 'size-[1.125rem] rounded',
+    size === '24' && 'size-6 rounded-md',
     disabled && 'border-text-08 bg-text-10',
     !disabled && value && 'border-morning bg-morning',
     !disabled && !value && 'border-text-08 bg-text-11',
@@ -62,8 +64,8 @@ function Checkbox({ value, size, disabled, ...props }: ToggleInputIconProps) {
 
   const checkIconContainerClassName = classNames(
     'size-full',
-    size === 'sm' && 'p-0.5',
-    size === 'lg' && 'p-[0.1875rem]',
+    size === '18' && 'p-0.5',
+    size === '24' && 'p-[0.1875rem]',
   );
 
   const checkIconClassName = classNames(
@@ -119,17 +121,17 @@ type ToggleInputProps = Omit<PressableHitSlopProps, 'children'> &
 /**
  * 토글 인풋 컴포넌트
  * @param type 인디케이터 타입; `radio` | `checkbox` | `toggle`
- * @param size 인풋 크기; `sm` | `lg` (`toggle` 타입은 크기 고정)
+ * @param size 인풋 크기; `18` | `24` (`toggle` 타입은 크기 고정)
  * @param value 현재 값
  * @param disabled 인풋 비활성화 여부
  * @param onChange `value` 상태 변화 시 호출하는 함수
  * @param text 인풋 컴포넌트 텍스트
  * @param children `text` 우측에 렌더링하거나 대체하는 컴포넌트
- * @jinhok96 25.05.30
+ * @jinhok96 25.06.23
  */
 export default function ToggleInput({
   type,
-  size = 'sm',
+  size = '18',
   value,
   disabled = false,
   onChange,
@@ -143,8 +145,8 @@ export default function ToggleInput({
   const handlePress = () => onChange(!value);
 
   const pressableClassName = classNames('flex flex-row items-center', {
-    'gap-1.5': size === 'sm',
-    'gap-2': size === 'lg',
+    'gap-1.5': size === '18',
+    'gap-2': size === '24',
   });
 
   return (
@@ -182,7 +184,7 @@ export default function ToggleInput({
       <View>
         <Show when={!!text}>
           <PretendardText
-            typo={size === 'sm' ? 'body-3' : 'body-2'}
+            typo={size === '18' ? 'body-3' : 'body-2'}
             className={disabled ? 'text-text-08' : 'text-text-01'}
           >
             {text}
