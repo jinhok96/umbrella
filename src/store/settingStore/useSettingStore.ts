@@ -7,6 +7,21 @@ import { INIT_SETTING_STORE_STATE } from '@store/settingStore/useSettingStore.co
 import type { SettingStore, SettingStoreState } from '@store/settingStore/useSettingStore.type';
 import type { StateCreator } from 'zustand';
 
+const settingStoreCreator: StateCreator<SettingStore> = set => ({
+  ...INIT_SETTING_STORE_STATE,
+  // theme, units, lang, defaultLocationMode
+  setTheme: theme => set({ theme }),
+  setUnits: units => set({ units }),
+  setLang: lang => set({ lang }),
+  setDefaultLocationMode: initLocationMode => set({ defaultLocationMode: initLocationMode }),
+
+  // permission
+  setLocationPermission: permission => set({ locationPermission: permission }),
+
+  // accessibility
+  setFontSize: fontSize => set({ fontSize }),
+});
+
 /**
  * 앱 설정 스토어
  * @ theme - 테마; light | dark | highContrast
@@ -23,21 +38,6 @@ import type { StateCreator } from 'zustand';
  * @ setFontSize - 접근성 폰트 크기 설정
  * @jinhok96 25.05.19
  */
-const settingStoreCreator: StateCreator<SettingStore> = set => ({
-  ...INIT_SETTING_STORE_STATE,
-  // theme, units, lang, defaultLocationMode
-  setTheme: theme => set({ theme }),
-  setUnits: units => set({ units }),
-  setLang: lang => set({ lang }),
-  setDefaultLocationMode: initLocationMode => set({ defaultLocationMode: initLocationMode }),
-
-  // permission
-  setLocationPermission: permission => set({ locationPermission: permission }),
-
-  // accessibility
-  setFontSize: fontSize => set({ fontSize }),
-});
-
 export const useSettingStore = create<SettingStore>()(
   devtools(
     persist<SettingStore, [], [], SettingStoreState>(settingStoreCreator, {

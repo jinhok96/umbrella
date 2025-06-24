@@ -7,17 +7,6 @@ import { INIT_FORECASTS_STORE_STATE } from '@store/forecastsStore/useForecastsSt
 import type { ForecastsStore, ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 import type { StateCreator } from 'zustand';
 
-/**
- * 날씨 정보 스토어
- * @ current - 현재 날씨 (미세먼지 포함)
- * @ minutely - 1시간 단위 분별 예보
- * @ hourly - 48시간 단위 시간별 예보 (미세먼지 포함)
- * @ daily - 8일 단위 일별 예보
- * @ alerts - 정부 날씨 경보
- * @ checklist - 체크리스트 정보
- * @ setForecasts - 전체 날씨 정보 설정 - useGetCurrentAndForecastsWeatherData, useGetCurrentAirQuality, useGetAirQualityHourlyForecasts의 Response Data 가공
- * @jinhok96 25.06.10
- */
 const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
   ...INIT_FORECASTS_STORE_STATE,
   setForecasts: (
@@ -140,5 +129,16 @@ const forecastsStoreCreator: StateCreator<ForecastsStore> = set => ({
   },
 });
 
+/**
+ * 날씨 정보 스토어
+ * @ current - 현재 날씨 (미세먼지 포함)
+ * @ minutely - 1시간 단위 분별 예보
+ * @ hourly - 48시간 단위 시간별 예보 (미세먼지 포함)
+ * @ daily - 8일 단위 일별 예보
+ * @ alerts - 정부 날씨 경보
+ * @ checklist - 체크리스트 정보
+ * @ setForecasts - 전체 날씨 정보 설정 - useGetCurrentAndForecastsWeatherData, useGetCurrentAirQuality, useGetAirQualityHourlyForecasts의 Response Data 가공
+ * @jinhok96 25.06.10
+ */
 export const useForecastsStore = create<ForecastsStore>()(immer(forecastsStoreCreator));
 export const forecastsStore = useForecastsStore;

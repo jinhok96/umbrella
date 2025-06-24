@@ -13,22 +13,7 @@ import { settingStore } from '@store/settingStore/useSettingStore';
 import type { Location, LocationStore, LocationStoreState } from '@store/locationStore/useLocationStore.type';
 import type { StateCreator } from 'zustand';
 
-/**
- * 위치 스토어
- * @ currentLocation - 현재 위치; Location | null
- * @ recentLocationList - 최근 본 위치 목록; Location[]
- * @ favoriteLocationList - 즐겨찾기 위치 목록; Location[]
- * @ setCurrentLocation - 현재 위치 설정
- * @ addRecentLocation - 최근 위치 목록 맨 앞에 새로운 위치 추가
- * @ removeRecentLocation - 최근 위치 목록에서 특정 원소 제거
- * @ removeAllRecentLocation - 최근 위치 목록 전체 제거
- * @ addFavoriteLocation - 즐겨찾기 위치 목록 맨 앞에 새로운 위치 추가
- * @ updateFavoriteLocationListOrder - 즐겨찾기 위치 목록 순서 변경
- * @ removeFavoriteLocation - 즐겨찾기 위치 목록에서 특정 원소 제거
- * @ removeAllFavoriteLocation - 즐겨찾기 위치 목록 전체 제거
- * @jinhok96 25.06.24
- */
-const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never]]> = set => ({
+const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never]]> = (set, get) => ({
   ...INIT_LOCATION_STORE_STATE,
   // currentLocation
   setCurrentLocation: currentLocation => set({ currentLocation }),
@@ -81,8 +66,28 @@ const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never
   removeFavoriteLocation: index =>
     set(state => ({ favoriteLocationList: state.favoriteLocationList.filter((_, i) => i !== index) })),
   removeAllFavoriteLocation: () => set({ favoriteLocationList: [] }),
+  isFavorite: (id: string) => {
+    const { favoriteLocationList } = get();
+    return favoriteLocationList.some(item => item.id === id);
+  },
 });
 
+/**
+ * 위치 스토어
+ * @ currentLocation - 현재 위치; Location | null
+ * @ recentLocationList - 최근 본 위치 목록; Location[]
+ * @ favoriteLocationList - 즐겨찾기 위치 목록; Location[]
+ * @ setCurrentLocation - 현재 위치 설정
+ * @ addRecentLocation - 최근 위치 목록 맨 앞에 새로운 위치 추가
+ * @ removeRecentLocation - 최근 위치 목록에서 특정 원소 제거
+ * @ removeAllRecentLocation - 최근 위치 목록 전체 제거
+ * @ addFavoriteLocation - 즐겨찾기 위치 목록 맨 앞에 새로운 위치 추가
+ * @ updateFavoriteLocationListOrder - 즐겨찾기 위치 목록 순서 변경
+ * @ removeFavoriteLocation - 즐겨찾기 위치 목록에서 특정 원소 제거
+ * @ removeAllFavoriteLocation - 즐겨찾기 위치 목록 전체 제거
+ * @ isFavorite - 위치가 즐겨찾기 되어있는지 여부 반환
+ * @jinhok96 25.06.24
+ */
 export const useLocationStore = create<LocationStore>()(
   devtools(
     persist<LocationStore, [['zustand/devtools', never]], [['zustand/immer', never]], LocationStoreState>(

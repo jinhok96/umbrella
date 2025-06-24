@@ -9,39 +9,6 @@ import type { StateCreator } from 'zustand';
 
 const SCREEN_TRANSITION_TIMEOUT = ANIMATION_DURATION + 50;
 
-/**
- * 앱 설정 스토어
- * @ isOpened - 모달이 열려있는지 여부
- * @ children - 모달에 렌더링할 컴포넌트
- * @ onCancelBeforeClose - 모달 취소 이벤트에서 모달 끄기 전 호출
- * @ onCancelAfterClose - 모달 취소 이벤트에서 모달 끈 뒤 호출
- * @ onSubmitBeforeClose - 모달 확인 이벤트에서 모달 끄기 전 호출
- * @ onSubmitAfterClose - 모달 확인 이벤트에서 모달 끈 뒤 호출
- * @ openModal - 모달 열기
- * @ closeModal - 모달 닫기
- * @example 
-    const openModal = useModalStore(state => state.openModal);
-
-    openModal(
-      {
-        title: 'Title',
-        subTitle: 'SubTitle',
-        cancelButtonProps: {
-          text: '취소',
-        },
-        submitButtonProps: {
-          text: '확인',
-        },
-      },
-      {
-        onCancelBeforeClose: () => handleCancelBeforeClose(...),
-        onCancelAfterClose: () => handleCancelAfterClose(...),
-        onSubmitBeforeClose: () => handleSubmitBeforeClose(...),
-        onSubmitAfterClose: () => handleSubmitAfterClose(...),
-      },
-    )
- * @jinhok96 25.06.01
- */
 const modalStoreCreator: StateCreator<ModalStore> = (set, get) => ({
   ...INIT_MODAL_STORE_STATE,
   openModal: (props, state) => {
@@ -78,5 +45,38 @@ const modalStoreCreator: StateCreator<ModalStore> = (set, get) => ({
   },
 });
 
+/**
+ * 앱 설정 스토어
+ * @ isOpened - 모달이 열려있는지 여부
+ * @ children - 모달에 렌더링할 컴포넌트
+ * @ onCancelBeforeClose - 모달 취소 이벤트에서 모달 끄기 전 호출
+ * @ onCancelAfterClose - 모달 취소 이벤트에서 모달 끈 뒤 호출
+ * @ onSubmitBeforeClose - 모달 확인 이벤트에서 모달 끄기 전 호출
+ * @ onSubmitAfterClose - 모달 확인 이벤트에서 모달 끈 뒤 호출
+ * @ openModal - 모달 열기
+ * @ closeModal - 모달 닫기
+ * @example 
+    const openModal = useModalStore(state => state.openModal);
+
+    openModal(
+      {
+        title: 'Title',
+        subTitle: 'SubTitle',
+        cancelButtonProps: {
+          text: '취소',
+        },
+        submitButtonProps: {
+          text: '확인',
+        },
+      },
+      {
+        onCancelBeforeClose: () => handleCancelBeforeClose(...),
+        onCancelAfterClose: () => handleCancelAfterClose(...),
+        onSubmitBeforeClose: () => handleSubmitBeforeClose(...),
+        onSubmitAfterClose: () => handleSubmitAfterClose(...),
+      },
+    )
+ * @jinhok96 25.06.01
+ */
 export const useModalStore = create<ModalStore>()(modalStoreCreator);
 export const modalStore = useModalStore;

@@ -5,6 +5,13 @@ import { INIT_TEMPLATE_STORE_STATE } from '@store/template/useTemplateStore.cons
 import type { TemplateStore } from '@store/template/useTemplateStore.type';
 import type { StateCreator } from 'zustand';
 
+const templateStoreCreator: StateCreator<TemplateStore> = set => ({
+  ...INIT_TEMPLATE_STORE_STATE,
+  setFirst: first => set({ first }),
+  setSecond: second => set({ second }),
+  setThird: third => set({ third }),
+});
+
 /**
  * 템플릿 스토어
  * @ first - 첫번째 상태
@@ -15,12 +22,5 @@ import type { StateCreator } from 'zustand';
  * @ setThird - 세번째 상태 설정
  * @jinhok96 25.06.02
  */
-const templateStoreCreator: StateCreator<TemplateStore> = set => ({
-  ...INIT_TEMPLATE_STORE_STATE,
-  setFirst: first => set({ first }),
-  setSecond: second => set({ second }),
-  setThird: third => set({ third }),
-});
-
 export const useTemplateStore = create<TemplateStore>()(templateStoreCreator);
 export const templateStore = useTemplateStore;

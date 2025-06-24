@@ -28,6 +28,7 @@ export type LocationStoreActions = {
   updateFavoriteLocationListOrder: (locationList: Location[]) => void;
   removeFavoriteLocation: (index: number) => void;
   removeAllFavoriteLocation: () => void;
+  isFavorite: (id: string) => boolean;
 };
 
 export type LocationStore = LocationStoreState & LocationStoreActions;
