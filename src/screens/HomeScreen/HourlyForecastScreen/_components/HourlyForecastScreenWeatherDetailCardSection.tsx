@@ -136,7 +136,7 @@ export default forwardRef<
         ref={ref}
         contentContainerClassName="p-5 gap-3 h-[191rem]" // 요소 확장 시 스크롤 위치가 변하지 않도록 높이 직접 지정
         data={hourly}
-        keyExtractor={item => item.dt.toString()}
+        keyExtractor={item => `${item.dt.toString()}-${lang}`} // lang 변경 시 리렌더링하기 위해 키 지정
         initialNumToRender={12}
         renderItem={renderItem}
       />
