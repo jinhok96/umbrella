@@ -13,11 +13,17 @@ import { locationStore } from '@store/locationStore/useLocationStore';
 import { INIT_LOCATION_STORE_STATE } from '@store/locationStore/useLocationStore.const';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
-import type { Location } from '@store/locationStore/useLocationStore.type';
+import type { Location, LocationStoreState } from '@store/locationStore/useLocationStore.type';
 
 const Stack = createNativeStackNavigator();
 
 const TEST_CHIlDREN = 'Test Children';
+
+const LOCATION_STORE_STATE_MOCK: LocationStoreState = {
+  currentLocation: null,
+  favoriteLocationList: [],
+  recentLocationList: [],
+};
 
 function TestComponent() {
   return <Text>{TEST_CHIlDREN}</Text>;
@@ -25,7 +31,7 @@ function TestComponent() {
 
 describe('HomeHeader', () => {
   beforeEach(() => {
-    locationStore.setState(INIT_LOCATION_STORE_STATE);
+    locationStore.setState(LOCATION_STORE_STATE_MOCK);
   });
 
   afterAll(() => {
@@ -33,7 +39,7 @@ describe('HomeHeader', () => {
   });
 
   test('currentLocation.name이 렌더링되는지 테스트', async () => {
-    expect(locationStore.getState()).toMatchObject(INIT_LOCATION_STORE_STATE);
+    expect(locationStore.getState()).toMatchObject(LOCATION_STORE_STATE_MOCK);
 
     const testLocation: Location = {
       name: 'testName',

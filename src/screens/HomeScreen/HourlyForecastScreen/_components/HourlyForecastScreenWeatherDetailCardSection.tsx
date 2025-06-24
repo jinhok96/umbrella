@@ -16,7 +16,7 @@ import type { ForecastsGraphSectionProps } from '@screens/HomeScreen/_components
 import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 type HourlyForecastScreenWeatherDetailCardSectionProps = Omit<ViewProps, 'children' | 'className'> &
-  Required<Pick<ForecastsGraphSectionProps, 'selectedIndex' | 'onSelectedIndexChange'>> & {};
+  Required<Pick<ForecastsGraphSectionProps, 'selectedIndex' | 'onSelectedIndexChange'>>;
 
 /**
  * 시간별 날씨 상세 카드 리스트 섹션
@@ -74,11 +74,13 @@ export default forwardRef<
     const pm25 = item.pm25 && Math.round(item.pm25);
     const o3 = item.o3 && Math.round(item.o3 * 100) / 100;
 
+    const isSelected = selectedIndex === index;
+
     return (
       <WeatherDetailCard
         type="hourly"
-        isSelected={selectedIndex === index}
-        onPress={() => onSelectedIndexChange(index)}
+        isSelected={isSelected}
+        onPress={() => onSelectedIndexChange(isSelected ? null : index)}
         label={label}
         className={label && index !== 0 ? 'pt-1' : undefined}
         mainDataProps={{

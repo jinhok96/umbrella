@@ -16,13 +16,13 @@ import type { ForecastsGraphSectionProps } from '@screens/HomeScreen/_components
 import type { ForecastsStoreState } from '@store/forecastsStore/useForecastsStore.type';
 
 type DailyForecastScreenWeatherDetailCardSectionProps = Omit<ViewProps, 'children' | 'className'> &
-  Required<Pick<ForecastsGraphSectionProps, 'selectedIndex' | 'onSelectedIndexChange'>> & {};
+  Required<Pick<ForecastsGraphSectionProps, 'selectedIndex' | 'onSelectedIndexChange'>>;
 
 /**
  * 요일별 날씨 상세 카드 리스트 섹션
  * @param selectedIndex 선택된 날씨 데이터 카드의 인덱스
  * @param onSelectedIndexChange 선택된 날씨 데이터 카드 변경 함수
- * @jinhok96 25.06.20
+ * @jinhok96 25.06.24
  */
 export default forwardRef<
   FlatList<NonNullable<ForecastsStoreState['daily']>[number]>,
@@ -64,11 +64,13 @@ export default forwardRef<
     const windDeg = convertWindDegToText(item.wind_deg)[lang];
     const windSpeed = Math.round(item.wind_speed * 10) / 10;
 
+    const isSelectedIndex = selectedIndex === index;
+
     return (
       <WeatherDetailCard
         type="daily"
-        isSelected={selectedIndex === index}
-        onPress={() => onSelectedIndexChange(index)}
+        isSelected={isSelectedIndex}
+        onPress={() => onSelectedIndexChange(isSelectedIndex ? null : index)}
         mainDataProps={{
           badgeLabel,
           mainValue,

@@ -16,16 +16,15 @@ const OPENED_CARD_OFFSET: Record<ForecastType, number> = {
  * HourlyForecastScreen, DailyForecastScreen에서 그래프 및 목록 제어를 위해 사용하는 훅
  * @param type 예보 타입; `hourly` | `daily`
  * @returns `{ selectedIndex, detailCardSectionRef, handleSelectedIndexChange, handleScrollDetailCardSectionToSelectedIndex }`
- * @jinhok96 25.06.20
+ * @jinhok96 25.06.24
  */
 export function useForecastScreen<T>(type: ForecastType) {
   const [selectedIndex, setSelectedIndex] = useState<ForecastsGraphSelectedIndex>(null);
   const detailCardSectionRef = useRef<FlatList<T>>(null);
 
   // selectedIndex 업데이트
-  const handleSelectedIndexChange = (index: number) => {
-    if (selectedIndex === index) setSelectedIndex?.(null);
-    setSelectedIndex?.(index);
+  const handleSelectedIndexChange = (index: ForecastsGraphSelectedIndex) => {
+    setSelectedIndex(index);
   };
 
   // 그래프에서 날짜 선택 시 카드 섹션 스크롤
