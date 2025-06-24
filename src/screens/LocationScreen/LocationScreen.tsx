@@ -1,6 +1,5 @@
 import { useState } from 'react';
-
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ScrollView } from 'react-native';
 
 import Section from '@components/section/Section';
 import SectionPartition from '@components/section/SectionPartition';
@@ -8,11 +7,13 @@ import Show from '@components/wrapper/Show';
 import { ROOT_NAVIGATION_TEST_ID_LIST } from '@navigation/root/RootNavigation.const';
 import CurrentLocationSection from '@screens/LocationScreen/_components/locationItem/CurrentLocationSection';
 import FavoriteLocationSection from '@screens/LocationScreen/_components/locationItem/FavoriteLocationSection';
+import RecentSearchLocationSection from '@screens/LocationScreen/_components/locationItem/RecentSearchLocationSection';
 import LocationScreenWrapper from '@screens/LocationScreen/_components/LocationScreenWrapper';
 import LocationSearchHeader from '@screens/LocationScreen/_components/LocationSearchHeader';
 
 export default function LocationScreen() {
   const [inputValue, onChangeText] = useState('');
+  const [hasInputFocused, setHasInputFocused] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   return (
@@ -20,27 +21,30 @@ export default function LocationScreen() {
       <LocationSearchHeader
         value={inputValue}
         onChangeText={onChangeText}
-        onFocus={() => setIsInputFocused(true)}
+        onFocus={() => {
+          setHasInputFocused(true);
+          setIsInputFocused(true);
+        }}
         onBlur={() => setIsInputFocused(false)}
       />
       <SectionPartition />
-      <KeyboardAwareScrollView className="flex-1">
+      <ScrollView>
         <Show when={!!inputValue}>
           <Section label={{ ko: '검색 결과', en: 'Search Result' }} />
-          <SectionPartition />
         </Show>
         <Show when={!inputValue}>
-          <Show when={isInputFocused}>
-            <Section label={{ ko: '최근 검색한 위치', en: 'Recent Search' }} />
-            <SectionPartition />
+          <Show when={hasInputFocused}>
+            <RecentSearchLocationSection />
           </Show>
-          <Show when={!isInputFocused}>
+          <Show when={!hasInputFocused}>
             <CurrentLocationSection />
-            <SectionPartition />
-            <FavoriteLocationSection />
           </Show>
         </Show>
-      </KeyboardAwareScrollView>
+        <Show when={!isInputFocused}>
+          <SectionPartition />
+          <FavoriteLocationSection />
+        </Show>
+      </ScrollView>
     </LocationScreenWrapper>
   );
 }
