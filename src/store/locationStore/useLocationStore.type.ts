@@ -26,7 +26,7 @@ export type LocationStoreActions = {
   // favoriteLocationList
   addFavoriteLocation: (location: Location) => void;
   updateFavoriteLocationListOrder: (locationList: Location[]) => void;
-  removeFavoriteLocation: (index: number) => void;
+  removeFavoriteLocation: (id: string) => void;
   removeAllFavoriteLocation: () => void;
   isFavorite: (id: string) => boolean;
 };

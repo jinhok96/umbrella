@@ -63,10 +63,10 @@ const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never
       state.favoriteLocationList.unshift(newLocation);
     }),
   updateFavoriteLocationListOrder: locationList => set({ favoriteLocationList: locationList }),
-  removeFavoriteLocation: index =>
-    set(state => ({ favoriteLocationList: state.favoriteLocationList.filter((_, i) => i !== index) })),
+  removeFavoriteLocation: id =>
+    set(state => ({ favoriteLocationList: state.favoriteLocationList.filter(item => item.id !== id) })),
   removeAllFavoriteLocation: () => set({ favoriteLocationList: [] }),
-  isFavorite: (id: string) => {
+  isFavorite: id => {
     const { favoriteLocationList } = get();
     return favoriteLocationList.some(item => item.id === id);
   },
@@ -83,7 +83,7 @@ const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never
  * @ removeAllRecentLocation - 최근 위치 목록 전체 제거
  * @ addFavoriteLocation - 즐겨찾기 위치 목록 맨 앞에 새로운 위치 추가
  * @ updateFavoriteLocationListOrder - 즐겨찾기 위치 목록 순서 변경
- * @ removeFavoriteLocation - 즐겨찾기 위치 목록에서 특정 원소 제거
+ * @ removeFavoriteLocation - 즐겨찾기 위치 목록에서 아이디로 특정 원소 제거
  * @ removeAllFavoriteLocation - 즐겨찾기 위치 목록 전체 제거
  * @ isFavorite - 위치가 즐겨찾기 되어있는지 여부 반환
  * @jinhok96 25.06.24
