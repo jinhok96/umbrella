@@ -22,7 +22,7 @@ type HourlyForecastScreenWeatherDetailCardSectionProps = Omit<ViewProps, 'childr
  * 시간별 날씨 상세 카드 리스트 섹션
  * @param selectedIndex 선택된 날씨 데이터 카드의 인덱스
  * @param onSelectedIndexChange 선택된 날씨 데이터 카드 변경 함수
- * @jinhok96 25.06.20
+ * @jinhok96 25.06.24
  */
 export default forwardRef<
   FlatList<NonNullable<ForecastsStoreState['hourly']>[number]>,
@@ -67,9 +67,9 @@ export default forwardRef<
     // itemProps - value
     const humidity = Math.round(item.humidity);
     const clouds = Math.round(item.clouds);
-    const uvi = `${convertUVIndexToText(item.uvi)[lang]} (${item.uvi})`;
     const windDeg = convertWindDegToText(item.wind_deg)[lang];
     const windSpeed = Math.round(item.wind_speed * 10) / 10;
+    const uvi = `${convertUVIndexToText(item.uvi)[lang]} (${item.uvi})`;
     const pm10 = item.pm10 && Math.round(item.pm10);
     const pm25 = item.pm25 && Math.round(item.pm25);
     const o3 = item.o3 && Math.round(item.o3 * 100) / 100;

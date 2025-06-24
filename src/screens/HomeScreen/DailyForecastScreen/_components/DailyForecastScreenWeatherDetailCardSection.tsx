@@ -60,17 +60,17 @@ export default forwardRef<
     );
     const humidity = Math.round(item.humidity);
     const clouds = Math.round(item.clouds);
-    const uvi = `${convertUVIndexToText(item.uvi)[lang]} (${item.uvi})`;
     const windDeg = convertWindDegToText(item.wind_deg)[lang];
     const windSpeed = Math.round(item.wind_speed * 10) / 10;
+    const uvi = `${convertUVIndexToText(item.uvi)[lang]} (${item.uvi})`;
 
-    const isSelectedIndex = selectedIndex === index;
+    const isSelected = selectedIndex === index;
 
     return (
       <WeatherDetailCard
         type="daily"
-        isSelected={isSelectedIndex}
-        onPress={() => onSelectedIndexChange(isSelectedIndex ? null : index)}
+        isSelected={isSelected}
+        onPress={() => onSelectedIndexChange(isSelected ? null : index)}
         mainDataProps={{
           badgeLabel,
           mainValue,
@@ -116,7 +116,7 @@ export default forwardRef<
         ref={ref}
         contentContainerClassName="p-5 gap-3 h-[42rem]" // 요소 확장 시 스크롤 위치가 변하지 않도록 높이 직접 지정
         data={daily}
-        keyExtractor={item => item.dt.toString()}
+        keyExtractor={item => `${item.dt.toString()}-${lang}`} // lang 변경 시 리렌더링하기 위해 키 지정
         renderItem={renderItem}
       />
     </View>
