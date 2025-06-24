@@ -84,7 +84,17 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
       className="rounded-[1.25rem] bg-background-02 pb-5"
     >
       <CurrentForecastScreenSectionHeader text={SECTION_HEADER_TEXT} />
-      <Show when={!!checklistMatrix.length}>
+      <Show
+        when={!!checklistMatrix.length}
+        fallback={
+          <View
+            className="flex items-center justify-center"
+            style={{ height: buttonMaxHeight }}
+          >
+            <EmptyContent subTitle={PLACEHOLDER_TEXT[lang]} />
+          </View>
+        }
+      >
         {checklistMatrix.map((item, row) => (
           <View
             key={`checklist-row-${item.toString()}`}
@@ -120,9 +130,6 @@ export default function ChecklistSection({ ...props }: ChecklistSection) {
             <ChecklistSectionMessageBox selected={selected && row === selected?.row ? selected.type : null} />
           </View>
         ))}
-      </Show>
-      <Show when={!checklistMatrix.length}>
-        <EmptyContent subTitle={PLACEHOLDER_TEXT[lang]} />
       </Show>
     </View>
   );

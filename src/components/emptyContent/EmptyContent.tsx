@@ -21,13 +21,13 @@ type EmptyContentProps = Omit<ViewProps, 'children' | 'className'> & {
  * @param subTitle 부제목
  * @param icon 맨 위에 표시할 아이콘
  * @param buttonProps 버튼 컴포넌트 props
- * @jinhok96 25.06.18
+ * @jinhok96 25.06.24
  */
 export default function EmptyContent({ title, subTitle, icon, buttonProps, ...props }: EmptyContentProps) {
   return (
     <View
       {...props}
-      className="flex items-center justify-center gap-5 px-4 py-10"
+      className="flex items-center justify-center gap-5 px-4"
     >
       <Show when={!!icon}>
         <View className="size-[3.75rem]">{icon}</View>

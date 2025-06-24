@@ -13,20 +13,21 @@ type LocationIconProps = Omit<
 >;
 
 export default function LocationIcon({ filled = false, ...props }: LocationIconProps) {
-  const colorHex = useGetColorHex('--color-morning');
+  const morningColor = useGetColorHex('--color-morning');
+  const text01Color = useGetColorHex('--color-text-01');
 
   return (
     <>
       <Show when={!filled}>
         <LocationDefaultSvg
           {...props}
-          color={colorHex}
+          color={text01Color}
         />
       </Show>
       <Show when={filled}>
         <LocationFilledSvg
           {...props}
-          color={colorHex}
+          color={morningColor}
         />
       </Show>
     </>
