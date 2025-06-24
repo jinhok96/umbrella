@@ -58,9 +58,6 @@ export default function FavoriteLocationSection({ ...props }: FavoriteLocationSe
             subLabel={item.address[lang]}
             current={item.id === currentLocation?.id}
             onPress={() => handleItemPress(item)}
-            onLayout={e => {
-              console.log(e.nativeEvent.layout.height);
-            }}
           />
         ))}
       </Show>
