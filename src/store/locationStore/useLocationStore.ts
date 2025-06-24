@@ -10,7 +10,7 @@ import {
 } from '@store/locationStore/useLocationStore.const';
 import { settingStore } from '@store/settingStore/useSettingStore';
 
-import type { LocationStore, LocationStoreState } from '@store/locationStore/useLocationStore.type';
+import type { Location, LocationStore, LocationStoreState } from '@store/locationStore/useLocationStore.type';
 import type { StateCreator } from 'zustand';
 
 /**
@@ -26,7 +26,7 @@ import type { StateCreator } from 'zustand';
  * @ updateFavoriteLocationListOrder - 즐겨찾기 위치 목록 순서 변경
  * @ removeFavoriteLocation - 즐겨찾기 위치 목록에서 특정 원소 제거
  * @ removeAllFavoriteLocation - 즐겨찾기 위치 목록 전체 제거
- * @jinhok96 25.05.14
+ * @jinhok96 25.06.24
  */
 const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never]]> = set => ({
   ...INIT_LOCATION_STORE_STATE,
@@ -53,20 +53,29 @@ const locationStoreCreator: StateCreator<LocationStore, [['zustand/immer', never
     set(state => {
       const { lang } = settingStore.getState();
 
+      const newLocation: Location = {
+        ...location,
+        name: location.name.trim(),
+      };
+
       // 최대 길이 제한
       if (state.favoriteLocationList.length >= LOCATION_STORE_STATE_RECENT_LOCATION_LIST_MAX_LEN) {
         throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationListFull[lang]);
       }
+      // 이름 최소 길이 제한
+      if (newLocation.name.length < 1) {
+        throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationNameEmpty[lang]);
+      }
       // 중복 이름 제한
-      if (state.favoriteLocationList.some(item => item.name === location.name)) {
+      if (state.favoriteLocationList.some(item => item.name === newLocation.name)) {
         throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationNameDuplication[lang]);
       }
       // 중복 id 제한
-      if (state.favoriteLocationList.some(item => item.id === location.id)) {
+      if (state.favoriteLocationList.some(item => item.id === newLocation.id)) {
         throw new Error(LOCATION_STORE_ERROR_MESSAGE.favoriteLocationIdDuplication[lang]);
       }
 
-      state.favoriteLocationList.unshift(location);
+      state.favoriteLocationList.unshift(newLocation);
     }),
   updateFavoriteLocationListOrder: locationList => set({ favoriteLocationList: locationList }),
   removeFavoriteLocation: index =>
