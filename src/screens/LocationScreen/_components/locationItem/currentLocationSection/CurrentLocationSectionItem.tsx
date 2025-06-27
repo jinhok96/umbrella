@@ -4,14 +4,14 @@ import { Pressable, View } from 'react-native';
 import MontserratText from '@components/fontText/MontserratText';
 import LocationIcon from '@components/icon/LocationIcon';
 import WeatherIcon from '@components/icon/WeatherIcon';
-import LocationItemLabel from '@screens/LocationScreen/_components/locationItem/LocationItemLabel';
-import LocationSectionItemWrapper from '@screens/LocationScreen/_components/locationItem/LocationSectionItemWrapper';
+import LocationSectionItemLabel from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemLabel';
+import LocationSectionItemWrapper from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemWrapper';
 
-import type { LocationItemLabelProps } from '@screens/LocationScreen/_components/locationItem/LocationItemLabel.type';
+import type { LocationSectionItemLabelProps } from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemLabel.type';
 import type { WeatherIconId } from '@services/openWeatherOneCall/axios.type';
 
 type CurrentLocationSectionItemProps = Omit<PressableProps, 'children'> &
-  Pick<LocationItemLabelProps, 'label' | 'subLabel'> & {
+  Pick<LocationSectionItemLabelProps, 'label' | 'subLabel'> & {
     temp: number;
     icon: WeatherIconId;
   };
@@ -30,7 +30,7 @@ export default function CurrentLocationSectionItem({
           <View className="size-6">
             <LocationIcon filled />
           </View>
-          <LocationItemLabel
+          <LocationSectionItemLabel
             label={label}
             subLabel={subLabel}
           />

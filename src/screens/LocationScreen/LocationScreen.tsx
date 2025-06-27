@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-import Section from '@components/section/Section';
 import SectionPartition from '@components/section/SectionPartition';
 import Show from '@components/wrapper/Show';
 import { ROOT_NAVIGATION_TEST_ID_LIST } from '@navigation/root/RootNavigation.const';
-import CurrentLocationSection from '@screens/LocationScreen/_components/locationItem/CurrentLocationSection';
-import FavoriteLocationSection from '@screens/LocationScreen/_components/locationItem/FavoriteLocationSection';
-import RecentSearchLocationSection from '@screens/LocationScreen/_components/locationItem/RecentSearchLocationSection';
+import CurrentLocationSection from '@screens/LocationScreen/_components/locationItem/currentLocationSection/CurrentLocationSection';
+import FavoriteLocationSection from '@screens/LocationScreen/_components/locationItem/favoriteLocationSection/FavoriteLocationSection';
+import CurrentSearchResultLocationSection from '@screens/LocationScreen/_components/locationItem/searchResultLocationSection/CurrentSearchResultLocationSection';
+import RecentSearchResultLocationSection from '@screens/LocationScreen/_components/locationItem/searchResultLocationSection/RecentSearchResultLocationSection';
 import LocationScreenWrapper from '@screens/LocationScreen/_components/LocationScreenWrapper';
 import LocationSearchHeader from '@screens/LocationScreen/_components/LocationSearchHeader';
 
@@ -18,32 +18,34 @@ export default function LocationScreen() {
 
   return (
     <LocationScreenWrapper testID={ROOT_NAVIGATION_TEST_ID_LIST.Location}>
-      <LocationSearchHeader
-        value={inputValue}
-        onChangeText={onChangeText}
-        onFocus={() => {
-          setHasInputFocused(true);
-          setIsInputFocused(true);
-        }}
-        onBlur={() => setIsInputFocused(false)}
-      />
-      <SectionPartition />
       <ScrollView>
-        <Show when={!!inputValue}>
-          <Section label={{ ko: '검색 결과', en: 'Search Result' }} />
-        </Show>
-        <Show when={!inputValue}>
-          <Show when={hasInputFocused}>
-            <RecentSearchLocationSection />
+        <LocationSearchHeader
+          value={inputValue}
+          onChangeText={onChangeText}
+          onFocus={() => {
+            setHasInputFocused(true);
+            setIsInputFocused(true);
+          }}
+          onBlur={() => setIsInputFocused(false)}
+        />
+        <SectionPartition />
+        <View className="pb-safe-offset-14">
+          <Show when={!!inputValue}>
+            <CurrentSearchResultLocationSection input={inputValue} />
           </Show>
-          <Show when={!hasInputFocused}>
-            <CurrentLocationSection />
+          <Show when={!inputValue}>
+            <Show when={hasInputFocused}>
+              <RecentSearchResultLocationSection />
+            </Show>
+            <Show when={!hasInputFocused}>
+              <CurrentLocationSection />
+            </Show>
           </Show>
-        </Show>
-        <Show when={!isInputFocused}>
-          <SectionPartition />
-          <FavoriteLocationSection />
-        </Show>
+          <Show when={!isInputFocused}>
+            <SectionPartition />
+            <FavoriteLocationSection />
+          </Show>
+        </View>
       </ScrollView>
     </LocationScreenWrapper>
   );

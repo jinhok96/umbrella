@@ -3,10 +3,9 @@ import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import EmptyContent from '@components/emptyContent/EmptyContent';
-import EmptyIcon from '@components/icon/EmptyIcon';
 import Section from '@components/section/Section';
 import Show from '@components/wrapper/Show';
-import SearchLocationSectionItem from '@screens/LocationScreen/_components/locationItem/SearchLocationSectionItem';
+import FavoriteLocationSectionItem from '@screens/LocationScreen/_components/locationItem/favoriteLocationSection/FavoriteLocationSectionItem';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
 
@@ -14,29 +13,28 @@ import type { SectionProps } from '@components/section/Section.type';
 import type { LocalizedText } from '@libs/utils/localize/localize.type';
 import type { Location } from '@store/locationStore/useLocationStore.type';
 
+const LABEL: LocalizedText = { ko: '저장한 위치', en: 'Favorite' };
+
 const PLACEHOLDER: LocalizedText = {
-  ko: '최근 검색한 위치가 없습니다.',
-  en: 'There is no recent search location.',
+  ko: '저장한 위치가 없습니다.',
+  en: 'There is no favorite location.',
 };
 
-type RecentSearchLocationSectionProps = Omit<SectionProps, 'children' | 'label' | 'className'>;
+type FavoriteLocationSectionProps = Omit<SectionProps, 'children' | 'label' | 'className'>;
 
 function Placeholder() {
   const lang = useSettingStore(state => state.lang);
 
   return (
     <View className="flex h-32 items-center justify-center">
-      <EmptyContent
-        icon={<EmptyIcon />}
-        subTitle={PLACEHOLDER[lang]}
-      />
+      <EmptyContent subTitle={PLACEHOLDER[lang]} />
     </View>
   );
 }
 
-export default function RecentSearchLocationSection({ ...props }: RecentSearchLocationSectionProps) {
-  const lang = useSettingStore(state => state.lang);
-  const recentLocationList = useLocationStore(state => state.recentLocationList);
+export default function FavoriteLocationSection({ ...props }: FavoriteLocationSectionProps) {
+  const currentLocation = useLocationStore(state => state.currentLocation);
+  const favoriteLocationList = useLocationStore(state => state.favoriteLocationList);
   const setCurrentLocation = useLocationStore(state => state.setCurrentLocation);
   const navigation = useNavigation();
 
@@ -48,18 +46,18 @@ export default function RecentSearchLocationSection({ ...props }: RecentSearchLo
   return (
     <Section
       {...props}
-      label={{ ko: '최근 검색한 위치', en: 'Recent Search' }}
+      label={LABEL}
     >
       <Show
-        when={!!recentLocationList.length}
+        when={!!favoriteLocationList.length}
         fallback={<Placeholder />}
       >
-        {recentLocationList.map(item => (
-          <SearchLocationSectionItem
+        {favoriteLocationList.map(item => (
+          <FavoriteLocationSectionItem
             key={item.id}
             label={item.name}
-            subLabel={item.address[lang]}
-            location={item}
+            subLabel={item.address}
+            current={item.id === currentLocation?.id}
             onPress={() => handleItemPress(item)}
           />
         ))}

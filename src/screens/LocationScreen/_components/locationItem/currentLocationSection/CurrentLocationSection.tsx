@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import EmptyContent from '@components/emptyContent/EmptyContent';
 import Section from '@components/section/Section';
 import Show from '@components/wrapper/Show';
-import CurrentLocationSectionItem from '@screens/LocationScreen/_components/locationItem/CurrentLocationSectionItem';
+import CurrentLocationSectionItem from '@screens/LocationScreen/_components/locationItem/currentLocationSection/CurrentLocationSectionItem';
 import { useForecastsStore } from '@store/forecastsStore/useForecastsStore';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 import { useSettingStore } from '@store/settingStore/useSettingStore';
@@ -36,7 +36,6 @@ function Placeholder() {
 }
 
 export default function CurrentLocationSection({ ...props }: CurrentLocationSectionProps) {
-  const lang = useSettingStore(state => state.lang);
   const currentLocation = useLocationStore(state => state.currentLocation);
   const currentWeather = useForecastsStore(state => state.current);
   const navigation = useNavigation();
@@ -56,7 +55,7 @@ export default function CurrentLocationSection({ ...props }: CurrentLocationSect
       >
         <CurrentLocationSectionItem
           label={currentLocation!.name}
-          subLabel={currentLocation!.address[lang]}
+          subLabel={currentLocation!.address}
           temp={Math.round(currentWeather!.temp)}
           icon={currentWeather!.weather[0].icon}
           onPress={handleItemPress}

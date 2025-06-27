@@ -2,13 +2,13 @@ import type { PressableProps } from 'react-native';
 import { Pressable, View } from 'react-native';
 
 import LocationIcon from '@components/icon/LocationIcon';
-import LocationItemLabel from '@screens/LocationScreen/_components/locationItem/LocationItemLabel';
-import LocationSectionItemWrapper from '@screens/LocationScreen/_components/locationItem/LocationSectionItemWrapper';
+import LocationSectionItemLabel from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemLabel';
+import LocationSectionItemWrapper from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemWrapper';
 
-import type { LocationItemLabelProps } from '@screens/LocationScreen/_components/locationItem/LocationItemLabel.type';
+import type { LocationSectionItemLabelProps } from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemLabel.type';
 
 type FavoriteLocationSectionItemProps = Omit<PressableProps, 'children'> &
-  Pick<LocationItemLabelProps, 'label' | 'subLabel'> & {
+  Pick<LocationSectionItemLabelProps, 'label' | 'subLabel'> & {
     current: boolean;
   };
 
@@ -24,7 +24,7 @@ export default function FavoriteLocationSectionItem({
         <View className="size-6">
           <LocationIcon filled={current} />
         </View>
-        <LocationItemLabel
+        <LocationSectionItemLabel
           label={label}
           subLabel={subLabel}
         />

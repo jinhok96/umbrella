@@ -1,28 +1,21 @@
-import type { PressableProps } from 'react-native';
 import { Pressable } from 'react-native';
 
 import PressableHitSlop from '@components/button/PressableHitSlop';
 import CheckCircleIcon from '@components/icon/CheckCircleIcon';
 import XCircleIcon from '@components/icon/XCircleIcon';
 import Show from '@components/wrapper/Show';
-import LocationItemLabel from '@screens/LocationScreen/_components/locationItem/LocationItemLabel';
-import LocationSectionItemWrapper from '@screens/LocationScreen/_components/locationItem/LocationSectionItemWrapper';
+import LocationSectionItemLabel from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemLabel';
+import LocationSectionItemWrapper from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemWrapper';
 import { useLocationStore } from '@store/locationStore/useLocationStore';
 
-import type { LocationItemLabelProps } from '@screens/LocationScreen/_components/locationItem/LocationItemLabel.type';
-import type { Location } from '@store/locationStore/useLocationStore.type';
+import type { SearchResultLocationSectionItemProps } from '@screens/LocationScreen/_components/locationItem/searchResultLocationSection/SearchResultLocationSectionItem.type';
 
-type SearchLocationSectionItemProps = Omit<PressableProps, 'children'> &
-  Pick<LocationItemLabelProps, 'label' | 'subLabel'> & {
-    location: Location;
-  };
-
-export default function SearchLocationSectionItem({
+export default function SearchResultLocationSectionItem({
   label,
   subLabel,
   location,
   ...props
-}: SearchLocationSectionItemProps) {
+}: SearchResultLocationSectionItemProps) {
   const isFavorite = useLocationStore(state => state.isFavorite(location.id));
   const addFavoriteLocation = useLocationStore(state => state.addFavoriteLocation);
   const removeFavoriteLocationById = useLocationStore(state => state.removeFavoriteLocation);
@@ -36,7 +29,7 @@ export default function SearchLocationSectionItem({
     <Pressable {...props}>
       <LocationSectionItemWrapper className="flex flex-row items-center justify-between gap-3">
         {/* 라벨 */}
-        <LocationItemLabel
+        <LocationSectionItemLabel
           label={label}
           subLabel={subLabel}
         />

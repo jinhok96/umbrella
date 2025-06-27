@@ -2,15 +2,15 @@ import { View } from 'react-native';
 
 import PretendardText from '@components/fontText/PretendardText';
 
-import type { LocationItemLabelProps } from '@screens/LocationScreen/_components/locationItem/LocationItemLabel.type';
+import type { LocationSectionItemLabelProps } from '@screens/LocationScreen/_components/locationItem/locationSectionItem/LocationSectionItemLabel.type';
 
 /**
- * `LocationItem` 컴포넌트의 라벨 컴포넌트
+ * `LocationSectionItem` 컴포넌트의 라벨 컴포넌트
  * @param label 라벨
  * @param subLabel 서브 라벨
- * @jinhok96 25.06.24
+ * @jinhok96 25.06.27
  */
-export default function LocationItemLabel({ label, subLabel, ...props }: LocationItemLabelProps) {
+export default function LocationSectionItemLabel({ label, subLabel, ...props }: LocationSectionItemLabelProps) {
   return (
     <View
       {...props}
