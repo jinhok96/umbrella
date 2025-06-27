@@ -1,3 +1,5 @@
+type LanguageCode = 'ko' | 'en'; // IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
+
 export type GoogleMapsServicePlacesGeocodingError = {
   code: number;
   message: string;
@@ -20,11 +22,11 @@ export type GoogleMapsServiceAirQualityError = {
  * @jinhok96 25.05.20
  */
 export type CommonAutocompleteRegionsPayload = {
-  languageCode: 'ko' | 'en';
+  languageCode: LanguageCode;
   includedPrimaryTypes: '(regions)' | '(cities)' | Array<'locality' | 'sublocality' | 'geocode'>;
 };
 
-export type PostAutocompleteRegionsPayload = CommonAutocompleteRegionsPayload & {
+export type PostAutocompleteRegionsPayload = Pick<CommonAutocompleteRegionsPayload, 'languageCode'> & {
   input: string;
 };
 
@@ -44,6 +46,29 @@ export type PostAutocompleteRegionsResponse = Array<{
   text: string;
   types: string[];
 }>;
+
+export type GetPlaceDetailParams = {
+  placeId: string;
+  languageCode: LanguageCode;
+};
+
+export type GetPlaceDetailResponse = {
+  formattedAddress: string;
+  addressComponents: Array<{
+    longText: string;
+    shortText: string;
+    types: string[];
+    languageCode: string;
+  }>;
+  displayName: {
+    text: string;
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  types: string[];
+};
 
 export type GeocodingResult = {
   placeId: string;
@@ -85,6 +110,7 @@ export type FullGeocodingResult = GeocodingResult & {
 
 export type GetPlaceGeocodingParams = {
   placeId: string;
+  languageCode: LanguageCode;
 };
 
 export type GetPlaceGeocodingRawResponse = FullGeocodingResult;
@@ -108,7 +134,7 @@ export type GetReverseGeocodingResponse = GeocodingResult;
 
 export type CommonAirQualityPayload = {
   location: { latitude: number; longitude: number };
-  languageCode: 'ko' | 'en'; // IETF BCP-47 언어 코드 / ko, en은 앱 언어 코드(ISO 639-1)와 동일
+  languageCode: LanguageCode;
   extraComputations: ['POLLUTANT_CONCENTRATION'];
 };
 

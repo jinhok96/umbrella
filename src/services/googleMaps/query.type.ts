@@ -1,4 +1,5 @@
 import type {
+  GetPlaceDetailParams,
   GetPlaceGeocodingParams,
   GetReverseGeocodingParams,
   PostAutocompleteRegionsPayload,
@@ -8,7 +9,9 @@ export type UseGetAutocompleteRegionParams = Partial<
   Omit<PostAutocompleteRegionsPayload, 'languageCode' | 'includedPrimaryTypes'>
 >;
 
-export type UseGetPlaceGeocodingParams = Partial<GetPlaceGeocodingParams>;
+export type UseGetPlaceDetailParams = Partial<Pick<GetPlaceDetailParams, 'placeId'>>;
+
+export type UseGetPlaceGeocodingParams = Partial<Pick<GetPlaceGeocodingParams, 'placeId'>>;
 
 export type UseGetReverseGeocodingParams = Partial<GetReverseGeocodingParams>;
 

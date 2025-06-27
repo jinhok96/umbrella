@@ -5,6 +5,8 @@ import { httpClientError } from '@services/httpClient/httpClient.util';
 
 import type {
   GeocodingResult,
+  GetPlaceDetailParams,
+  GetPlaceDetailResponse,
   GetPlaceGeocodingParams,
   GetPlaceGeocodingRawResponse,
   GetPlaceGeocodingResponse,
@@ -93,7 +95,7 @@ function filterGeocodingResult(data: GeocodingResult & Record<string, unknown>) 
 
 /**
  * Google Maps API 서비스
- * @jinhok96 25.05.20
+ * @jinhok96 25.06.27
  */
 export const googleMapsService = {
   postAutocompleteRegions: async (
@@ -132,12 +134,30 @@ export const googleMapsService = {
       throwError(error);
     }
   },
-  getPlaceGeocoding: async (
-    params: GetPlaceGeocodingParams,
-  ): Promise<PickedAxiosResponse<GetPlaceGeocodingResponse | null> | undefined> => {
+  getPlaceDetail: async ({ placeId, languageCode }: GetPlaceDetailParams) => {
+    try {
+      const response = await placesAxiosInstance.get<GetPlaceDetailResponse>(
+        `v1/places/${placeId}?languageCode=${languageCode}`,
+        undefined,
+        {
+          headers: {
+            'X-Goog-FieldMask': 'displayName,addressComponents,formattedAddress,location,types',
+          },
+        },
+      );
+
+      return response;
+    } catch (error) {
+      throwError(error);
+    }
+  },
+  getPlaceGeocoding: async ({
+    placeId,
+    languageCode,
+  }: GetPlaceGeocodingParams): Promise<PickedAxiosResponse<GetPlaceGeocodingResponse | null> | undefined> => {
     try {
       const response = await geocodingAxiosInstance.get<GetPlaceGeocodingRawResponse>(
-        `/v4beta/geocode/places/${params.placeId}`,
+        `/v4beta/geocode/places/${placeId}?languageCode=${languageCode}`,
       );
 
       if (!response.data?.formattedAddress) {

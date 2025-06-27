@@ -15,6 +15,7 @@ import type {
   UseGetAirQualityHourlyForecastsParams,
   UseGetAutocompleteRegionParams,
   UseGetCurrentAirQualityParams,
+  UseGetPlaceDetailParams,
   UseGetPlaceGeocodingParams,
   UseGetReverseGeocodingParams,
 } from '@services/googleMaps/query.type';
@@ -58,18 +59,53 @@ export function useGetAutocompleteRegions(params: UseGetAutocompleteRegionParams
 }
 
 /**
- * 장소 id로 행정 구역 위치 찾기
- * @param placeId string; 장소 id
- * @returns `{ placeId, formattedAddress, location, types }`
- * @jinhok96 25.05.16
+ * 장소 정보 가져오기
+ * @payload `{ placeId }`
+ * @returns `{ displayName, addressComponents, formattedAddress, location, types }`
+ * @jinhok96 25.06.27
  */
-export function useGetPlaceGeocoding(params: UseGetPlaceGeocodingParams) {
+export function useGetPlaceDetail(params: UseGetPlaceDetailParams) {
+  const lang = useSettingStore(state => state.lang);
+
+  const commonPayload = {
+    languageCode: lang,
+  };
+
   return useSuspenseQuery({
-    queryKey: ['useGetPlaceGeocoding', JSON.stringify(params)],
+    queryKey: ['useGetPlaceDetail', JSON.stringify(params), JSON.stringify(commonPayload)],
     queryFn: () => {
       const { placeId } = params;
       if (!placeId) return null;
-      return googleMapsService.getPlaceGeocoding({ placeId });
+
+      const fullParams = { ...commonPayload, placeId };
+      return googleMapsService.getPlaceDetail(fullParams);
+    },
+    staleTime: Infinity,
+    gcTime: Infinity,
+  });
+}
+
+/**
+ * 장소 id로 행정 구역 위치 찾기
+ * @param placeId string; 장소 id
+ * @returns `{ placeId, formattedAddress, location, types }`
+ * @jinhok96 25.06.27
+ */
+export function useGetPlaceGeocoding(params: UseGetPlaceGeocodingParams) {
+  const lang = useSettingStore(state => state.lang);
+
+  const commonPayload = {
+    languageCode: lang,
+  };
+
+  return useSuspenseQuery({
+    queryKey: ['useGetPlaceGeocoding', JSON.stringify(params), JSON.stringify(commonPayload)],
+    queryFn: () => {
+      const { placeId } = params;
+      if (!placeId) return null;
+
+      const fullParams = { ...commonPayload, placeId };
+      return googleMapsService.getPlaceGeocoding(fullParams);
     },
     staleTime: Infinity,
     gcTime: Infinity,
