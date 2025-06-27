@@ -32,6 +32,13 @@ type CurrentSearchResultLocationSectionProps = Omit<SectionProps, 'children' | '
   input: string;
 };
 
+/**
+ * 플레이스홀더
+ * @param title 타이틀
+ * @param subTitle 서브타이틀
+ * @param icon 상단에 표시할 아이콘
+ * @jinhok96 25.06.27
+ */
 function Placeholder({ title, subTitle, icon }: { title?: string; subTitle?: string; icon?: boolean }) {
   return (
     <View className="flex items-center justify-center py-10">
@@ -44,6 +51,11 @@ function Placeholder({ title, subTitle, icon }: { title?: string; subTitle?: str
   );
 }
 
+/**
+ * 검색 결과 자동완성 리스트
+ * @param input 검색어
+ * @jinhok96 25.06.27
+ */
 function CurrentSearchAutocompleteList({ input }: { input: string }) {
   const lang = useSettingStore(state => state.lang);
 
@@ -71,6 +83,11 @@ function CurrentSearchAutocompleteList({ input }: { input: string }) {
   );
 }
 
+/**
+ * 검색 결과 섹션
+ * @param input 검색어
+ * @jinhok96 25.06.27
+ */
 export default function CurrentSearchResultLocationSection({
   input,
   ...props

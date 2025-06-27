@@ -22,6 +22,10 @@ const PLACEHOLDER: LocalizedText = {
 
 type FavoriteLocationSectionProps = Omit<SectionProps, 'children' | 'label' | 'className'>;
 
+/**
+ * 플레이스홀더
+ * @jinhok96 25.06.27
+ */
 function Placeholder() {
   const lang = useSettingStore(state => state.lang);
 
@@ -32,6 +36,10 @@ function Placeholder() {
   );
 }
 
+/**
+ * 저장한 위치 섹션
+ * @jinhok96 25.06.27
+ */
 export default function FavoriteLocationSection({ ...props }: FavoriteLocationSectionProps) {
   const currentLocation = useLocationStore(state => state.currentLocation);
   const favoriteLocationList = useLocationStore(state => state.favoriteLocationList);

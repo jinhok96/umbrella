@@ -12,6 +12,13 @@ type FavoriteLocationSectionItemProps = Omit<PressableProps, 'children'> &
     current: boolean;
   };
 
+/**
+ * `FavoriteLocationSection`의 아이템 컴포넌트
+ * @param label 라벨
+ * @param subLabel 서브 라벨
+ * @param current 현재 위치인지 여부
+ * @jinhok96 25.06.27
+ */
 export default function FavoriteLocationSectionItem({
   label,
   subLabel,

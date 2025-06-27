@@ -3,6 +3,10 @@ import { View } from 'react-native';
 
 type LocationSectionItemWrapperProps = ViewProps;
 
+/**
+ * `LocationSectionItem` 컴포넌트의 공통 래퍼 컴포넌트
+ * @jinhok96 25.06.27
+ */
 export default function LocationSectionItemWrapper({ className, children, ...props }: LocationSectionItemWrapperProps) {
   return (
     <View

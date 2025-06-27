@@ -25,6 +25,10 @@ const LABEL: LocalizedText = {
 
 type CurrentLocationSectionProps = Omit<SectionProps, 'children' | 'label' | 'className'>;
 
+/**
+ * 플레이스홀더
+ * @jinhok96 25.06.27
+ */
 function Placeholder() {
   const lang = useSettingStore(state => state.lang);
 
@@ -35,6 +39,10 @@ function Placeholder() {
   );
 }
 
+/**
+ * 현재 위치 섹션
+ * @jinhok96 25.06.27
+ */
 export default function CurrentLocationSection({ ...props }: CurrentLocationSectionProps) {
   const currentLocation = useLocationStore(state => state.currentLocation);
   const currentWeather = useForecastsStore(state => state.current);

@@ -17,6 +17,11 @@ type CurrentSearchResultLocationSectionItemProps = Omit<
   placeId: string;
 };
 
+/**
+ * `CurrentSearchResultLocationSection`의 아이템 컴포넌트
+ * @param placeId 장소 ID
+ * @jinhok96 25.06.27
+ */
 export default function CurrentSearchResultLocationSectionItem({
   placeId,
   onPress,

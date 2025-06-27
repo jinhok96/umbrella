@@ -23,6 +23,10 @@ const PLACEHOLDER: LocalizedText = {
 
 type RecentSearchResultLocationSectionProps = Omit<SectionProps, 'children' | 'label' | 'className'>;
 
+/**
+ * 플레이스홀더
+ * @jinhok96 25.06.27
+ */
 function Placeholder() {
   const lang = useSettingStore(state => state.lang);
 
@@ -36,6 +40,10 @@ function Placeholder() {
   );
 }
 
+/**
+ * 최근 검색한 위치 섹션
+ * @jinhok96 25.06.27
+ */
 export default function RecentSearchResultLocationSection({ ...props }: RecentSearchResultLocationSectionProps) {
   const recentLocationList = useLocationStore(state => state.recentLocationList);
   const setCurrentLocation = useLocationStore(state => state.setCurrentLocation);

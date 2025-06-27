@@ -16,6 +16,14 @@ type CurrentLocationSectionItemProps = Omit<PressableProps, 'children'> &
     icon: WeatherIconId;
   };
 
+/**
+ * `CurrentLocationSection`의 아이템 컴포넌트
+ * @param label 라벨
+ * @param subLabel 서브 라벨
+ * @param temp 현재 기온
+ * @param icon 날씨 아이콘 ID
+ * @jinhok96 25.06.27
+ */
 export default function CurrentLocationSectionItem({
   label,
   subLabel,

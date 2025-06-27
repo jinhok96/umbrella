@@ -10,6 +10,13 @@ import { useLocationStore } from '@store/locationStore/useLocationStore';
 
 import type { SearchResultLocationSectionItemProps } from '@screens/LocationScreen/_components/locationItem/searchResultLocationSection/SearchResultLocationSectionItem.type';
 
+/**
+ * `(Current/Recent)SearchResultLocationSection`의 공통 아이템 컴포넌트
+ * @param label 라벨
+ * @param subLabel 서브 라벨
+ * @param location 위치 정보
+ * @jinhok96 25.06.27
+ */
 export default function SearchResultLocationSectionItem({
   label,
   subLabel,
