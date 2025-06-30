@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 import { View } from 'react-native';
 
 import classNames from 'classnames';
@@ -15,7 +16,7 @@ const DEFAULT_MESSAGE_LINE = 1;
 /**
  * `ChecklistSection`의 메세지 컴포넌트
  * @param selected 선택된 체크리스트 타입
- * @jinhok96 25.06.18
+ * @jinhok96 25.06.30
  */
 export default function ChecklistSectionMessageBox({
   selected,
@@ -27,7 +28,14 @@ export default function ChecklistSectionMessageBox({
   const [latestSelected, setLatestSelected] = useState(selected);
   const [messageLine, setMessageLine] = useState(DEFAULT_MESSAGE_LINE);
 
-  const message = latestSelected && checklist?.[latestSelected]?.message;
+  const message: string = (latestSelected && checklist?.[latestSelected]?.message?.[lang]) || '';
+
+  const handleMessageLayout = (e: NativeSyntheticEvent<TextLayoutEventData>) => {
+    onTextLayout?.(e);
+
+    if (!message) return;
+    setMessageLine(e.nativeEvent.lines.length);
+  };
 
   const messagePaddingTopClassName = classNames(
     'px-5 transition-[padding-top]',
@@ -46,7 +54,7 @@ export default function ChecklistSectionMessageBox({
   );
 
   useEffect(() => {
-    if (!selected) return setMessageLine(DEFAULT_MESSAGE_LINE);
+    if (!selected) return;
     setLatestSelected(selected);
   }, [selected]);
 
@@ -58,12 +66,9 @@ export default function ChecklistSectionMessageBox({
           {...props}
           typo="body-2"
           className={messageClassName}
-          onTextLayout={e => {
-            setMessageLine(e.nativeEvent.lines.length);
-            onTextLayout?.(e);
-          }}
+          onTextLayout={handleMessageLayout}
         >
-          {message?.[lang]}
+          {message}
         </PretendardText>
         <ChecklistSectionMessageBoxLabel selected={selected} />
       </View>
