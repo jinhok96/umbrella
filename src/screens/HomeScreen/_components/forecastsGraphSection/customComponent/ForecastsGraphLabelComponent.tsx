@@ -43,7 +43,7 @@ const HEIGHT = 100; // 라벨 높이
  * @param forecastsGraphBottomPadding 그래프 바텀 패딩
  * @param forecastsGraphSpacing 그래프 간격
  * @returns 라벨 컴포넌트
- * @jinhok96 25.06.20
+ * @jinhok96 25.06.30
  */
 export default memo(
   function ForecastsGraphLabelComponent({
@@ -112,5 +112,11 @@ export default memo(
       </Pressable>
     );
   },
-  (prev, next) => prev.isSelected === next.isSelected,
+  (prev, next) =>
+    prev.isSelected === next.isSelected &&
+    prev.forecastsGraphHeight === next.forecastsGraphHeight &&
+    prev.forecastsGraphBottomOffset === next.forecastsGraphBottomOffset &&
+    prev.forecastsGraphBottomPadding === next.forecastsGraphBottomPadding &&
+    prev.forecastsGraphTopPadding === next.forecastsGraphTopPadding &&
+    prev.forecastsGraphSpacing === next.forecastsGraphSpacing,
 );
